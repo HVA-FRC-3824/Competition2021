@@ -3,9 +3,13 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Chassis extends SubsystemBase {
@@ -22,6 +26,12 @@ public class Chassis extends SubsystemBase {
   private SpeedControllerGroup m_right;
 
   private DifferentialDrive m_differentialDrive;
+
+  private static AHRS m_ahrs;
+
+  private Compressor m_compressor;
+
+  private DoubleSolenoid m_gearShift;
 
   public Chassis() {
     
@@ -49,6 +59,22 @@ public class Chassis extends SubsystemBase {
     m_right = new SpeedControllerGroup(m_right_front, m_right_back);
 
     m_differentialDrive = new DifferentialDrive(m_left, m_right);
+
+    /**
+     * Try to instantiate the navx gyro with exception catch
+     */
+    try {
+      m_ahrs = new AHRS(SPI.Port.kMXP);
+    } catch (RuntimeException ex) {
+        System.out.println("\nError instantiating navX-MXP:\n" + ex.getMessage() + "\n");
+    }
+
+    /**
+     * Pneumatics objects
+     */
+    m_compressor = new Compressor();
+
+    m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_A, Constants.CHASSIS_GEARSHIFT_PORT_B);
 
   }
 
