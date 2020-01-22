@@ -1,11 +1,18 @@
 package frc.robot;
 
 public class Constants {
+  /**
+   * PID Constants
+   */
+  public static final int K_SLOT_IDX                    = 0;
+  public static final int K_PID_LOOP_IDX                = 0;
+  public static final int K_TIMEOUT_MS                  = 30;
 
   /**
    * Robot Map
    * A collection of ports and IDs for various objects representing hardware.
    */
+  
   
   /**
    * CAN IDs
@@ -48,7 +55,18 @@ public class Constants {
   /**
    * PWM
    */
+ 
   public static final int CLIMBER_RATCHET_LEFT  = 0;
   public static final int CLIMBER_RATCHET_RIGHT = 1;
 
+  /**
+   * Operator Joystick buttons
+   */
+  
+  public static final int OPERATOR_BTN_LAUNCHER_SPINWHEELS_ID = 0;
+
+  /**
+   * Driver Joystick buttons
+   */
+  
 }

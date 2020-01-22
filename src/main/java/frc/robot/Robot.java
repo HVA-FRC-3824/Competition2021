@@ -9,6 +9,11 @@ package frc.robot;
 
 import frc.robot.subsystems.*;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,7 +40,8 @@ public class Robot extends TimedRobot {
   /**
    * Subsystem Instantiation
    */
-  private final Chassis m_chassis = new Chassis();
+  public final Chassis m_chassis = new Chassis();
+  public final Launcher m_launcher = new Launcher();
 
   /**
    * Inline Commands Initialization
@@ -129,5 +135,35 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public void initializeMotorController(WPI_TalonSRX talonSRX, boolean setInverted, boolean setSensorPhase,
+                                        double kF, double kP, double kI, double kD, int kCruiseVelocity, int kAcceleration){
+    talonSRX.configFactoryDefault();
+    talonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+                                            Constants.K_PID_LOOP_IDX,
+                                            Constants.K_TIMEOUT_MS);
+
+    talonSRX.setSensorPhase(setSensorPhase);
+    talonSRX.setInverted(setInverted);
+    
+    talonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.K_TIMEOUT_MS);
+    talonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.K_TIMEOUT_MS);
+
+    talonSRX.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
+    talonSRX.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
+    talonSRX.configPeakOutputForward(1, Constants.K_TIMEOUT_MS);
+    talonSRX.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
+
+    talonSRX.selectProfileSlot(Constants.K_SLOT_IDX, Constants.K_PID_LOOP_IDX);
+    talonSRX.config_kF(Constants.K_SLOT_IDX, kF, Constants.K_TIMEOUT_MS);
+    talonSRX.config_kP(Constants.K_SLOT_IDX, kP, Constants.K_TIMEOUT_MS);
+    talonSRX.config_kI(Constants.K_SLOT_IDX, kI, Constants.K_TIMEOUT_MS);
+    talonSRX.config_kD(Constants.K_SLOT_IDX, kD, Constants.K_TIMEOUT_MS);
+
+    talonSRX.configMotionCruiseVelocity(kCruiseVelocity, Constants.K_TIMEOUT_MS);
+    talonSRX.configMotionAcceleration(kAcceleration, Constants.K_TIMEOUT_MS);
+
+    talonSRX.setSelectedSensorPosition(0, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
   }
 }

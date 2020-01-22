@@ -1,19 +1,75 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-public class OI {
+/**
+ * Describes all the operator interface controls for the robot
+ * 
+ * Launcher Controls
+ * -------------------------------------------------------------------------
+ * Button: set launcher angle and wheel speed at initiation line
+ * Button: set launcher angle and wheel speed at control panel
+ * Slider: manual set wheel speed
+ * Button: increase launcher angle
+ * Button: decrease launcher angle
+ * Button: feeds ball to launcher
+ * Button: auto aim and launch
+ * 
+ * Intake Controls
+ * -------------------------------------------------------------------------
+ * Button: extend/retract intake and start/stop intake wheels
+ * 
+ * Chamber Controls
+ * -------------------------------------------------------------------------
+ * Button: enable conveyor while held
+ * Button: auto feed 1 cell
+ * 
+ * Chassis Controls
+ * -------------------------------------------------------------------------
+ * Joystick: drive robot with speed and direction
+ * Button: shift gears
+ * Button: auto align with vision
+ * 
+ * Climber Controls
+ * -------------------------------------------------------------------------
+ * Button: extend hooks
+ * Button: pull robot up
+ * Button: auto pull up and balance
+ * Button: manual balance left
+ * Button: manual balance right
+ * Button: lock ratchets
+ * 
+ * Control Panel Controls
+ * -------------------------------------------------------------------------
+ * Button: rotate wheel 4 times
+ * Button: rotate to color
+ * Button: override rotation when held
+ */
+
+ public class OI {
 
     /**
      * Declare all joysticks and buttons here.
      */
-    public static Joystick driverJoystick;
+    public static Joystick m_driverJoystick;
+    public static Joystick m_operatorJoystick;
+    public static JoystickButton m_btn_launcher_spinWheels;
 
     public OI() {
         /**
          * Instantiate declared joysticks and buttons here.
          */
-        driverJoystick = new Joystick(0);
+        m_driverJoystick = new Joystick(0);
+        m_operatorJoystick = new Joystick(1);
+        m_btn_launcher_spinWheels = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_BTN_LAUNCHER_SPINWHEELS_ID);
+
+        /**
+         * Bind commands to buttons
+         */
+
+        //m_btn_launcher_spinWheels.whenPressed(new InstantCommand(Robot.m_launcher.))
     }
 
     /**
@@ -21,7 +77,9 @@ public class OI {
      * @return access to driverJoystick values/attributes.
      */
     public static Joystick getDriverJoystick() {
-        return driverJoystick;
+        return m_driverJoystick;
     }
+
+  //BRUH JOVI MOMENT  
 
 }
