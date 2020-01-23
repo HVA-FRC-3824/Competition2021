@@ -3,27 +3,25 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Chassis extends SubsystemBase {
-
+public class Chassis extends SubsystemBase 
+{
   /**
    * Declaring objects for the drivetrain
    */
-  private WPI_TalonFX m_left_front;
-  private WPI_TalonFX m_left_back;
-  private SpeedControllerGroup m_left;
+  private WPI_TalonFX m_leftMaster;
+  private WPI_TalonFX m_leftSlave;
 
-  private WPI_TalonFX m_right_front;
-  private WPI_TalonFX m_right_back;
-  private SpeedControllerGroup m_right;
+  private WPI_TalonFX m_rightMaster;
+  private WPI_TalonFX m_rightSlave;
 
   private DifferentialDrive m_differentialDrive;
 
@@ -33,39 +31,29 @@ public class Chassis extends SubsystemBase {
 
   private DoubleSolenoid m_gearShift;
 
-  public Chassis() {
-    
+  public Chassis() 
+  {
     /**
-     * Instantiating drivetrain objects and setting attributes (inverted/sensor phase)
+     * Instantiating drivetrain objects
      */
-    m_left_front = new WPI_TalonFX(Constants.CHASSIS_LEFT_FRONT_ID);
-    m_left_front.setInverted(false);
-    m_left_front.setSensorPhase(false);
+    m_leftMaster = new WPI_TalonFX(Constants.CHASSIS_LEFT_MASTER_ID);
+    m_leftSlave = new WPI_TalonFX(Constants.CHASSIS_LEFT_SLAVE_ID);
+    m_leftSlave.follow(m_leftMaster);
 
-    m_left_back = new WPI_TalonFX(Constants.CHASSIS_LEFT_BACK_ID);
-    m_left_back.setInverted(false);
-    m_left_back.setSensorPhase(false);
+    m_rightMaster = new WPI_TalonFX(Constants.CHASSIS_RIGHT_MASTER_ID);
+    m_rightSlave = new WPI_TalonFX(Constants.CHASSIS_RIGHT_SLAVE_ID);
+    m_rightSlave.follow(m_rightMaster);
 
-    m_left = new SpeedControllerGroup(m_left_front, m_left_back);
-
-    m_right_front = new WPI_TalonFX(Constants.CHASSIS_RIGHT_FRONT_ID);
-    m_right_front.setInverted(false);
-    m_right_front.setSensorPhase(false);
-
-    m_right_back = new WPI_TalonFX(Constants.CHASSIS_RIGHT_BACK_ID);
-    m_right_back.setInverted(false);
-    m_right_back.setSensorPhase(false);
-
-    m_right = new SpeedControllerGroup(m_right_front, m_right_back);
-
-    m_differentialDrive = new DifferentialDrive(m_left, m_right);
+    m_differentialDrive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
     /**
      * Try to instantiate the navx gyro with exception catch
      */
-    try {
+    try 
+    {
       m_ahrs = new AHRS(SPI.Port.kMXP);
-    } catch (RuntimeException ex) {
+    } catch (RuntimeException ex) 
+    {
         System.out.println("\nError instantiating navX-MXP:\n" + ex.getMessage() + "\n");
     }
 
@@ -78,9 +66,12 @@ public class Chassis extends SubsystemBase {
 
   }
 
+  /**
+   * This method will be called once per scheduler run.
+   */
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void periodic()
+  {
   }
 
   /**
@@ -88,8 +79,8 @@ public class Chassis extends SubsystemBase {
    * Allows external commands to control the private differentialDrive object.
    * Can be used for manual and autonomous input.
    */
-  public void drive(double power, double turn) {
+  public void drive(double power, double turn)
+  {
     m_differentialDrive.arcadeDrive(power, turn);
   }
-
 }

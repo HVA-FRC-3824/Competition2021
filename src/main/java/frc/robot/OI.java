@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * Describes all the operator interface controls for the robot
@@ -48,38 +46,35 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * Button: override rotation when held
  */
 
- public class OI {
+public class OI 
+{
+  /**
+   * Declare all joysticks and buttons here.
+   */
+  public static Joystick m_driverJoystick;
+  public static Joystick m_operatorJoystick;
+
+  public OI() 
+  {
+    /**
+     * Instantiate declared joysticks and buttons here.
+     */
+    m_driverJoystick = new Joystick(0);
+    m_operatorJoystick = new Joystick(1);
 
     /**
-     * Declare all joysticks and buttons here.
+     * Bind commands to buttons here.
      */
-    public static Joystick m_driverJoystick;
-    public static Joystick m_operatorJoystick;
-    public static JoystickButton m_btn_launcher_spinWheels;
+  }
 
-    public OI() {
-        /**
-         * Instantiate declared joysticks and buttons here.
-         */
-        m_driverJoystick = new Joystick(0);
-        m_operatorJoystick = new Joystick(1);
-        m_btn_launcher_spinWheels = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_BTN_LAUNCHER_SPINWHEELS_ID);
+  /**
+   * Allows use of driverJoystick object outside of OI class.
+   * @return access to driverJoystick values/attributes.
+   */
+  public static Joystick getDriverJoystick() 
+  {
+    return m_driverJoystick;
+  }
 
-        /**
-         * Bind commands to buttons
-         */
-
-        //m_btn_launcher_spinWheels.whenPressed(new InstantCommand(Robot.m_launcher.))
-    }
-
-    /**
-     * Allows use of driverJoystick object outside of OI class.
-     * @return access to driverJoystick values/attributes.
-     */
-    public static Joystick getDriverJoystick() {
-        return m_driverJoystick;
-    }
-
-  //BRUH JOVI MOMENT  
-
+  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi
 }
