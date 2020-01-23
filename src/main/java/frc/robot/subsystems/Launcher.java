@@ -25,11 +25,20 @@ public class Launcher extends SubsystemBase
     m_topWheel = new WPI_TalonFX(Constants.LAUNCHER_WHEEL_TOP_ID);
     Robot.configureTalonFX(m_topWheel, false, false, Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
                             Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D);
+
     m_bottomWheel = new WPI_TalonFX(Constants.LAUNCHER_WHEEL_BOTTOM_ID);
+    Robot.configureTalonFX(m_bottomWheel, false, false, Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P,
+                            Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
 
     m_feeder = new WPI_TalonSRX(Constants.LAUNCHER_FEEDER_ID);
+    Robot.configureTalonSRX(m_feeder, false, false, false, Constants.LAUNCHER_FEEDER_F, Constants.LAUNCHER_FEEDER_P,
+                            Constants.LAUNCHER_FEEDER_I, Constants.LAUNCHER_FEEDER_D, Constants.LAUNCHER_FEEDER_CRUISECONTROL,
+                            Constants.LAUNCHER_FEEDER_ACCELERATION);
 
     m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
+    Robot.configureTalonSRX(m_pivot, false, false, false, Constants.LAUNCHER_PIVOT_F, Constants.LAUNCHER_PIVOT_P,
+                            Constants.LAUNCHER_PIVOT_I, Constants.LAUNCHER_PIVOT_D, Constants.LAUNCHER_PIVOT_CRUISECONTROL,
+                            Constants.LAUNCHER_PIVOT_ACCELERATION);
 
     m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
   }

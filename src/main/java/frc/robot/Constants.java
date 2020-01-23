@@ -15,6 +15,27 @@ public class Constants
   public static final double LAUNCHER_TOP_WHEEL_I = 0.0;
   public static final double LAUNCHER_TOP_WHEEL_D = 0.0;
 
+  public static final double LAUNCHER_BOTTOM_WHEEL_F = 0.0;
+  public static final double LAUNCHER_BOTTOM_WHEEL_P = 0.0;
+  public static final double LAUNCHER_BOTTOM_WHEEL_I = 0.0;
+  public static final double LAUNCHER_BOTTOM_WHEEL_D = 0.0;
+
+  public static final double LAUNCHER_FEEDER_F              = 0.0;
+  public static final double LAUNCHER_FEEDER_P              = 0.0;
+  public static final double LAUNCHER_FEEDER_I              = 0.0;
+  public static final double LAUNCHER_FEEDER_D              = 0.0;
+  public static final int    LAUNCHER_FEEDER_CRUISECONTROL = 0;
+  public static final int    LAUNCHER_FEEDER_ACCELERATION  = 0;
+
+  public static final double LAUNCHER_PIVOT_F              = 0.0;
+  public static final double LAUNCHER_PIVOT_P              = 0.0;
+  public static final double LAUNCHER_PIVOT_I              = 0.0;
+  public static final double LAUNCHER_PIVOT_D              = 0.0;
+  public static final int    LAUNCHER_PIVOT_CRUISECONTROL = 0;
+  public static final int    LAUNCHER_PIVOT_ACCELERATION  = 0;
+
+  
+
   /**
    * Robot Map
    * A collection of ports and IDs for various objects representing hardware.
