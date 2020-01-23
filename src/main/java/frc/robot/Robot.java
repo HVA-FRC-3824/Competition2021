@@ -162,7 +162,7 @@ public class Robot extends TimedRobot
    * @param controlMode If true, configure with Motion Magic. If false, configure without Motion Magic.
    *                    (Motion Magic not required for TalonSRXs that will set with ControlMode.Velocity).        
    */
-  public void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, boolean setInverted, boolean setSensorPhase,
+  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, boolean setInverted, boolean setSensorPhase,
                                 double kF, double kP, double kI, double kD, int kCruiseVelocity, int kAcceleration) 
   {
     /* Factory default to reset TalonSRX and prevent unexpected behavior. */
@@ -217,7 +217,7 @@ public class Robot extends TimedRobot
    * Falcon 500s will be used for the chassis and launcher wheels only, thus Motion Magic is not required.
    * (PIDController with Gyro/Vision or ControlMode.Velocity will be used instead).
    */
-  public void configureTalonFX(WPI_TalonFX talonFX, boolean setInverted, boolean setSensorPhase,
+  public static void configureTalonFX(WPI_TalonFX talonFX, boolean setInverted, boolean setSensorPhase,
                                double kF, double kP, double kI, double kD) 
   {
     /* Factory default to reset TalonFX and prevent unexpected behavior. */

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -22,6 +23,8 @@ public class Launcher extends SubsystemBase
   public Launcher()
   {
     m_topWheel = new WPI_TalonFX(Constants.LAUNCHER_WHEEL_TOP_ID);
+    Robot.configureTalonFX(m_topWheel, false, false, Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
+                            Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D);
     m_bottomWheel = new WPI_TalonFX(Constants.LAUNCHER_WHEEL_BOTTOM_ID);
 
     m_feeder = new WPI_TalonSRX(Constants.LAUNCHER_FEEDER_ID);

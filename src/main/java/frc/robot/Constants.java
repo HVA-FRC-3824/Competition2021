@@ -9,6 +9,12 @@ public class Constants
   public static final int K_PID_LOOP_IDX  = 0;
   public static final int K_TIMEOUT_MS    = 30;
 
+  /* Launcher */
+  public static final double LAUNCHER_TOP_WHEEL_F = 0.0;
+  public static final double LAUNCHER_TOP_WHEEL_P = 0.0;
+  public static final double LAUNCHER_TOP_WHEEL_I = 0.0;
+  public static final double LAUNCHER_TOP_WHEEL_D = 0.0;
+
   /**
    * Robot Map
    * A collection of ports and IDs for various objects representing hardware.
