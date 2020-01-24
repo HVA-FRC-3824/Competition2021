@@ -24,17 +24,44 @@ public class Constants
   public static final double LAUNCHER_FEEDER_P              = 0.0;
   public static final double LAUNCHER_FEEDER_I              = 0.0;
   public static final double LAUNCHER_FEEDER_D              = 0.0;
-  public static final int    LAUNCHER_FEEDER_CRUISECONTROL = 0;
-  public static final int    LAUNCHER_FEEDER_ACCELERATION  = 0;
+  public static final int    LAUNCHER_FEEDER_CRUISECONTROL  = 0;
+  public static final int    LAUNCHER_FEEDER_ACCELERATION   = 0;
 
   public static final double LAUNCHER_PIVOT_F              = 0.0;
   public static final double LAUNCHER_PIVOT_P              = 0.0;
   public static final double LAUNCHER_PIVOT_I              = 0.0;
   public static final double LAUNCHER_PIVOT_D              = 0.0;
-  public static final int    LAUNCHER_PIVOT_CRUISECONTROL = 0;
-  public static final int    LAUNCHER_PIVOT_ACCELERATION  = 0;
+  public static final int    LAUNCHER_PIVOT_CRUISECONTROL  = 0;
+  public static final int    LAUNCHER_PIVOT_ACCELERATION   = 0;
 
-  
+  /* Intake */
+
+  public static final double INTAKE_WHEEL_INTAKE_F          = 0.0;
+  public static final double INTAKE_WHEEL_INTAKE_P          = 0.0;
+  public static final double INTAKE_WHEEL_INTAKE_I          = 0.0;
+  public static final double INTAKE_WHEEL_INTAKE_D          = 0.0;
+  public static final int INTAKE_WHEEL_INTAKE_CRUISECONTROL = 0;
+  public static final int INTAKE_WHEEL_INTAKE_ACCELERATE    = 0;
+
+  /* Control Panel */
+
+  public static final double CONTROLPANEL_WHEEL_SPINNER_F          = 0.0;
+  public static final double CONTROLPANEL_WHEEL_SPINNER_P          = 0.0;
+  public static final double CONTROLPANEL_WHEEL_SPINNER_I          = 0.0;
+  public static final double CONTROLPANEL_WHEEL_SPINNER_D          = 0.0;
+  public static final int CONTROLPANEL_WHEEL_SPINNER_CRUISECONTROL = 0;
+  public static final int CONTROLPANEL_WHEEL_SPINNER_ACCELERATION  = 0;
+
+  /* Climber */
+
+  public static final double CLIMBER_STRING_PULLER_F          = 0.0;
+  public static final double CLIMBER_STRING_PULLER_P          = 0.0;
+  public static final double CLIMBER_STRING_PULLER_I          = 0.0;
+  public static final double CLIMBER_STRING_PULLER_D          = 0.0;
+  public static final int CLIMBER_STRING_PULLER_CRUISECONTROL = 0;
+  public static final int CLIMBER_STRING_PULLER_ACCELERATION  = 0;
+
+
 
   /**
    * Robot Map
