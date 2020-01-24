@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -37,11 +38,23 @@ public class Chassis extends SubsystemBase
      * Instantiating drivetrain objects
      */
     m_leftMaster = new WPI_TalonFX(Constants.CHASSIS_LEFT_MASTER_ID);
+    Robot.configureTalonFX(m_leftMaster, false, false, Constants.CHASSIS_LEFT_MASTER_F, Constants.CHASSIS_LEFT_MASTER_P,
+                            Constants.CHASSIS_LEFT_MASTER_I, Constants.CHASSIS_LEFT_MASTER_D);
+
     m_leftSlave = new WPI_TalonFX(Constants.CHASSIS_LEFT_SLAVE_ID);
+    Robot.configureTalonFX(m_leftSlave, false, false, Constants.CHASSIS_LEFT_SLAVE_F, Constants.CHASSIS_LEFT_SLAVE_P,
+                            Constants.CHASSIS_LEFT_SLAVE_I, Constants.CHASSIS_LEFT_SLAVE_D);
+
     m_leftSlave.follow(m_leftMaster);
 
     m_rightMaster = new WPI_TalonFX(Constants.CHASSIS_RIGHT_MASTER_ID);
+    Robot.configureTalonFX(m_rightMaster, false, false, Constants.CHASSIS_RIGHT_MASTER_F, Constants.CHASSIS_RIGHT_MASTER_P,
+                            Constants.CHASSIS_RIGHT_MASTER_I, Constants.CHASSIS_RIGHT_MASTER_D);
+
     m_rightSlave = new WPI_TalonFX(Constants.CHASSIS_RIGHT_SLAVE_ID);
+    Robot.configureTalonFX(m_rightSlave, false, false, Constants.CHASSIS_RIGHT_SLAVE_F, Constants.CHASSIS_RIGHT_SLAVE_P,
+                            Constants.CHASSIS_RIGHT_SLAVE_I, Constants.CHASSIS_RIGHT_SLAVE_D);
+
     m_rightSlave.follow(m_rightMaster);
 
     m_differentialDrive = new DifferentialDrive(m_leftMaster, m_rightMaster);
