@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,7 +20,7 @@ public class Intake extends SubsystemBase
     m_extender = new DoubleSolenoid(Constants.INTAKE_EXTENDER_PORT_A, Constants.INTAKE_EXTENDER_PORT_B);
 
     m_wheelIntake = new WPI_TalonSRX(Constants.INTAKE_WHEEL_INTAKE_ID);
-    Robot.configureTalonSRX(m_wheelIntake, false, false, false, Constants.INTAKE_WHEEL_INTAKE_F, Constants.INTAKE_WHEEL_INTAKE_P,
+    Robot.configureTalonSRX(m_wheelIntake, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.INTAKE_WHEEL_INTAKE_F, Constants.INTAKE_WHEEL_INTAKE_P,
                             Constants.INTAKE_WHEEL_INTAKE_I, Constants.INTAKE_WHEEL_INTAKE_D, Constants.INTAKE_WHEEL_INTAKE_CRUISECONTROL,
                             Constants.INTAKE_WHEEL_INTAKE_ACCELERATE);
   }

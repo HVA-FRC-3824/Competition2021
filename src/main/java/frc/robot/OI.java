@@ -51,8 +51,8 @@ public class OI
   /**
    * Declare all joysticks and buttons here.
    */
-  public static Joystick m_driverJoystick;
-  public static Joystick m_operatorJoystick;
+  private static Joystick m_driverJoystick;
+  private static Joystick m_operatorJoystick;
 
   public OI() 
   {
@@ -76,5 +76,9 @@ public class OI
     return m_driverJoystick;
   }
 
+  public static Joystick getOperatorController() 
+  {
+    return m_operatorJoystick;
+  }
   //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi
 }

@@ -5,9 +5,9 @@ public class Constants
   /**
    * PID Constants
    */
-  public static final int K_SLOT_IDX      = 0;
-  public static final int K_PID_LOOP_IDX  = 0;
-  public static final int K_TIMEOUT_MS    = 30;
+  public static final int K_SLOT_IDX                             = 0;
+  public static final int K_PID_LOOP_IDX                         = 0;
+  public static final int K_TIMEOUT_MS                           = 30;
 
   /* Chamber */
   public static final double CHAMBER_CHAMBER_START_F             = 0.0;
@@ -45,6 +45,24 @@ public class Constants
   public static final double CHASSIS_RIGHT_SLAVE_I               = 0.0;
   public static final double CHASSIS_RIGHT_SLAVE_D               = 0.0;
 
+  /* Climber */
+
+  public static final double CLIMBER_STRING_PULLER_F          = 0.0;
+  public static final double CLIMBER_STRING_PULLER_P          = 0.0;
+  public static final double CLIMBER_STRING_PULLER_I          = 0.0;
+  public static final double CLIMBER_STRING_PULLER_D          = 0.0;
+  public static final int CLIMBER_STRING_PULLER_CRUISECONTROL = 0;
+  public static final int CLIMBER_STRING_PULLER_ACCELERATION  = 0;
+
+  /* Control Panel */
+
+  public static final double CONTROLPANEL_WHEEL_SPINNER_F          = 0.0;
+  public static final double CONTROLPANEL_WHEEL_SPINNER_P          = 0.0;
+  public static final double CONTROLPANEL_WHEEL_SPINNER_I          = 0.0;
+  public static final double CONTROLPANEL_WHEEL_SPINNER_D          = 0.0;
+  public static final int CONTROLPANEL_WHEEL_SPINNER_CRUISECONTROL = 0;
+  public static final int CONTROLPANEL_WHEEL_SPINNER_ACCELERATION  = 0;
+
   /* Launcher */
   public static final double LAUNCHER_TOP_WHEEL_F = 0.0;
   public static final double LAUNCHER_TOP_WHEEL_P = 0.0;
@@ -78,26 +96,6 @@ public class Constants
   public static final double INTAKE_WHEEL_INTAKE_D          = 0.0;
   public static final int INTAKE_WHEEL_INTAKE_CRUISECONTROL = 0;
   public static final int INTAKE_WHEEL_INTAKE_ACCELERATE    = 0;
-
-  /* Control Panel */
-
-  public static final double CONTROLPANEL_WHEEL_SPINNER_F          = 0.0;
-  public static final double CONTROLPANEL_WHEEL_SPINNER_P          = 0.0;
-  public static final double CONTROLPANEL_WHEEL_SPINNER_I          = 0.0;
-  public static final double CONTROLPANEL_WHEEL_SPINNER_D          = 0.0;
-  public static final int CONTROLPANEL_WHEEL_SPINNER_CRUISECONTROL = 0;
-  public static final int CONTROLPANEL_WHEEL_SPINNER_ACCELERATION  = 0;
-
-  /* Climber */
-
-  public static final double CLIMBER_STRING_PULLER_F          = 0.0;
-  public static final double CLIMBER_STRING_PULLER_P          = 0.0;
-  public static final double CLIMBER_STRING_PULLER_I          = 0.0;
-  public static final double CLIMBER_STRING_PULLER_D          = 0.0;
-  public static final int CLIMBER_STRING_PULLER_CRUISECONTROL = 0;
-  public static final int CLIMBER_STRING_PULLER_ACCELERATION  = 0;
-
-
 
   /**
    * Robot Map

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -21,7 +22,7 @@ public class Climber extends SubsystemBase
   public Climber()
   {
     m_stringPuller = new WPI_TalonSRX(Constants.CLIMBER_STRING_PULLER_ID);
-    Robot.configureTalonSRX(m_stringPuller, false, false, false, Constants.CLIMBER_STRING_PULLER_F, Constants.CLIMBER_STRING_PULLER_P,
+    Robot.configureTalonSRX(m_stringPuller, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_STRING_PULLER_F, Constants.CLIMBER_STRING_PULLER_P,
                             Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
                             Constants.CLIMBER_STRING_PULLER_CRUISECONTROL, Constants.CLIMBER_STRING_PULLER_ACCELERATION);
 

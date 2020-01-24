@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -21,12 +22,14 @@ public class Chamber extends SubsystemBase
   public Chamber()
   {
     m_chamberStart = new WPI_TalonSRX(Constants.CHAMBER_START_ID);
-    Robot.configureTalonSRX(m_chamberStart, false, false, false, Constants.CHAMBER_CHAMBER_START_F, Constants.CHAMBER_CHAMBER_START_P,
+    Robot.configureTalonSRX(m_chamberStart, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                            Constants.CHAMBER_CHAMBER_START_F, Constants.CHAMBER_CHAMBER_START_P,
                             Constants.CHAMBER_CHAMBER_START_I, Constants.CHAMBER_CHAMBER_START_D, Constants.CHAMBER_CHAMBER_START_CRUISECONTROL,
                             Constants.CHAMBER_CHAMBER_START_ACCELERATION);
                             
     m_chamberEnd = new WPI_TalonSRX(Constants.CHAMBER_END_ID);
-    Robot.configureTalonSRX(m_chamberEnd, false, false, false, Constants.CHAMBER_CHAMBER_END_F, Constants.CHAMBER_CHAMBER_END_P,
+    Robot.configureTalonSRX(m_chamberEnd, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                            Constants.CHAMBER_CHAMBER_END_F, Constants.CHAMBER_CHAMBER_END_P,
                             Constants.CHAMBER_CHAMBER_END_I, Constants.CHAMBER_CHAMBER_END_D, Constants.CHAMBER_CHAMBER_END_CRUISECONTROL,
                             Constants.CHAMBER_CHAMBER_END_ACCELERATION);
     

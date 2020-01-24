@@ -50,6 +50,8 @@ public class Robot extends TimedRobot
   private final Command m_driveWithJoystick =
     new RunCommand(() -> m_chassis.drive(OI.getDriverJoystick().getY(), OI.getDriverJoystick().getTwist()), m_chassis);
 
+  private final Command m_setLauncherPower =
+    new RunCommand(() -> m_launcher.setWheelPower(OI.getOperatorController().getRawAxis(5)), m_launcher);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -125,6 +127,8 @@ public class Robot extends TimedRobot
      * Schedule default commands here.
      */
     m_driveWithJoystick.schedule();
+
+    m_setLauncherPower.schedule();
   }
 
   /**
@@ -162,14 +166,14 @@ public class Robot extends TimedRobot
    * @param controlMode If true, configure with Motion Magic. If false, configure without Motion Magic.
    *                    (Motion Magic not required for TalonSRXs that will set with ControlMode.Velocity).        
    */
-  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, boolean setInverted, boolean setSensorPhase,
+  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, FeedbackDevice feedbackDevice, boolean setInverted, boolean setSensorPhase,
                                 double kF, double kP, double kI, double kD, int kCruiseVelocity, int kAcceleration) 
   {
     /* Factory default to reset TalonSRX and prevent unexpected behavior. */
     talonSRX.configFactoryDefault();
 
     /* Configure Sensor Source for Primary PID. */
-    talonSRX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
+    talonSRX.configSelectedFeedbackSensor(feedbackDevice, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
 
     /* Configure TalonSRX to drive forward when LED is green. */
     talonSRX.setInverted(setInverted);
@@ -282,6 +286,6 @@ public class Robot extends TimedRobot
      * TalonFX object (pass in null if configuring TalonSRX).
      * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
      */
-    SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_launcher.getTopWheelTalonFX(), false));
+    //SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_launcher.getTopWheelTalonFX(), false));
   }
 }

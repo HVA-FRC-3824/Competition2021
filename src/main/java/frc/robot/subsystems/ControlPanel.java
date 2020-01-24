@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -17,7 +18,7 @@ public class ControlPanel extends SubsystemBase
   public ControlPanel() 
   {
     m_wheelSpinner = new WPI_TalonSRX(Constants.CONTROLPANEL_WHEEL_SPINNER_ID);
-    Robot.configureTalonSRX(m_wheelSpinner, false, false, false, Constants.CONTROLPANEL_WHEEL_SPINNER_F, 
+    Robot.configureTalonSRX(m_wheelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CONTROLPANEL_WHEEL_SPINNER_F, 
                             Constants.CONTROLPANEL_WHEEL_SPINNER_P, Constants.CONTROLPANEL_WHEEL_SPINNER_I, 
                             Constants.CONTROLPANEL_WHEEL_SPINNER_D, Constants.CONTROLPANEL_WHEEL_SPINNER_CRUISECONTROL, 
                             Constants.CONTROLPANEL_WHEEL_SPINNER_ACCELERATION);
