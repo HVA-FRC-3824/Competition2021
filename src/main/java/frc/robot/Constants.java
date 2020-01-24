@@ -9,6 +9,42 @@ public class Constants
   public static final int K_PID_LOOP_IDX  = 0;
   public static final int K_TIMEOUT_MS    = 30;
 
+  /* Chamber */
+  public static final double CHAMBER_CHAMBER_START_F             = 0.0;
+  public static final double CHAMBER_CHAMBER_START_P             = 0.0;
+  public static final double CHAMBER_CHAMBER_START_I             = 0.0;
+  public static final double CHAMBER_CHAMBER_START_D             = 0.0;
+  public static final int    CHAMBER_CHAMBER_START_CRUISECONTROL = 0;
+  public static final int    CHAMBER_CHAMBER_START_ACCELERATION  = 0;
+
+  public static final double CHAMBER_CHAMBER_END_F               = 0.0;
+  public static final double CHAMBER_CHAMBER_END_P               = 0.0;
+  public static final double CHAMBER_CHAMBER_END_I               = 0.0;
+  public static final double CHAMBER_CHAMBER_END_D               = 0.0;
+  public static final int    CHAMBER_CHAMBER_END_CRUISECONTROL   = 0;
+  public static final int    CHAMBER_CHAMBER_END_ACCELERATION    = 0;
+
+  /* Chassis */
+  public static final double CHASSIS_LEFT_MASTER_F               = 0.0;
+  public static final double CHASSIS_LEFT_MASTER_P               = 0.0;
+  public static final double CHASSIS_LEFT_MASTER_I               = 0.0;
+  public static final double CHASSIS_LEFT_MASTER_D               = 0.0;
+
+  public static final double CHASSIS_LEFT_SLAVE_F                = 0.0;
+  public static final double CHASSIS_LEFT_SLAVE_P                = 0.0;
+  public static final double CHASSIS_LEFT_SLAVE_I                = 0.0;
+  public static final double CHASSIS_LEFT_SLAVE_D                = 0.0;
+
+  public static final double CHASSIS_RIGHT_MASTER_F              = 0.0;
+  public static final double CHASSIS_RIGHT_MASTER_P              = 0.0;
+  public static final double CHASSIS_RIGHT_MASTER_I              = 0.0;
+  public static final double CHASSIS_RIGHT_MASTER_D              = 0.0;
+
+  public static final double CHASSIS_RIGHT_SLAVE_F               = 0.0;
+  public static final double CHASSIS_RIGHT_SLAVE_P               = 0.0;
+  public static final double CHASSIS_RIGHT_SLAVE_I               = 0.0;
+  public static final double CHASSIS_RIGHT_SLAVE_D               = 0.0;
+
   /* Launcher */
   public static final double LAUNCHER_TOP_WHEEL_F = 0.0;
   public static final double LAUNCHER_TOP_WHEEL_P = 0.0;
