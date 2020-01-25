@@ -28,6 +28,10 @@ public class InlineCommands {
   public final Command m_setLauncherTopWheelPower;
   public final Command m_setLauncherBottomWheelPower;
   public final Command m_setLauncherWheelsPower;
+
+  /* Intake Inline Command Declarations */
+  public final Command m_extendIntake;
+  public final Command m_retractIntake;
     
   public InlineCommands()
   {
@@ -51,6 +55,11 @@ public class InlineCommands {
     m_setLauncherWheelsPower =
       new RunCommand(() -> m_setLauncherTopWheelPower.alongWith(m_setLauncherBottomWheelPower), Robot.m_launcher);
 
+    /* Intake Inline Command Instantiations */ 
+    m_extendIntake = 
+      new InstantCommand(() -> Robot.m_intake.extendPiston(true));
+    m_retractIntake = 
+      new InstantCommand(() -> Robot.m_intake.extendPiston(false));
     
   }
 }

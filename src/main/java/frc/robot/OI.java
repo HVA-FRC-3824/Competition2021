@@ -60,6 +60,7 @@ public class OI
 
   /* Operator Joystick */
   private static Joystick m_operatorJoystick;
+  private static JoystickButton m_extendIntakeBtn;
   
 
   public OI() 
@@ -74,13 +75,20 @@ public class OI
 
     /* Operator Joystick */
     m_operatorJoystick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
+    m_extendIntakeBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_EXTEND_INTAKE_BTN_ID);
 
 
     /**
      * Bind commands to buttons here.
      */
+
+    /* Gearshift Buttons */
     m_gearShiftBtn.whenPressed(Robot.m_inlineCommands.m_shiftHighGear);
     m_gearShiftBtn.whenReleased(Robot.m_inlineCommands.m_shiftLowGear);
+
+    /* Intake Button */
+    m_extendIntakeBtn.whenPressed(Robot.m_inlineCommands.m_extendIntake);
+    m_extendIntakeBtn.whenReleased(Robot.m_inlineCommands.m_retractIntake);
 
   }
 
