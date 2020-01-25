@@ -18,10 +18,9 @@ public class ControlPanel extends SubsystemBase
   public ControlPanel() 
   {
     m_wheelSpinner = new WPI_TalonSRX(Constants.CONTROLPANEL_WHEEL_SPINNER_ID);
-    Robot.configureTalonSRX(m_wheelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CONTROLPANEL_WHEEL_SPINNER_F, 
-                            Constants.CONTROLPANEL_WHEEL_SPINNER_P, Constants.CONTROLPANEL_WHEEL_SPINNER_I, 
-                            Constants.CONTROLPANEL_WHEEL_SPINNER_D, Constants.CONTROLPANEL_WHEEL_SPINNER_CRUISECONTROL, 
-                            Constants.CONTROLPANEL_WHEEL_SPINNER_ACCELERATION);
+    Robot.configureTalonSRX(m_wheelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                            Constants.CONTROLPANEL_WHEEL_SPINNER_F, Constants.CONTROLPANEL_WHEEL_SPINNER_P, 
+                            Constants.CONTROLPANEL_WHEEL_SPINNER_I, Constants.CONTROLPANEL_WHEEL_SPINNER_D, 0, 0);
 
     m_colorSensor = new DigitalInput(Constants.CONTROLPANEL_COLOR_SENSOR_PORT);
   }

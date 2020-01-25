@@ -59,8 +59,8 @@ public class OI
     /**
      * Instantiate declared joysticks and buttons here.
      */
-    m_driverJoystick = new Joystick(0);
-    m_operatorJoystick = new Joystick(1);
+    m_driverJoystick = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
+    m_operatorJoystick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
     /**
      * Bind commands to buttons here.
@@ -71,12 +71,12 @@ public class OI
    * Allows use of driverJoystick object outside of OI class.
    * @return access to driverJoystick values/attributes.
    */
-  public static Joystick getDriverJoystick() 
+  public Joystick getDriverJoystick() 
   {
     return m_driverJoystick;
   }
 
-  public static Joystick getOperatorController() 
+  public Joystick getOperatorController() 
   {
     return m_operatorJoystick;
   }

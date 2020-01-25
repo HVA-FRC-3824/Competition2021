@@ -9,6 +9,8 @@ package frc.robot;
 
 import frc.robot.commands.SetPIDValues;
 import frc.robot.subsystems.*;
+import frc.robot.OI;
+import frc.robot.commands.InlineCommands;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -20,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,19 +40,18 @@ public class Robot extends TimedRobot
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
   /**
-   * Subsystem Instantiation
+   * Class Instantiation (Subsystems, OI, and InlineCommands)
    */
-  public final Chassis m_chassis = new Chassis();
-  public final Launcher m_launcher = new Launcher();
+  public static final Chassis m_chassis = new Chassis();
+  public static final Intake m_intake = new Intake();
+  public static final Chamber m_chamber = new Chamber();
+  public static final Launcher m_launcher = new Launcher();
+  public static final Climber m_climber = new Climber();
+  public static final ControlPanel m_controlPanel = new ControlPanel();
 
-  /**
-   * Inline Commands Initialization
-   */
-  private final Command m_driveWithJoystick =
-    new RunCommand(() -> m_chassis.drive(OI.getDriverJoystick().getY(), OI.getDriverJoystick().getTwist()), m_chassis);
+  public static final OI m_OI = new OI();
+  public static final InlineCommands m_inlineCommands = new InlineCommands();
 
-  private final Command m_setLauncherPower =
-    new RunCommand(() -> m_launcher.setWheelPower(OI.getOperatorController().getRawAxis(5)), m_launcher);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -59,6 +59,9 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit()
   {
+    /* Initialize default commands for all subsystems. */
+    this.initializeDefaultCommands();
+
     /* Initialize autonomous command chooser and display on the SmartDashboard. */
     this.initializeAutoChooser();
 
@@ -122,13 +125,6 @@ public class Robot extends TimedRobot
      */
     if (m_autonomousCommand != null)
       m_autonomousCommand.cancel();
-    
-    /**
-     * Schedule default commands here.
-     */
-    m_driveWithJoystick.schedule();
-
-    m_setLauncherPower.schedule();
   }
 
   /**
@@ -137,6 +133,7 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic() 
   {
+    // m_launcher.setWheelPower(m_OI.getOperatorController().getRawAxis(5));
   }
 
   /**
@@ -145,6 +142,21 @@ public class Robot extends TimedRobot
   @Override
   public void testPeriodic()
   {
+  }
+
+  /**
+   * Set default command for subsystems.
+   * Default commands are commands that run automatically whenever a subsystem is not being used by another command.
+   * If default command is set to null, there will be no default command for the subsystem.
+   */
+  public void initializeDefaultCommands()
+  {
+    m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
+    m_intake.setDefaultCommand(null);
+    m_chamber.setDefaultCommand(null);
+    m_launcher.setDefaultCommand(m_inlineCommands.m_setLauncherWheelsPower);
+    m_climber.setDefaultCommand(null);
+    m_controlPanel.setDefaultCommand(null);
   }
 
   /**
@@ -166,8 +178,9 @@ public class Robot extends TimedRobot
    * @param controlMode If true, configure with Motion Magic. If false, configure without Motion Magic.
    *                    (Motion Magic not required for TalonSRXs that will set with ControlMode.Velocity).        
    */
-  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, FeedbackDevice feedbackDevice, boolean setInverted, boolean setSensorPhase,
-                                double kF, double kP, double kI, double kD, int kCruiseVelocity, int kAcceleration) 
+  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, FeedbackDevice feedbackDevice, boolean setInverted, 
+                                       boolean setSensorPhase, double kF, double kP, double kI, double kD, 
+                                       int kCruiseVelocity, int kAcceleration)
   {
     /* Factory default to reset TalonSRX and prevent unexpected behavior. */
     talonSRX.configFactoryDefault();
@@ -287,5 +300,14 @@ public class Robot extends TimedRobot
      * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
      */
     //SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_launcher.getTopWheelTalonFX(), false));
+  }
+
+  /**
+   * Convert RPM to units/100ms for TalonSRX/TalonFX to use for ControlMode.Velocity
+   */
+  public static double convertRPMToVelocity(int rpm)
+  {
+    /* (RPM * 4096 Units/Revolution / 600 100ms/min) */
+    return rpm * 4096 / 600;
   }
 }

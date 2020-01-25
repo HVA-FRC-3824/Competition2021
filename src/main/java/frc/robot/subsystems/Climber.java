@@ -22,9 +22,9 @@ public class Climber extends SubsystemBase
   public Climber()
   {
     m_stringPuller = new WPI_TalonSRX(Constants.CLIMBER_STRING_PULLER_ID);
-    Robot.configureTalonSRX(m_stringPuller, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_STRING_PULLER_F, Constants.CLIMBER_STRING_PULLER_P,
-                            Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
-                            Constants.CLIMBER_STRING_PULLER_CRUISECONTROL, Constants.CLIMBER_STRING_PULLER_ACCELERATION);
+    Robot.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_STRING_PULLER_F, 
+                            Constants.CLIMBER_STRING_PULLER_P, Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
+                            Constants.CLIMBER_STRING_PULLER_CRUISEVELOCITY, Constants.CLIMBER_STRING_PULLER_ACCELERATION);
 
     m_PTO = new DoubleSolenoid(Constants.CLIMBER_PTO_PORT_A, Constants.CLIMBER_PTO_PORT_B);
 

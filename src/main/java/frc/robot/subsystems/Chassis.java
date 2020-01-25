@@ -76,7 +76,6 @@ public class Chassis extends SubsystemBase
     m_compressor = new Compressor();
 
     m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_A, Constants.CHASSIS_GEARSHIFT_PORT_B);
-
   }
 
   /**

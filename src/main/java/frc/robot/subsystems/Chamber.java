@@ -22,15 +22,15 @@ public class Chamber extends SubsystemBase
   public Chamber()
   {
     m_chamberStart = new WPI_TalonSRX(Constants.CHAMBER_START_ID);
-    Robot.configureTalonSRX(m_chamberStart, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                            Constants.CHAMBER_CHAMBER_START_F, Constants.CHAMBER_CHAMBER_START_P,
-                            Constants.CHAMBER_CHAMBER_START_I, Constants.CHAMBER_CHAMBER_START_D, Constants.CHAMBER_CHAMBER_START_CRUISECONTROL,
+    Robot.configureTalonSRX(m_chamberStart, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                            Constants.CHAMBER_CHAMBER_START_F, Constants.CHAMBER_CHAMBER_START_P, Constants.CHAMBER_CHAMBER_START_I, 
+                            Constants.CHAMBER_CHAMBER_START_D, Constants.CHAMBER_CHAMBER_START_CRUISEVELOCITY, 
                             Constants.CHAMBER_CHAMBER_START_ACCELERATION);
                             
     m_chamberEnd = new WPI_TalonSRX(Constants.CHAMBER_END_ID);
-    Robot.configureTalonSRX(m_chamberEnd, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                            Constants.CHAMBER_CHAMBER_END_F, Constants.CHAMBER_CHAMBER_END_P,
-                            Constants.CHAMBER_CHAMBER_END_I, Constants.CHAMBER_CHAMBER_END_D, Constants.CHAMBER_CHAMBER_END_CRUISECONTROL,
+    Robot.configureTalonSRX(m_chamberEnd, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                            Constants.CHAMBER_CHAMBER_END_F, Constants.CHAMBER_CHAMBER_END_P, Constants.CHAMBER_CHAMBER_END_I, 
+                            Constants.CHAMBER_CHAMBER_END_D, Constants.CHAMBER_CHAMBER_END_CRUISEVELOCITY, 
                             Constants.CHAMBER_CHAMBER_END_ACCELERATION);
     
     m_ballPos_1 = new DigitalInput(Constants.CHAMBER_BALL_POS_1_PORT);
