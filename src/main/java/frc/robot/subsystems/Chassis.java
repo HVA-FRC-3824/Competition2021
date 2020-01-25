@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Chassis extends SubsystemBase 
@@ -94,5 +95,22 @@ public class Chassis extends SubsystemBase
   public void drive(double power, double turn)
   {
     m_differentialDrive.arcadeDrive(power, turn);
+  }
+
+  /**
+   * Method to control gearbox shifter.
+   * @param highGear
+   */
+  public void shiftGear(boolean highGear)
+  {
+    if (highGear == true)
+    {
+      m_gearShift.set(Value.kForward);
+    }
+    else
+    {
+      m_gearShift.set(Value.kReverse);
+    }
+
   }
 }

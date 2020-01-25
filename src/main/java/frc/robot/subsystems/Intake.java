@@ -3,10 +3,12 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase 
@@ -40,5 +42,38 @@ public class Intake extends SubsystemBase
   {
       return m_wheelIntake;
   }
+ 
+  /**
+  * Method to extend/retract intake pistons.
+  * @param extended if true extend, if false retract.
+  */
+  public void extendPiston(boolean extended)
+  {
+    if (extended == true)
+    {
+      m_extender.set(Value.kForward);
+    }
+    else
+    {
+      m_extender.set(Value.kReverse);
+    }
+  }
 
+  /**
+   * Method that spins intake wheels with power.
+   * @param power range is -1.0 to 1.0.
+   */
+  public void setWheelPower(double power)
+  {
+    m_wheelIntake.set(power);
+  }
+
+  /**
+   * Method sets intake wheel's RPM.
+   * @param rpm is converted to units per 100 milliseconds for ControlMode.Velocity.
+   */
+  public void setWheelRPM(int rpm)
+  {
+    m_wheelIntake.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
+  }
 }

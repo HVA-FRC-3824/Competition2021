@@ -133,7 +133,6 @@ public class Robot extends TimedRobot
   @Override
   public void teleopPeriodic() 
   {
-    // m_launcher.setWheelPower(m_OI.getOperatorController().getRawAxis(5));
   }
 
   /**
