@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,6 +35,8 @@ public class InlineCommands {
   public final Command m_retractIntake;
   public final Command m_startIntakeWheel;
   public final Command m_stopIntakeWheel;
+  public final Command m_setIntakeWheelRPM;
+  public final Command m_setIntakeWheelStop;
 
   public InlineCommands()
   {
@@ -66,5 +69,10 @@ public class InlineCommands {
       new InstantCommand(() -> Robot.m_intake.setWheelPower(true));
     m_stopIntakeWheel = 
       new InstantCommand(() -> Robot.m_intake.setWheelPower(false));
+    
+    m_setIntakeWheelRPM = 
+      new InstantCommand(() -> Robot.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
+    m_setIntakeWheelStop = 
+      new InstantCommand(() -> Robot.m_intake.setWheelRPM(0));
   }
 }

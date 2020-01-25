@@ -85,7 +85,7 @@ public class OI
      * Bind commands to buttons here.
      */
 
-    /* Gearshift Buttons */
+    /* Gearshift Button */
     m_gearShiftBtn.whenPressed(Robot.m_inlineCommands.m_shiftHighGear);
     m_gearShiftBtn.whenReleased(Robot.m_inlineCommands.m_shiftLowGear);
 
@@ -96,7 +96,8 @@ public class OI
     /*Wheel Buttons */
     m_setIntateWheelPowerBtn.whenPressed(Robot.m_inlineCommands.m_startIntakeWheel);
     m_setIntateWheelPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheel);
-
+    m_setIntakeWheelRPMBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelRPM);
+    m_setIntakeWheelRPMBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelStop);
   }
 
   /**

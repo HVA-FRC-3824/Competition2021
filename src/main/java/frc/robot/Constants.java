@@ -89,6 +89,7 @@ public class Constants
   public static final double INTAKE_WHEEL_INTAKE_P                = 0.0;
   public static final double INTAKE_WHEEL_INTAKE_I                = 0.0;
   public static final double INTAKE_WHEEL_INTAKE_D                = 0.0;
+  public static final int    INTAKE_WHEEL_RPM                     = 120;
 
   /**
    * Robot Map
