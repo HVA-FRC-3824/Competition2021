@@ -140,6 +140,8 @@ public class Constants
    * Operator Joystick Map
    */
   public static final int OPERATOR_JOYSTICK_PORT                  = 1;
-  public static final int OPERATOR_EXTEND_INTAKE_BTN_ID           = 3;
+  public static final int OPERATOR_EXTEND_INTAKE_BTN_ID           = 2;
+  public static final int OPERATOR_SET_INTAKE_WHEEL_POWER_BTN_ID  = 3;
+  public static final int OPERATOR_SET_INTAKE_WHEEL_RPM_BTN_ID    = 4;
   
 }

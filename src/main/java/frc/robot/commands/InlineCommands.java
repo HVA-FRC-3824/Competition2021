@@ -32,7 +32,9 @@ public class InlineCommands {
   /* Intake Inline Command Declarations */
   public final Command m_extendIntake;
   public final Command m_retractIntake;
-    
+  public final Command m_startIntakeWheel;
+  public final Command m_stopIntakeWheel;
+
   public InlineCommands()
   {
     /**
@@ -60,6 +62,9 @@ public class InlineCommands {
       new InstantCommand(() -> Robot.m_intake.extendPiston(true));
     m_retractIntake = 
       new InstantCommand(() -> Robot.m_intake.extendPiston(false));
-    
+    m_startIntakeWheel = 
+      new InstantCommand(() -> Robot.m_intake.setWheelPower(true));
+    m_stopIntakeWheel = 
+      new InstantCommand(() -> Robot.m_intake.setWheelPower(false));
   }
 }

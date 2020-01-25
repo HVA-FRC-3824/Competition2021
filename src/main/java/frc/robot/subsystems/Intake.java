@@ -61,11 +61,18 @@ public class Intake extends SubsystemBase
 
   /**
    * Method that spins intake wheels with power.
-   * @param power range is -1.0 to 1.0.
+   * @param power if true spin wheels
    */
-  public void setWheelPower(double power)
+  public void setWheelPower(boolean power)
   {
-    m_wheelIntake.set(power);
+    if (power == true)
+    {        
+      m_wheelIntake.set(1.0);
+    }
+    else
+    {
+      m_wheelIntake.set(0.0);
+    }
   }
 
   /**

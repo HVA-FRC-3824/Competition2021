@@ -61,6 +61,8 @@ public class OI
   /* Operator Joystick */
   private static Joystick m_operatorJoystick;
   private static JoystickButton m_extendIntakeBtn;
+  private static JoystickButton m_setIntateWheelPowerBtn;
+  private static JoystickButton m_setIntakeWheelRPMBtn;
   
 
   public OI() 
@@ -76,7 +78,8 @@ public class OI
     /* Operator Joystick */
     m_operatorJoystick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
     m_extendIntakeBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_EXTEND_INTAKE_BTN_ID);
-
+    m_setIntateWheelPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_SET_INTAKE_WHEEL_POWER_BTN_ID);
+    m_setIntakeWheelRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_SET_INTAKE_WHEEL_RPM_BTN_ID);
 
     /**
      * Bind commands to buttons here.
@@ -89,6 +92,10 @@ public class OI
     /* Intake Button */
     m_extendIntakeBtn.whenPressed(Robot.m_inlineCommands.m_extendIntake);
     m_extendIntakeBtn.whenReleased(Robot.m_inlineCommands.m_retractIntake);
+
+    /*Wheel Buttons */
+    m_setIntateWheelPowerBtn.whenPressed(Robot.m_inlineCommands.m_startIntakeWheel);
+    m_setIntateWheelPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheel);
 
   }
 
