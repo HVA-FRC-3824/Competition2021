@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * Describes all the operator interface controls for the robot
@@ -51,20 +53,35 @@ public class OI
   /**
    * Declare all joysticks and buttons here.
    */
+
+  /* Driver Joystick */
   private static Joystick m_driverJoystick;
+  private static JoystickButton m_gearShiftBtn;
+
+  /* Operator Joystick */
   private static Joystick m_operatorJoystick;
+  
 
   public OI() 
   {
     /**
      * Instantiate declared joysticks and buttons here.
      */
+
+    /* Driver Joystick */
     m_driverJoystick = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
+    m_gearShiftBtn = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
+
+    /* Operator Joystick */
     m_operatorJoystick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
+
 
     /**
      * Bind commands to buttons here.
      */
+    m_gearShiftBtn.whenPressed(Robot.m_inlineCommands.m_shiftHighGear);
+    m_gearShiftBtn.whenReleased(Robot.m_inlineCommands.m_shiftLowGear);
+
   }
 
   /**

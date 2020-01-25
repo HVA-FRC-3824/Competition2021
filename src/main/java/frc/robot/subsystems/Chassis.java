@@ -111,6 +111,5 @@ public class Chassis extends SubsystemBase
     {
       m_gearShift.set(Value.kReverse);
     }
-
   }
 }

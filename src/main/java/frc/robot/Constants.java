@@ -134,6 +134,7 @@ public class Constants
    * Driver Joystick Map
    */
   public static final int DRIVER_JOYSTICK_PORT                    = 0;
+  public static final int DRIVER_GEAR_SHIFT_BTN_ID                = 2; 
 
   /**
    * Operator Joystick Map

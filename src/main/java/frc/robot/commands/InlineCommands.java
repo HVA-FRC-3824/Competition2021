@@ -21,6 +21,8 @@ public class InlineCommands {
 
   /* Chassis Inline Command Declarations */
   public final Command m_driveWithJoystick;
+  public final Command m_shiftHighGear;
+  public final Command m_shiftLowGear;
 
   /* Launcher Inline Command Declarations */
   public final Command m_setLauncherTopWheelPower;
@@ -36,7 +38,11 @@ public class InlineCommands {
     /* Chassis Inline Command Instantiations */
     m_driveWithJoystick =
       new RunCommand(() -> Robot.m_chassis.drive(Robot.m_OI.getDriverJoystick().getY(), Robot.m_OI.getDriverJoystick().getTwist()), Robot.m_chassis);
-    
+    m_shiftHighGear = 
+      new InstantCommand(() -> Robot.m_chassis.shiftGear(true));
+    m_shiftLowGear = 
+      new InstantCommand(() -> Robot.m_chassis.shiftGear(false));    
+
     /* Launcher Inline Command Instantiations */
     m_setLauncherTopWheelPower =
       new InstantCommand(() -> Robot.m_launcher.setTopWheelPower(Robot.m_OI.getOperatorController().getRawAxis(5)));
@@ -44,5 +50,7 @@ public class InlineCommands {
       new InstantCommand(() -> Robot.m_launcher.setBottomWheelPower(Robot.m_OI.getOperatorController().getRawAxis(5)));
     m_setLauncherWheelsPower =
       new RunCommand(() -> m_setLauncherTopWheelPower.alongWith(m_setLauncherBottomWheelPower), Robot.m_launcher);
+
+    
   }
 }
