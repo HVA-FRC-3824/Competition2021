@@ -44,39 +44,36 @@ public class Intake extends SubsystemBase
   }
  
   /**
-  * Method to extend/retract intake pistons.
-  * @param extended if true extend, if false retract.
-  */
-  public void extendPiston(boolean extended)
+   * Method that toggles the intake pistons between being retracted and extended.
+   */
+  public void toggleExtender()
   {
-    if (extended == true)
-    {
-      m_extender.set(Value.kForward);
-    }
+    m_extender.set(this.getExtenderValueToToggle());
+  }
+
+  /**
+   * Gets the opposite value of the current solenoid value for toggling extender.
+   * @return the solenoid value the extender should be set to in order to toggle.
+   */
+  public Value getExtenderValueToToggle()
+  {
+    if (m_extender.get() == Value.kForward)
+      return Value.kReverse;
     else
-    {
-      m_extender.set(Value.kReverse);
-    }
+      return Value.kForward;
   }
 
   /**
    * Method that spins intake wheels with power.
-   * @param power if true spin wheels
+   * @param power range is from -1.0 to 1.0.
    */
-  public void setWheelPower(boolean power)
+  public void setWheelPower(double power)
   {
-    if (power == true)
-    {        
-      m_wheelIntake.set(1.0);
-    }
-    else
-    {
-      m_wheelIntake.set(0.0);
-    }
+    m_wheelIntake.set(ControlMode.PercentOutput, power);
   }
 
   /**
-   * Method sets intake wheel's RPM.
+   * Method sets intake wheel's RPM with ControlMode.Velocity.
    * @param rpm is converted to units per 100 milliseconds for ControlMode.Velocity.
    */
   public void setWheelRPM(int rpm)

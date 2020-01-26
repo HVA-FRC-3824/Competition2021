@@ -110,4 +110,13 @@ public class Launcher extends SubsystemBase
   {
     m_bottomWheel.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
   }
+
+  /**
+   * Stops launcher wheels.
+   */
+  public void stopWheels()
+  {
+    m_topWheel.set(0.0);
+    m_bottomWheel.set(0.0);
+  }
 }

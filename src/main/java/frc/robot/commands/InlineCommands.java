@@ -29,14 +29,16 @@ public class InlineCommands {
   public final Command m_setLauncherTopWheelPower;
   public final Command m_setLauncherBottomWheelPower;
   public final Command m_setLauncherWheelsPower;
+  public final Command m_setLauncherTopWheelRPM;
+  public final Command m_setLauncherBottomWheelRPM;
+  public final Command m_setLauncherWheelsRPM;
+  public final Command m_stopLauncherWheels;
 
   /* Intake Inline Command Declarations */
-  public final Command m_extendIntake;
-  public final Command m_retractIntake;
-  public final Command m_startIntakeWheel;
-  public final Command m_stopIntakeWheel;
-  public final Command m_setIntakeWheelRPM;
-  public final Command m_setIntakeWheelStop;
+  public final Command m_toggleIntake;
+  public final Command m_setIntakeWheelsPower;
+  public final Command m_setIntakeWheelsRPM;
+  public final Command m_stopIntakeWheels;
 
   public InlineCommands()
   {
@@ -47,32 +49,39 @@ public class InlineCommands {
     /* Chassis Inline Command Instantiations */
     m_driveWithJoystick =
       new RunCommand(() -> Robot.m_chassis.drive(Robot.m_OI.getDriverJoystick().getY(), Robot.m_OI.getDriverJoystick().getTwist()), Robot.m_chassis);
+    
     m_shiftHighGear = 
-      new InstantCommand(() -> Robot.m_chassis.shiftGear(true));
-    m_shiftLowGear = 
-      new InstantCommand(() -> Robot.m_chassis.shiftGear(false));    
+      new InstantCommand(() -> Robot.m_chassis.shiftHighGear());
+    m_shiftLowGear =
+      new InstantCommand(() -> Robot.m_chassis.shiftLowGear());
 
     /* Launcher Inline Command Instantiations */
     m_setLauncherTopWheelPower =
-      new InstantCommand(() -> Robot.m_launcher.setTopWheelPower(Robot.m_OI.getOperatorController().getRawAxis(5)));
+      new InstantCommand(() -> Robot.m_launcher.setTopWheelPower(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
     m_setLauncherBottomWheelPower =
-      new InstantCommand(() -> Robot.m_launcher.setBottomWheelPower(Robot.m_OI.getOperatorController().getRawAxis(5)));
+      new InstantCommand(() -> Robot.m_launcher.setBottomWheelPower(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
     m_setLauncherWheelsPower =
       new RunCommand(() -> m_setLauncherTopWheelPower.alongWith(m_setLauncherBottomWheelPower), Robot.m_launcher);
 
+    m_setLauncherTopWheelRPM =
+      new InstantCommand(() -> Robot.m_launcher.setTopWheelRPM((int)(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
+    m_setLauncherBottomWheelRPM =
+      new InstantCommand(() -> Robot.m_launcher.setBottomWheelRPM((int)(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
+    m_setLauncherWheelsRPM =
+      new RunCommand(() -> m_setLauncherTopWheelRPM.alongWith(m_setLauncherBottomWheelRPM), Robot.m_launcher);
+
+    m_stopLauncherWheels =
+      new InstantCommand(() -> Robot.m_launcher.stopWheels(), Robot.m_launcher);
+
     /* Intake Inline Command Instantiations */ 
-    m_extendIntake = 
-      new InstantCommand(() -> Robot.m_intake.extendPiston(true));
-    m_retractIntake = 
-      new InstantCommand(() -> Robot.m_intake.extendPiston(false));
-    m_startIntakeWheel = 
-      new InstantCommand(() -> Robot.m_intake.setWheelPower(true));
-    m_stopIntakeWheel = 
-      new InstantCommand(() -> Robot.m_intake.setWheelPower(false));
-    
-    m_setIntakeWheelRPM = 
+    m_toggleIntake =
+      new InstantCommand(() -> Robot.m_intake.toggleExtender());
+
+    m_setIntakeWheelsPower = 
+      new InstantCommand(() -> Robot.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER));
+    m_setIntakeWheelsRPM = 
       new InstantCommand(() -> Robot.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
-    m_setIntakeWheelStop = 
-      new InstantCommand(() -> Robot.m_intake.setWheelRPM(0));
+    m_stopIntakeWheels = 
+      new InstantCommand(() -> Robot.m_intake.setWheelPower(0.0));
   }
 }

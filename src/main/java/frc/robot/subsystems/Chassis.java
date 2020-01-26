@@ -98,18 +98,14 @@ public class Chassis extends SubsystemBase
   }
 
   /**
-   * Method to control gearbox shifter.
-   * @param highGear
+   * Methods to control gearbox shifter.
    */
-  public void shiftGear(boolean highGear)
+  public void shiftLowGear()
   {
-    if (highGear == true)
-    {
-      m_gearShift.set(Value.kForward);
-    }
-    else
-    {
-      m_gearShift.set(Value.kReverse);
-    }
+    m_gearShift.set(Value.kReverse);
+  }
+  public void shiftHighGear()
+  {
+    m_gearShift.set(Value.kForward);
   }
 }

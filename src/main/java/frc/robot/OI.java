@@ -56,14 +56,19 @@ public class OI
 
   /* Driver Joystick */
   private static Joystick m_driverJoystick;
+
   private static JoystickButton m_gearShiftBtn;
 
   /* Operator Joystick */
   private static Joystick m_operatorJoystick;
-  private static JoystickButton m_extendIntakeBtn;
-  private static JoystickButton m_setIntateWheelPowerBtn;
+
+  private static JoystickButton m_toggleIntakePistonsBtn;
+  private static JoystickButton m_setIntakeWheelPowerBtn;
   private static JoystickButton m_setIntakeWheelRPMBtn;
-  
+
+  private static JoystickButton m_setLauncherWheelsPowerBtn;
+  private static JoystickButton m_setLauncherWheelsRPMBtn;
+  private static JoystickButton m_stopLauncherWheelsBtn;
 
   public OI() 
   {
@@ -73,36 +78,46 @@ public class OI
 
     /* Driver Joystick */
     m_driverJoystick = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
+
     m_gearShiftBtn = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
 
     /* Operator Joystick */
     m_operatorJoystick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
-    m_extendIntakeBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_EXTEND_INTAKE_BTN_ID);
-    m_setIntateWheelPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_SET_INTAKE_WHEEL_POWER_BTN_ID);
-    m_setIntakeWheelRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_SET_INTAKE_WHEEL_RPM_BTN_ID);
+
+    m_toggleIntakePistonsBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
+    m_setIntakeWheelPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_POWER_BTN_ID);
+    m_setIntakeWheelRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_RPM_BTN_ID);
+
+    m_setLauncherWheelsPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID);
+    m_setLauncherWheelsRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID);
+    m_stopLauncherWheelsBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID);
 
     /**
      * Bind commands to buttons here.
      */
 
-    /* Gearshift Button */
+    /* Chassis Buttons */
     m_gearShiftBtn.whenPressed(Robot.m_inlineCommands.m_shiftHighGear);
     m_gearShiftBtn.whenReleased(Robot.m_inlineCommands.m_shiftLowGear);
 
-    /* Intake Button */
-    m_extendIntakeBtn.whenPressed(Robot.m_inlineCommands.m_extendIntake);
-    m_extendIntakeBtn.whenReleased(Robot.m_inlineCommands.m_retractIntake);
+    /* Intake Buttons */
+    m_toggleIntakePistonsBtn.whenPressed(Robot.m_inlineCommands.m_toggleIntake);
 
-    /*Wheel Buttons */
-    m_setIntateWheelPowerBtn.whenPressed(Robot.m_inlineCommands.m_startIntakeWheel);
-    m_setIntateWheelPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheel);
-    m_setIntakeWheelRPMBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelRPM);
-    m_setIntakeWheelRPMBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelStop);
+    m_setIntakeWheelPowerBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelsPower);
+    m_setIntakeWheelPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheels);
+
+    m_setIntakeWheelRPMBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelsRPM);
+    m_setIntakeWheelRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheels);
+
+    /* Launcher Buttons */
+    m_setLauncherWheelsPowerBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherWheelsPower);
+    m_setLauncherWheelsRPMBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherWheelsRPM);
+    m_stopLauncherWheelsBtn.whenPressed(Robot.m_inlineCommands.m_stopLauncherWheels);
   }
 
   /**
-   * Allows use of driverJoystick object outside of OI class.
-   * @return access to driverJoystick values/attributes.
+   * Allows use of driverJoystick/operatorJoystick object outside of OI class.
+   * @return access to driverJoystick/operatorJoystick values/attributes.
    */
   public Joystick getDriverJoystick() 
   {
@@ -113,5 +128,6 @@ public class OI
   {
     return m_operatorJoystick;
   }
+  
   //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi
 }
