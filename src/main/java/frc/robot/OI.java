@@ -1,52 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-/**
- * Describes all the operator interface controls for the robot
- * 
- * Launcher Controls
- * -------------------------------------------------------------------------
- * Button: set launcher angle and wheel speed at initiation line
- * Button: set launcher angle and wheel speed at control panel
- * Slider: manual set wheel speed
- * Button: increase launcher angle
- * Button: decrease launcher angle
- * Button: feeds ball to launcher
- * Button: auto aim and launch
- * 
- * Intake Controls
- * -------------------------------------------------------------------------
- * Button: extend/retract intake and start/stop intake wheels
- * 
- * Chamber Controls
- * -------------------------------------------------------------------------
- * Button: enable conveyor while held
- * Button: auto feed 1 cell
- * 
- * Chassis Controls
- * -------------------------------------------------------------------------
- * Joystick: drive robot with speed and direction
- * Button: shift gears
- * Button: auto align with vision
- * 
- * Climber Controls
- * -------------------------------------------------------------------------
- * Button: extend hooks
- * Button: pull robot up
- * Button: auto pull up and balance
- * Button: manual balance left
- * Button: manual balance right
- * Button: lock ratchets
- * 
- * Control Panel Controls
- * -------------------------------------------------------------------------
- * Button: rotate wheel 4 times
- * Button: rotate to color
- * Button: override rotation when held
- */
 
 public class OI 
 {
@@ -70,6 +25,16 @@ public class OI
   private static JoystickButton m_setLauncherWheelsRPMBtn;
   private static JoystickButton m_stopLauncherWheelsBtn;
 
+  private static JoystickButton m_jogLauncherAngleUpBtn;
+  private static JoystickButton m_jogLauncherAngleDownBtn;
+
+  private static JoystickButton m_setLauncherForInitiationLineBtn;
+  private static JoystickButton m_setLauncherForCloseTrenchBtn;
+  private static JoystickButton m_setLauncherForFarTrenchBtn;
+
+  private static JoystickButton m_setLauncherFeederPowerBtn;
+  private static JoystickButton m_setLauncherFeederRPMBtn;
+
   public OI() 
   {
     /**
@@ -92,6 +57,16 @@ public class OI
     m_setLauncherWheelsRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID);
     m_stopLauncherWheelsBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID);
 
+    m_jogLauncherAngleUpBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID);
+    m_jogLauncherAngleDownBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID);
+
+    m_setLauncherForInitiationLineBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_INIT_LINE_BTN_ID);
+    m_setLauncherForCloseTrenchBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID);
+    m_setLauncherForFarTrenchBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID);
+
+    m_setLauncherFeederPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID);
+    m_setLauncherFeederRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
+
     /**
      * Bind commands to buttons here.
      */
@@ -101,7 +76,7 @@ public class OI
     m_gearShiftBtn.whenReleased(Robot.m_inlineCommands.m_shiftLowGear);
 
     /* Intake Buttons */
-    m_toggleIntakePistonsBtn.whenPressed(Robot.m_inlineCommands.m_toggleIntake);
+    m_toggleIntakePistonsBtn.whenPressed(Robot.m_inlineCommands.m_toggleIntakePistons);
 
     m_setIntakeWheelPowerBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelsPower);
     m_setIntakeWheelPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheels);
@@ -113,6 +88,18 @@ public class OI
     m_setLauncherWheelsPowerBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherWheelsPower);
     m_setLauncherWheelsRPMBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherWheelsRPM);
     m_stopLauncherWheelsBtn.whenPressed(Robot.m_inlineCommands.m_stopLauncherWheels);
+
+    m_jogLauncherAngleUpBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleUp);
+    m_jogLauncherAngleDownBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleDown);
+
+    m_setLauncherForInitiationLineBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherForInitiationLine);
+    m_setLauncherForCloseTrenchBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherForCloseTrench);
+    m_setLauncherForFarTrenchBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherForFarTrench);
+
+    m_setLauncherFeederPowerBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherFeederPower);
+    m_setLauncherFeederPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopLauncherFeeder);
+    m_setLauncherFeederRPMBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherFeederRPM);
+    m_setLauncherFeederRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopLauncherFeeder);
   }
 
   /**

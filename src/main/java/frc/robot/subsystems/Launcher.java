@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Launcher extends SubsystemBase 
@@ -24,6 +25,12 @@ public class Launcher extends SubsystemBase
   private WPI_TalonSRX m_pivot;
 
   private DigitalInput m_ballSwitch;
+
+  /**
+   * Displays current desired angle of pivot. 
+   * Used for jogging up and down feature and displaying on SmartDashboard for operator.
+   */
+  private int pivotCurrentAngle = 0;
 
   public Launcher()
   {
@@ -54,6 +61,12 @@ public class Launcher extends SubsystemBase
                             Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, Constants.LAUNCHER_PIVOT_ACCELERATION);
 
     m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
+
+    /**
+     * Put pivot angle on SmartDashboard.
+     * Hard to visually see on the field, so operator can use this value to measure.
+     */
+    SmartDashboard.putNumber("Pivot Angle", this.pivotCurrentAngle);
   }
 
   /**
@@ -118,5 +131,70 @@ public class Launcher extends SubsystemBase
   {
     m_topWheel.set(0.0);
     m_bottomWheel.set(0.0);
+  }
+
+  /**
+   * Sets the desired position of the launcher pivot angle.
+   * @param position will be used as the setpoint for the PID controller
+   */
+  public void setAngle(int angle)
+  {
+    /* Verify desired angle is within the minimum and maximum launcher angle range. */
+    if (angle < Constants.LAUNCHER_PIVOT_MIN_ANGLE)
+      angle = Constants.LAUNCHER_PIVOT_MIN_ANGLE;
+    else if (angle > Constants.LAUNCHER_PIVOT_MAX_ANGLE)
+      angle = Constants.LAUNCHER_PIVOT_MAX_ANGLE;
+
+    /* Update current desired angle variable for other features like jogging up and down. */
+    this.pivotCurrentAngle = angle;
+
+    /* Update value on SmartDashboard. Hard to visually see angle on field, so operator can use this value to measure. */
+    SmartDashboard.putNumber("Pivot Angle", this.pivotCurrentAngle);
+
+    /**
+     * Convert desired angle to encoder ticks for PID setpoint.
+     * To do this, use pheonix software to get several points with x = angle and y = encoder ticks.
+     * Compile points into a table and use linear regression (y=mx+b) to find an equation to convert angle (x) to encoder ticks (y).
+     */
+    int setpoint = angle; // TODO: Find equation and convert angle to setpoint.
+
+    m_pivot.set(ControlMode.MotionMagic, setpoint);
+  }
+
+  /**
+   * Returns the current angle.
+   * Used for jogging the pivot angle up and down by taking the current angle and adding the jog magnitude.
+   */
+  public int getCurrentAngle()
+  {
+    return this.pivotCurrentAngle;
+  }
+  
+  /**
+   * This method is used to set the wheel RPMs and pivot angle for presets.
+   */
+  public void setPreset(int topRPM, int bottomRPM, int pivotAngle)
+  {
+    this.setTopWheelRPM(topRPM);
+    this.setBottomWheelRPM(bottomRPM);
+    this.setAngle(pivotAngle);
+  }
+
+  /**
+   * Activates the feeder mechanism with a power output to the motor.
+   * @param power range is from -1.0 to 1.0.
+   */
+  public void setFeederPower(double power)
+  {
+    m_feeder.set(ControlMode.PercentOutput, power);
+  }
+
+  /**
+   * Activates the feeder mechanism with a velocity PID using RPM.
+   * @param rpm is converted to a velocity (units/100ms) for a PID to use.
+   */
+  public void setFeederRPM(int rpm)
+  {
+    m_feeder.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
   }
 }

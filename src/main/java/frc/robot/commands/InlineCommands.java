@@ -22,6 +22,7 @@ public class InlineCommands {
 
   /* Chassis Inline Command Declarations */
   public final Command m_driveWithJoystick;
+
   public final Command m_shiftHighGear;
   public final Command m_shiftLowGear;
 
@@ -29,13 +30,27 @@ public class InlineCommands {
   public final Command m_setLauncherTopWheelPower;
   public final Command m_setLauncherBottomWheelPower;
   public final Command m_setLauncherWheelsPower;
+
   public final Command m_setLauncherTopWheelRPM;
   public final Command m_setLauncherBottomWheelRPM;
   public final Command m_setLauncherWheelsRPM;
+
   public final Command m_stopLauncherWheels;
 
+  public final Command m_jogLauncherAngleUp;
+  public final Command m_jogLauncherAngleDown;
+
+  public final Command m_setLauncherForInitiationLine;
+  public final Command m_setLauncherForCloseTrench;
+  public final Command m_setLauncherForFarTrench;
+
+  public final Command m_setLauncherFeederPower;
+  public final Command m_setLauncherFeederRPM;
+  public final Command m_stopLauncherFeeder;
+
   /* Intake Inline Command Declarations */
-  public final Command m_toggleIntake;
+  public final Command m_toggleIntakePistons;
+
   public final Command m_setIntakeWheelsPower;
   public final Command m_setIntakeWheelsRPM;
   public final Command m_stopIntakeWheels;
@@ -48,9 +63,10 @@ public class InlineCommands {
 
     /* Chassis Inline Command Instantiations */
     m_driveWithJoystick =
-      new RunCommand(() -> Robot.m_chassis.drive(Robot.m_OI.getDriverJoystick().getY(), Robot.m_OI.getDriverJoystick().getTwist()), Robot.m_chassis);
+      new RunCommand(() -> Robot.m_chassis.drive(Robot.m_OI.getDriverJoystick().getY(), Robot.m_OI.getDriverJoystick().getTwist()),
+                     Robot.m_chassis);
     
-    m_shiftHighGear = 
+    m_shiftHighGear =
       new InstantCommand(() -> Robot.m_chassis.shiftHighGear());
     m_shiftLowGear =
       new InstantCommand(() -> Robot.m_chassis.shiftLowGear());
@@ -61,23 +77,48 @@ public class InlineCommands {
     m_setLauncherBottomWheelPower =
       new InstantCommand(() -> Robot.m_launcher.setBottomWheelPower(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
     m_setLauncherWheelsPower =
-      new RunCommand(() -> m_setLauncherTopWheelPower.alongWith(m_setLauncherBottomWheelPower), Robot.m_launcher);
+      new RunCommand(() -> m_setLauncherTopWheelPower.alongWith(m_setLauncherBottomWheelPower), 
+                     Robot.m_launcher);
 
     m_setLauncherTopWheelRPM =
       new InstantCommand(() -> Robot.m_launcher.setTopWheelRPM((int)(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
     m_setLauncherBottomWheelRPM =
       new InstantCommand(() -> Robot.m_launcher.setBottomWheelRPM((int)(Robot.m_OI.getOperatorController().getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
     m_setLauncherWheelsRPM =
-      new RunCommand(() -> m_setLauncherTopWheelRPM.alongWith(m_setLauncherBottomWheelRPM), Robot.m_launcher);
+      new RunCommand(() -> m_setLauncherTopWheelRPM.alongWith(m_setLauncherBottomWheelRPM), 
+                     Robot.m_launcher);
 
     m_stopLauncherWheels =
-      new InstantCommand(() -> Robot.m_launcher.stopWheels(), Robot.m_launcher);
+      new InstantCommand(() -> Robot.m_launcher.stopWheels(), 
+                         Robot.m_launcher);
+
+    m_jogLauncherAngleUp =
+      new InstantCommand(() -> Robot.m_launcher.setAngle(Robot.m_launcher.getCurrentAngle() + Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+    m_jogLauncherAngleDown =
+      new InstantCommand(() -> Robot.m_launcher.setAngle(Robot.m_launcher.getCurrentAngle() - Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+    
+    m_setLauncherForInitiationLine =
+      new InstantCommand(() -> Robot.m_launcher.setPreset(Constants.LAUNCHER_INITIATION_LINE_TOP_RPM, Constants.LAUNCHER_INITIATION_LINE_BOTTOM_RPM, Constants.LAUNCHER_INITIATION_LINE_ANGLE),
+                         Robot.m_launcher);
+    m_setLauncherForCloseTrench =
+      new InstantCommand(() -> Robot.m_launcher.setPreset(Constants.LAUNCHER_CLOSE_TRENCH_TOP_RPM, Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_CLOSE_TRENCH_ANGLE),
+                         Robot.m_launcher);
+    m_setLauncherForFarTrench =
+      new InstantCommand(() -> Robot.m_launcher.setPreset(Constants.LAUNCHER_FAR_TRENCH_TOP_RPM, Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_FAR_TRENCH_ANGLE),
+                         Robot.m_launcher);
+
+    m_setLauncherFeederPower =
+      new InstantCommand(() -> Robot.m_launcher.setFeederPower(Constants.LAUNCHER_FEEDER_POWER));
+    m_setLauncherFeederRPM =
+      new InstantCommand(() -> Robot.m_launcher.setFeederRPM(Constants.LAUNCHER_FEEDER_RPM));
+    m_stopLauncherFeeder =
+      new InstantCommand(() -> Robot.m_launcher.setFeederPower(0.0));
 
     /* Intake Inline Command Instantiations */ 
-    m_toggleIntake =
+    m_toggleIntakePistons =
       new InstantCommand(() -> Robot.m_intake.toggleExtender());
 
-    m_setIntakeWheelsPower = 
+    m_setIntakeWheelsPower =
       new InstantCommand(() -> Robot.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER));
     m_setIntakeWheelsRPM = 
       new InstantCommand(() -> Robot.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));

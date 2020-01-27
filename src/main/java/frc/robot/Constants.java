@@ -141,10 +141,30 @@ public class Constants
   /* Launcher */
   public static final int    LAUNCHER_WHEEL_MAX_RPM               = 6380; // Max RPM from TalonFX tech specs on CTRE.
 
+  public static final int    LAUNCHER_PIVOT_MIN_ANGLE             = 0;
+  public static final int    LAUNCHER_PIVOT_MAX_ANGLE             = 90;
+  public static final int    LAUNCHER_PIVOT_JOG_MAGNITUDE         = 5;
+
+  public static final int    LAUNCHER_INITIATION_LINE_TOP_RPM     = 0;
+  public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM  = 0;
+  public static final int    LAUNCHER_INITIATION_LINE_ANGLE       = 0;
+
+  public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM        = 0;
+  public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM     = 0;
+  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE          = 0;
+
+  public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM          = 0;
+  public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM       = 0;
+  public static final int    LAUNCHER_FAR_TRENCH_ANGLE            = 0;
+
+  public static final double LAUNCHER_FEEDER_POWER                = 0;
+  public static final int    LAUNCHER_FEEDER_RPM                  = 120;
+
   /**
    * Driver Joystick Map
    */
 
+  /* Joystick */
   public static final int DRIVER_JOYSTICK_PORT                    = 0;
 
   /* Buttons */
@@ -154,6 +174,7 @@ public class Constants
    * Operator Joystick Map
    */
 
+  /* Joystick */
   public static final int OPERATOR_JOYSTICK_PORT                  = 1;
 
   /* Buttons */
@@ -164,8 +185,15 @@ public class Constants
   public static final int OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID   = 5;
   public static final int OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID     = 6;
   public static final int OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID    = 7;
+  public static final int OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID   = 8;
+  public static final int OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID = 9;
+  public static final int OPERATOR_LAUNCHER_INIT_LINE_BTN_ID      = 10;
+  public static final int OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID   = 11;
+  public static final int OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID     = 12;
+  public static final int OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID   = 13;
+  public static final int OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID     = 14;
 
   /* Axes */
-  public static final int OPERATOR_LAUNCHER_WHEELS_SLIDER_ID      = 1;
+  public static final int OPERATOR_LAUNCHER_WHEELS_SLIDER_ID  = 1;
   
 }
