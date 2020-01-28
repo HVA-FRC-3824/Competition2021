@@ -14,7 +14,6 @@ public class Constants
   public static final int CHASSIS_RIGHT_SLAVE_ID                  = 4;
   public static final int INTAKE_WHEEL_INTAKE_ID                  = 5;
   public static final int CHAMBER_ELEVATOR_ID                     = 6;
-  public static final int LAUNCHER_CHAMBER_ID                          = 7;
   public static final int LAUNCHER_WHEEL_TOP_ID                   = 8;
   public static final int LAUNCHER_WHEEL_BOTTOM_ID                = 9;
   public static final int LAUNCHER_FEEDER_ID                      = 10;
@@ -56,13 +55,6 @@ public class Constants
   public static final double CHAMBER_ELEVATOR_D                   = 0.0;
   public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY      = 0;
   public static final int    CHAMBER_ELEVATOR_ACCELERATION        = 0;
-
-  public static final double LAUNCHER_CHAMBER_F                        = 0.0;
-  public static final double LAUNCHER_CHAMBER_P                        = 0.0;
-  public static final double LAUNCHER_CHAMBER_I                        = 0.0;
-  public static final double LAUNCHER_CHAMBER_D                        = 0.0;
-  public static final int    LAUNCHER_CHAMBER_CRUISEVELOCITY           = 0;
-  public static final int    LAUNCHER_CHAMBER_ACCELERATION             = 0;
 
   /* Chassis */
   public static final double CHASSIS_LEFT_MASTER_F                = 0.0;
@@ -160,9 +152,6 @@ public class Constants
   public static final double LAUNCHER_FEEDER_POWER                 = 0;
   public static final int    LAUNCHER_FEEDER_RPM                   = 120;
 
-  public static final int    LAUNCHER_CHAMBER_POWER                = 0;
-  public static final int    LAUNCHER_CHAMBER_RPM                  = 0;
-
   /* Chamber */
   public static final int    CHAMBER_ELEVATOR_POWER                = 0;
   public static final int    CHAMBER_ELEVATOR_RPM                  = 0;
@@ -200,12 +189,9 @@ public class Constants
   public static final int OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID      = 12;
   public static final int OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID    = 13;
   public static final int OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID      = 14;
-  public static final int OPERATOR_LAUNCHER_CHAMBER_POWER_BTN_ID   = 17;
-  public static final int OPERATOR_LAUNCHER_CHAMBER_RPM_BTN_ID     = 16;
   
-
-  public static final int OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID   = 19;
-  public static final int OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID     = 18;
+  public static final int OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID   = 15;
+  public static final int OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID     = 16;
   
 
 

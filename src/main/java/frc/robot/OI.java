@@ -35,9 +35,6 @@ public class OI
   private static JoystickButton m_setLauncherFeederPowerBtn;
   private static JoystickButton m_setLauncherFeederRPMBtn;
 
-  private static JoystickButton m_setLauncherChamberPowerBtn;
-  private static JoystickButton m_setLauncherChamberRPMBtn;
-
   private static JoystickButton m_setChamberElevatorPowerBtn;
   private static JoystickButton m_setChamberElevatorRPMBtm;
 
@@ -72,9 +69,6 @@ public class OI
 
     m_setLauncherFeederPowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID);
     m_setLauncherFeederRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
-
-    m_setLauncherChamberPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CHAMBER_POWER_BTN_ID);
-    m_setLauncherChamberRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CHAMBER_RPM_BTN_ID);
 
     m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
     m_setChamberElevatorRPMBtm        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);

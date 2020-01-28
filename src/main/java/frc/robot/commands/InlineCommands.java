@@ -48,10 +48,6 @@ public class InlineCommands {
   public final Command m_setLauncherFeederRPM;
   public final Command m_stopLauncherFeeder;
 
-  public final Command m_setLauncherChamberPower;
-  public final Command m_setLauncherChamberRPM;
-  public final Command m_stopLauncherChamber;
-
   /* Intake Inline Command Declarations */
   public final Command m_toggleIntakePistons;
 
@@ -117,18 +113,11 @@ public class InlineCommands {
                          Robot.m_launcher);
 
     m_setLauncherFeederPower =
-      new InstantCommand(() -> Robot.m_launcher.setFeederPower(Constants.LAUNCHER_FEEDER_POWER));
+      new InstantCommand(() -> Robot.m_launcher.setFeederPower(Constants.LAUNCHER_FEEDER_POWER)).alongWith(Robot.m_inlineCommands.m_setChamberElevatorPower);
     m_setLauncherFeederRPM =
-      new InstantCommand(() -> Robot.m_launcher.setFeederRPM(Constants.LAUNCHER_FEEDER_RPM));
+      new InstantCommand(() -> Robot.m_launcher.setFeederRPM(Constants.LAUNCHER_FEEDER_RPM)).alongWith(Robot.m_inlineCommands.m_setChamberElevatorRPM);
     m_stopLauncherFeeder =
       new InstantCommand(() -> Robot.m_launcher.setFeederPower(0.0));
-
-    m_setLauncherChamberPower = 
-      new InstantCommand(() -> Robot.m_launcher.setLauncherChamberPower(Constants.LAUNCHER_CHAMBER_POWER));
-    m_setLauncherChamberRPM = 
-      new InstantCommand(() -> Robot.m_launcher.setLauncherChamberRPM(Constants.LAUNCHER_CHAMBER_RPM));
-    m_stopLauncherChamber = 
-      new InstantCommand(() -> Robot.m_launcher.setLauncherChamberPower(0.0));
 
     /* Intake Inline Command Instantiations */ 
     m_toggleIntakePistons =

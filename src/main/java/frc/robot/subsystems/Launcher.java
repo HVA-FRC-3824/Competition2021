@@ -26,8 +26,6 @@ public class Launcher extends SubsystemBase
 
   private DigitalInput m_ballSwitch;
 
-  private WPI_TalonSRX m_launcherChamber;
-
   /**
    * Displays current desired angle of pivot. 
    * Used for jogging up and down feature and displaying on SmartDashboard for operator.
@@ -64,12 +62,6 @@ public class Launcher extends SubsystemBase
 
     m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
 
-    m_launcherChamber = new WPI_TalonSRX(Constants.LAUNCHER_CHAMBER_ID);
-    Robot.configureTalonSRX(m_launcherChamber, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                            Constants.LAUNCHER_CHAMBER_F, Constants.LAUNCHER_CHAMBER_P, Constants.LAUNCHER_CHAMBER_I, 
-                            Constants.LAUNCHER_CHAMBER_D, Constants.LAUNCHER_CHAMBER_CRUISEVELOCITY, 
-                            Constants.LAUNCHER_CHAMBER_ACCELERATION);
-
     /**
      * Put pivot angle on SmartDashboard.
      * Hard to visually see on the field, so operator can use this value to measure.
@@ -104,10 +96,6 @@ public class Launcher extends SubsystemBase
   public WPI_TalonSRX getPivotTalonSRX()
   {
       return m_pivot;
-  }
-  public WPI_TalonSRX getLauncherChamberTalonSRX()
-  {
-    return m_launcherChamber;
   }
 
   /**
@@ -208,22 +196,5 @@ public class Launcher extends SubsystemBase
   public void setFeederRPM(int rpm)
   {
     m_feeder.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
-  }
-
-  /**
-   * Method that spins launcher chamber wheels with power.
-   * @param power range is from -1.0 to 1.0.
-   */
-  public void setLauncherChamberPower(double power)
-  {
-    m_launcherChamber.set(ControlMode.PercentOutput, power);
-  }
-  /**
-   * Method sets lancher chamber wheel's RPM with ControlMode.Velocity.
-   * @param rpm is converted to units per 100 milliseconds for ControlMode.Velocity.
-   */
-  public void setLauncherChamberRPM(int rpm)
-  {
-    m_launcherChamber.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
   }
 }
