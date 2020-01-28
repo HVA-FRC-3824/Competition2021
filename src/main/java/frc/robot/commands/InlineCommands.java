@@ -48,12 +48,21 @@ public class InlineCommands {
   public final Command m_setLauncherFeederRPM;
   public final Command m_stopLauncherFeeder;
 
+  public final Command m_setLauncherChamberPower;
+  public final Command m_setLauncherChamberRPM;
+  public final Command m_stopLauncherChamber;
+
   /* Intake Inline Command Declarations */
   public final Command m_toggleIntakePistons;
 
   public final Command m_setIntakeWheelsPower;
   public final Command m_setIntakeWheelsRPM;
   public final Command m_stopIntakeWheels;
+
+  /* Chamber Inline Command Declarations */
+  public final Command m_setChamberElevatorPower;
+  public final Command m_setChamberElevatorRPM;
+  public final Command m_stopChamberElevator;
 
   public InlineCommands()
   {
@@ -114,6 +123,13 @@ public class InlineCommands {
     m_stopLauncherFeeder =
       new InstantCommand(() -> Robot.m_launcher.setFeederPower(0.0));
 
+    m_setLauncherChamberPower = 
+      new InstantCommand(() -> Robot.m_launcher.setLauncherChamberPower(Constants.LAUNCHER_CHAMBER_POWER));
+    m_setLauncherChamberRPM = 
+      new InstantCommand(() -> Robot.m_launcher.setLauncherChamberRPM(Constants.LAUNCHER_CHAMBER_RPM));
+    m_stopLauncherChamber = 
+      new InstantCommand(() -> Robot.m_launcher.setLauncherChamberPower(0.0));
+
     /* Intake Inline Command Instantiations */ 
     m_toggleIntakePistons =
       new InstantCommand(() -> Robot.m_intake.toggleExtender());
@@ -124,5 +140,13 @@ public class InlineCommands {
       new InstantCommand(() -> Robot.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
     m_stopIntakeWheels = 
       new InstantCommand(() -> Robot.m_intake.setWheelPower(0.0));
+
+    /* Chamber Inline Command Instantiations */
+    m_setChamberElevatorPower =
+      new InstantCommand(() -> Robot.m_chamber.setChamberElevatorPower(Constants.CHAMBER_ELEVATOR_POWER));
+    m_setChamberElevatorRPM =
+      new InstantCommand(() -> Robot.m_chamber.setChamberElevatorRMP(Constants.CHAMBER_ELEVATOR_RPM));
+    m_stopChamberElevator =
+      new InstantCommand(() -> Robot.m_chamber.setChamberElevatorPower(0.0));
   }
 }

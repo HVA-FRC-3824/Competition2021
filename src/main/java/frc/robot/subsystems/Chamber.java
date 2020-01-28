@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -11,8 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Chamber extends SubsystemBase
 {
-  private WPI_TalonSRX m_chamberStart;
-  private WPI_TalonSRX m_chamberEnd;
+  private WPI_TalonSRX m_chamberElevator;
 
   private DigitalInput m_ballPos_1;
   private DigitalInput m_ballPos_2;
@@ -21,24 +21,19 @@ public class Chamber extends SubsystemBase
 
   public Chamber()
   {
-    m_chamberStart = new WPI_TalonSRX(Constants.CHAMBER_START_ID);
-    Robot.configureTalonSRX(m_chamberStart, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                            Constants.CHAMBER_CHAMBER_START_F, Constants.CHAMBER_CHAMBER_START_P, Constants.CHAMBER_CHAMBER_START_I, 
-                            Constants.CHAMBER_CHAMBER_START_D, Constants.CHAMBER_CHAMBER_START_CRUISEVELOCITY, 
-                            Constants.CHAMBER_CHAMBER_START_ACCELERATION);
-                            
-    m_chamberEnd = new WPI_TalonSRX(Constants.CHAMBER_END_ID);
-    Robot.configureTalonSRX(m_chamberEnd, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                            Constants.CHAMBER_CHAMBER_END_F, Constants.CHAMBER_CHAMBER_END_P, Constants.CHAMBER_CHAMBER_END_I, 
-                            Constants.CHAMBER_CHAMBER_END_D, Constants.CHAMBER_CHAMBER_END_CRUISEVELOCITY, 
-                            Constants.CHAMBER_CHAMBER_END_ACCELERATION);
-    
+    m_chamberElevator = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_ID);
+    Robot.configureTalonSRX(m_chamberElevator, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                            Constants.CHAMBER_ELEVATOR_F, Constants.CHAMBER_ELEVATOR_P, Constants.CHAMBER_ELEVATOR_I, 
+                            Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
+                            Constants.CHAMBER_ELEVATOR_ACCELERATION);
+
     m_ballPos_1 = new DigitalInput(Constants.CHAMBER_BALL_POS_1_PORT);
     m_ballPos_2 = new DigitalInput(Constants.CHAMBER_BALL_POS_2_PORT);
     m_ballPos_3 = new DigitalInput(Constants.CHAMBER_BALL_POS_3_PORT);
     m_ballPos_4 = new DigitalInput(Constants.CHAMBER_BALL_POS_4_PORT);
+ 
   }
-
+  
   /**
    * This method will be called once per scheduler run
    */
@@ -51,12 +46,26 @@ public class Chamber extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  public WPI_TalonSRX getChamberStartTalonSRX()
+  public WPI_TalonSRX getChamberElevatorTalonSRX()
   {
-    return m_chamberStart;
+    return m_chamberElevator;
   }
-  public WPI_TalonSRX getChamberEndTalonSRX()
+
+  /**
+   * Method to spin elevator chamber wheels with power.
+   * @param power range is from 1.0 to -1.0
+   */
+  public void setChamberElevatorPower(double power)
   {
-    return m_chamberEnd;
+    m_chamberElevator.set(ControlMode.PercentOutput, power);
+  }
+ 
+  /**
+   * Method to set elevator chamber wheels RPM with ControlMode.Velocity.
+   * @param rpm is converted to units per 100 milliseconds for ControlMode.Velocity.
+   */
+  public void setChamberElevatorRMP(int rpm)
+  {
+    m_chamberElevator.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
   }
 }

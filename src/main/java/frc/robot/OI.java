@@ -10,12 +10,12 @@ public class OI
    */
 
   /* Driver Joystick */
-  private static Joystick m_driverJoystick;
+  private static Joystick       m_driverJoystick;
 
   private static JoystickButton m_gearShiftBtn;
 
   /* Operator Joystick */
-  private static Joystick m_operatorJoystick;
+  private static Joystick       m_operatorJoystick;
 
   private static JoystickButton m_toggleIntakePistonsBtn;
   private static JoystickButton m_setIntakeWheelPowerBtn;
@@ -35,6 +35,12 @@ public class OI
   private static JoystickButton m_setLauncherFeederPowerBtn;
   private static JoystickButton m_setLauncherFeederRPMBtn;
 
+  private static JoystickButton m_setLauncherChamberPowerBtn;
+  private static JoystickButton m_setLauncherChamberRPMBtn;
+
+  private static JoystickButton m_setChamberElevatorPowerBtn;
+  private static JoystickButton m_setChamberElevatorRPMBtm;
+
   public OI() 
   {
     /**
@@ -42,30 +48,36 @@ public class OI
      */
 
     /* Driver Joystick */
-    m_driverJoystick = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
+    m_driverJoystick                  = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
 
-    m_gearShiftBtn = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
+    m_gearShiftBtn                    = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
 
     /* Operator Joystick */
-    m_operatorJoystick = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
+    m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
-    m_toggleIntakePistonsBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
-    m_setIntakeWheelPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_POWER_BTN_ID);
-    m_setIntakeWheelRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_RPM_BTN_ID);
+    m_toggleIntakePistonsBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
+    m_setIntakeWheelPowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_POWER_BTN_ID);
+    m_setIntakeWheelRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_RPM_BTN_ID);
 
-    m_setLauncherWheelsPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID);
-    m_setLauncherWheelsRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID);
-    m_stopLauncherWheelsBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID);
+    m_setLauncherWheelsPowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID);
+    m_setLauncherWheelsRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID);
+    m_stopLauncherWheelsBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID);
 
-    m_jogLauncherAngleUpBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID);
-    m_jogLauncherAngleDownBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID);
+    m_jogLauncherAngleUpBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID);
+    m_jogLauncherAngleDownBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID);
 
     m_setLauncherForInitiationLineBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_INIT_LINE_BTN_ID);
-    m_setLauncherForCloseTrenchBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID);
-    m_setLauncherForFarTrenchBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID);
+    m_setLauncherForCloseTrenchBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID);
+    m_setLauncherForFarTrenchBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID);
 
-    m_setLauncherFeederPowerBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID);
-    m_setLauncherFeederRPMBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
+    m_setLauncherFeederPowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID);
+    m_setLauncherFeederRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
+
+    m_setLauncherChamberPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CHAMBER_POWER_BTN_ID);
+    m_setLauncherChamberRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CHAMBER_RPM_BTN_ID);
+
+    m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
+    m_setChamberElevatorRPMBtm        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
 
     /**
      * Bind commands to buttons here.
@@ -100,6 +112,12 @@ public class OI
     m_setLauncherFeederPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopLauncherFeeder);
     m_setLauncherFeederRPMBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherFeederRPM);
     m_setLauncherFeederRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopLauncherFeeder);
+
+    /* Chamber Buttons */
+    m_setChamberElevatorPowerBtn.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorPower);
+    m_setChamberElevatorPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
+    m_setChamberElevatorRPMBtm.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorRPM);
+    m_setChamberElevatorRPMBtm.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
   }
 
   /**
