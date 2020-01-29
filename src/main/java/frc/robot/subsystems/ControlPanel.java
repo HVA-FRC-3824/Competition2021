@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -17,10 +18,10 @@ public class ControlPanel extends SubsystemBase
 
   public ControlPanel() 
   {
-    m_wheelSpinner = new WPI_TalonSRX(Constants.CONTROLPANEL_WHEEL_SPINNER_ID);
+    m_wheelSpinner = new WPI_TalonSRX(Constants.CONTROL_PANEL_SPINNER_ID);
     Robot.configureTalonSRX(m_wheelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-                            Constants.CONTROLPANEL_WHEEL_SPINNER_F, Constants.CONTROLPANEL_WHEEL_SPINNER_P, 
-                            Constants.CONTROLPANEL_WHEEL_SPINNER_I, Constants.CONTROLPANEL_WHEEL_SPINNER_D, 0, 0);
+                            Constants.CONTROL_PANEL_SPINNER_F, Constants.CONTROL_PANEL_SPINNER_P, 
+                            Constants.CONTROL_PANEL_SPINNER_I, Constants.CONTROL_PANEL_SPINNER_D, 0, 0);
 
     m_colorSensor = new DigitalInput(Constants.CONTROLPANEL_COLOR_SENSOR_PORT);
   }
@@ -40,5 +41,15 @@ public class ControlPanel extends SubsystemBase
   public WPI_TalonSRX getWheelSpinnerTalonSRX() 
   {
       return m_wheelSpinner;
+  }
+
+  public void setWheelSpinnerPower(double power)
+  {
+    m_wheelSpinner.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setWheelSpinnerRPM(int rpm)
+  {
+    m_wheelSpinner.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
   }
 }

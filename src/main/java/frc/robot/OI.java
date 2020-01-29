@@ -36,7 +36,13 @@ public class OI
   private static JoystickButton m_setLauncherFeederRPMBtn;
 
   private static JoystickButton m_setChamberElevatorPowerBtn;
-  private static JoystickButton m_setChamberElevatorRPMBtm;
+  private static JoystickButton m_setChamberElevatorRPMBtn;
+
+  private static JoystickButton m_jogClimberReelPositionUpBtn;
+  private static JoystickButton m_jogClimberReelPositionDownBtn;
+
+  private static JoystickButton m_setControlPanelSpinnerPowerBtn;
+  private static JoystickButton m_setControlPanelSpinnerRPMBtn;
 
   public OI() 
   {
@@ -71,7 +77,13 @@ public class OI
     m_setLauncherFeederRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
 
     m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
-    m_setChamberElevatorRPMBtm        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
+    m_setChamberElevatorRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
+
+    m_jogClimberReelPositionUpBtn     = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_UP_BTN_ID);
+    m_jogClimberReelPositionDownBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_DOWN_BTN_ID);
+
+    m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
+    m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
 
     /**
      * Bind commands to buttons here.
@@ -110,8 +122,18 @@ public class OI
     /* Chamber Buttons */
     m_setChamberElevatorPowerBtn.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorPower);
     m_setChamberElevatorPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
-    m_setChamberElevatorRPMBtm.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorRPM);
-    m_setChamberElevatorRPMBtm.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
+    m_setChamberElevatorRPMBtn.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorRPM);
+    m_setChamberElevatorRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
+
+    /* Climber Buttons */
+    m_jogClimberReelPositionUpBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleUp);
+    m_jogClimberReelPositionDownBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleDown);
+
+    /* Control Panel Buttons */
+    m_setControlPanelSpinnerPowerBtn.whenPressed(Robot.m_inlineCommands.m_setControlPanelSpinnerPower);
+    m_setControlPanelSpinnerPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopControlPanelSpinner);
+    m_setControlPanelSpinnerPowerBtn.whenPressed(Robot.m_inlineCommands.m_setControlPanelSpinnerRPM);
+    m_setControlPanelSpinnerPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopControlPanelSpinner);
   }
 
   /**

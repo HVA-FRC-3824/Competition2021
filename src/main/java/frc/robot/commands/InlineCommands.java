@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -47,7 +46,7 @@ public class InlineCommands {
   public final Command m_setLauncherFeederPower;
   public final Command m_setLauncherFeederRPM;
   public final Command m_stopLauncherFeeder;
-
+  
   /* Intake Inline Command Declarations */
   public final Command m_toggleIntakePistons;
 
@@ -59,6 +58,11 @@ public class InlineCommands {
   public final Command m_setChamberElevatorPower;
   public final Command m_setChamberElevatorRPM;
   public final Command m_stopChamberElevator;
+
+  /* Control Panel Command Declarations */
+  public final Command m_setControlPanelSpinnerPower;
+  public final Command m_setControlPanelSpinnerRPM;
+  public final Command m_stopControlPanelSpinner;
 
   public InlineCommands()
   {
@@ -137,5 +141,14 @@ public class InlineCommands {
       new InstantCommand(() -> Robot.m_chamber.setChamberElevatorRMP(Constants.CHAMBER_ELEVATOR_RPM));
     m_stopChamberElevator =
       new InstantCommand(() -> Robot.m_chamber.setChamberElevatorPower(0.0));
+
+    /* Control Panel Command Instantiations */
+    m_setControlPanelSpinnerPower =
+      new InstantCommand(() -> Robot.m_controlPanel.setWheelSpinnerPower(Constants.CONTROL_PANEL_SPINNER_POWER));
+    m_setControlPanelSpinnerRPM = 
+      new InstantCommand(() -> Robot.m_controlPanel.setWheelSpinnerRPM(Constants.CONTROL_PANEL_SPINNER_RPM));
+    m_stopControlPanelSpinner =
+      new InstantCommand(() -> Robot.m_controlPanel.setWheelSpinnerPower(0.0));
+
   }
 }
