@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -43,20 +43,20 @@ public class Launcher extends SubsystemBase
     //                         Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
     
     m_topWheel = new WPI_TalonSRX(Constants.LAUNCHER_WHEEL_TOP_ID);
-    Robot.configureTalonSRX(m_topWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.LAUNCHER_TOP_WHEEL_F,
+    RobotContainer.configureTalonSRX(m_topWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.LAUNCHER_TOP_WHEEL_F,
                             Constants.LAUNCHER_TOP_WHEEL_P, Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0);
                             
     m_bottomWheel = new WPI_TalonSRX(Constants.LAUNCHER_WHEEL_BOTTOM_ID);
-    Robot.configureTalonSRX(m_bottomWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, false, Constants.LAUNCHER_BOTTOM_WHEEL_F,
+    RobotContainer.configureTalonSRX(m_bottomWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, false, Constants.LAUNCHER_BOTTOM_WHEEL_F,
                             Constants.LAUNCHER_BOTTOM_WHEEL_P, Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D, 0, 0);
 
     m_feeder = new WPI_TalonSRX(Constants.LAUNCHER_FEEDER_ID);
-    Robot.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.LAUNCHER_FEEDER_F,
+    RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.LAUNCHER_FEEDER_F,
                             Constants.LAUNCHER_FEEDER_P,Constants.LAUNCHER_FEEDER_I, Constants.LAUNCHER_FEEDER_D,
                             Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, Constants.LAUNCHER_FEEDER_ACCELERATION);
 
     m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
-    Robot.configureTalonSRX(m_pivot, true, FeedbackDevice.Analog, false, false, Constants.LAUNCHER_PIVOT_F,
+    RobotContainer.configureTalonSRX(m_pivot, true, FeedbackDevice.Analog, false, false, Constants.LAUNCHER_PIVOT_F,
                             Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, Constants.LAUNCHER_PIVOT_D,
                             Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, Constants.LAUNCHER_PIVOT_ACCELERATION);
 
@@ -117,11 +117,11 @@ public class Launcher extends SubsystemBase
    */
   public void setTopWheelRPM(int rpm)
   {
-    m_topWheel.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
+    m_topWheel.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
   public void setBottomWheelRPM(int rpm)
   {
-    m_bottomWheel.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
+    m_bottomWheel.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
 
   /**
@@ -195,6 +195,6 @@ public class Launcher extends SubsystemBase
    */
   public void setFeederRPM(int rpm)
   {
-    m_feeder.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
+    m_feeder.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
 }

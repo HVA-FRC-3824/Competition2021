@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -22,7 +22,7 @@ public class Chamber extends SubsystemBase
   public Chamber()
   {
     m_chamberElevator = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_ID);
-    Robot.configureTalonSRX(m_chamberElevator, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+    RobotContainer.configureTalonSRX(m_chamberElevator, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                             Constants.CHAMBER_ELEVATOR_F, Constants.CHAMBER_ELEVATOR_P, Constants.CHAMBER_ELEVATOR_I, 
                             Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
                             Constants.CHAMBER_ELEVATOR_ACCELERATION);
@@ -66,6 +66,6 @@ public class Chamber extends SubsystemBase
    */
   public void setChamberElevatorRMP(int rpm)
   {
-    m_chamberElevator.set(ControlMode.Velocity, Robot.convertRPMToVelocity(rpm));
+    m_chamberElevator.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
 }

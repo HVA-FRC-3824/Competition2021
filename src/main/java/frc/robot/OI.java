@@ -47,7 +47,7 @@ public class OI
   public OI() 
   {
     /**
-     * Instantiate declared joysticks and buttons here.
+     * Instantiate the declared joysticks and joystick buttons here.
      */
 
     /* Driver Joystick */
@@ -84,56 +84,6 @@ public class OI
 
     m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
     m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
-
-    /**
-     * Bind commands to buttons here.
-     */
-
-    /* Chassis Buttons */
-    m_gearShiftBtn.whenPressed(Robot.m_inlineCommands.m_shiftHighGear);
-    m_gearShiftBtn.whenReleased(Robot.m_inlineCommands.m_shiftLowGear);
-
-    /* Intake Buttons */
-    m_toggleIntakePistonsBtn.whenPressed(Robot.m_inlineCommands.m_toggleIntakePistons);
-
-    m_setIntakeWheelPowerBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelsPower);
-    m_setIntakeWheelPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheels);
-
-    m_setIntakeWheelRPMBtn.whenPressed(Robot.m_inlineCommands.m_setIntakeWheelsRPM);
-    m_setIntakeWheelRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopIntakeWheels);
-
-    /* Launcher Buttons */
-    m_setLauncherWheelsPowerBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherWheelsPower);
-    m_setLauncherWheelsRPMBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherWheelsRPM);
-    m_stopLauncherWheelsBtn.whenPressed(Robot.m_inlineCommands.m_stopLauncherWheels);
-
-    m_jogLauncherAngleUpBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleUp);
-    m_jogLauncherAngleDownBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleDown);
-
-    m_setLauncherForInitiationLineBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherForInitiationLine);
-    m_setLauncherForCloseTrenchBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherForCloseTrench);
-    m_setLauncherForFarTrenchBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherForFarTrench);
-
-    m_setLauncherFeederPowerBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherFeederPower);
-    m_setLauncherFeederPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopLauncherFeeder);
-    m_setLauncherFeederRPMBtn.whenPressed(Robot.m_inlineCommands.m_setLauncherFeederRPM);
-    m_setLauncherFeederRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopLauncherFeeder);
-
-    /* Chamber Buttons */
-    m_setChamberElevatorPowerBtn.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorPower);
-    m_setChamberElevatorPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
-    m_setChamberElevatorRPMBtn.whenPressed(Robot.m_inlineCommands.m_setChamberElevatorRPM);
-    m_setChamberElevatorRPMBtn.whenReleased(Robot.m_inlineCommands.m_stopChamberElevator);
-
-    /* Climber Buttons */
-    m_jogClimberReelPositionUpBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleUp);
-    m_jogClimberReelPositionDownBtn.whenPressed(Robot.m_inlineCommands.m_jogLauncherAngleDown);
-
-    /* Control Panel Buttons */
-    m_setControlPanelSpinnerPowerBtn.whenPressed(Robot.m_inlineCommands.m_setControlPanelSpinnerPower);
-    m_setControlPanelSpinnerPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopControlPanelSpinner);
-    m_setControlPanelSpinnerPowerBtn.whenPressed(Robot.m_inlineCommands.m_setControlPanelSpinnerRPM);
-    m_setControlPanelSpinnerPowerBtn.whenReleased(Robot.m_inlineCommands.m_stopControlPanelSpinner);
   }
 
   /**
@@ -148,6 +98,60 @@ public class OI
   public Joystick getOperatorController() 
   {
     return m_operatorJoystick;
+  }
+
+  /**
+   * Bind commands to joystick buttons.
+   * This method is run after the instantiation of the inline commands class because if run before,
+   * the inline commands binded to the joystick buttons wouldn't have a reference point.
+   */
+  public void configureButtonBindings()
+  {
+    /* Chassis Buttons */
+    m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
+    m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
+
+    /* Intake Buttons */
+    m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
+
+    m_setIntakeWheelPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setIntakeWheelsPower);
+    m_setIntakeWheelPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopIntakeWheels);
+
+    m_setIntakeWheelRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setIntakeWheelsRPM);
+    m_setIntakeWheelRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopIntakeWheels);
+
+    /* Launcher Buttons */
+    m_setLauncherWheelsPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherWheelsPower);
+    m_setLauncherWheelsRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherWheelsRPM);
+    m_stopLauncherWheelsBtn.whenPressed(RobotContainer.m_inlineCommands.m_stopLauncherWheels);
+
+    m_jogLauncherAngleUpBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleUp);
+    m_jogLauncherAngleDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleDown);
+
+    m_setLauncherForInitiationLineBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherForInitiationLine);
+    m_setLauncherForCloseTrenchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherForCloseTrench);
+    m_setLauncherForFarTrenchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherForFarTrench);
+
+    m_setLauncherFeederPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherFeederPower);
+    m_setLauncherFeederPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherFeeder);
+    m_setLauncherFeederRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherFeederRPM);
+    m_setLauncherFeederRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherFeeder);
+
+    /* Chamber Buttons */
+    m_setChamberElevatorPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorPower);
+    m_setChamberElevatorPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
+    m_setChamberElevatorRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorRPM);
+    m_setChamberElevatorRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
+
+    /* Climber Buttons */
+    m_jogClimberReelPositionUpBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleUp);
+    m_jogClimberReelPositionDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleDown);
+
+    /* Control Panel Buttons */
+    m_setControlPanelSpinnerPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerPower);
+    m_setControlPanelSpinnerPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
+    m_setControlPanelSpinnerPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerRPM);
+    m_setControlPanelSpinnerPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
   }
   
   //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi

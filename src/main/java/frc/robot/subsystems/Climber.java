@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -30,11 +30,11 @@ public class Climber extends SubsystemBase
   public Climber()
   {
     m_stringPuller = new WPI_TalonSRX(Constants.CLIMBER_STRING_PULLER_ID);
-    Robot.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_STRING_PULLER_F, 
+    RobotContainer.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_STRING_PULLER_F, 
                             Constants.CLIMBER_STRING_PULLER_P, Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
                             Constants.CLIMBER_STRING_PULLER_CRUISEVELOCITY, Constants.CLIMBER_STRING_PULLER_ACCELERATION);
     m_reel = new WPI_TalonSRX(Constants.CLIMBER_REEL_ID);
-    Robot.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_REEL_F, 
+    RobotContainer.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_REEL_F, 
                             Constants.CLIMBER_REEL_P, Constants.CLIMBER_REEL_I, Constants.CLIMBER_REEL_D, 
                             Constants.CLIMBER_REEL_CRUISEVELOCITY, Constants.CLIMBER_REEL_ACCELERATION);
 
