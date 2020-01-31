@@ -27,12 +27,12 @@ public class RobotContainer
    * practically being used in every class. Making them private would create the need 
    * to pass in the subsystem to each individual class which is more work than just making them public.
    */
-  public static final Chassis m_chassis = new Chassis();
-  public static final Intake m_intake = new Intake();
   public static final Chamber m_chamber = new Chamber();
-  public static final Launcher m_launcher = new Launcher();
+  public static final Chassis m_chassis = new Chassis();
   public static final Climber m_climber = new Climber();
   public static final ControlPanel m_controlPanel = new ControlPanel();
+  public static final Intake m_intake = new Intake();
+  public static final Launcher m_launcher = new Launcher();
 
   /**
    * Instantiation of OI and inline commands.
@@ -44,8 +44,8 @@ public class RobotContainer
    * RobotContainer constructor, the method in the OI class to bind commands to joystick
    * buttons is called.
    */
-  public static final OI m_OI = new OI();
   public static final InlineCommands m_inlineCommands = new InlineCommands();
+  public static final OI m_OI = new OI();
   
   /**
    * Instantiation of other commands.
@@ -83,11 +83,11 @@ public class RobotContainer
   private void initializeDefaultCommands()
   {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
-    m_intake.setDefaultCommand(null);
-    m_chamber.setDefaultCommand(null);
-    m_launcher.setDefaultCommand(m_inlineCommands.m_setLauncherWheelsPower);
-    m_climber.setDefaultCommand(null);
-    m_controlPanel.setDefaultCommand(null);
+    // m_intake.setDefaultCommand(null);
+    // m_chamber.setDefaultCommand(null);
+    // m_launcher.setDefaultCommand(m_inlineCommands.m_setLauncherWheelsPower);
+    // m_climber.setDefaultCommand(null);
+    // m_controlPanel.setDefaultCommand(null);
   }
 
   /**
@@ -239,7 +239,7 @@ public class RobotContainer
      * TalonFX object (pass in null if configuring TalonSRX).
      * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
      */
-    //SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_launcher.getTopWheelTalonFX(), false));
+    SmartDashboard.putData("Set PID Values", new SetPIDValues(m_launcher.getTestTalon(), null, false));
   }
 
   /**

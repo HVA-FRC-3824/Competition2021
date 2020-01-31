@@ -40,21 +40,21 @@ public class Chassis extends SubsystemBase
      */
     m_leftMaster = new WPI_TalonFX(Constants.CHASSIS_LEFT_MASTER_ID);
     RobotContainer.configureTalonFX(m_leftMaster, false, false, Constants.CHASSIS_LEFT_MASTER_F, Constants.CHASSIS_LEFT_MASTER_P,
-                            Constants.CHASSIS_LEFT_MASTER_I, Constants.CHASSIS_LEFT_MASTER_D);
+                                    Constants.CHASSIS_LEFT_MASTER_I, Constants.CHASSIS_LEFT_MASTER_D);
 
     m_leftSlave = new WPI_TalonFX(Constants.CHASSIS_LEFT_SLAVE_ID);
     RobotContainer.configureTalonFX(m_leftSlave, false, false, Constants.CHASSIS_LEFT_SLAVE_F, Constants.CHASSIS_LEFT_SLAVE_P,
-                            Constants.CHASSIS_LEFT_SLAVE_I, Constants.CHASSIS_LEFT_SLAVE_D);
+                                    Constants.CHASSIS_LEFT_SLAVE_I, Constants.CHASSIS_LEFT_SLAVE_D);
 
     m_leftSlave.follow(m_leftMaster);
 
     m_rightMaster = new WPI_TalonFX(Constants.CHASSIS_RIGHT_MASTER_ID);
     RobotContainer.configureTalonFX(m_rightMaster, false, false, Constants.CHASSIS_RIGHT_MASTER_F, Constants.CHASSIS_RIGHT_MASTER_P,
-                            Constants.CHASSIS_RIGHT_MASTER_I, Constants.CHASSIS_RIGHT_MASTER_D);
+                                    Constants.CHASSIS_RIGHT_MASTER_I, Constants.CHASSIS_RIGHT_MASTER_D);
 
     m_rightSlave = new WPI_TalonFX(Constants.CHASSIS_RIGHT_SLAVE_ID);
     RobotContainer.configureTalonFX(m_rightSlave, false, false, Constants.CHASSIS_RIGHT_SLAVE_F, Constants.CHASSIS_RIGHT_SLAVE_P,
-                            Constants.CHASSIS_RIGHT_SLAVE_I, Constants.CHASSIS_RIGHT_SLAVE_D);
+                                    Constants.CHASSIS_RIGHT_SLAVE_I, Constants.CHASSIS_RIGHT_SLAVE_D);
 
     m_rightSlave.follow(m_rightMaster);
 

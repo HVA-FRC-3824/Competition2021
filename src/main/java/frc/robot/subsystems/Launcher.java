@@ -26,6 +26,8 @@ public class Launcher extends SubsystemBase
 
   private DigitalInput m_ballSwitch;
 
+  private WPI_TalonSRX m_PIDPractice;
+
   /**
    * Displays current desired angle of pivot. 
    * Used for jogging up and down feature and displaying on SmartDashboard for operator.
@@ -34,33 +36,42 @@ public class Launcher extends SubsystemBase
 
   public Launcher()
   {
-    // m_topWheel = new WPI_TalonFX(Constants.LAUNCHER_WHEEL_TOP_ID);
+    // m_topWheel = new WPI_TalonFX(Constants.LAUNCHER_TOP_WHEEL_ID);
     // Robot.configureTalonFX(m_topWheel, false, false, Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
     //                         Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D);
 
-    // m_bottomWheel = new WPI_Talon(Constants.LAUNCHER_WHEEL_BOTTOM_ID);
+    // m_bottomWheel = new WPI_TalonFX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
     // Robot.configureTalonFX(m_bottomWheel, false, false, Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P,
     //                         Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
     
-    m_topWheel = new WPI_TalonSRX(Constants.LAUNCHER_WHEEL_TOP_ID);
-    RobotContainer.configureTalonSRX(m_topWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.LAUNCHER_TOP_WHEEL_F,
-                            Constants.LAUNCHER_TOP_WHEEL_P, Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0);
+    m_topWheel = new WPI_TalonSRX(Constants.LAUNCHER_TOP_WHEEL_ID);
+    RobotContainer.configureTalonSRX(m_topWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P, 
+                                    Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0);
                             
-    m_bottomWheel = new WPI_TalonSRX(Constants.LAUNCHER_WHEEL_BOTTOM_ID);
-    RobotContainer.configureTalonSRX(m_bottomWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, false, Constants.LAUNCHER_BOTTOM_WHEEL_F,
-                            Constants.LAUNCHER_BOTTOM_WHEEL_P, Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D, 0, 0);
+    m_bottomWheel = new WPI_TalonSRX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
+    RobotContainer.configureTalonSRX(m_bottomWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, false, 
+                                    Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P, 
+                                    Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D, 0, 0);
 
     m_feeder = new WPI_TalonSRX(Constants.LAUNCHER_FEEDER_ID);
-    RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.LAUNCHER_FEEDER_F,
-                            Constants.LAUNCHER_FEEDER_P,Constants.LAUNCHER_FEEDER_I, Constants.LAUNCHER_FEEDER_D,
-                            Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, Constants.LAUNCHER_FEEDER_ACCELERATION);
+    RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.LAUNCHER_FEEDER_F, Constants.LAUNCHER_FEEDER_P, Constants.LAUNCHER_FEEDER_I, 
+                                    Constants.LAUNCHER_FEEDER_D, Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, 
+                                    Constants.LAUNCHER_FEEDER_ACCELERATION);
 
     m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
     RobotContainer.configureTalonSRX(m_pivot, true, FeedbackDevice.Analog, false, false, Constants.LAUNCHER_PIVOT_F,
-                            Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, Constants.LAUNCHER_PIVOT_D,
-                            Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, Constants.LAUNCHER_PIVOT_ACCELERATION);
+                                    Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, Constants.LAUNCHER_PIVOT_D,
+                                    Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, Constants.LAUNCHER_PIVOT_ACCELERATION);
 
     m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
+
+    m_PIDPractice = new WPI_TalonSRX(1);
+    RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.LAUNCHER_FEEDER_F, Constants.LAUNCHER_FEEDER_P, Constants.LAUNCHER_FEEDER_I, 
+                                    Constants.LAUNCHER_FEEDER_D, Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, 
+                                    Constants.LAUNCHER_FEEDER_ACCELERATION);
 
     /**
      * Put pivot angle on SmartDashboard.
@@ -196,5 +207,20 @@ public class Launcher extends SubsystemBase
   public void setFeederRPM(int rpm)
   {
     m_feeder.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+  }
+
+
+  /**
+   * THIS IS FOR PID PRACTICE -- DELETE THIS WHEN WE'RE DONE WITH IT
+   */
+  public void setPIDSetpoint(int setpoint)
+  {
+    m_PIDPractice.set(ControlMode.MotionMagic, setpoint);
+
+    System.out.println("\n\n\n\n\nPID SETPOINT IS " + setpoint + "\n\n\n\n");
+  }
+  public WPI_TalonSRX getTestTalon()
+  {
+    return m_PIDPractice;
   }
 }

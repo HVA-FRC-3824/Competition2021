@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ControlPanel extends SubsystemBase
 {
-  private WPI_TalonSRX m_wheelSpinner;
+  private WPI_TalonSRX m_panelSpinner;
 
   private DigitalInput m_colorSensor;
 
   public ControlPanel() 
   {
-    m_wheelSpinner = new WPI_TalonSRX(Constants.CONTROL_PANEL_SPINNER_ID);
-    RobotContainer.configureTalonSRX(m_wheelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+    m_panelSpinner = new WPI_TalonSRX(Constants.CONTROL_PANEL_SPINNER_ID);
+    RobotContainer.configureTalonSRX(m_panelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
                             Constants.CONTROL_PANEL_SPINNER_F, Constants.CONTROL_PANEL_SPINNER_P, 
                             Constants.CONTROL_PANEL_SPINNER_I, Constants.CONTROL_PANEL_SPINNER_D, 0, 0);
 
@@ -38,18 +38,18 @@ public class ControlPanel extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  public WPI_TalonSRX getWheelSpinnerTalonSRX() 
+  public WPI_TalonSRX getPanelSpinnerTalonSRX() 
   {
-      return m_wheelSpinner;
+      return m_panelSpinner;
   }
 
-  public void setWheelSpinnerPower(double power)
+  public void setPanelSpinnerPower(double power)
   {
-    m_wheelSpinner.set(ControlMode.PercentOutput, power);
+    m_panelSpinner.set(ControlMode.PercentOutput, power);
   }
 
-  public void setWheelSpinnerRPM(int rpm)
+  public void setPanelSpinnerRPM(int rpm)
   {
-    m_wheelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+    m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
 }
