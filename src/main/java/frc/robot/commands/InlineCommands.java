@@ -37,8 +37,10 @@ public class InlineCommands {
   /* Climber Inline Command Declarations */
   public final Command m_jogClimberReelPositionUp;
   public final Command m_jogClimberReelPositionDown;
+
   public final Command m_jogClimberZiplinePositionLeft;
   public final Command m_jogClimberZiplinePositionRight;
+
   public final Command m_setClimberZiplinePower;
   public final Command m_stopClimberZipline;
   
@@ -110,26 +112,48 @@ public class InlineCommands {
     m_jogClimberReelPositionDown = 
       new InstantCommand(() -> RobotContainer.m_climber.setReelPosition(RobotContainer.m_climber.getReelCurrentPosition() 
                         - Constants.CLIMBER_REEL_JOG_MAGNITUDE));
+    
     m_jogClimberZiplinePositionLeft =
       new InstantCommand(() -> RobotContainer.m_climber.setZiplinePosition(RobotContainer.m_climber.getZiplineCurrentPosition() 
                         + Constants.CLIMBER_ZIPLINE_JOG_MAGNITUDE));
     m_jogClimberZiplinePositionRight =
       new InstantCommand(() -> RobotContainer.m_climber.setZiplinePosition(RobotContainer.m_climber.getZiplineCurrentPosition() 
                         - Constants.CLIMBER_ZIPLINE_JOG_MAGNITUDE));
+
     m_setClimberZiplinePower =
       new InstantCommand(() -> RobotContainer.m_climber.setZiplinePower(Constants.CLIMBER_ZIPLINE_POWER));
     m_stopClimberZipline = 
       new InstantCommand(() -> RobotContainer.m_climber.setZiplinePower(0.0));
 
-    // bruh jovi moment 2.0
+    // bruh jovi moment 2.0 <- lmao
+
+    /* Control Panel Command Instantiations */
+    m_setControlPanelSpinnerPower =
+      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(Constants.CONTROL_PANEL_SPINNER_POWER));
+    m_setControlPanelSpinnerRPM = 
+      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerRPM(Constants.CONTROL_PANEL_SPINNER_RPM));
+    m_stopControlPanelSpinner =
+      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(0.0));
+
+    /* Intake Inline Command Instantiations */ 
+    m_toggleIntakePistons =
+      new InstantCommand(() -> RobotContainer.m_intake.toggleExtender());
+
+    m_setIntakeWheelsPower =
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER));
+    m_setIntakeWheelsRPM = 
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
+    m_stopIntakeWheels = 
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(0.0));
       
     /* Launcher Inline Command Instantiations */
     m_setLauncherTopWheelPower =
       new RunCommand(() -> RobotContainer.m_launcher.setTopWheelPower(RobotContainer.m_OI.getOperatorController().
-                        getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
+                    getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
     m_setLauncherBottomWheelPower =
       new RunCommand(() -> RobotContainer.m_launcher.setBottomWheelPower(RobotContainer.m_OI.getOperatorController().
-                        getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
+                    getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
+    
     m_setLauncherWheelsPower = new ParallelCommandGroup(m_setLauncherTopWheelPower, m_setLauncherBottomWheelPower);
     m_setLauncherWheelsPower.addRequirements(RobotContainer.m_launcher);
 
@@ -178,24 +202,5 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_launcher.setPIDSetpoint(200000));
     m_setPIDPracticeZero =
       new InstantCommand(() -> RobotContainer.m_launcher.setPIDSetpoint(0));
-
-    /* Intake Inline Command Instantiations */ 
-    m_toggleIntakePistons =
-      new InstantCommand(() -> RobotContainer.m_intake.toggleExtender());
-
-    m_setIntakeWheelsPower =
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER));
-    m_setIntakeWheelsRPM = 
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
-    m_stopIntakeWheels = 
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(0.0));
-
-    /* Control Panel Command Instantiations */
-    m_setControlPanelSpinnerPower =
-      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(Constants.CONTROL_PANEL_SPINNER_POWER));
-    m_setControlPanelSpinnerRPM = 
-      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerRPM(Constants.CONTROL_PANEL_SPINNER_RPM));
-    m_stopControlPanelSpinner =
-      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(0.0));
   }
 }

@@ -13,16 +13,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase
 {
-  private WPI_TalonSRX m_stringPuller;
-  private WPI_TalonSRX m_reel;
-  private WPI_TalonSRX m_zipline;
 
   private DoubleSolenoid m_PTO;
 
-  private Servo m_lockRatchet;
+  private Servo m_lockRatchetLeft;
+  private Servo m_lockRatchetRight;
   private Servo m_ratchetLeft;
   private Servo m_ratchetRight;
-
+  
+  private WPI_TalonSRX m_stringPuller;
+  private WPI_TalonSRX m_reel;
+  private WPI_TalonSRX m_zipline;
 
   /**
    * Displays current desired position of reel. 
@@ -38,10 +39,12 @@ public class Climber extends SubsystemBase
                                     Constants.CLIMBER_STRING_PULLER_F, Constants.CLIMBER_STRING_PULLER_P, 
                                     Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
                                     Constants.CLIMBER_STRING_PULLER_CRUISEVELOCITY, Constants.CLIMBER_STRING_PULLER_ACCELERATION);
+
     m_reel = new WPI_TalonSRX(Constants.CLIMBER_REEL_ID);
     RobotContainer.configureTalonSRX(m_reel, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_REEL_F, 
                                     Constants.CLIMBER_REEL_P, Constants.CLIMBER_REEL_I, Constants.CLIMBER_REEL_D, 
                                     Constants.CLIMBER_REEL_CRUISEVELOCITY, Constants.CLIMBER_REEL_ACCELERATION);
+
     m_zipline = new WPI_TalonSRX(Constants.CLIMBER_ZIPLINE_ID);
     RobotContainer.configureTalonSRX(m_zipline, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
                                     Constants.CLIMBER_ZIPLINE_F, Constants.CLIMBER_ZIPLINE_P, Constants.CLIMBER_ZIPLINE_I, 
@@ -50,9 +53,10 @@ public class Climber extends SubsystemBase
     
     m_PTO = new DoubleSolenoid(Constants.CLIMBER_PTO_PORT_A, Constants.CLIMBER_PTO_PORT_B);
 
-    m_lockRatchet  = new Servo(Constants.CLIMBER_LOCK_RATCHET_PORT);
-    m_ratchetLeft  = new Servo(Constants.CLIMBER_RATCHET_LEFT_PORT);
-    m_ratchetRight = new Servo(Constants.CLIMBER_RATCHET_RIGHT_PORT);
+    m_lockRatchetLeft  = new Servo(Constants.CLIMBER_LOCK_RATCHET_LEFT_PORT);
+    m_lockRatchetRight = new Servo(Constants.CLIMBER_LOCK_RATCHET_RIGHT_PORT);
+    m_ratchetLeft      = new Servo(Constants.CLIMBER_RATCHET_LEFT_PORT);
+    m_ratchetRight     = new Servo(Constants.CLIMBER_RATCHET_RIGHT_PORT);
   }
 
   /**

@@ -9,24 +9,41 @@ public class OI
    * Declare all joysticks and buttons here.
    */
 
-  /* Driver Joystick */
+  /* 
+   * Driver Joystick 
+   */
   private static Joystick       m_driverJoystick;
 
   private static JoystickButton m_gearShiftBtn;
 
-  /* Operator Joystick */
+  /* 
+   * Operator Joystick
+   */
   private static Joystick       m_operatorJoystick;
   
+  /* Chamber */
   private static JoystickButton m_setChamberElevatorPowerBtn;
   private static JoystickButton m_setChamberElevatorRPMBtn;
 
+  /* Climber */
   private static JoystickButton m_jogClimberReelPositionUpBtn;
   private static JoystickButton m_jogClimberReelPositionDownBtn;
 
+  private static JoystickButton m_jogClimberZiplineLeftBtn;
+  private static JoystickButton m_jogClimberZiplineRightBtn;
+
+  private static JoystickButton m_setClimberZiplinePowerBtn;
+  
+  /* Control Panel */
+  private static JoystickButton m_setControlPanelSpinnerPowerBtn;
+  private static JoystickButton m_setControlPanelSpinnerRPMBtn;
+  
+  /* Intake */
   // private static JoystickButton m_toggleIntakePistonsBtn;
   private static JoystickButton m_setIntakeWheelPowerBtn;
   private static JoystickButton m_setIntakeWheelRPMBtn;
 
+  /* Launcher */
   private static JoystickButton m_jogLauncherAngleUpBtn;
   private static JoystickButton m_jogLauncherAngleDownBtn;
 
@@ -43,33 +60,47 @@ public class OI
 
   private static JoystickButton m_setPIDSetpointBtn;
 
-  private static JoystickButton m_setControlPanelSpinnerPowerBtn;
-  private static JoystickButton m_setControlPanelSpinnerRPMBtn;
-  
-  private static JoystickButton m_jogClimberZiplineLeftBtn;
-  private static JoystickButton m_jogClimberZiplineRightBtn;
-
-  private static JoystickButton m_setClimberZiplinePowerBtn;
-  
-
   public OI() 
   {
     /**
      * Instantiate the declared joysticks and joystick buttons here.
      */
 
-    /* Driver Joystick */
+    /*
+     * Driver Joystick 
+     */
     m_driverJoystick                  = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
 
     m_gearShiftBtn                    = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
 
-    /* Operator Joystick */
+    /* 
+     * Operator Joystick
+     */
     m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
-    // m_toggleIntakePistonsBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
+    /* Chamber */
+    m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
+    m_setChamberElevatorRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
+
+    /* Climber */
+    m_jogClimberReelPositionUpBtn     = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_UP_BTN_ID);
+    m_jogClimberReelPositionDownBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_DOWN_BTN_ID);
+
+    m_jogClimberZiplineLeftBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_ZIPLINE_LEFT_BTN_ID);
+    m_jogClimberZiplineRightBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_ZIPLINE_RIGHT_BTN_ID);
+
+    m_setClimberZiplinePowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_POWER_BTN_ID);
+
+    /* Control Panel */
+    m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
+    m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
+
+    /* Intake */
+    // m_toggleIntakePistonsBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
     m_setIntakeWheelPowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_POWER_BTN_ID);
     m_setIntakeWheelRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_RPM_BTN_ID);
 
+    /* Launcher */
     m_setLauncherWheelsPowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID);
     m_setLauncherWheelsRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID);
     m_stopLauncherWheelsBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID);
@@ -85,22 +116,6 @@ public class OI
     m_setLauncherFeederRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
     
     m_setPIDSetpointBtn               = new JoystickButton(m_operatorJoystick, 2);
-
-    m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
-    m_setChamberElevatorRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
-
-    m_jogClimberReelPositionUpBtn     = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_UP_BTN_ID);
-    m_jogClimberReelPositionDownBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_DOWN_BTN_ID);
-
-    m_jogClimberZiplineLeftBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_ZIPLINE_LEFT_BTN_ID);
-    m_jogClimberZiplineRightBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_ZIPLINE_RIGHT_BTN_ID);
-
-    m_setClimberZiplinePowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_POWER_BTN_ID);
-    
-
-    m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
-    m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
-
   }
 
   /**
@@ -151,6 +166,7 @@ public class OI
 
     m_setLauncherFeederPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherFeederPower);
     m_setLauncherFeederPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherFeeder);
+    
     m_setLauncherFeederRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherFeederRPM);
     m_setLauncherFeederRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherFeeder);
 
