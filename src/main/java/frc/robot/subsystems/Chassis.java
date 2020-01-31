@@ -113,39 +113,4 @@ public class Chassis extends SubsystemBase
   {
     m_gearShift.set(Value.kForward);
   }
-
-  /* Anthony works in the grocery store
-  Savin' his pennies for someday
-  Mama Leone left a note on the door
-  She said
-  "Sonny, move out to the country."
-  Workin' too hard can give me
-  A heart attack
-  You oughta know by now
-  Who needs a house out in Hackensack?
-  Is that what you get with your money?
-  It seems such a waste of time
-  If that's what it's all about
-  If that's movin' up then I'm movin' out
-  Sergeant O'Leary is walkin' the beat
-  At night he becomes a bartender
-  He works at Mister Cacciatore's down
-  On Sullivan Street
-  Across from the medical center
-  He's tradin' in his Chevy for a Cadillac
-  You oughta know by now
-  And if he can't drive
-  With a broken back
-  At least he can polish the fenders
-  It seems such a waste of time
-  If that's what it's all about mama,
-  If that's movin' up then I'm movin' out
-  I'm movin out!
-  You should never argue with a crazy mind
-  You oughta know by now
-  You can pay Uncle Sam with overtime
-  Is that all you get for your money?
-  It seems such a waste of time
-  If that's what it's all about
-  If that's movin' up then I'm movin' out */
 }
