@@ -61,13 +61,21 @@ public class Constants
   public static final int    K_SLOT_IDX                                     = 0;
   public static final int    K_TIMEOUT_MS                                   = 30;
 
+  /* Chassis */
+  public static final double K_CHASSIS_TURN_P                               = 0;
+  public static final double K_CHASSIS_TURN_I                               = 0;
+  public static final double K_CHASSIS_TURN_D                               = 0;
+
+  public static final double K_TURN_TOLERANCE_DEG                           = 0;
+  public static final double K_TURN_RATE_TOLERANCE_DEG_PER_SEC              = 0;
+
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_P                             = 10.0;
+  public static final double CHAMBER_ELEVATOR_P                             = 0.0;
   public static final double CHAMBER_ELEVATOR_I                             = 0.0;
   public static final double CHAMBER_ELEVATOR_D                             = 0.0;
-  public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 10000;
-  public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 10000;
+  public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 0;
+  public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 0;
 
   /* Chassis */
   public static final double CHASSIS_LEFT_MASTER_F                          = 0.0;
@@ -136,8 +144,8 @@ public class Constants
   public static final double LAUNCHER_BOTTOM_WHEEL_D                        = 0.0;
 
   public static final double LAUNCHER_FEEDER_F                              = 0.0;
-  public static final double LAUNCHER_FEEDER_P                              = 0.0;
-  public static final double LAUNCHER_FEEDER_I                              = 0.0;
+  public static final double LAUNCHER_FEEDER_P                              = 0.01;
+  public static final double LAUNCHER_FEEDER_I                              = 0.0001;
   public static final double LAUNCHER_FEEDER_D                              = 0.0;
   public static final int    LAUNCHER_FEEDER_CRUISEVELOCITY                 = 0;
   public static final int    LAUNCHER_FEEDER_ACCELERATION                   = 0;
@@ -212,6 +220,10 @@ public class Constants
 
   /* Buttons */
   public static final int    DRIVER_GEAR_SHIFT_BTN_ID                       = 2;
+
+  public static final int    DRIVER_TURN_CHASSIS_FOR_INITIATION_LINE_BTN_ID = 3;
+  public static final int    DRIVER_TURN_CHASSIS_FOR_CLOSE_TRENCH_BTN_ID    = 4;
+  public static final int    DRIVER_TURN_CHASSIS_FOR_FAR_TRENCH_BTN_ID      = 5;
 
   /**
    * Operator Joystick Map

@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -111,8 +112,19 @@ public class Climber extends SubsystemBase
     int setpoint = position;
 
     m_zipline.set(ControlMode.MotionMagic, setpoint);
-  }
+
     
+  }
+
+  public void extendHooks()
+  {
+    m_PTO.set(Value.kForward);
+  }
+
+  public void retractHooks()
+  {
+    m_PTO.set(Value.kReverse);
+  }
 
 
   /**

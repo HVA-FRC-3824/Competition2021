@@ -16,6 +16,10 @@ public class OI
 
   private static JoystickButton m_gearShiftBtn;
 
+  private static JoystickButton m_turnChassisForInitiationLineBtn;
+  private static JoystickButton m_turnChassisForCloseTrenchBtn;
+  private static JoystickButton m_turnChassisForFarTrenchBtn;
+
   /* 
    * Operator Joystick
    */
@@ -39,7 +43,7 @@ public class OI
   private static JoystickButton m_setControlPanelSpinnerRPMBtn;
   
   /* Intake */
-  // private static JoystickButton m_toggleIntakePistonsBtn;
+  private static JoystickButton m_toggleIntakePistonsBtn;
   private static JoystickButton m_setIntakeWheelPowerBtn;
   private static JoystickButton m_setIntakeWheelRPMBtn;
 
@@ -58,8 +62,6 @@ public class OI
   private static JoystickButton m_setLauncherFeederPowerBtn;
   private static JoystickButton m_setLauncherFeederRPMBtn;
 
-  private static JoystickButton m_setPIDSetpointBtn;
-
   public OI() 
   {
     /**
@@ -72,6 +74,10 @@ public class OI
     m_driverJoystick                  = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
 
     m_gearShiftBtn                    = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
+
+    m_turnChassisForInitiationLineBtn = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_INITIATION_LINE_BTN_ID);
+    m_turnChassisForCloseTrenchBtn    = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_CLOSE_TRENCH_BTN_ID);
+    m_turnChassisForFarTrenchBtn      = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_FAR_TRENCH_BTN_ID);
 
     /* 
      * Operator Joystick
@@ -96,7 +102,7 @@ public class OI
     m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
 
     /* Intake */
-    // m_toggleIntakePistonsBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
+    m_toggleIntakePistonsBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
     m_setIntakeWheelPowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_POWER_BTN_ID);
     m_setIntakeWheelRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_RPM_BTN_ID);
 
@@ -114,8 +120,6 @@ public class OI
 
     m_setLauncherFeederPowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID);
     m_setLauncherFeederRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID);
-    
-    m_setPIDSetpointBtn               = new JoystickButton(m_operatorJoystick, 2);
   }
 
   /**
@@ -143,8 +147,17 @@ public class OI
     m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
     m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
 
+    m_turnChassisForInitiationLineBtn.whenPressed(RobotContainer.m_inlineCommands.m_turnChassisForInitiationLine);
+    m_turnChassisForInitiationLineBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopTurningChassisAtInitiationLine);
+
+    m_turnChassisForCloseTrenchBtn.whenPressed(RobotContainer.m_inlineCommands.m_turnChassisForCloseTrench);
+    m_turnChassisForCloseTrenchBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopTurningChassisAtCloseTrench);
+
+    m_turnChassisForFarTrenchBtn.whenPressed(RobotContainer.m_inlineCommands.m_turnChassisForFarTrench);
+    m_turnChassisForFarTrenchBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopTurningChassisAtFarTrench);
+
     /* Intake Buttons */
-    // m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
+    m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
 
     m_setIntakeWheelPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setIntakeWheelsPower);
     m_setIntakeWheelPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopIntakeWheels);
@@ -170,9 +183,6 @@ public class OI
     m_setLauncherFeederRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherFeederRPM);
     m_setLauncherFeederRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherFeeder);
 
-    m_setPIDSetpointBtn.whenPressed(RobotContainer.m_inlineCommands.m_setPIDPractice);
-    m_setPIDSetpointBtn.whenReleased(RobotContainer.m_inlineCommands.m_setPIDPracticeZero);
-
     /* Chamber Buttons */
     m_setChamberElevatorPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorPower);
     m_setChamberElevatorPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
@@ -196,5 +206,5 @@ public class OI
     m_setControlPanelSpinnerRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
   }
   
-  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey
+//BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey
 }

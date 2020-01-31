@@ -25,9 +25,7 @@ public class Launcher extends SubsystemBase
   private WPI_TalonSRX m_pivot;
 
   private DigitalInput m_ballSwitch;
-
-  private WPI_TalonSRX m_PIDPractice;
-
+  
   /**
    * Displays current desired angle of pivot. 
    * Used for jogging up and down feature and displaying on SmartDashboard for operator.
@@ -66,12 +64,6 @@ public class Launcher extends SubsystemBase
                                     Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, Constants.LAUNCHER_PIVOT_ACCELERATION);
 
     m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
-
-    m_PIDPractice = new WPI_TalonSRX(1);
-    RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-                                    Constants.LAUNCHER_FEEDER_F, Constants.LAUNCHER_FEEDER_P, Constants.LAUNCHER_FEEDER_I, 
-                                    Constants.LAUNCHER_FEEDER_D, Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, 
-                                    Constants.LAUNCHER_FEEDER_ACCELERATION);
 
     /**
      * Put pivot angle on SmartDashboard.
@@ -208,19 +200,53 @@ public class Launcher extends SubsystemBase
   {
     m_feeder.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
+ 
+  /* This ain't a song for the broken-hearted
+No silent prayer for the faith-departed
+I ain't gonna be just a face in the crowd
+You're gonna hear my voice
+When I shout it out loud
+It's my life
+It's now or never
+I ain't gonna live forever
+I just want to live while I'm alive
+(It's my life)
+My heart is like an open highway
+Like Frankie said I did it my way
+I just want to live while I'm alive
+It's my life
+This is for the ones who stood their ground
+It's for Tommy and Gina who never backed down
+Tomorrow's getting harder, make no mistake
+Luck ain't enough
+You've got to make your own breaks
+It's my life
+And it's now or never
+I ain't gonna live forever
+I just want to live while I'm alive
+(It's my life)
+My heart is like an open highway
+Like Frankie said I did it my way
+I just want to live while I'm alive
+It's my life
+You better stand tall when they're calling you out
+Don't bend, don't break, baby, don't back down
+It's my life
+And it's now or never
+I ain't gonna live forever
+I just want to live while I'm alive
+(It's my life)
+My heart is like an open highway
+Like Frankie said I did it my way
+I just want to live while I'm alive
+(It's my life)
+And it's now or never
+I ain't gonna live forever
+I just want to live while I'm alive
+(It's my life)
+My heart is like an open highway
+Like Frankie said I did it my way
+I just want to live while I'm alive
+(It's my life) */
 
-
-  /**
-   * THIS IS FOR PID PRACTICE -- DELETE THIS WHEN WE'RE DONE WITH IT
-   */
-  public void setPIDSetpoint(int setpoint)
-  {
-    m_PIDPractice.set(ControlMode.MotionMagic, setpoint);
-
-    System.out.println("\n\n\n\n\nPID SETPOINT IS " + setpoint + "\n\n\n\n");
-  }
-  public WPI_TalonSRX getTestTalon()
-  {
-    return m_PIDPractice;
-  }
 }

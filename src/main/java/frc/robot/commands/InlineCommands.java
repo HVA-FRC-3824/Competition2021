@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -34,6 +32,15 @@ public class InlineCommands {
   public final Command m_shiftHighGear;
   public final Command m_shiftLowGear;
 
+  public final Command m_turnChassisForInitiationLine;
+  public final Command m_turnChassisForCloseTrench;
+  public final Command m_turnChassisForFarTrench;
+  
+  public final Command m_stopTurningChassisAtInitiationLine;
+  public final Command m_stopTurningChassisAtCloseTrench;
+  public final Command m_stopTurningChassisAtFarTrench;
+  
+
   /* Climber Inline Command Declarations */
   public final Command m_jogClimberReelPositionUp;
   public final Command m_jogClimberReelPositionDown;
@@ -43,6 +50,11 @@ public class InlineCommands {
 
   public final Command m_setClimberZiplinePower;
   public final Command m_stopClimberZipline;
+
+  /* Control Panel Command Declarations */
+  public final Command m_setControlPanelSpinnerPower;
+  public final Command m_setControlPanelSpinnerRPM;
+  public final Command m_stopControlPanelSpinner;
   
   /* Intake Inline Command Declarations */
   public final Command m_toggleIntakePistons;
@@ -51,10 +63,6 @@ public class InlineCommands {
   public final Command m_setIntakeWheelsRPM;
   public final Command m_stopIntakeWheels;
 
-  /* Control Panel Command Declarations */
-  public final Command m_setControlPanelSpinnerPower;
-  public final Command m_setControlPanelSpinnerRPM;
-  public final Command m_stopControlPanelSpinner;
 
 
   /* Launcher Inline Command Declarations */
@@ -64,7 +72,7 @@ public class InlineCommands {
 
   public final Command m_setLauncherTopWheelRPM;
   public final Command m_setLauncherBottomWheelRPM;
-  public final Command m_setLauncherWheelsRPM;
+  public final ParallelCommandGroup m_setLauncherWheelsRPM;
 
   public final Command m_stopLauncherWheels;
 
@@ -78,9 +86,6 @@ public class InlineCommands {
   public final Command m_setLauncherFeederPower;
   public final Command m_setLauncherFeederRPM;
   public final Command m_stopLauncherFeeder;
-
-  public final Command m_setPIDPractice;
-  public final Command m_setPIDPracticeZero;
   
   public InlineCommands()
   {
@@ -97,6 +102,20 @@ public class InlineCommands {
     m_shiftLowGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftLowGear());
 
+    m_turnChassisForInitiationLine =
+      new ChassisTurnAngle(Constants.CHASSIS_INITIATION_LINE_ANGLE);
+    m_turnChassisForCloseTrench =    
+      new ChassisTurnAngle(Constants.CHASSIS_CLOSE_TRENCH_ANGLE);
+    m_turnChassisForFarTrench =
+      new ChassisTurnAngle(Constants.CHASSIS_FAR_TRENCH_ANGLE);
+      
+    m_stopTurningChassisAtInitiationLine =
+      new InstantCommand(() -> m_turnChassisForInitiationLine.cancel());
+    m_stopTurningChassisAtCloseTrench =
+      new InstantCommand(() -> m_turnChassisForCloseTrench.cancel());
+    m_stopTurningChassisAtFarTrench =
+      new InstantCommand(() -> m_turnChassisForFarTrench.cancel());
+  
     /* Chamber Inline Command Instantiations */
     m_setChamberElevatorPower =
       new InstantCommand(() -> RobotContainer.m_chamber.setChamberElevatorPower(Constants.CHAMBER_ELEVATOR_POWER));
@@ -125,7 +144,7 @@ public class InlineCommands {
     m_stopClimberZipline = 
       new InstantCommand(() -> RobotContainer.m_climber.setZiplinePower(0.0));
 
-    // bruh jovi moment 2.0 <- lmao
+    // bruh jovi moment 2.0 <- lmao >:(
 
     /* Control Panel Command Instantiations */
     m_setControlPanelSpinnerPower =
@@ -163,9 +182,8 @@ public class InlineCommands {
     m_setLauncherBottomWheelRPM =
       new InstantCommand(() -> RobotContainer.m_launcher.setBottomWheelRPM((int)(RobotContainer.m_OI.getOperatorController().
                         getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
-    m_setLauncherWheelsRPM =
-      new RunCommand(() -> m_setLauncherTopWheelRPM.alongWith(m_setLauncherBottomWheelRPM), 
-                     RobotContainer.m_launcher);
+    m_setLauncherWheelsRPM = new ParallelCommandGroup(m_setLauncherTopWheelRPM, m_setLauncherBottomWheelRPM);
+    m_setLauncherWheelsRPM.addRequirements(RobotContainer.m_launcher);
 
     m_stopLauncherWheels =
       new InstantCommand(() -> RobotContainer.m_launcher.stopWheels(), 
@@ -197,10 +215,5 @@ public class InlineCommands {
                         // alongWith(RobotContainer.m_inlineCommands.m_setChamberElevatorRPM);
     m_stopLauncherFeeder =
       new InstantCommand(() -> RobotContainer.m_launcher.setFeederPower(0.0));
-
-    m_setPIDPractice =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPIDSetpoint(200000));
-    m_setPIDPracticeZero =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPIDSetpoint(0));
   }
 }

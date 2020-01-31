@@ -239,7 +239,33 @@ public class RobotContainer
      * TalonFX object (pass in null if configuring TalonSRX).
      * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
      */
-    SmartDashboard.putData("Set PID Values", new SetPIDValues(m_launcher.getTestTalon(), null, false));
+    // SmartDashboard.putData("Set PID Values", new SetPIDValues(null, null, false));
+  }
+
+  /**
+   * Method to display position, velocity, error, and motor ouput of a TalonSRX.
+   * Primarily used for PID tuning.
+   */
+  public static void displayTalonSRXInfo(WPI_TalonSRX talonSRX, String label)
+  {
+    SmartDashboard.putNumber(label + " Setpoint", talonSRX.getClosedLoopTarget());
+    SmartDashboard.putNumber(label + " Position", talonSRX.getSelectedSensorPosition());
+    SmartDashboard.putNumber(label + " Velocity", talonSRX.getSelectedSensorVelocity());
+    SmartDashboard.putNumber(label + " Error",    talonSRX.getClosedLoopError());
+    SmartDashboard.putNumber(label + " Output",   talonSRX.getMotorOutputVoltage());
+  }
+
+  /**
+   * Method to display position, velocity, error, and motor ouput of a TalonFX.
+   * Primarily used for PID tuning.
+   */
+  public static void displayTalonFXInfo(WPI_TalonFX talonFX, String label)
+  {
+    SmartDashboard.putNumber(label + " Setpoint", talonFX.getClosedLoopTarget());
+    SmartDashboard.putNumber(label + " Position", talonFX.getSelectedSensorPosition());
+    SmartDashboard.putNumber(label + " Velocity", talonFX.getSelectedSensorVelocity());
+    SmartDashboard.putNumber(label + " Error",    talonFX.getClosedLoopError());
+    SmartDashboard.putNumber(label + " Output",   talonFX.getMotorOutputVoltage());
   }
 
   /**
