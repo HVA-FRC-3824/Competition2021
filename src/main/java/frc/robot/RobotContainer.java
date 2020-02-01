@@ -181,7 +181,7 @@ public class RobotContainer
     talonFX.configFactoryDefault();
 
     /* Configure Sensor Source for Primary PID. */
-    talonFX.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
+    talonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
 
     /* Configure TalonFX to drive forward when LED is green. */
     talonFX.setInverted(setInverted);

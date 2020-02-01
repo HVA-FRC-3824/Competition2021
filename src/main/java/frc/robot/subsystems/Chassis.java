@@ -50,11 +50,11 @@ public class Chassis extends SubsystemBase
     m_leftSlave.follow(m_leftMaster);
 
     m_rightMaster = new WPI_TalonFX(Constants.CHASSIS_RIGHT_MASTER_ID);
-    RobotContainer.configureTalonFX(m_rightMaster, false, false, Constants.CHASSIS_RIGHT_MASTER_F, Constants.CHASSIS_RIGHT_MASTER_P,
+    RobotContainer.configureTalonFX(m_rightMaster, true, false, Constants.CHASSIS_RIGHT_MASTER_F, Constants.CHASSIS_RIGHT_MASTER_P,
                                     Constants.CHASSIS_RIGHT_MASTER_I, Constants.CHASSIS_RIGHT_MASTER_D);
 
     m_rightSlave = new WPI_TalonFX(Constants.CHASSIS_RIGHT_SLAVE_ID);
-    RobotContainer.configureTalonFX(m_rightSlave, false, false, Constants.CHASSIS_RIGHT_SLAVE_F, Constants.CHASSIS_RIGHT_SLAVE_P,
+    RobotContainer.configureTalonFX(m_rightSlave, true, false, Constants.CHASSIS_RIGHT_SLAVE_F, Constants.CHASSIS_RIGHT_SLAVE_P,
                                     Constants.CHASSIS_RIGHT_SLAVE_I, Constants.CHASSIS_RIGHT_SLAVE_D);
 
     m_rightSlave.follow(m_rightMaster);
@@ -77,7 +77,7 @@ public class Chassis extends SubsystemBase
      */
     m_compressor = new Compressor();
 
-    m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_A, Constants.CHASSIS_GEARSHIFT_PORT_B);
+    m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_B, Constants.CHASSIS_GEARSHIFT_PORT_A);
   }
 
   /**
@@ -99,7 +99,7 @@ public class Chassis extends SubsystemBase
    */
   public void drive(double power, double turn)
   {
-    m_differentialDrive.arcadeDrive(power, turn);
+    m_differentialDrive.arcadeDrive(turn, -power);
   }
 
   /**
