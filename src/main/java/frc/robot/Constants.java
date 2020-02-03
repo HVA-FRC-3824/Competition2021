@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 public class Constants 
 {
   /**
@@ -76,27 +78,6 @@ public class Constants
   public static final double CHAMBER_ELEVATOR_D                             = 0.0;
   public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 0;
   public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 0;
-
-  /* Chassis */
-  public static final double CHASSIS_LEFT_MASTER_F                          = 0.0;
-  public static final double CHASSIS_LEFT_MASTER_P                          = 0.0;
-  public static final double CHASSIS_LEFT_MASTER_I                          = 0.0;
-  public static final double CHASSIS_LEFT_MASTER_D                          = 0.0;
- 
-  public static final double CHASSIS_LEFT_SLAVE_F                           = 0.0;
-  public static final double CHASSIS_LEFT_SLAVE_P                           = 0.0;
-  public static final double CHASSIS_LEFT_SLAVE_I                           = 0.0;
-  public static final double CHASSIS_LEFT_SLAVE_D                           = 0.0;
- 
-  public static final double CHASSIS_RIGHT_MASTER_F                         = 0.0;
-  public static final double CHASSIS_RIGHT_MASTER_P                         = 0.0;
-  public static final double CHASSIS_RIGHT_MASTER_I                         = 0.0;
-  public static final double CHASSIS_RIGHT_MASTER_D                         = 0.0;
-
-  public static final double CHASSIS_RIGHT_SLAVE_F                          = 0.0;
-  public static final double CHASSIS_RIGHT_SLAVE_P                          = 0.0;
-  public static final double CHASSIS_RIGHT_SLAVE_I                          = 0.0;
-  public static final double CHASSIS_RIGHT_SLAVE_D                          = 0.0;
 
   /* Climber */
   public static final double CLIMBER_STRING_PULLER_F                        = 0.0;
@@ -276,5 +257,35 @@ public class Constants
   
   /* Axes */
   public static final int    OPERATOR_LAUNCHER_WHEELS_SLIDER_ID             = 5;
+
+  /**
+   * Autonomous Constants
+   */
+  public static final int    K_ENCODER_TICKS_PER_REVOLUTION                 = 0;
+  public static final double K_WHEEL_DIAMETER_METERS                        = 0.1524;
+  public static final double K_ENCODER_DISTANCE_PER_PULSE                   = (K_WHEEL_DIAMETER_METERS * Math.PI) / 
+                                                                              (double) K_ENCODER_TICKS_PER_REVOLUTION;
+
+  public static final boolean K_GYRO_REVERSED                               = false;
+
+  /* Use robot characterization tool for these values. */
+  public static final double K_S_VOLTS                                      = 0.0;
+  public static final double K_V_VOLT_SECONDS_PER_METER                     = 0.0;
+  public static final double K_A_VOLT_SECONDS_SQUARED_PER_METER             = 0.0;
   
+  public static final double K_P_DRIVE_VEL                                  = 0.0;
+
+  public static final double K_TRACK_WIDTH_METERS                           = 0.0;
+  public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS        = new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
+
+  /* Maximum voltage is 10V rather than nominal battery voltage of 12V for 
+    "headroom" in dealing with "voltage sag." */
+  public static final int    K_MAX_VOLTAGE                                  = 10;
+  
+  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 0.0;
+  public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 0.0;
+
+  public static final double K_RAMSETE_B                                    = 2;
+  public static final double K_RAMSETE_ZETA                                 = 0.7;
+
 }

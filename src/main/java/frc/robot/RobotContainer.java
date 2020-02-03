@@ -3,14 +3,26 @@ package frc.robot;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -109,7 +121,60 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    return m_autoChooser.getSelected();
+    // return m_autoChooser.getSelected();
+
+    /**
+     * Path following command
+     * TODO: make this modular and move to a different location later.
+     * NOTE: some of the variables below may not be needed because getting trajectory from pathweaver, ex: config
+     */
+
+    /* Create voltage constraint to ensure robot doesn't accelerate too fast. */
+    var autoVoltageConstraint = 
+      new DifferentialDriveVoltageConstraint(
+        new SimpleMotorFeedforward(Constants.K_S_VOLTS,
+                                   Constants.K_V_VOLT_SECONDS_PER_METER,
+                                   Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
+        Constants.K_DRIVE_KINEMATICS, 
+        Constants.K_MAX_VOLTAGE);
+    
+    /* Create config for trajectory --> wraps together all of the path constraints. */
+    TrajectoryConfig config =
+      new TrajectoryConfig(Constants.K_MAX_SPEED_METERS_PER_SECOND,
+                           Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+          .setKinematics(Constants.K_DRIVE_KINEMATICS) // Ensure max speed is obeyed.
+          .addConstraint(autoVoltageConstraint); // Apply voltage constraint.
+
+    /* Get path/trajectory to follow from PathWeaver json file. */
+    String trajectoryJSONFilePath = "paths/tenBall_pathOne.wpilib.json";
+    Trajectory trajectory = null;
+    try
+    {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex)
+    {
+      System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
+    }
+
+    /* Create command that will follow the trajectory. */
+    RamseteCommand ramseteCommand = new RamseteCommand(
+      trajectory,
+      m_chassis::getPose,
+      new RamseteController(Constants.K_RAMSETE_B, Constants.K_RAMSETE_ZETA),
+      new SimpleMotorFeedforward(Constants.K_S_VOLTS,
+                                 Constants.K_V_VOLT_SECONDS_PER_METER,
+                                 Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
+      Constants.K_DRIVE_KINEMATICS,
+      m_chassis::getWheelSpeeds,
+      new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
+      new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
+      m_chassis::driveWithVoltage, // RamseteCommand passes volts to the callback.
+      m_chassis
+    );
+
+    /* Run path following command, then stop the robot at the end. */
+    return ramseteCommand.andThen(() -> m_chassis.driveWithVoltage(0, 0));
   }
 
   /**

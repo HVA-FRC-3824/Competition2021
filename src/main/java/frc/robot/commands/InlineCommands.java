@@ -20,7 +20,6 @@ public class InlineCommands {
    * Declare all inline commands here.
    */
 
-
   /* Chamber Inline Command Declarations */
   public final Command m_setChamberElevatorPower;
   public final Command m_setChamberElevatorRPM;

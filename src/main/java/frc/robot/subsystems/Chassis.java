@@ -8,6 +8,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
@@ -34,28 +38,29 @@ public class Chassis extends SubsystemBase
 
   private DoubleSolenoid m_gearShift;
 
+  /**
+   * Declaring objects for autonomous path following.
+   */
+  private final DifferentialDriveOdometry m_odometry;
+
   public Chassis() 
   {
     /**
      * Instantiating drivetrain objects
      */
     m_leftMaster = new WPI_TalonFX(Constants.CHASSIS_LEFT_MASTER_ID);
-    RobotContainer.configureTalonFX(m_leftMaster, false, false, Constants.CHASSIS_LEFT_MASTER_F, Constants.CHASSIS_LEFT_MASTER_P,
-                                    Constants.CHASSIS_LEFT_MASTER_I, Constants.CHASSIS_LEFT_MASTER_D);
+    RobotContainer.configureTalonFX(m_leftMaster, false, false, 0.0, 0.0, 0.0, 0.0);
 
     m_leftSlave = new WPI_TalonFX(Constants.CHASSIS_LEFT_SLAVE_ID);
-    RobotContainer.configureTalonFX(m_leftSlave, false, false, Constants.CHASSIS_LEFT_SLAVE_F, Constants.CHASSIS_LEFT_SLAVE_P,
-                                    Constants.CHASSIS_LEFT_SLAVE_I, Constants.CHASSIS_LEFT_SLAVE_D);
+    RobotContainer.configureTalonFX(m_leftSlave, false, false, 0.0, 0.0, 0.0, 0.0);
 
     m_leftSlave.follow(m_leftMaster);
 
     m_rightMaster = new WPI_TalonFX(Constants.CHASSIS_RIGHT_MASTER_ID);
-    RobotContainer.configureTalonFX(m_rightMaster, true, false, Constants.CHASSIS_RIGHT_MASTER_F, Constants.CHASSIS_RIGHT_MASTER_P,
-                                    Constants.CHASSIS_RIGHT_MASTER_I, Constants.CHASSIS_RIGHT_MASTER_D);
+    RobotContainer.configureTalonFX(m_rightMaster, true, false, 0.0, 0.0, 0.0, 0.0);
 
     m_rightSlave = new WPI_TalonFX(Constants.CHASSIS_RIGHT_SLAVE_ID);
-    RobotContainer.configureTalonFX(m_rightSlave, true, false, Constants.CHASSIS_RIGHT_SLAVE_F, Constants.CHASSIS_RIGHT_SLAVE_P,
-                                    Constants.CHASSIS_RIGHT_SLAVE_I, Constants.CHASSIS_RIGHT_SLAVE_D);
+    RobotContainer.configureTalonFX(m_rightSlave, true, false, 0.0, 0.0, 0.0, 0.0);
 
     m_rightSlave.follow(m_rightMaster);
 
@@ -78,6 +83,17 @@ public class Chassis extends SubsystemBase
     m_compressor = new Compressor();
 
     m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_B, Constants.CHASSIS_GEARSHIFT_PORT_A);
+
+    /**
+     * Autonomous path following objects
+     */
+
+    /* Reset encoders & gyro to ensure autonomous path following is correct. */
+    this.resetEncoders();
+    this.zeroHeading();
+
+    /* Used for tracking robot pose. */
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.getHeading()));
   }
 
   /**
@@ -86,12 +102,9 @@ public class Chassis extends SubsystemBase
   @Override
   public void periodic()
   {
+    this.updateOdometry();
   }
 
-  public double getAngle()
-  {
-    return m_ahrs.getAngle();
-  }
   /**
    * Controls movement of robot drivetrain with passed in power and turn values.
    * Allows external commands to control the private differentialDrive object.
@@ -112,5 +125,112 @@ public class Chassis extends SubsystemBase
   public void shiftHighGear()
   {
     m_gearShift.set(Value.kForward);
+  }
+
+  /**
+   * Get heading of the robot (no domain).
+   * @return the angle of the gyro in degrees.
+   */
+  public double getAngle()
+  {
+    return m_ahrs.getAngle();
+  }
+
+  /**
+   * Reset left and right encoder positions.
+   */
+  public void resetEncoders()
+  {
+    m_leftMaster.setSelectedSensorPosition(0);
+    m_rightMaster.setSelectedSensorPosition(0);
+  }
+
+  /**
+   * Reset gyro to zero the heading of the robot.
+   */
+  public void zeroHeading()
+  {
+    m_ahrs.reset();
+  }
+
+  /**
+   * Methods for path following.
+   */
+
+  /**
+   * Get the distance the left and right sides of the robot have driven with encoder feedback.
+   * Convert position (units) to distance (meters).
+   * @return the distance travelled of the specified drive train side.
+   */
+  public double getLeftEncoderDistance()
+  {
+    return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+  }
+  public double getRightEncoderDistance()
+  {
+    return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+  }
+
+  /**
+   * Get rate of left and right encoders in distance (meters) per second.
+   * Convert velocity (units/100ms) to rate (m/s).
+   * @return the current rate of the encoder.
+   */
+  public double getLeftEncoderRate()
+  {
+    return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+  }
+  public double getRightEncoderRate()
+  {
+    return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+  }
+
+  /**
+   * Get current wheel speeds of the robot based on encoder feedback.
+   * @return the current wheel speeds.
+   */
+  public DifferentialDriveWheelSpeeds getWheelSpeeds()
+  {
+    return new DifferentialDriveWheelSpeeds(this.getLeftEncoderRate(), this.getRightEncoderRate());
+  }
+
+  /**
+   * Get gyro heading between -180 to 180.
+   * Uses Math.IEEEremainder to get range of -180 to 180 --> dividend - (divisor * Math.Round(dividend / divisor)).
+   * @return the robot's heading in degrees.
+   */
+  public double getHeading()
+  {
+    return Math.IEEEremainder(m_ahrs.getAngle(), 360) * (Constants.K_GYRO_REVERSED ? -1.0 : 1.0);
+  }
+
+  /**
+   * Updates the odometry with current gyro angle and encoder distances.
+   */
+  public void updateOdometry()
+  {
+    m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftEncoderDistance(), this.getRightEncoderDistance());
+  }
+
+  /**
+   * Get an estimation for the current pose of the robot.
+   * @return the pose in meters.
+   */
+  public Pose2d getPose()
+  {
+    return m_odometry.getPoseMeters();
+  }
+
+  /**
+   * Controls the left and right sides of the drive train directly with voltages.
+   * Use setVoltage() rather than set() as it will compensate for battery "voltage sag," required for accuracy.
+   * @param leftVoltage  the commanded left voltage output.
+   * @param rightVoltage the commanded right voltage output.
+   */
+  public void driveWithVoltage(double leftVoltage, double rightVoltage)
+  {
+    m_leftMaster.setVoltage(leftVoltage);
+    m_rightMaster.setVoltage(-rightVoltage);
+    m_differentialDrive.feed();
   }
 }
