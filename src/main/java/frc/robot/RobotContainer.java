@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -22,6 +25,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 /**
@@ -77,9 +81,6 @@ public class RobotContainer
     /* Bind commands to joystick buttons. */
     m_OI.configureButtonBindings();
 
-    /* Initialize default commands for all subsystems. */
-    this.initializeDefaultCommands();
-
     /* Initialize autonomous command chooser and display on the SmartDashboard. */
     this.initializeAutoChooser();
 
@@ -92,7 +93,7 @@ public class RobotContainer
    * Default commands are commands that run automatically whenever a subsystem is not being used by another command.
    * If default command is set to null, there will be no default command for the subsystem.
    */
-  private void initializeDefaultCommands()
+  public void initializeDefaultCommands()
   {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
@@ -130,23 +131,23 @@ public class RobotContainer
      */
 
     /* Create voltage constraint to ensure robot doesn't accelerate too fast. */
-    var autoVoltageConstraint = 
-      new DifferentialDriveVoltageConstraint(
-        new SimpleMotorFeedforward(Constants.K_S_VOLTS,
-                                   Constants.K_V_VOLT_SECONDS_PER_METER,
-                                   Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
-        Constants.K_DRIVE_KINEMATICS, 
-        Constants.K_MAX_VOLTAGE);
+    // var autoVoltageConstraint = 
+    //   new DifferentialDriveVoltageConstraint(
+    //     new SimpleMotorFeedforward(Constants.K_S_VOLTS,
+    //                                Constants.K_V_VOLT_SECONDS_PER_METER,
+    //                                Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
+    //     Constants.K_DRIVE_KINEMATICS, 
+    //     Constants.K_MAX_VOLTAGE);
     
-    /* Create config for trajectory --> wraps together all of the path constraints. */
-    TrajectoryConfig config =
-      new TrajectoryConfig(Constants.K_MAX_SPEED_METERS_PER_SECOND,
-                           Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-          .setKinematics(Constants.K_DRIVE_KINEMATICS) // Ensure max speed is obeyed.
-          .addConstraint(autoVoltageConstraint); // Apply voltage constraint.
+    // /* Create config for trajectory --> wraps together all of the path constraints. */
+    // TrajectoryConfig config =
+    //   new TrajectoryConfig(Constants.K_MAX_SPEED_METERS_PER_SECOND,
+    //                        Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+    //       .setKinematics(Constants.K_DRIVE_KINEMATICS) // Ensure max speed is obeyed.
+    //       .addConstraint(autoVoltageConstraint); // Apply voltage constraint.
 
     /* Get path/trajectory to follow from PathWeaver json file. */
-    String trajectoryJSONFilePath = "paths/tenBall_pathOne.wpilib.json";
+    String trajectoryJSONFilePath = "paths/aroundThePole.wpilib.json";
     Trajectory trajectory = null;
     try
     {
@@ -156,6 +157,12 @@ public class RobotContainer
     {
       System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
     }
+
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+    Pose2d zeroedPose = odometry.getPoseMeters();
+
+    var transform = zeroedPose.minus(trajectory.getInitialPose());
+    trajectory = trajectory.transformBy(transform);
 
     /* Create command that will follow the trajectory. */
     RamseteCommand ramseteCommand = new RamseteCommand(

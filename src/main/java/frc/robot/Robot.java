@@ -88,6 +88,9 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit()
   {
+    /* Set robot heading. */
+    this.m_robotContainer.m_chassis.zeroHeading();
+
     /**
      * Gets selected autonomous command from autoChooser and schedules said command.
      */
@@ -118,6 +121,12 @@ public class Robot extends TimedRobot
      */
     if (m_autonomousCommand != null)
       m_autonomousCommand.cancel();
+
+    /* Initialize default commands for all subsystems. */
+    this.m_robotContainer.initializeDefaultCommands();
+
+    /* Set robot heading. */
+    this.m_robotContainer.m_chassis.zeroHeading();
   }
 
   /**

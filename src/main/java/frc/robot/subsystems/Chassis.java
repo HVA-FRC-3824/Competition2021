@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI;
@@ -57,14 +59,16 @@ public class Chassis extends SubsystemBase
     m_leftSlave.follow(m_leftMaster);
 
     m_rightMaster = new WPI_TalonFX(Constants.CHASSIS_RIGHT_MASTER_ID);
-    RobotContainer.configureTalonFX(m_rightMaster, true, false, 0.0, 0.0, 0.0, 0.0);
+    RobotContainer.configureTalonFX(m_rightMaster, false, false, 0.0, 0.0, 0.0, 0.0);
 
     m_rightSlave = new WPI_TalonFX(Constants.CHASSIS_RIGHT_SLAVE_ID);
-    RobotContainer.configureTalonFX(m_rightSlave, true, false, 0.0, 0.0, 0.0, 0.0);
+    RobotContainer.configureTalonFX(m_rightSlave, false, false, 0.0, 0.0, 0.0, 0.0);
 
     m_rightSlave.follow(m_rightMaster);
 
     m_differentialDrive = new DifferentialDrive(m_leftMaster, m_rightMaster);
+    m_differentialDrive.setSafetyEnabled(false);
+    m_differentialDrive.setDeadband(0.1);
 
     /**
      * Try to instantiate the navx gyro with exception catch
@@ -103,6 +107,19 @@ public class Chassis extends SubsystemBase
   public void periodic()
   {
     this.updateOdometry();
+
+    SmartDashboard.putNumber("LEFT ENCODER", m_leftMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RIGHT ENCODER", -m_rightMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("LEFT VELOCITY", m_leftMaster.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RIGHT VELOCITY", -m_rightMaster.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LEFT DISTANCE", this.getLeftEncoderDistance());
+    SmartDashboard.putNumber("RIGHT DISTANCE", this.getRightEncoderDistance());
+    SmartDashboard.putNumber("LEFT RATE", this.getLeftEncoderRate());
+    SmartDashboard.putNumber("RIGHT RATE", this.getRightEncoderRate());
+    SmartDashboard.putNumber("ANGLE", this.getAngle());
+    SmartDashboard.putNumber("HEADING", this.getHeading());
+    SmartDashboard.putNumber("LEFT VOLTAGE", m_leftMaster.getMotorOutputVoltage());
+    SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
   }
 
   /**
@@ -112,7 +129,10 @@ public class Chassis extends SubsystemBase
    */
   public void drive(double power, double turn)
   {
-    m_differentialDrive.arcadeDrive(turn, -power);
+    if (turn > -0.1 && turn < 0.1)
+      turn = 0;
+
+    m_differentialDrive.arcadeDrive(-power, turn, true);
   }
 
   /**
@@ -151,6 +171,7 @@ public class Chassis extends SubsystemBase
   public void zeroHeading()
   {
     m_ahrs.reset();
+    m_ahrs.setAngleAdjustment(0.0);
   }
 
   /**
@@ -168,7 +189,7 @@ public class Chassis extends SubsystemBase
   }
   public double getRightEncoderDistance()
   {
-    return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
   }
 
   /**
@@ -182,7 +203,7 @@ public class Chassis extends SubsystemBase
   }
   public double getRightEncoderRate()
   {
-    return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
   }
 
   /**
