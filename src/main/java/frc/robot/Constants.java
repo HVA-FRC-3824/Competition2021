@@ -34,21 +34,27 @@ public class Constants
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 0;
   public static final int CHASSIS_GEARSHIFT_PORT_B                          = 1;
 
-  public static final int CLIMBER_PTO_PORT_A                                = 4;
-  public static final int CLIMBER_PTO_PORT_B                                = 5;
-
   public static final int INTAKE_EXTENDER_PORT_A                            = 2;
   public static final int INTAKE_EXTENDER_PORT_B                            = 3;
 
-  /* Digital IO Ports */
-  public static final int CHAMBER_BALL_POS_1_PORT                           = 0;
-  public static final int CHAMBER_BALL_POS_2_PORT                           = 1;
-  public static final int CHAMBER_BALL_POS_3_PORT                           = 2;
-  public static final int CHAMBER_BALL_POS_4_PORT                           = 3;
-  
-  public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 5;
+  public static final int CLIMBER_PTO_PORT_A                                = 4;
+  public static final int CLIMBER_PTO_PORT_B                                = 5;
 
-  public static final int LAUNCHER_BALL_SWITCH_PORT                         = 4;
+  /* Digital IO Ports */
+  public static final int CHAMBER_BALL_POS_1_PORT_A                         = 0;
+  public static final int CHAMBER_BALL_POS_1_PORT_B                         = 1;
+  public static final int CHAMBER_BALL_POS_2_PORT_A                         = 2;
+  public static final int CHAMBER_BALL_POS_2_PORT_B                         = 3;
+  public static final int CHAMBER_BALL_POS_3_PORT_A                         = 4;
+  public static final int CHAMBER_BALL_POS_3_PORT_B                         = 5;
+  public static final int CHAMBER_BALL_POS_4_PORT_A                         = 6;
+  public static final int CHAMBER_BALL_POS_4_PORT_B                         = 7;
+  public static final int CHAMBER_BALL_POS_5_PORT_A                         = 8;
+  public static final int CHAMBER_BALL_POS_5_PORT_B                         = 9;
+  
+  public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 10;
+
+  public static final int LAUNCHER_BALL_SWITCH_PORT                         = 11;
 
   /* PWM Ports */
   public static final int CLIMBER_RATCHET_LEFT_PORT                         = 0;
@@ -273,7 +279,7 @@ public class Constants
   public static final double K_V_VOLT_SECONDS_PER_METER                     = 3.09;
   public static final double K_A_VOLT_SECONDS_SQUARED_PER_METER             = 0.154;
   
-  public static final double K_P_DRIVE_VEL                                  = 0.00425;//0.0585;//0.01; //5.85;
+  public static final double K_P_DRIVE_VEL                                  = 0.00425;
 
   public static final double K_TRACK_WIDTH_METERS                           = 0.774;
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS        = new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
@@ -282,6 +288,7 @@ public class Constants
     "headroom" in dealing with "voltage sag." */
   public static final int    K_MAX_VOLTAGE                                  = 10;
   
+  /* If these values are changed, must also edit max velocity/acceleration in PathWeaver. */
   public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 2.5;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 3.0;
 

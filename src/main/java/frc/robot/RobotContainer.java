@@ -21,9 +21,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -49,6 +47,8 @@ public class RobotContainer
   public static final ControlPanel m_controlPanel = new ControlPanel();
   public static final Intake m_intake = new Intake();
   public static final Launcher m_launcher = new Launcher();
+
+  public static final Limelight m_limelight = Limelight.getInstance();
 
   /**
    * Instantiation of OI and inline commands.
@@ -93,7 +93,7 @@ public class RobotContainer
    * Default commands are commands that run automatically whenever a subsystem is not being used by another command.
    * If default command is set to null, there will be no default command for the subsystem.
    */
-  public void initializeDefaultCommands()
+  public static void initializeDefaultCommands()
   {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
@@ -127,24 +127,7 @@ public class RobotContainer
     /**
      * Path following command
      * TODO: make this modular and move to a different location later.
-     * NOTE: some of the variables below may not be needed because getting trajectory from pathweaver, ex: config
      */
-
-    /* Create voltage constraint to ensure robot doesn't accelerate too fast. */
-    // var autoVoltageConstraint = 
-    //   new DifferentialDriveVoltageConstraint(
-    //     new SimpleMotorFeedforward(Constants.K_S_VOLTS,
-    //                                Constants.K_V_VOLT_SECONDS_PER_METER,
-    //                                Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
-    //     Constants.K_DRIVE_KINEMATICS, 
-    //     Constants.K_MAX_VOLTAGE);
-    
-    // /* Create config for trajectory --> wraps together all of the path constraints. */
-    // TrajectoryConfig config =
-    //   new TrajectoryConfig(Constants.K_MAX_SPEED_METERS_PER_SECOND,
-    //                        Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-    //       .setKinematics(Constants.K_DRIVE_KINEMATICS) // Ensure max speed is obeyed.
-    //       .addConstraint(autoVoltageConstraint); // Apply voltage constraint.
 
     /* Get path/trajectory to follow from PathWeaver json file. */
     String trajectoryJSONFilePath = "paths/aroundThePole.wpilib.json";
@@ -158,9 +141,12 @@ public class RobotContainer
       System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
     }
 
+    /**
+     * Make trajectory relative to robot rather than relative to field. 
+     * Transforms original trajectory to shift to robot's zeroed position.
+     */
     DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
     Pose2d zeroedPose = odometry.getPoseMeters();
-
     var transform = zeroedPose.minus(trajectory.getInitialPose());
     trajectory = trajectory.transformBy(transform);
 

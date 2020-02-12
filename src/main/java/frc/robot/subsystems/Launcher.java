@@ -16,9 +16,6 @@ public class Launcher extends SubsystemBase
 {
   private WPI_TalonFX m_topWheel;
   private WPI_TalonFX m_bottomWheel;
-  
-  // private WPI_TalonSRX m_topWheel;
-  // private WPI_TalonSRX m_bottomWheel;
 
   private WPI_TalonSRX m_feeder;
 
@@ -41,16 +38,6 @@ public class Launcher extends SubsystemBase
     m_bottomWheel = new WPI_TalonFX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
     RobotContainer.configureTalonFX(m_bottomWheel, false, false, Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P,
                             Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
-    
-    // m_topWheel = new WPI_TalonSRX(Constants.LAUNCHER_TOP_WHEEL_ID);
-    // RobotContainer.configureTalonSRX(m_topWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-    //                                 Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P, 
-    //                                 Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0);
-                            
-    // m_bottomWheel = new WPI_TalonSRX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
-    // RobotContainer.configureTalonSRX(m_bottomWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-    //                                 Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P, 
-    //                                 Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D, 0, 0);
 
     m_feeder = new WPI_TalonSRX(Constants.LAUNCHER_FEEDER_ID);
     RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
@@ -84,21 +71,13 @@ public class Launcher extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  // public WPI_TalonFX getTopWheelTalonFX()
-  // {
-  //     return m_topWheel;
-  // }
-  // public WPI_TalonFX getBottomWheelTalonFX()
-  // {
-  //     return m_bottomWheel;
-  // }
-  public WPI_TalonSRX getFeederTalonSRX()
+  public WPI_TalonFX getTopWheelTalonFX()
   {
-      return m_feeder;
+      return m_topWheel;
   }
-  public WPI_TalonSRX getPivotTalonSRX()
+  public WPI_TalonFX getBottomWheelTalonFX()
   {
-      return m_pivot;
+      return m_bottomWheel;
   }
 
   /**
