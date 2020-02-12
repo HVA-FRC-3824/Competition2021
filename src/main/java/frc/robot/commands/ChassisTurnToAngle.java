@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 /**
  * A command that will turn the robot to the specified angle.
  */
-public class ChassisTurnAngle extends PIDCommand {
+public class ChassisTurnToAngle extends PIDCommand {
   /**
    * Turns to robot to the specified angle.
    *
    * @param targetAngleDegrees The angle to turn to
    * @param drive              The drive subsystem to use
    */
-  public ChassisTurnAngle(double targetAngleDegrees) {
+  public ChassisTurnToAngle(double targetAngleDegrees) {
     super(
       new PIDController(Constants.K_CHASSIS_TURN_P, Constants.K_CHASSIS_TURN_I, Constants.K_CHASSIS_TURN_D),
       // Close loop on heading
@@ -23,7 +23,7 @@ public class ChassisTurnAngle extends PIDCommand {
       // Set reference to target
       targetAngleDegrees,
       // Pipe output to turn robot
-      output -> RobotContainer.m_chassis.drive(0, output),
+      output -> RobotContainer.m_chassis.autoDrive(0, output),
       // Require the drive
       RobotContainer.m_chassis);
 

@@ -16,6 +16,8 @@ public class OI
 
   private static JoystickButton m_gearShiftBtn;
 
+  private static JoystickButton m_chassisTurnToTargetBtn;
+
   private static JoystickButton m_turnChassisForInitiationLineBtn;
   private static JoystickButton m_turnChassisForCloseTrenchBtn;
   private static JoystickButton m_turnChassisForFarTrenchBtn;
@@ -74,6 +76,8 @@ public class OI
     m_driverJoystick                  = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
 
     m_gearShiftBtn                    = new JoystickButton(m_driverJoystick, Constants.DRIVER_GEAR_SHIFT_BTN_ID);
+
+    m_chassisTurnToTargetBtn          = new JoystickButton(m_driverJoystick, Constants.DRIVER_CHASSIS_TURN_TO_TARGET_BTN_ID);
 
     m_turnChassisForInitiationLineBtn = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_INITIATION_LINE_BTN_ID);
     m_turnChassisForCloseTrenchBtn    = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_CLOSE_TRENCH_BTN_ID);
@@ -147,6 +151,9 @@ public class OI
     m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
     m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
 
+    m_chassisTurnToTargetBtn.whenPressed(RobotContainer.m_inlineCommands.m_chassisTurnToTarget);
+    m_chassisTurnToTargetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChassisTurnToTarget);
+
     m_turnChassisForInitiationLineBtn.whenPressed(RobotContainer.m_inlineCommands.m_turnChassisForInitiationLine);
     m_turnChassisForInitiationLineBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopTurningChassisAtInitiationLine);
 
@@ -206,5 +213,5 @@ public class OI
     m_setControlPanelSpinnerRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
   }
   
-//BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey
+  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey, at least indent your comment properly. -Jovi
 }

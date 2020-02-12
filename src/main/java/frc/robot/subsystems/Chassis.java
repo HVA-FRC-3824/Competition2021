@@ -68,7 +68,6 @@ public class Chassis extends SubsystemBase
 
     m_differentialDrive = new DifferentialDrive(m_leftMaster, m_rightMaster);
     m_differentialDrive.setSafetyEnabled(false);
-    m_differentialDrive.setDeadband(0.1);
 
     /**
      * Try to instantiate the navx gyro with exception catch
@@ -123,16 +122,27 @@ public class Chassis extends SubsystemBase
   }
 
   /**
-   * Controls movement of robot drivetrain with passed in power and turn values.
+   * Controls movement of robot drivetrain with passed in power and turn values
+   * from driver input of joystick.
    * Allows external commands to control the private differentialDrive object.
-   * Can be used for manual and autonomous input.
    */
-  public void drive(double power, double turn)
+  public void teleopDrive(double power, double turn)
   {
+    /* Creates deadband for joystick twist input. */
     if (turn > -0.1 && turn < 0.1)
       turn = 0;
 
     m_differentialDrive.arcadeDrive(-power, turn, true);
+  }
+
+  /**
+   * Controls movement of robot drivetrain with passed in power and turn values
+   * from autonomous input. Example: vision control.
+   * Difference from teleopDrive is there's no deadband.
+   */
+  public void autoDrive(double power, double turn)
+  {
+    m_differentialDrive.arcadeDrive(-power, turn, false);
   }
 
   /**

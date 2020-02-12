@@ -30,6 +30,9 @@ public class InlineCommands {
 
   public final Command m_shiftHighGear;
   public final Command m_shiftLowGear;
+  
+  public final Command m_chassisTurnToTarget;
+  public final Command m_stopChassisTurnToTarget;
 
   public final Command m_turnChassisForInitiationLine;
   public final Command m_turnChassisForCloseTrench;
@@ -39,7 +42,6 @@ public class InlineCommands {
   public final Command m_stopTurningChassisAtCloseTrench;
   public final Command m_stopTurningChassisAtFarTrench;
   
-
   /* Climber Inline Command Declarations */
   public final Command m_jogClimberReelPositionUp;
   public final Command m_jogClimberReelPositionDown;
@@ -61,8 +63,6 @@ public class InlineCommands {
   public final Command m_setIntakeWheelsPower;
   public final Command m_setIntakeWheelsRPM;
   public final Command m_stopIntakeWheels;
-
-
 
   /* Launcher Inline Command Declarations */
   public final Command m_setLauncherTopWheelPower;
@@ -94,26 +94,31 @@ public class InlineCommands {
 
     /* Chassis Inline Command Instantiations */
     m_driveWithJoystick =
-      new RunCommand(() -> RobotContainer.m_chassis.drive(RobotContainer.m_OI.getDriverJoystick().getY(), 
+      new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
                     RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis);
     m_shiftHighGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftHighGear());
     m_shiftLowGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftLowGear());
 
+    m_chassisTurnToTarget =
+      new ChassisTurnToTarget();
+    m_stopChassisTurnToTarget =
+      new InstantCommand(() -> this.m_chassisTurnToTarget.cancel());
+
     m_turnChassisForInitiationLine =
-      new ChassisTurnAngle(Constants.CHASSIS_INITIATION_LINE_ANGLE);
+      new ChassisTurnToAngle(Constants.CHASSIS_INITIATION_LINE_ANGLE);
     m_turnChassisForCloseTrench =    
-      new ChassisTurnAngle(Constants.CHASSIS_CLOSE_TRENCH_ANGLE);
+      new ChassisTurnToAngle(Constants.CHASSIS_CLOSE_TRENCH_ANGLE);
     m_turnChassisForFarTrench =
-      new ChassisTurnAngle(Constants.CHASSIS_FAR_TRENCH_ANGLE);
+      new ChassisTurnToAngle(Constants.CHASSIS_FAR_TRENCH_ANGLE);
       
     m_stopTurningChassisAtInitiationLine =
-      new InstantCommand(() -> m_turnChassisForInitiationLine.cancel());
+      new InstantCommand(() -> this.m_turnChassisForInitiationLine.cancel());
     m_stopTurningChassisAtCloseTrench =
-      new InstantCommand(() -> m_turnChassisForCloseTrench.cancel());
+      new InstantCommand(() -> this.m_turnChassisForCloseTrench.cancel());
     m_stopTurningChassisAtFarTrench =
-      new InstantCommand(() -> m_turnChassisForFarTrench.cancel());
+      new InstantCommand(() -> this.m_turnChassisForFarTrench.cancel());
   
     /* Chamber Inline Command Instantiations */
     m_setChamberElevatorPower =
@@ -171,7 +176,6 @@ public class InlineCommands {
     m_setLauncherBottomWheelPower =
       new RunCommand(() -> RobotContainer.m_launcher.setBottomWheelPower(RobotContainer.m_OI.getOperatorController().
                     getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
-    
     m_setLauncherWheelsPower = new ParallelCommandGroup(m_setLauncherTopWheelPower, m_setLauncherBottomWheelPower);
     m_setLauncherWheelsPower.addRequirements(RobotContainer.m_launcher);
 

@@ -77,6 +77,9 @@ public class Constants
   public static final double K_TURN_TOLERANCE_DEG                           = 0;
   public static final double K_TURN_RATE_TOLERANCE_DEG_PER_SEC              = 0;
 
+  public static final double K_CHASSIS_TURN_VISION_P                        = 0.01;
+  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.05;
+
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
   public static final double CHAMBER_ELEVATOR_P                             = 0.0;
@@ -207,6 +210,8 @@ public class Constants
 
   /* Buttons */
   public static final int    DRIVER_GEAR_SHIFT_BTN_ID                       = 2;
+
+  public static final int    DRIVER_CHASSIS_TURN_TO_TARGET_BTN_ID           = 1;
 
   public static final int    DRIVER_TURN_CHASSIS_FOR_INITIATION_LINE_BTN_ID = 3;
   public static final int    DRIVER_TURN_CHASSIS_FOR_CLOSE_TRENCH_BTN_ID    = 4;
