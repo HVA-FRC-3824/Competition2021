@@ -141,6 +141,10 @@ public class Limelight
   {
     this.setLEDMode(LEDMode.OFF);
   }
+  public void blinkLED()
+  {
+    this.setLEDMode(LEDMode.BLINK);
+  }
 
   /**
    * Method to set camera mode.

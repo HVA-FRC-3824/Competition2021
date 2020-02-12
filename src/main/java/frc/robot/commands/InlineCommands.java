@@ -32,6 +32,7 @@ public class InlineCommands {
   public final Command m_shiftLowGear;
   
   public final Command m_chassisTurnToTarget;
+  public final Command m_chassisAutoTurnToTarget;
   public final Command m_stopChassisTurnToTarget;
 
   public final Command m_turnChassisForInitiationLine;
@@ -102,6 +103,8 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_chassis.shiftLowGear());
 
     m_chassisTurnToTarget =
+      new ChassisTurnToTarget().andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()), this.m_driveWithJoystick);
+    m_chassisAutoTurnToTarget =
       new ChassisTurnToTarget();
     m_stopChassisTurnToTarget =
       new InstantCommand(() -> this.m_chassisTurnToTarget.cancel());

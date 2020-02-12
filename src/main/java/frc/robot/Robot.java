@@ -96,6 +96,9 @@ public class Robot extends TimedRobot
     /* Zero robot heading to current heading. */
     RobotContainer.m_chassis.zeroHeading();
 
+    /* Initialize zeroed pose for transforming trajectories. */
+    RobotContainer.initializeZeroedPos();
+
     /**
      * Gets selected autonomous command from autoChooser and schedules said command.
      */

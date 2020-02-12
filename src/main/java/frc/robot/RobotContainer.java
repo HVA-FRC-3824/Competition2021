@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -74,6 +75,11 @@ public class RobotContainer
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
   /**
+   * Declaration of zeroed Pose2d object for transforming trajectories.
+   */
+  private static Pose2d m_zeroedPose;
+
+  /**
    * This code runs at robotInit.
    */
   public RobotContainer() 
@@ -110,7 +116,8 @@ public class RobotContainer
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", /*DEFAULT COMMAND HERE*/null);
-    m_autoChooser.addOption("COMMAND NAME HERE", /*COMMAND HERE*/null);
+    m_autoChooser.addOption("TEST", new CommandGroupTemplate());
+    m_autoChooser.addOption("TEN BALL", new AutonomousTenBall());
 
     /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
@@ -122,15 +129,27 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    // return m_autoChooser.getSelected();
+    return m_autoChooser.getSelected();
+  }
 
-    /**
-     * Path following command
-     * TODO: make this modular and move to a different location later.
-     */
+  /**
+   * Gets zeroed pose to transform trajectory relative to robot's initial position.
+   */
+  public static void initializeZeroedPos()
+  {
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+    m_zeroedPose = odometry.getPoseMeters();
+  }
 
+  /**
+   * Generates ramsete command for following passed in path in autonomous.
+   * @param pathName is the path file generated from PathWeaver.
+   * @return sequential command group that follows the path and stops when complete.
+   */
+  public static SequentialCommandGroup generateRamsete(String pathName)
+  {
     /* Get path/trajectory to follow from PathWeaver json file. */
-    String trajectoryJSONFilePath = "paths/aroundThePole.wpilib.json";
+    String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
     Trajectory trajectory = null;
     try
     {
@@ -145,9 +164,7 @@ public class RobotContainer
      * Make trajectory relative to robot rather than relative to field. 
      * Transforms original trajectory to shift to robot's zeroed position.
      */
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
-    Pose2d zeroedPose = odometry.getPoseMeters();
-    var transform = zeroedPose.minus(trajectory.getInitialPose());
+    var transform = m_zeroedPose.minus(trajectory.getInitialPose());
     trajectory = trajectory.transformBy(transform);
 
     /* Create command that will follow the trajectory. */
@@ -166,7 +183,7 @@ public class RobotContainer
       m_chassis
     );
 
-    /* Run path following command, then stop the robot at the end. */
+    /* Return command group that will run path following command, then stop the robot at the end. */
     return ramseteCommand.andThen(() -> m_chassis.driveWithVoltage(0, 0));
   }
 

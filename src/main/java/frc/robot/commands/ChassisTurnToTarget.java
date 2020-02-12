@@ -55,19 +55,6 @@ public class ChassisTurnToTarget extends CommandBase
   }
 
   /**
-   * Called once the command ends or is interrupted.
-   */
-  @Override
-  public void end(boolean interrupted)
-  {
-    /* Set Limelight to driver mode. */
-    RobotContainer.m_limelight.setModeDriver();
-    
-    /* Re-schedule driveWithJoystick command since this command interrupted the previously scheduled one. */
-    RobotContainer.m_inlineCommands.m_driveWithJoystick.schedule();
-  }
-
-  /**
    * Returns true when the command should end.
    */
   @Override
