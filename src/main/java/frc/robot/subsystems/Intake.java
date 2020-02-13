@@ -33,6 +33,7 @@ public class Intake extends SubsystemBase
   @Override
   public void periodic()
   {
+    RobotContainer.displayTalonSRXInfo(m_wheelIntake, "Intake Wheels PID Info");
   }
 
   /**
