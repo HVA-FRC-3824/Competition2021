@@ -57,10 +57,10 @@ public class Constants
   public static final int LAUNCHER_BALL_SWITCH_PORT                         = 11;
 
   /* PWM Ports */
-  public static final int CLIMBER_RATCHET_LEFT_PORT                         = 0;
-  public static final int CLIMBER_RATCHET_RIGHT_PORT                        = 1;
-  public static final int CLIMBER_LOCK_RATCHET_LEFT_PORT                    = 2;
-  public static final int CLIMBER_LOCK_RATCHET_RIGHT_PORT                   = 3;
+  public static final int CLIMBER_RATCHET_LEFT_PORT                         = 1;
+  public static final int CLIMBER_RATCHET_RIGHT_PORT                        = 2;
+  public static final int CLIMBER_LOCK_RATCHET_LEFT_PORT                    = 3;
+  public static final int CLIMBER_LOCK_RATCHET_RIGHT_PORT                   = 4;
 
   /**
    * PID Constants
@@ -77,8 +77,8 @@ public class Constants
   public static final double K_TURN_TOLERANCE_DEG                           = 0;
   public static final double K_TURN_RATE_TOLERANCE_DEG_PER_SEC              = 0;
 
-  public static final double K_CHASSIS_TURN_VISION_P                        = 0.01;
-  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.05;
+  public static final double K_CHASSIS_TURN_VISION_P                        = 0.04;
+  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.03;
 
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
@@ -247,8 +247,8 @@ public class Constants
   public static final int    OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID      = 18;
   
   /* Intake */
-  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 2;
-  public static final int    OPERATOR_INTAKE_WHEEL_POWER_BTN_ID             = 3;
+  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 10;
+  public static final int    OPERATOR_INTAKE_WHEEL_POWER_BTN_ID             = 11;
   public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 4;
 
   /* Launcher */
@@ -259,9 +259,9 @@ public class Constants
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 8;
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 9;
 
-  public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 10;
-  public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 11;
-  public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 12;
+  public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 1;
+  public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 2;
+  public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 3;
 
   public static final int    OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID          = 13;
   public static final int    OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID            = 14;

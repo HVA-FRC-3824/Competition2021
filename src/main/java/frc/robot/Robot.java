@@ -73,7 +73,7 @@ public class Robot extends TimedRobot
   public void disabledInit()
   {
     /* Turn off Limelight LED when disabled so it doesn't blind drive team. */
-    RobotContainer.m_limelight.turnOffLED();
+    // RobotContainer.m_limelight.turnOffLED();
   }
 
   /**
@@ -131,7 +131,8 @@ public class Robot extends TimedRobot
       m_autonomousCommand.cancel();
 
     /* Initially switch Limelight to driver mode for teleoperation. */
-    RobotContainer.m_limelight.setModeDriver();
+    // RobotContainer.m_limelight.setModeDriver();
+    RobotContainer.m_limelight.setModeVision();
 
     /**
      * Initialize default commands for all subsystems.

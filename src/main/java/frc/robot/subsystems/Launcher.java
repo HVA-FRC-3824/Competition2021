@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -19,7 +20,7 @@ public class Launcher extends SubsystemBase
 
   private WPI_TalonSRX m_feeder;
 
-  private WPI_TalonSRX m_pivot;
+  private PWM m_pivot;
 
   private DigitalInput m_ballSwitch;
   
@@ -45,10 +46,7 @@ public class Launcher extends SubsystemBase
                                     Constants.LAUNCHER_FEEDER_D, Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, 
                                     Constants.LAUNCHER_FEEDER_ACCELERATION);
 
-    m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
-    RobotContainer.configureTalonSRX(m_pivot, true, FeedbackDevice.Analog, false, false, Constants.LAUNCHER_PIVOT_F,
-                                    Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, Constants.LAUNCHER_PIVOT_D,
-                                    Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, Constants.LAUNCHER_PIVOT_ACCELERATION);
+    m_pivot = new PWM(0);
 
     m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
 
@@ -86,11 +84,11 @@ public class Launcher extends SubsystemBase
    */
   public void setTopWheelPower(double power)
   {
-    m_topWheel.set(ControlMode.PercentOutput, power);
+    m_topWheel.set(ControlMode.PercentOutput, 0.85);
   }
   public void setBottomWheelPower(double power)
   {
-    m_bottomWheel.set(ControlMode.PercentOutput, power);
+    m_bottomWheel.set(ControlMode.PercentOutput, 0.85);
   }
 
   /**
@@ -119,7 +117,7 @@ public class Launcher extends SubsystemBase
    * Sets the desired position of the launcher pivot angle.
    * @param position will be used as the setpoint for the PID controller
    */
-  public void setAngle(int angle)
+  public void setAngle(int angle, double power)
   {
     /* Verify desired angle is within the minimum and maximum launcher angle range. */
     if (angle < Constants.LAUNCHER_PIVOT_MIN_ANGLE)
@@ -140,7 +138,15 @@ public class Launcher extends SubsystemBase
      */
     int setpoint = angle; // TODO: Find equation and convert angle to setpoint.
 
-    m_pivot.set(ControlMode.MotionMagic, setpoint);
+    SmartDashboard.putNumber("POWER", power);
+
+    // if (RobotContainer.m_OI.getOperatorController().getRawButtonPressed(10))
+    //   m_pivot.setSpeed(0.0);
+    // else if (RobotContainer.m_OI.getOperatorController().getRawButtonPressed(11))
+    //   m_pivot.setSpeed(0.5);
+    // else if (RobotContainer.m_OI.getOperatorController().getRawButtonPressed(12))
+    //   m_pivot.setSpeed(1.0);
+    m_pivot.setSpeed(power);
   }
 
   /**
@@ -155,11 +161,11 @@ public class Launcher extends SubsystemBase
   /**
    * This method is used to set the wheel RPMs and pivot angle for presets.
    */
-  public void setPreset(int topRPM, int bottomRPM, int pivotAngle)
+  public void setPreset(int topRPM, int bottomRPM, int pivotAngle, double power)
   {
     this.setTopWheelRPM(topRPM);
     this.setBottomWheelRPM(bottomRPM);
-    this.setAngle(pivotAngle);
+    this.setAngle(pivotAngle, power);
   }
 
   /**

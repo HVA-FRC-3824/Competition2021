@@ -15,12 +15,9 @@ public class Chamber extends SubsystemBase
 {
   private WPI_TalonSRX m_chamberElevator;
 
-  private Ultrasonic m_ballPos_1;
-  private Ultrasonic m_ballPos_2;
-  private Ultrasonic m_ballPos_3;
-  private Ultrasonic m_ballPos_4;
-  private Ultrasonic m_ballPos_5;
-
+  private Ultrasonic m_ballPos_entering;
+  private Ultrasonic m_ballPos_middle;
+  private Ultrasonic m_ballPos_exiting;
   public Chamber()
   {
     m_chamberElevator = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_ID);
@@ -29,11 +26,9 @@ public class Chamber extends SubsystemBase
                                     Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
                                     Constants.CHAMBER_ELEVATOR_ACCELERATION);
 
-    m_ballPos_1 = new Ultrasonic(Constants.CHAMBER_BALL_POS_1_PORT_A, Constants.CHAMBER_BALL_POS_1_PORT_B);
-    m_ballPos_2 = new Ultrasonic(Constants.CHAMBER_BALL_POS_2_PORT_A, Constants.CHAMBER_BALL_POS_2_PORT_B);
-    m_ballPos_3 = new Ultrasonic(Constants.CHAMBER_BALL_POS_3_PORT_A, Constants.CHAMBER_BALL_POS_3_PORT_B);
-    m_ballPos_4 = new Ultrasonic(Constants.CHAMBER_BALL_POS_4_PORT_A, Constants.CHAMBER_BALL_POS_4_PORT_B);
-    m_ballPos_5 = new Ultrasonic(Constants.CHAMBER_BALL_POS_5_PORT_A, Constants.CHAMBER_BALL_POS_5_PORT_B);
+    m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_1_PORT_A, Constants.CHAMBER_BALL_POS_1_PORT_B);
+    m_ballPos_middle = new Ultrasonic(Constants.CHAMBER_BALL_POS_2_PORT_A, Constants.CHAMBER_BALL_POS_2_PORT_B);
+    m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_3_PORT_A, Constants.CHAMBER_BALL_POS_3_PORT_B);
   }
   
   /**
@@ -45,8 +40,6 @@ public class Chamber extends SubsystemBase
     SmartDashboard.putNumber("BALL POS 1 DISTANCE", this.getRange());
     SmartDashboard.putNumber("BALL POS 2 DISTANCE", this.getRange1());
     SmartDashboard.putNumber("BALL POS 3 DISTANCE", this.getRange2());
-    SmartDashboard.putNumber("BALL POS 4 DISTANCE", this.getRange3());
-    SmartDashboard.putNumber("BALL POS 5 DISTANCE", this.getRange4());
   }
 
   /**
@@ -78,31 +71,21 @@ public class Chamber extends SubsystemBase
 
   public double getRange()
   {
-    return m_ballPos_1.getRangeInches();
+    return m_ballPos_entering.getRangeInches();
   }
   public double getRange1()
   {
-    return m_ballPos_2.getRangeInches();
+    return m_ballPos_middle.getRangeInches();
   }
   public double getRange2()
   {
-    return m_ballPos_3.getRangeInches();
-  }
-  public double getRange3()
-  {
-    return m_ballPos_4.getRangeInches();
-  }
-  public double getRange4()
-  {
-    return m_ballPos_5.getRangeInches();
+    return m_ballPos_exiting.getRangeInches();
   }
 
   public void startUltrasonic()
   {
-    m_ballPos_1.setAutomaticMode(true);
-    m_ballPos_2.setAutomaticMode(true);
-    m_ballPos_3.setAutomaticMode(true);
-    m_ballPos_4.setAutomaticMode(true);
-    m_ballPos_5.setAutomaticMode(true);
+    m_ballPos_entering.setAutomaticMode(true);
+    m_ballPos_middle.setAutomaticMode(true);
+    m_ballPos_exiting.setAutomaticMode(true);
   }
 }

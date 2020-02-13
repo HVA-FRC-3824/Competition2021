@@ -38,7 +38,7 @@ public class ChassisTurnToTarget extends CommandBase
   public void execute()
   {
     /* Heading error is how off the robot is from the target in the "x" direction. */
-    m_headingError = -RobotContainer.m_limelight.getTargetOffsetX();
+    m_headingError = RobotContainer.m_limelight.getTargetOffsetX();
 
     /* Calculate turn based on offset from target. */
     if (m_headingError > 0.5)
@@ -54,12 +54,21 @@ public class ChassisTurnToTarget extends CommandBase
     RobotContainer.m_chassis.autoDrive(RobotContainer.m_OI.getDriverJoystick().getY(), m_turn);
   }
 
+  @Override
+  public void end(boolean interrupted)
+  {
+    RobotContainer.m_limelight.setModeDriver();
+
+    // RobotContainer.m_inlineCommands.m_driveWithJoystick.schedule();
+  }
+
   /**
    * Returns true when the command should end.
    */
   @Override
   public boolean isFinished()
   {
-    return (m_headingError < 0.5 && m_headingError > -0.5);
+    // return (m_headingError < 0.5 && m_headingError > -0.5);
+    return false;
   }
 }
