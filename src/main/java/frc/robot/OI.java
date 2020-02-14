@@ -85,8 +85,7 @@ public class OI
 
     /* 
      * Operator Joystick
-     */
-    m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
+     */    m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
     /* Chamber */
     m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);

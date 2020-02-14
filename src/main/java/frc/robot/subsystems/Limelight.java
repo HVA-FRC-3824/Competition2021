@@ -113,7 +113,7 @@ public class Limelight
   }
 
   /**
-   * Get area of detected target.
+   * Get area of detected target.                                                                                                                        
    * @return target area from 0% to 100%.
    */
   public double getTargetArea()
@@ -136,7 +136,7 @@ public class Limelight
   public void turnOnLED()
   {
     this.setLEDMode(LEDMode.ON);
-  }
+  }                 
   public void turnOffLED()
   {
     this.setLEDMode(LEDMode.OFF);

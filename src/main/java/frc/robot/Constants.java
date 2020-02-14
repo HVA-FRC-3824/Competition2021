@@ -45,6 +45,12 @@ public class Constants
   public static final int CHAMBER_BALL_POS_1_PORT_B                         = 1;
   public static final int CHAMBER_BALL_POS_2_PORT_A                         = 2;
   public static final int CHAMBER_BALL_POS_2_PORT_B                         = 3;
+  public static final int CHAMBER_BALL_POS_3_PORT_A                         = 4;
+  public static final int CHAMBER_BALL_POS_3_PORT_B                         = 5;
+  public static final int CHAMBER_BALL_POS_4_PORT_A                         = 6;
+  public static final int CHAMBER_BALL_POS_4_PORT_B                         = 7;
+  public static final int CHAMBER_BALL_POS_5_PORT_A                         = 8;
+  public static final int CHAMBER_BALL_POS_5_PORT_B                         = 9;
   
   public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 10;
 
@@ -81,10 +87,10 @@ public class Constants
   public static final double CHAMBER_BALL_PRESENT_DIST                      = 10.0;
 
   public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
-
+  
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_P                             = 0.15;
-  public static final double CHAMBER_ELEVATOR_I                             = 0.00125;
+  public static final double CHAMBER_ELEVATOR_P                             = 0.0;
+  public static final double CHAMBER_ELEVATOR_I                             = 0.0;
   public static final double CHAMBER_ELEVATOR_D                             = 0.0;
   public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 0;
   public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 0;
@@ -119,8 +125,8 @@ public class Constants
 
   /* Intake */
   public static final double INTAKE_WHEEL_INTAKE_F                          = 0.0;
-  public static final double INTAKE_WHEEL_INTAKE_P                          = 0.15;
-  public static final double INTAKE_WHEEL_INTAKE_I                          = 0.00125;
+  public static final double INTAKE_WHEEL_INTAKE_P                          = 0.0;
+  public static final double INTAKE_WHEEL_INTAKE_I                          = 0.0;
   public static final double INTAKE_WHEEL_INTAKE_D                          = 0.0;
 
   /* Launcher */
@@ -177,8 +183,8 @@ public class Constants
   public static final int    CONTROL_PANEL_SPINNER_RPM                      = 0;
 
   /* Intake */
-  public static final double INTAKE_WHEEL_POWER                             = 0.5;
-  public static final int    INTAKE_WHEEL_RPM                               = 500;
+  public static final double INTAKE_WHEEL_POWER                             = -0.5;
+  public static final int    INTAKE_WHEEL_RPM                               = 120;
 
   /* Launcher */
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 0;
@@ -248,19 +254,19 @@ public class Constants
   public static final int    OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID      = 18;
   
   /* Intake */
-  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 10;
-  public static final int    OPERATOR_INTAKE_WHEEL_POWER_BTN_ID             = 11;
-  public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 4;
+  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 1;
+  public static final int    OPERATOR_INTAKE_WHEEL_POWER_BTN_ID             = 4;
+  public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 11;
 
   /* Launcher */
-  public static final int    OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID          = 5;
-  public static final int    OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID            = 7;
+  public static final int    OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID          = 7;
+  public static final int    OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID            = 9;
   public static final int    OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID           = 6;
 
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 8;
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 9;
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 10;
 
-  public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 1;
+  public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 5;
   public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 2;
   public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 3;
 

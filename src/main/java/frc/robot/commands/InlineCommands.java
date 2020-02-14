@@ -65,8 +65,6 @@ public class InlineCommands {
   public final Command m_setIntakeWheelsRPM;
   public final Command m_stopIntakeWheels;
 
-  public final Command m_intakeBall;
-
   /* Launcher Inline Command Declarations */
   public final Command m_setLauncherTopWheelPower;
   public final Command m_setLauncherBottomWheelPower;
@@ -168,14 +166,11 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_intake.toggleExtender());
 
     m_setIntakeWheelsPower =
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER));
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER), RobotContainer.m_intake);
     m_setIntakeWheelsRPM = 
       new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
     m_stopIntakeWheels = 
       new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(0.0));
-
-    m_intakeBall =
-      new LoadBallIntoChamber();
       
     /* Launcher Inline Command Instantiations */
     m_setLauncherTopWheelPower =
