@@ -16,7 +16,6 @@ public class Chamber extends SubsystemBase
   private WPI_TalonSRX m_chamberElevator;
 
   private Ultrasonic m_ballPos_entering;
-  private Ultrasonic m_ballPos_middle;
   private Ultrasonic m_ballPos_exiting;
   public Chamber()
   {
@@ -26,9 +25,8 @@ public class Chamber extends SubsystemBase
                                     Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
                                     Constants.CHAMBER_ELEVATOR_ACCELERATION);
 
-    m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_1_PORT_A, Constants.CHAMBER_BALL_POS_1_PORT_B);
-    m_ballPos_middle = new Ultrasonic(Constants.CHAMBER_BALL_POS_2_PORT_A, Constants.CHAMBER_BALL_POS_2_PORT_B);
-    m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_3_PORT_A, Constants.CHAMBER_BALL_POS_3_PORT_B);
+    m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_1_PORT_B, Constants.CHAMBER_BALL_POS_1_PORT_A);
+    m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_2_PORT_B, Constants.CHAMBER_BALL_POS_2_PORT_A);
   }
   
   /**
@@ -37,9 +35,8 @@ public class Chamber extends SubsystemBase
   @Override
   public void periodic()
   {
-    SmartDashboard.putNumber("BALL POS 1 DISTANCE", this.getRange());
-    SmartDashboard.putNumber("BALL POS 2 DISTANCE", this.getRange1());
-    SmartDashboard.putNumber("BALL POS 3 DISTANCE", this.getRange2());
+    SmartDashboard.putNumber("BALL ENTERING POS DISTANCE", this.getEnteringRange());
+    SmartDashboard.putNumber("BALL EXITING POS DISTANCE", this.getExitingRange());
   }
 
   /**
@@ -78,15 +75,11 @@ public class Chamber extends SubsystemBase
     m_chamberElevator.set(ControlMode.MotionMagic, presentPosition + distance);
   }
 
-  public double getRange()
+  public double getEnteringRange()
   {
     return m_ballPos_entering.getRangeInches();
   }
-  public double getRange1()
-  {
-    return m_ballPos_middle.getRangeInches();
-  }
-  public double getRange2()
+  public double getExitingRange()
   {
     return m_ballPos_exiting.getRangeInches();
   }
@@ -94,13 +87,12 @@ public class Chamber extends SubsystemBase
   public void startUltrasonic()
   {
     m_ballPos_entering.setAutomaticMode(true);
-    m_ballPos_middle.setAutomaticMode(true);
     m_ballPos_exiting.setAutomaticMode(true);
   }
 
   public double SensorDistance(int sensor)
   {
-    Ultrasonic [] sensors = {m_ballPos_entering, m_ballPos_middle, m_ballPos_exiting};
-    return sensors[sensor].getRangeMM();
+    Ultrasonic [] sensors = {m_ballPos_entering, m_ballPos_exiting};
+    return sensors[sensor].getRangeInches();
   }
 }

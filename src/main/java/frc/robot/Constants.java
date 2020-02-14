@@ -45,12 +45,6 @@ public class Constants
   public static final int CHAMBER_BALL_POS_1_PORT_B                         = 1;
   public static final int CHAMBER_BALL_POS_2_PORT_A                         = 2;
   public static final int CHAMBER_BALL_POS_2_PORT_B                         = 3;
-  public static final int CHAMBER_BALL_POS_3_PORT_A                         = 4;
-  public static final int CHAMBER_BALL_POS_3_PORT_B                         = 5;
-  public static final int CHAMBER_BALL_POS_4_PORT_A                         = 6;
-  public static final int CHAMBER_BALL_POS_4_PORT_B                         = 7;
-  public static final int CHAMBER_BALL_POS_5_PORT_A                         = 8;
-  public static final int CHAMBER_BALL_POS_5_PORT_B                         = 9;
   
   public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 10;
 
@@ -82,8 +76,7 @@ public class Constants
 
   /* Chamber */
   public static final int    CHAMBER_ENTERING_BALLPOS                       = 0;
-  public static final int    CHAMBER_MIDDLE_BALLPOS                         = 1;
-  public static final int    CHAMBER_EXITING_BALLPOS                        = 2;
+  public static final int    CHAMBER_EXITING_BALLPOS                        = 1;
 
   public static final double CHAMBER_BALL_PRESENT_DIST                      = 10.0;
 

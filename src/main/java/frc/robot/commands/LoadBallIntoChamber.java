@@ -30,11 +30,10 @@ public class LoadBallIntoChamber extends CommandBase
     // Check entering sensor for ball
     else 
     {
-        if (RobotContainer.m_chamber.SensorDistance(Constants.CHAMBER_ENTERING_BALLPOS) < Constants.CHAMBER_BALL_PRESENT_DIST)
-        {
-            RobotContainer.m_chamber.stepChamberDistance(Constants.CHAMBER_BALL_STEP_DIST);
-        }
-
+      if (RobotContainer.m_chamber.SensorDistance(Constants.CHAMBER_ENTERING_BALLPOS) < Constants.CHAMBER_BALL_PRESENT_DIST)
+      {
+          RobotContainer.m_chamber.stepChamberDistance(Constants.CHAMBER_BALL_STEP_DIST);
+      }
     }
   }
 
