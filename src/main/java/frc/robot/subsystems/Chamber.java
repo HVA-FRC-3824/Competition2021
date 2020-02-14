@@ -69,6 +69,15 @@ public class Chamber extends SubsystemBase
     m_chamberElevator.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
   }
 
+  /**
+   * method to move the chamber the specified distance from its current position
+   */
+  public void stepChamberDistance(double distance)
+  {
+    double presentPosition = m_chamberElevator.getSelectedSensorPosition(0);
+    m_chamberElevator.set(ControlMode.MotionMagic, presentPosition + distance);
+  }
+
   public double getRange()
   {
     return m_ballPos_entering.getRangeInches();
@@ -87,5 +96,11 @@ public class Chamber extends SubsystemBase
     m_ballPos_entering.setAutomaticMode(true);
     m_ballPos_middle.setAutomaticMode(true);
     m_ballPos_exiting.setAutomaticMode(true);
+  }
+
+  public double SensorDistance(int sensor)
+  {
+    Ultrasonic [] sensors = {m_ballPos_entering, m_ballPos_middle, m_ballPos_exiting};
+    return sensors[sensor].getRangeMM();
   }
 }

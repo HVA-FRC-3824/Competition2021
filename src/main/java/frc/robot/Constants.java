@@ -81,9 +81,17 @@ public class Constants
   public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.03;
 
   /* Chamber */
+  public static final int    CHAMBER_ENTERING_BALLPOS                       = 0;
+  public static final int    CHAMBER_MIDDLE_BALLPOS                         = 1;
+  public static final int    CHAMBER_EXITING_BALLPOS                        = 2;
+
+  public static final double CHAMBER_BALL_PRESENT_DIST                      = 10.0;
+
+  public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
+
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_P                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_I                             = 0.0;
+  public static final double CHAMBER_ELEVATOR_P                             = 0.15;
+  public static final double CHAMBER_ELEVATOR_I                             = 0.00125;
   public static final double CHAMBER_ELEVATOR_D                             = 0.0;
   public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 0;
   public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 0;
@@ -118,8 +126,8 @@ public class Constants
 
   /* Intake */
   public static final double INTAKE_WHEEL_INTAKE_F                          = 0.0;
-  public static final double INTAKE_WHEEL_INTAKE_P                          = 0.0;
-  public static final double INTAKE_WHEEL_INTAKE_I                          = 0.0;
+  public static final double INTAKE_WHEEL_INTAKE_P                          = 0.15;
+  public static final double INTAKE_WHEEL_INTAKE_I                          = 0.00125;
   public static final double INTAKE_WHEEL_INTAKE_D                          = 0.0;
 
   /* Launcher */
@@ -177,7 +185,7 @@ public class Constants
 
   /* Intake */
   public static final double INTAKE_WHEEL_POWER                             = 0.5;
-  public static final int    INTAKE_WHEEL_RPM                               = 120;
+  public static final int    INTAKE_WHEEL_RPM                               = 500;
 
   /* Launcher */
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 0;
