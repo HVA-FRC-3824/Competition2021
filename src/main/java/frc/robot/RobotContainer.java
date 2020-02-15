@@ -116,8 +116,8 @@ public class RobotContainer
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", /*DEFAULT COMMAND HERE*/null);
-    // m_autoChooser.addOption("TEST", new CommandGroupTemplate());
-    // m_autoChooser.addOption("TEN BALL", new AutonomousTenBall());
+    m_autoChooser.addOption("TEST", new CommandGroupTemplate());
+    m_autoChooser.addOption("TEN BALL", new AutonomousTenBall());
 
     /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
@@ -148,50 +148,49 @@ public class RobotContainer
    */
   public static SequentialCommandGroup generateRamsete(String pathName)
   {
-    // /* Get path/trajectory to follow from PathWeaver json file. */
-    // String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
-    // Trajectory trajectory = null;
-    // try
-    // {
-    //   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
-    //   trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    // } catch (IOException ex)
-    // {
-    //   System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
-    // }
+    /* Get path/trajectory to follow from PathWeaver json file. */
+    String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
+    Trajectory trajectory = null;
+    try
+    {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex)
+    {
+      System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
+    }
 
-    // /**
-    //  * Make trajectory relative to robot rather than relative to field. 
-    //  * Transforms original trajectory to shift to robot's zeroed position.
-    //  */
-    // try
-    // {
-    //   var transform = m_zeroedPose.minus(trajectory.getInitialPose());
-    //   trajectory = trajectory.transformBy(transform);
-    // } catch (NullPointerException ex)
-    // {
-    //   System.out.println("\nZeroed Pose not initialized yet.\n");
-    // }
+    /**
+     * Make trajectory relative to robot rather than relative to field. 
+     * Transforms original trajectory to shift to robot's zeroed position.
+     */
+    try
+    {
+      var transform = m_zeroedPose.minus(trajectory.getInitialPose());
+      trajectory = trajectory.transformBy(transform);
+    } catch (NullPointerException ex)
+    {
+      System.out.println("\nZeroed Pose not initialized yet.\n");
+    }
 
-    // /* Create command that will follow the trajectory. */
-    // RamseteCommand ramseteCommand = new RamseteCommand(
-    //   trajectory,
-    //   m_chassis::getPose,
-    //   new RamseteController(Constants.K_RAMSETE_B, Constants.K_RAMSETE_ZETA),
-    //   new SimpleMotorFeedforward(Constants.K_S_VOLTS,
-    //                              Constants.K_V_VOLT_SECONDS_PER_METER,
-    //                              Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
-    //   Constants.K_DRIVE_KINEMATICS,
-    //   m_chassis::getWheelSpeeds,
-    //   new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
-    //   new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
-    //   m_chassis::driveWithVoltage, // RamseteCommand passes volts to the callback.
-    //   m_chassis
-    // );
+    /* Create command that will follow the trajectory. */
+    RamseteCommand ramseteCommand = new RamseteCommand(
+      trajectory,
+      m_chassis::getPose,
+      new RamseteController(Constants.K_RAMSETE_B, Constants.K_RAMSETE_ZETA),
+      new SimpleMotorFeedforward(Constants.K_S_VOLTS,
+                                 Constants.K_V_VOLT_SECONDS_PER_METER,
+                                 Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
+      Constants.K_DRIVE_KINEMATICS,
+      m_chassis::getWheelSpeeds,
+      new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
+      new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
+      m_chassis::driveWithVoltage, // RamseteCommand passes volts to the callback.
+      m_chassis
+    );
 
-    // /* Return command group that will run path following command, then stop the robot at the end. */
-    // return ramseteCommand.andThen(() -> m_chassis.driveWithVoltage(0, 0));
-    return null;
+    /* Return command group that will run path following command, then stop the robot at the end. */
+    return ramseteCommand.andThen(() -> m_chassis.driveWithVoltage(0, 0));
   }
 
   /**

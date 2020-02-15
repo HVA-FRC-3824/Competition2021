@@ -183,7 +183,7 @@ public class Constants
   public static final int    CONTROL_PANEL_SPINNER_RPM                      = 0;
 
   /* Intake */
-  public static final double INTAKE_WHEEL_POWER                             = -0.5;
+  public static final double INTAKE_WHEEL_POWER                             = -0.7;
   public static final int    INTAKE_WHEEL_RPM                               = 120;
 
   /* Launcher */
@@ -259,14 +259,14 @@ public class Constants
   public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 11;
 
   /* Launcher */
-  public static final int    OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID          = 7;
+  public static final int    OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID          = 5;
   public static final int    OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID            = 9;
   public static final int    OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID           = 6;
 
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 8;
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 10;
 
-  public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 5;
+  public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 7;
   public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 2;
   public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 3;
 

@@ -9,13 +9,13 @@ public class CommandGroupTemplate extends SequentialCommandGroup
 {
   public CommandGroupTemplate()
   {
-    // addCommands(
-    //     new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
-    //     RobotContainer.generateRamsete("test"),
-    //     new InstantCommand(() -> RobotContainer.m_limelight.turnOnLED()),
-    //     new WaitCommand(3.0),
-    //     new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
-    //     RobotContainer.generateRamsete("test2")
-    // );
+    addCommands(
+        new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
+        RobotContainer.generateRamsete("test"),
+        new InstantCommand(() -> RobotContainer.m_limelight.turnOnLED()),
+        new WaitCommand(3.0),
+        new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
+        RobotContainer.generateRamsete("test2")
+    );
   }
 }

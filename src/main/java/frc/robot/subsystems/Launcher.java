@@ -84,11 +84,11 @@ public class Launcher extends SubsystemBase
    */
   public void setTopWheelPower(double power)
   {
-    m_topWheel.set(ControlMode.PercentOutput, 0.85);
+    m_topWheel.set(ControlMode.PercentOutput, 0.65);
   }
   public void setBottomWheelPower(double power)
   {
-    m_bottomWheel.set(ControlMode.PercentOutput, 0.85);
+    m_bottomWheel.set(ControlMode.PercentOutput, 0.65);
   }
 
   /**

@@ -103,7 +103,7 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_chassis.shiftLowGear());
 
     m_chassisTurnToTarget =
-      new ChassisTurnToTarget(); //.andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()), this.m_driveWithJoystick);
+      new ChassisTurnToTarget().andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()));
     m_chassisAutoTurnToTarget =
       new ChassisTurnToTarget();
     m_stopChassisTurnToTarget =
@@ -208,10 +208,10 @@ public class InlineCommands {
                         RobotContainer.m_launcher);
     m_setLauncherForCloseTrench =
       new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_CLOSE_TRENCH_TOP_RPM, 
-                        Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_CLOSE_TRENCH_ANGLE, -0.35), RobotContainer.m_launcher);
+                        Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_CLOSE_TRENCH_ANGLE, 0.15), RobotContainer.m_launcher);
     m_setLauncherForFarTrench =
       new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_FAR_TRENCH_TOP_RPM, 
-                        Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_FAR_TRENCH_ANGLE, -0.25), RobotContainer.m_launcher);
+                        Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_FAR_TRENCH_ANGLE, 0.35), RobotContainer.m_launcher);
 
     m_setLauncherFeederPower =
       new InstantCommand(() -> RobotContainer.m_launcher.setFeederPower(Constants.LAUNCHER_FEEDER_POWER));

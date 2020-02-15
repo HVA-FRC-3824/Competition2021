@@ -132,7 +132,7 @@ public class Chassis extends SubsystemBase
     if (turn > -0.1 && turn < 0.1)
       turn = 0;
 
-    m_differentialDrive.arcadeDrive(-power, turn, true);
+    m_differentialDrive.arcadeDrive(power, turn, true);
   }
 
   /**
