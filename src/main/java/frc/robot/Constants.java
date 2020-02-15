@@ -84,7 +84,8 @@ public class Constants
   public static final int    CHAMBER_ENTERING_BALLPOS                       = 0;
   public static final int    CHAMBER_EXITING_BALLPOS                        = 1;
 
-  public static final double CHAMBER_BALL_PRESENT_DIST                      = 10.0;
+  public static final double CHAMBER_BALL_FAR_DIST                          = 10.0;
+  public static final double CHAMBER_BALL_NEAR_DIST                         = 5.0;
 
   public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
   
