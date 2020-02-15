@@ -132,7 +132,7 @@ public class Chassis extends SubsystemBase
     if (turn > -0.1 && turn < 0.1)
       turn = 0;
 
-    m_differentialDrive.arcadeDrive(power, turn, true);
+    m_differentialDrive.arcadeDrive(-power, turn, true);
   }
 
   /**
@@ -241,6 +241,17 @@ public class Chassis extends SubsystemBase
   public void updateOdometry()
   {
     m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftEncoderDistance(), this.getRightEncoderDistance());
+  }
+
+  /**
+   * Resets odometry for following new paths during one runtime.
+   */
+  public void resetOdometry()
+  {
+    this.zeroHeading();
+    this.resetEncoders();
+    Pose2d pose = new Pose2d();
+    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(this.getHeading()));
   }
 
   /**

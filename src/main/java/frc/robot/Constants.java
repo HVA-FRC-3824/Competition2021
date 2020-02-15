@@ -301,7 +301,7 @@ public class Constants
   public static final int    K_MAX_VOLTAGE                                  = 10;
   
   /* If these values are changed, must also edit max velocity/acceleration in PathWeaver. */
-  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 2.5;
+  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 1.0;//2.5;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 3.0;
 
   public static final double K_RAMSETE_B                                    = 2;

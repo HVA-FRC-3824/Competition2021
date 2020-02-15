@@ -90,6 +90,7 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit()
   {
+
     /* Switch Limelight to vision mode for autonomous. */
     RobotContainer.m_limelight.setModeVision();
 

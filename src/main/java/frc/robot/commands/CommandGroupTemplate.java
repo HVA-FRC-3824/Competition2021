@@ -11,11 +11,11 @@ public class CommandGroupTemplate extends SequentialCommandGroup
   {
     addCommands(
         new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
-        RobotContainer.generateRamsete("test"),
+        new FollowPath("straight"),
         new InstantCommand(() -> RobotContainer.m_limelight.turnOnLED()),
         new WaitCommand(3.0),
         new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
-        RobotContainer.generateRamsete("test2")
+        new FollowPath("straight2")
     );
   }
 }

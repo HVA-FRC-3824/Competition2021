@@ -47,4 +47,21 @@ public class LoadBallIntoChamber extends CommandBase
   {
     return true;
   }
+
+  public void indexingBalls()
+  {
+    // int ballCount = 0;
+    // //when ball exits, minus 1
+    // if (RobotContainer.m_chamber.SensorDistance(Constants.CHAMBER_ENTERING_BALLPOS) < Constants.CHAMBER_BALL_PRESENT_DIST)
+    // {
+    //   ballCount -= 1;
+    // }
+
+    //LED lights decrease by 1
+
+    //when ball enters, add 1
+
+    
+    //LED lights increase by 1
+  }
 }
