@@ -43,16 +43,18 @@ public class Constants
   public static final int CLIMBER_PTO_PORT_B                                = 5;
 
   /* Digital IO Ports */
-  public static final int CHAMBER_BALL_POS_ENTER_PORT_A                         = 1;
-  public static final int CHAMBER_BALL_POS_ENTER_PORT_B                         = 0;
-  public static final int CHAMBER_BALL_POS_EXIT_PORT_A                          = 3;
-  public static final int CHAMBER_BALL_POS_EXIT_PORT_B                          = 2;
+  public static final int CHAMBER_BALL_POS_ENTER_PORT_A                     = 1;
+  public static final int CHAMBER_BALL_POS_ENTER_PORT_B                     = 0;
+  public static final int CHAMBER_BALL_POS_EXIT_PORT_A                      = 3;
+  public static final int CHAMBER_BALL_POS_EXIT_PORT_B                      = 2;
   
   public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 10;
 
   public static final int LAUNCHER_BALL_SWITCH_PORT                         = 11;
 
   /* PWM Ports */
+  public static final int CHAMBER_LEDS_PORT                                 = 0;
+
   public static final int CLIMBER_RATCHET_LEFT_PORT                         = 1;
   public static final int CLIMBER_RATCHET_RIGHT_PORT                        = 2;
   public static final int CLIMBER_LOCK_RATCHET_LEFT_PORT                    = 3;
@@ -165,6 +167,8 @@ public class Constants
   public static final int    LAUNCHER_PIVOT_CRUISEVELOCITY                  = 0;
   public static final int    LAUNCHER_PIVOT_ACCELERATION                    = 0;
 
+  public static final int    CHAMBER_LED_BUFFER_LENGTH                      = 50;
+
   /**
    * Subsystem-Specific Values For Commands
    */
@@ -196,7 +200,7 @@ public class Constants
   public static final int    CONTROL_PANEL_SPINNER_RPM                      = 0;
 
   /* Intake */
-  public static final double INTAKE_WHEEL_POWER                             = -0.75;
+  public static final double INTAKE_WHEEL_POWER                             = -1.0;
   public static final int    INTAKE_WHEEL_RPM                               = 120;
 
   /* Launcher */

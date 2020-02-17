@@ -83,7 +83,7 @@ public class Chamber extends SubsystemBase
 
   public void setChamberBasePower(double power)
   {
-    m_chamberBase.set(ControlMode.PercentOutput, power);
+    m_chamberBase.set(ControlMode.PercentOutput, -power);
   }
  
   /**

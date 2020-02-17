@@ -281,9 +281,34 @@ public class Chassis extends SubsystemBase
    */
   public void driveWithVoltage(double leftVoltage, double rightVoltage)
   {
-    m_leftMaster.setVoltage(leftVoltage);
-    m_rightMaster.setVoltage(-rightVoltage);
+    if (testlol == 1)
+    {
+      m_leftMaster.setVoltage(testlol * leftVoltage);
+      m_rightMaster.setVoltage(testlol * -rightVoltage);
+    }
+    else if (testlol == -1)
+    {
+      m_leftMaster.setVoltage(testlol * rightVoltage);
+      m_rightMaster.setVoltage(testlol * -leftVoltage);
+    }
     m_differentialDrive.feed();
+  }
+
+  private int testlol = 1;
+
+  public void reverseTest(boolean test)
+  {
+    m_leftMaster.setInverted(test);
+    m_leftSlave.setInverted(test);
+    m_rightMaster.setInverted(test);
+    m_rightSlave.setInverted(test);
+    if (test)
+      m_ahrs.setAngleAdjustment(180);
+
+    if (test)
+      testlol = -1;
+    else
+      testlol = 1;
   }
 
   /**
