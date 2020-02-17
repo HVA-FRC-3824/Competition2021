@@ -31,6 +31,8 @@ public class OI
   private static JoystickButton m_setChamberElevatorPowerBtn;
   private static JoystickButton m_setChamberElevatorRPMBtn;
 
+  private static JoystickButton m_setChamberBasePowerBtn;
+
   /* Climber */
   private static JoystickButton m_jogClimberReelPositionUpBtn;
   private static JoystickButton m_jogClimberReelPositionDownBtn;
@@ -88,8 +90,10 @@ public class OI
      */    m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
     /* Chamber */
-    m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
-    m_setChamberElevatorRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
+    m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
+    m_setChamberElevatorRPMBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID);
+
+    m_setChamberBasePowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_BASE_POWER_BTN_ID);
 
     /* Climber */
     m_jogClimberReelPositionUpBtn     = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_JOG_REEL_POSITION_UP_BTN_ID);
@@ -194,6 +198,9 @@ public class OI
     m_setChamberElevatorPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
     m_setChamberElevatorRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorRPM);
     m_setChamberElevatorRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
+
+    m_setChamberBasePowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberBasePower);
+    m_setChamberBasePowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberBase);
 
     /* Climber Buttons */
     m_jogClimberReelPositionUpBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleUp);

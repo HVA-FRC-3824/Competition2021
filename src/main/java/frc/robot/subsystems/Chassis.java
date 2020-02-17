@@ -97,6 +97,8 @@ public class Chassis extends SubsystemBase
 
     /* Used for tracking robot pose. */
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.getHeading()));
+
+    this.setReversedTest(true);
   }
 
   /**
@@ -121,6 +123,25 @@ public class Chassis extends SubsystemBase
     SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
   }
 
+  public void setAngle(int test)
+  {
+    m_ahrs.setAngleAdjustment(test);
+  }
+
+  public void setReversedTest(boolean test)
+  {
+    if (test)
+    {
+      m_leftMaster.setSensorPhase(true);
+      m_rightMaster.setSensorPhase(true);
+    }
+    else
+    {
+      m_leftMaster.setSensorPhase(false);
+      m_rightMaster.setSensorPhase(false);
+    }
+  }
+
   /**
    * Controls movement of robot drivetrain with passed in power and turn values
    * from driver input of joystick.
@@ -132,7 +153,7 @@ public class Chassis extends SubsystemBase
     if (turn > -0.1 && turn < 0.1)
       turn = 0;
 
-    m_differentialDrive.arcadeDrive(-power, turn, true);
+    m_differentialDrive.arcadeDrive(power, turn, true);
   }
 
   /**

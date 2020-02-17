@@ -11,6 +11,8 @@ public class Constants
 
   /* CAN IDs */
   public static final int CHAMBER_ELEVATOR_ID                               = 6;
+  public static final int CHAMBER_ELEVATOR2_ID                              = 7;
+  public static final int CHAMBER_BASE_ID                                   = 15;
 
   public static final int CHASSIS_LEFT_MASTER_ID                            = 1;
   public static final int CHASSIS_LEFT_SLAVE_ID                             = 2;
@@ -165,8 +167,10 @@ public class Constants
   public static final int    CHASSIS_FAR_TRENCH_ANGLE                       = 0;
 
   /* Chamber */
-  public static final int    CHAMBER_ELEVATOR_POWER                         = 0;
+  public static final double CHAMBER_ELEVATOR_POWER                         = 0.5;
   public static final int    CHAMBER_ELEVATOR_RPM                           = 0;
+
+  public static final double CHAMBER_BASE_POWER                             = 0.5;
 
   /* Climber */
   public static final int    CLIMBER_REEL_MIN_POSITION                      = 0;
@@ -184,7 +188,7 @@ public class Constants
   public static final int    CONTROL_PANEL_SPINNER_RPM                      = 0;
 
   /* Intake */
-  public static final double INTAKE_WHEEL_POWER                             = -0.7;
+  public static final double INTAKE_WHEEL_POWER                             = -0.75;
   public static final int    INTAKE_WHEEL_RPM                               = 120;
 
   /* Launcher */
@@ -238,8 +242,9 @@ public class Constants
    */
 
   /* Chamber */
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID         = 15;
+  public static final int    OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID         = 2;
   public static final int    OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID           = 16;
+  public static final int    OPERATOR_CHAMBER_BASE_POWER_BTN_ID             = 3;
 
   /* Climber */
   public static final int    OPERATOR_CLIMBER_JOG_REEL_POSITION_UP_BTN_ID   = 19;
@@ -264,12 +269,12 @@ public class Constants
   public static final int    OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID            = 9;
   public static final int    OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID           = 6;
 
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 8;
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 15;
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 10;
 
   public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 7;
-  public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 2;
-  public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 3;
+  public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 8;
+  public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 25;
 
   public static final int    OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID          = 13;
   public static final int    OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID            = 14;

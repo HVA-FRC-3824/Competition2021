@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -75,9 +76,10 @@ public class RobotContainer
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
   /**
-   * Declaration of zeroed Pose2d object for transforming trajectories.
+   * Declaration of trajectory transformation object.
    */
-  private static Pose2d m_zeroedPose;
+  private static Transform2d m_trajTransform;
+  private static SequentialCommandGroup m_trajCommand;
 
   /**
    * This code runs at robotInit.
@@ -116,8 +118,8 @@ public class RobotContainer
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", /*DEFAULT COMMAND HERE*/null);
-    m_autoChooser.addOption("TEST", new CommandGroupTemplate());
-    m_autoChooser.addOption("TEN BALL", new AutonomousTenBall());
+    // m_autoChooser.addOption("TEST", );
+    // m_autoChooser.addOption("TEN BALL", new AutonomousTenBall());
 
     /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
@@ -129,21 +131,33 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    return m_autoChooser.getSelected();
+    return new CommandGroupTemplate();
+    // return m_autoChooser.getSelected();
   }
 
   /**
    * Gets zeroed pose to transform trajectory relative to robot's initial position.
    */
-  public static void initializeZeroedPos()
+  public static void initializeTrajTransform(Trajectory initialTraj)
   {
     DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
-    m_zeroedPose = odometry.getPoseMeters();
+    Pose2d zeroedPose = odometry.getPoseMeters();
+    m_trajTransform = zeroedPose.minus(initialTraj.getInitialPose());
   }
 
-  public static Pose2d getInitialPose()
+  public static Transform2d getTrajTransform()
   {
-    return m_zeroedPose;
+    return m_trajTransform;
+  }
+
+  public static void setTrajCommand(SequentialCommandGroup command)
+  {
+    m_trajCommand = command;
+  }
+
+  public static SequentialCommandGroup getTrajCommand()
+  {
+    return m_trajCommand;
   }
 
   /**

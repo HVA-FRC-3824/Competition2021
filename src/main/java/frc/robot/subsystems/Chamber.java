@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Chamber extends SubsystemBase
 {
   private WPI_TalonSRX m_chamberElevator;
+  private WPI_TalonSRX m_chamberElevator2;
+  private WPI_TalonSRX m_chamberBase;
 
   private Ultrasonic m_ballPos_entering;
   private Ultrasonic m_ballPos_exiting;
@@ -21,6 +23,21 @@ public class Chamber extends SubsystemBase
   {
     m_chamberElevator = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_ID);
     RobotContainer.configureTalonSRX(m_chamberElevator, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                                    Constants.CHAMBER_ELEVATOR_F, Constants.CHAMBER_ELEVATOR_P, Constants.CHAMBER_ELEVATOR_I, 
+                                    Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
+                                    Constants.CHAMBER_ELEVATOR_ACCELERATION);
+    
+                                    /**
+                                     * TODO: CHANGE THE CONSTANTS FOR FPID V/A
+                                     */
+    m_chamberElevator2 = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR2_ID);
+    RobotContainer.configureTalonSRX(m_chamberElevator2, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                                    Constants.CHAMBER_ELEVATOR_F, Constants.CHAMBER_ELEVATOR_P, Constants.CHAMBER_ELEVATOR_I, 
+                                    Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
+                                    Constants.CHAMBER_ELEVATOR_ACCELERATION);
+
+    m_chamberBase = new WPI_TalonSRX(Constants.CHAMBER_BASE_ID);
+    RobotContainer.configureTalonSRX(m_chamberBase, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_ELEVATOR_F, Constants.CHAMBER_ELEVATOR_P, Constants.CHAMBER_ELEVATOR_I, 
                                     Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
                                     Constants.CHAMBER_ELEVATOR_ACCELERATION);
@@ -55,6 +72,12 @@ public class Chamber extends SubsystemBase
   public void setChamberElevatorPower(double power)
   {
     m_chamberElevator.set(ControlMode.PercentOutput, power);
+    m_chamberElevator2.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setChamberBasePower(double power)
+  {
+    m_chamberBase.set(ControlMode.PercentOutput, power);
   }
  
   /**
