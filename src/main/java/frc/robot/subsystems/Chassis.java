@@ -312,6 +312,7 @@ public class Chassis extends SubsystemBase
     {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      System.out.println("\nPath being initialized: " + pathName + "\n");
     } catch (IOException ex)
     {
       System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
@@ -319,7 +320,8 @@ public class Chassis extends SubsystemBase
 
     /**
      * Make trajectory relative to robot rather than relative to field. 
-     * Transforms original trajectory to shift to robot's zeroed position.
+     * If is the first path being followed, initialize the trajectory transform.
+     * Transform trajectory based on the first path's initial position.
      */
     if (isFirstPath)
     {
