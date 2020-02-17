@@ -167,7 +167,7 @@ public class Constants
   public static final int    LAUNCHER_PIVOT_CRUISEVELOCITY                  = 0;
   public static final int    LAUNCHER_PIVOT_ACCELERATION                    = 0;
 
-  public static final int    CHAMBER_LED_BUFFER_LENGTH                      = 50;
+  public static final int    CHAMBER_NUMBER_OF_LEDS                         = 60;
 
   /**
    * Subsystem-Specific Values For Commands

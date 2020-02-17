@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.LoadBallIntoChamber;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,11 +12,13 @@ public class LEDs extends SubsystemBase
 {
   private static AddressableLED m_chamberLEDs;
   private static AddressableLEDBuffer m_LEDBuffer;
-  private static AddressableLED m_rainbowFirstPixleHue;
+  private int m_rainbowFirstPixleHue;
+  private boolean m_launcherMoving = false;
+
   public LEDs()
   {
       m_chamberLEDs = new AddressableLED(Constants.CHAMBER_LEDS_PORT);
-      m_LEDBuffer = new AddressableLEDBuffer(Constants.CHAMBER_LED_BUFFER_LENGTH);
+      m_LEDBuffer = new AddressableLEDBuffer(Constants.CHAMBER_NUMBER_OF_LEDS);
 
       m_chamberLEDs.setLength(m_LEDBuffer.getLength());
   
@@ -30,19 +33,27 @@ public class LEDs extends SubsystemBase
   @Override
   public void periodic()
   {
-  }
-
-  private void setColor()
-  {
-   //Sets the color for each LED with Red, Green, and Blue input.
-    for (var i = 0; i < m_LEDBuffer.getLength(); i++)
+    if (m_launcherMoving == true)
     {
-        m_LEDBuffer.setRGB(i, 0, 0, 0);
+      rainbow();
     }
+    else if (LoadBallIntoChamber.getBallCount() > 0)
+    {
+      setLEDsForBallCount(LoadBallIntoChamber.getBallCount());
+    }
+    m_chamberLEDs.setData(m_LEDBuffer);  }
 
-    // Assigns color to LEDs.
-    m_chamberLEDs.setData(m_LEDBuffer);
-  }
+  // private void setColor()
+  // {
+  //  //Sets the color for each LED with Red, Green, and Blue input.
+  //   for (var i = 0; i < m_LEDBuffer.getLength(); i++)
+  //   {
+  //       m_LEDBuffer.setRGB(i, 0, 0, 0);
+  //   }
+
+  //   // Assigns color to LEDs.
+  //   m_chamberLEDs.setData(m_LEDBuffer);
+  // }
 
   private void rainbow()
   {
@@ -55,5 +66,28 @@ public class LEDs extends SubsystemBase
     m_rainbowFirstPixleHue += 3;
 
     m_rainbowFirstPixleHue %= 180;
+  }
+
+  public void setLEDstateLaunching(boolean launcherMoving)
+  {
+    m_launcherMoving = launcherMoving;
+  }
+
+  public void setLEDsForBallCount (int ballCount)
+  {
+    //turn off all LEDs
+    for (var LED = 0; LED < m_LEDBuffer.getLength(); LED++)
+    {
+        m_LEDBuffer.setHSV(LED, 0, 0, 0);
+    }
+    //set LEDs per ball
+    for (var ball = 0; ball < ballCount; ball++)
+    {
+      for(var LED = ball * Constants.CHAMBER_NUMBER_OF_LEDS / 5; LED < (ball + 1) * Constants.CHAMBER_NUMBER_OF_LEDS / 5; LED++)
+      {
+
+      }
+    }
+
   }
 }
