@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -11,13 +14,23 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -44,6 +57,8 @@ public class Chassis extends SubsystemBase
    * Declaring objects for autonomous path following.
    */
   private final DifferentialDriveOdometry m_odometry;
+
+  private Transform2d m_trajTransform;
 
   public Chassis() 
   {
@@ -77,7 +92,7 @@ public class Chassis extends SubsystemBase
       m_ahrs = new AHRS(SPI.Port.kMXP);
     } catch (RuntimeException ex) 
     {
-        System.out.println("\nError instantiating navX-MXP:\n" + ex.getMessage() + "\n");
+      System.out.println("\nError instantiating navX-MXP:\n" + ex.getMessage() + "\n");
     }
 
     /**
@@ -91,14 +106,18 @@ public class Chassis extends SubsystemBase
      * Autonomous path following objects
      */
 
-    /* Reset encoders & gyro to ensure autonomous path following is correct. */
-    this.resetEncoders();
-    this.zeroHeading();
-
     /* Used for tracking robot pose. */
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.getHeading()));
 
-    this.setReversedTest(true);
+    m_trajTransform = null;
+
+    /**
+     * Various methods to call when chassis subsystem first starts up.
+     */
+
+    /* Reset encoders & gyro to ensure autonomous path following is correct. */
+    this.resetEncoders();
+    this.zeroHeading();
   }
 
   /**
@@ -121,25 +140,6 @@ public class Chassis extends SubsystemBase
     SmartDashboard.putNumber("HEADING", this.getHeading());
     SmartDashboard.putNumber("LEFT VOLTAGE", m_leftMaster.getMotorOutputVoltage());
     SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
-  }
-
-  public void setAngle(int test)
-  {
-    m_ahrs.setAngleAdjustment(test);
-  }
-
-  public void setReversedTest(boolean test)
-  {
-    if (test)
-    {
-      m_leftMaster.setSensorPhase(true);
-      m_rightMaster.setSensorPhase(true);
-    }
-    else
-    {
-      m_leftMaster.setSensorPhase(false);
-      m_rightMaster.setSensorPhase(false);
-    }
   }
 
   /**
@@ -265,17 +265,6 @@ public class Chassis extends SubsystemBase
   }
 
   /**
-   * Resets odometry for following new paths during one runtime.
-   */
-  public void resetOdometry()
-  {
-    this.zeroHeading();
-    this.resetEncoders();
-    Pose2d pose = new Pose2d();
-    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(this.getHeading()));
-  }
-
-  /**
    * Get an estimation for the current pose of the robot.
    * @return the pose in meters.
    */
@@ -295,5 +284,66 @@ public class Chassis extends SubsystemBase
     m_leftMaster.setVoltage(leftVoltage);
     m_rightMaster.setVoltage(-rightVoltage);
     m_differentialDrive.feed();
+  }
+
+  /**
+   * Creates a zeroed pose object to transform trajectory relative to robot's initial position.
+   * Transform is saved in this subsystem class as a variable for other trajectories to reference.
+   */
+  public void initializeTrajTransform(Trajectory initialTraj)
+  {
+    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+    Pose2d zeroedPose = odometry.getPoseMeters();
+    m_trajTransform = zeroedPose.minus(initialTraj.getInitialPose());
+  }
+
+  /**
+   * Generates ramsete command for following passed in path in autonomous.
+   * @param pathName is the path file generated from PathWeaver.
+   * @param isFirstPath is to set the transform for all trajectories if is first path.
+   * @return sequential command group that follows the path and stops when complete.
+   */
+  public SequentialCommandGroup generateRamsete(String pathName, boolean isFirstPath)
+  {
+    /* Get path/trajectory to follow from PathWeaver json file. */
+    String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
+    Trajectory trajectory = null;
+    try
+    {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex)
+    {
+      System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
+    }
+
+    /**
+     * Make trajectory relative to robot rather than relative to field. 
+     * Transforms original trajectory to shift to robot's zeroed position.
+     */
+    if (isFirstPath)
+    {
+      this.initializeTrajTransform(trajectory);
+    }
+    trajectory = trajectory.transformBy(m_trajTransform);
+
+    /* Create command that will follow the trajectory. */
+    RamseteCommand ramseteCommand = new RamseteCommand(
+      trajectory,
+      RobotContainer.m_chassis::getPose,
+      new RamseteController(Constants.K_RAMSETE_B, Constants.K_RAMSETE_ZETA),
+      new SimpleMotorFeedforward(Constants.K_S_VOLTS,
+                                 Constants.K_V_VOLT_SECONDS_PER_METER,
+                                 Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
+      Constants.K_DRIVE_KINEMATICS,
+      RobotContainer.m_chassis::getWheelSpeeds,
+      new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
+      new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
+      RobotContainer.m_chassis::driveWithVoltage, // RamseteCommand passes volts to the callback.
+      RobotContainer.m_chassis
+    );
+
+    /* Return command group that will run path following command, then stop the robot at the end. */
+    return ramseteCommand.andThen(new InstantCommand(() -> RobotContainer.m_chassis.driveWithVoltage(0, 0)));
   }
 }

@@ -73,7 +73,7 @@ public class Robot extends TimedRobot
   public void disabledInit()
   {
     /* Turn off Limelight LED when disabled so it doesn't blind drive team. */
-    // RobotContainer.m_limelight.turnOffLED();
+    RobotContainer.m_limelight.turnOffLED();
   }
 
   /**
@@ -90,10 +90,6 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit()
   {
-
-    /* Switch Limelight to vision mode for autonomous. */
-    RobotContainer.m_limelight.setModeVision();
-
     /* Zero robot heading to current heading. */
     RobotContainer.m_chassis.zeroHeading();
     RobotContainer.m_chassis.resetEncoders();
@@ -130,19 +126,14 @@ public class Robot extends TimedRobot
       m_autonomousCommand.cancel();
 
     /* Initially switch Limelight to driver mode for teleoperation. */
-    // RobotContainer.m_limelight.setModeDriver();
-    RobotContainer.m_limelight.setModeVision();
+    RobotContainer.m_limelight.setModeDriver();
 
     /**
      * Initialize default commands for all subsystems.
-     * Do this in teleopInit rather than autonomousInit because default commands will
-     * interfere with autonomous commands.
+     * Do this in teleopInit rather than robotInit or autonomousInit because default commands 
+     * will interfere with autonomous commands.
      */
     RobotContainer.initializeDefaultCommands();
-
-    /* TODO: Delete these lines as they are for testing purposes only. */
-    RobotContainer.m_chassis.zeroHeading();
-    RobotContainer.m_chamber.startUltrasonic();
   }
 
   /**

@@ -10,27 +10,27 @@ public class Constants
    */
 
   /* CAN IDs */
-  public static final int CHAMBER_ELEVATOR_ID                               = 6;
-  public static final int CHAMBER_ELEVATOR2_ID                              = 7;
-  public static final int CHAMBER_BASE_ID                                   = 15;
-
   public static final int CHASSIS_LEFT_MASTER_ID                            = 1;
   public static final int CHASSIS_LEFT_SLAVE_ID                             = 2;
   public static final int CHASSIS_RIGHT_MASTER_ID                           = 3;
   public static final int CHASSIS_RIGHT_SLAVE_ID                            = 4;
+  
+  public static final int INTAKE_WHEEL_INTAKE_ID                            = 5;
+
+  public static final int CHAMBER_ELEVATOR_FRONT_ID                         = 6;
+  public static final int CHAMBER_ELEVATOR_BACK_ID                          = 7;
+  public static final int CHAMBER_BASE_ID                                   = 15;
+
+  public static final int LAUNCHER_TOP_WHEEL_ID                             = 8;
+  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 9;
+  public static final int LAUNCHER_FEEDER_ID                                = 10;
+  public static final int LAUNCHER_PIVOT_ID                                 = 11;
 
   public static final int CLIMBER_STRING_PULLER_ID                          = 12;
   public static final int CLIMBER_REEL_ID                                   = 11;
   public static final int CLIMBER_ZIPLINE_ID                                = 14;
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 13;
-
-  public static final int INTAKE_WHEEL_INTAKE_ID                            = 5;
-
-  public static final int LAUNCHER_TOP_WHEEL_ID                             = 8;
-  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 9;
-  public static final int LAUNCHER_FEEDER_ID                                = 10;
-  public static final int LAUNCHER_PIVOT_ID                                 = 11;
  
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 0;
@@ -43,16 +43,10 @@ public class Constants
   public static final int CLIMBER_PTO_PORT_B                                = 5;
 
   /* Digital IO Ports */
-  public static final int CHAMBER_BALL_POS_1_PORT_A                         = 0;
-  public static final int CHAMBER_BALL_POS_1_PORT_B                         = 1;
-  public static final int CHAMBER_BALL_POS_2_PORT_A                         = 2;
-  public static final int CHAMBER_BALL_POS_2_PORT_B                         = 3;
-  public static final int CHAMBER_BALL_POS_3_PORT_A                         = 4;
-  public static final int CHAMBER_BALL_POS_3_PORT_B                         = 5;
-  public static final int CHAMBER_BALL_POS_4_PORT_A                         = 6;
-  public static final int CHAMBER_BALL_POS_4_PORT_B                         = 7;
-  public static final int CHAMBER_BALL_POS_5_PORT_A                         = 8;
-  public static final int CHAMBER_BALL_POS_5_PORT_B                         = 9;
+  public static final int CHAMBER_BALL_POS_ENTER_PORT_A                         = 1;
+  public static final int CHAMBER_BALL_POS_ENTER_PORT_B                         = 0;
+  public static final int CHAMBER_BALL_POS_EXIT_PORT_A                          = 3;
+  public static final int CHAMBER_BALL_POS_EXIT_PORT_B                          = 2;
   
   public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 10;
 
@@ -91,12 +85,26 @@ public class Constants
 
   public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
   
-  public static final double CHAMBER_ELEVATOR_F                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_P                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_I                             = 0.0;
-  public static final double CHAMBER_ELEVATOR_D                             = 0.0;
-  public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 0;
-  public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 0;
+  public static final double CHAMBER_ELEVATOR_FRONT_F                       = 0.0;
+  public static final double CHAMBER_ELEVATOR_FRONT_P                       = 0.0;
+  public static final double CHAMBER_ELEVATOR_FRONT_I                       = 0.0;
+  public static final double CHAMBER_ELEVATOR_FRONT_D                       = 0.0;
+  public static final int    CHAMBER_ELEVATOR_FRONT_CRUISEVELOCITY          = 0;
+  public static final int    CHAMBER_ELEVATOR_FRONT_ACCELERATION            = 0;
+
+  public static final double CHAMBER_ELEVATOR_BACK_F                        = 0.0;
+  public static final double CHAMBER_ELEVATOR_BACK_P                        = 0.0;
+  public static final double CHAMBER_ELEVATOR_BACK_I                        = 0.0;
+  public static final double CHAMBER_ELEVATOR_BACK_D                        = 0.0;
+  public static final int    CHAMBER_ELEVATOR_BACK_CRUISEVELOCITY           = 0;
+  public static final int    CHAMBER_ELEVATOR_BACK_ACCELERATION             = 0;
+
+  public static final double CHAMBER_BASE_F                                 = 0.0;
+  public static final double CHAMBER_BASE_P                                 = 0.0;
+  public static final double CHAMBER_BASE_I                                 = 0.0;
+  public static final double CHAMBER_BASE_D                                 = 0.0;
+  public static final int    CHAMBER_BASE_CRUISEVELOCITY                    = 0;
+  public static final int    CHAMBER_BASE_ACCELERATION                      = 0;
 
   /* Climber */
   public static final double CLIMBER_STRING_PULLER_F                        = 0.0;

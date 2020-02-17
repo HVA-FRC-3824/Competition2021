@@ -3,30 +3,14 @@ package frc.robot;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.RamseteController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Transform2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -73,13 +57,7 @@ public class RobotContainer
    * Instantiation of autonomous chooser.
    * Allows operators to preselect which autonomous command to run during autonomous period.
    */
-  private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
-
-  /**
-   * Declaration of trajectory transformation object.
-   */
-  private static Transform2d m_trajTransform;
-  private static SequentialCommandGroup m_trajCommand;
+  private final SendableChooser<String> m_autoChooser = new SendableChooser<>();
 
   /**
    * This code runs at robotInit.
@@ -89,11 +67,27 @@ public class RobotContainer
     /* Bind commands to joystick buttons. */
     m_OI.configureButtonBindings();
 
+    /* Initialize various systems on robotInit. */
+    this.initializeStartup();
+
     /* Initialize autonomous command chooser and display on the SmartDashboard. */
     this.initializeAutoChooser();
 
     /* Initialize PID tuning for use on the SmartDashboard. */
     this.initializePIDValues();
+  }
+
+  /**
+   * Various methods to run when robot is initialized.
+   * Cannot put these in robotInit() in Robot.java because subsystems may not be instantiated at that point.
+   */
+  private void initializeStartup()
+  {
+    /* Turn off Limelight LED when first started up so it doesn't blind drive team. */
+    m_limelight.turnOffLED();
+
+    /* Start ultrasonics. */
+    m_chamber.startUltrasonics();
   }
 
   /**
@@ -106,20 +100,23 @@ public class RobotContainer
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
     // m_chamber.setDefaultCommand(null);
-    // m_launcher.setDefaultCommand(m_inlineCommands.m_setLauncherWheelsPower);
+    // m_launcher.setDefaultCommand(null);
     // m_climber.setDefaultCommand(null);
     // m_controlPanel.setDefaultCommand(null);
   }
 
   /**
    * Set options for autonomous command chooser and display them for selection on the SmartDashboard.
+   * Using string chooser rather than command chooser because if using a command chooser, will instantiate
+   * all the autonomous commands. This may cause problems (e.g. initial trajectory position is from a
+   * different command's path).
    */
   private void initializeAutoChooser()
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
-    m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", /*DEFAULT COMMAND HERE*/null);
-    // m_autoChooser.addOption("TEST", );
-    // m_autoChooser.addOption("TEN BALL", new AutonomousTenBall());
+    m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", "default");
+    m_autoChooser.addOption("TEST", "test");
+    m_autoChooser.addOption("TEN BALL", "ten_ball");
 
     /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
@@ -131,84 +128,18 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    return new CommandGroupTemplate();
-    // return m_autoChooser.getSelected();
-  }
-
-  /**
-   * Gets zeroed pose to transform trajectory relative to robot's initial position.
-   */
-  public static void initializeTrajTransform(Trajectory initialTraj)
-  {
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
-    Pose2d zeroedPose = odometry.getPoseMeters();
-    m_trajTransform = zeroedPose.minus(initialTraj.getInitialPose());
-  }
-
-  public static Transform2d getTrajTransform()
-  {
-    return m_trajTransform;
-  }
-
-  public static void setTrajCommand(SequentialCommandGroup command)
-  {
-    m_trajCommand = command;
-  }
-
-  public static SequentialCommandGroup getTrajCommand()
-  {
-    return m_trajCommand;
-  }
-
-  /**
-   * Generates ramsete command for following passed in path in autonomous.
-   * @param pathName is the path file generated from PathWeaver.
-   * @return sequential command group that follows the path and stops when complete.
-   */
-  public static SequentialCommandGroup generateRamsete(String pathName)
-  {
-    return null;
-    // /* Get path/trajectory to follow from PathWeaver json file. */
-    // String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
-    // Trajectory trajectory = null;
-    // try
-    // {
-    //   Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
-    //   trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    // } catch (IOException ex)
-    // {
-    //   System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
-    // }
-
-    // System.out.println("\n\n\nFOLLOWED " + pathName + "\n\n\n");
-
-    // /**
-    //  * Make trajectory relative to robot rather than relative to field. 
-    //  * Transforms original trajectory to shift to robot's zeroed position.
-    //  */
-    // DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
-    // Pose2d m_zeroedPose = odometry.getPoseMeters();
-    // var transform = m_zeroedPose.minus(trajectory.getInitialPose());
-    // trajectory = trajectory.transformBy(transform);
-
-    // /* Create command that will follow the trajectory. */
-    // RamseteCommand ramseteCommand = new RamseteCommand(
-    //   trajectory,
-    //   m_chassis::getPose,
-    //   new RamseteController(Constants.K_RAMSETE_B, Constants.K_RAMSETE_ZETA),
-    //   new SimpleMotorFeedforward(Constants.K_S_VOLTS,
-    //                              Constants.K_V_VOLT_SECONDS_PER_METER,
-    //                              Constants.K_A_VOLT_SECONDS_SQUARED_PER_METER),
-    //   Constants.K_DRIVE_KINEMATICS,
-    //   m_chassis::getWheelSpeeds,
-    //   new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
-    //   new PIDController(Constants.K_P_DRIVE_VEL, 0, 0),
-    //   m_chassis::driveWithVoltage, // RamseteCommand passes volts to the callback.
-    //   m_chassis
-    // );
-
-    // /* Return command group that will run path following command, then stop the robot at the end. */
-    // return ramseteCommand.andThen(() -> m_chassis.driveWithVoltage(0, 0));
+    switch (m_autoChooser.getSelected())
+    {
+      case "default":
+        return null;
+      case "test":
+        return new CommandGroupTemplate();
+      case "ten_ball":
+        return new AutonomousTenBall();
+      default:
+        System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
+        return null;
+    }
   }
 
   /**

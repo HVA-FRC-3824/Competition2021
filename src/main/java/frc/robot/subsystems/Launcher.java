@@ -139,13 +139,7 @@ public class Launcher extends SubsystemBase
     int setpoint = angle; // TODO: Find equation and convert angle to setpoint.
 
     SmartDashboard.putNumber("POWER", power);
-
-    // if (RobotContainer.m_OI.getOperatorController().getRawButtonPressed(10))
-    //   m_pivot.setSpeed(0.0);
-    // else if (RobotContainer.m_OI.getOperatorController().getRawButtonPressed(11))
-    //   m_pivot.setSpeed(0.5);
-    // else if (RobotContainer.m_OI.getOperatorController().getRawButtonPressed(12))
-    //   m_pivot.setSpeed(1.0);
+    
     m_pivot.setSpeed(power);
   }
 

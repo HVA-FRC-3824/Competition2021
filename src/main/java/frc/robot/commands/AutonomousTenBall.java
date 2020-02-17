@@ -14,7 +14,7 @@ public class AutonomousTenBall extends SequentialCommandGroup
       new PrintCommand("\nStarting Command\n"),
       new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
       new PrintCommand("\nBlinked LED\n"),
-      RobotContainer.generateRamsete("tenBall_pathOne"),
+      RobotContainer.m_chassis.generateRamsete("tenBall_pathOne", true),
       new PrintCommand("\nGenerated first path\n"),
       new ChassisTurnToTarget(),
       new PrintCommand("\nTurned to target\n"),
@@ -22,7 +22,7 @@ public class AutonomousTenBall extends SequentialCommandGroup
       new PrintCommand("\nwaited\n"),
       new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
       new PrintCommand("\nBlinked LED\n"),
-      RobotContainer.generateRamsete("tenBall_pathTwo"),
+      RobotContainer.m_chassis.generateRamsete("tenBall_pathOne", false),
       new PrintCommand("\nGenerated second path\n"),
       new ChassisTurnToTarget(),
       new PrintCommand("\nTurned to target\n")
