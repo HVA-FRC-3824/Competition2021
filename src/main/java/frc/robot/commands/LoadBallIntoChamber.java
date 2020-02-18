@@ -25,12 +25,14 @@ public class LoadBallIntoChamber extends CommandBase
   @Override
   public void execute()
   {
-    // Check if ball is at end of chamber
+    // Turn off intake if ball is present at the end of chamber
     if (RobotContainer.m_chamber.SensorDistance(Constants.CHAMBER_EXITING_BALLPOS) < Constants.CHAMBER_BALL_NEAR_DIST)
     {
       RobotContainer.m_intake.setWheelRPM(0);
       m_ballPresentExiting = true;
     }
+
+    // Subtracts 1 from count after ball is launched
     else if (RobotContainer.m_chamber.SensorDistance(Constants.CHAMBER_EXITING_BALLPOS) > Constants.CHAMBER_BALL_FAR_DIST)
     {
       if (m_ballPresentExiting == true)
@@ -39,6 +41,8 @@ public class LoadBallIntoChamber extends CommandBase
         m_ballPresentExiting = false;
       }
     }
+
+    // Adds 1 to count after ball enters chamber
     else 
     {
       m_ballPresentExiting = false;
@@ -50,10 +54,10 @@ public class LoadBallIntoChamber extends CommandBase
           m_ballCount++;
           m_ballPresentEntering = true;
         }
+      }
       else
       {
         m_ballPresentEntering = false;
-      }
       }
     }
   }
@@ -69,7 +73,7 @@ public class LoadBallIntoChamber extends CommandBase
     return true;
   }
 
-  public int getBallCount()
+  public static int getBallCount()
   {
     return m_ballCount;
   }

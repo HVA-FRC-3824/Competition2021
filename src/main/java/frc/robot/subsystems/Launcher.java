@@ -169,6 +169,14 @@ public class Launcher extends SubsystemBase
   public void setFeederPower(double power)
   {
     m_feeder.set(ControlMode.PercentOutput, power);
+    if (power > -0.01 && power < 0.01)
+    {
+      RobotContainer.m_LEDs.setLEDstateLaunching(false);
+    }
+    else
+    {
+      RobotContainer.m_LEDs.setLEDstateLaunching(true);
+    }
   }
 
   /**
@@ -178,5 +186,13 @@ public class Launcher extends SubsystemBase
   public void setFeederRPM(int rpm)
   {
     m_feeder.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+    if (rpm == 0)
+    {
+      RobotContainer.m_LEDs.setLEDstateLaunching(false);
+    }
+    else
+    {
+      RobotContainer.m_LEDs.setLEDstateLaunching(true);
+    }
   }
 }
