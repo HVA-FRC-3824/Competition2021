@@ -75,8 +75,8 @@ public class Constants
   public static final double K_TURN_TOLERANCE_DEG                           = 0;
   public static final double K_TURN_RATE_TOLERANCE_DEG_PER_SEC              = 0;
 
-  public static final double K_CHASSIS_TURN_VISION_P                        = 0.04;
-  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.03;
+  public static final double K_CHASSIS_TURN_VISION_P                        = 0.05;
+  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.04;
 
   /* Chamber */
   public static final int    CHAMBER_ENTERING_BALLPOS                       = 0;
@@ -179,10 +179,10 @@ public class Constants
   public static final int    CHASSIS_FAR_TRENCH_ANGLE                       = 0;
 
   /* Chamber */
-  public static final double CHAMBER_ELEVATOR_POWER                         = 0.5;
+  public static final double CHAMBER_ELEVATOR_POWER                         = 0.25;
   public static final int    CHAMBER_ELEVATOR_RPM                           = 0;
 
-  public static final double CHAMBER_BASE_POWER                             = 0.5;
+  public static final double CHAMBER_BASE_POWER                             = 0.75;
 
   /* Climber */
   public static final int    CLIMBER_REEL_MIN_POSITION                      = 0;
@@ -200,7 +200,7 @@ public class Constants
   public static final int    CONTROL_PANEL_SPINNER_RPM                      = 0;
 
   /* Intake */
-  public static final double INTAKE_WHEEL_POWER                             = -1.0;
+  public static final double INTAKE_WHEEL_POWER                             = -0.5;
   public static final int    INTAKE_WHEEL_RPM                               = 120;
 
   /* Launcher */

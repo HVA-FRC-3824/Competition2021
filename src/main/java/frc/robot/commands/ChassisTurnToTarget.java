@@ -54,6 +54,12 @@ public class ChassisTurnToTarget extends CommandBase
     RobotContainer.m_chassis.autoDrive(RobotContainer.m_OI.getDriverJoystick().getY(), m_turn);
   }
 
+  @Override
+  public void end(boolean interrupted)
+  {
+    RobotContainer.m_limelight.setModeVision();
+  }
+
   /**
    * Returns true when the command should end.
    */

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class OI 
@@ -66,6 +67,8 @@ public class OI
   private static JoystickButton m_setLauncherFeederPowerBtn;
   private static JoystickButton m_setLauncherFeederRPMBtn;
 
+  private static JoystickButton m_test;
+
   public OI() 
   {
     /**
@@ -84,6 +87,8 @@ public class OI
     m_turnChassisForInitiationLineBtn = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_INITIATION_LINE_BTN_ID);
     m_turnChassisForCloseTrenchBtn    = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_CLOSE_TRENCH_BTN_ID);
     m_turnChassisForFarTrenchBtn      = new JoystickButton(m_driverJoystick, Constants.DRIVER_TURN_CHASSIS_FOR_FAR_TRENCH_BTN_ID);
+
+    m_test                    = new JoystickButton(m_driverJoystick, 7);
 
     /* 
      * Operator Joystick
@@ -150,6 +155,7 @@ public class OI
    */
   public void configureButtonBindings()
   {
+    m_test.whenPressed(new InstantCommand(() -> RobotContainer.m_limelight.setModeVision()));
     /* Chassis Buttons */
     m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
     m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);

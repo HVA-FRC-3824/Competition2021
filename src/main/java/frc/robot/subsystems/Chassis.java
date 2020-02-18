@@ -216,11 +216,17 @@ public class Chassis extends SubsystemBase
    */
   public double getLeftEncoderDistance()
   {
-    return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    if (testlol == 1)
+      return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    else
+      return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
   }
   public double getRightEncoderDistance()
   {
-    return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    if (testlol == 1)
+      return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    else
+      return -m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
   }
 
   /**
@@ -230,11 +236,17 @@ public class Chassis extends SubsystemBase
    */
   public double getLeftEncoderRate()
   {
-    return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    if (testlol == 1)
+      return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    else
+      return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
   }
   public double getRightEncoderRate()
   {
-    return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    if (testlol == 1)
+      return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    else
+      return -m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
   }
 
   /**
@@ -283,13 +295,13 @@ public class Chassis extends SubsystemBase
   {
     if (testlol == 1)
     {
-      m_leftMaster.setVoltage(testlol * leftVoltage);
-      m_rightMaster.setVoltage(testlol * -rightVoltage);
+      m_leftMaster.setVoltage(leftVoltage);
+      m_rightMaster.setVoltage(-rightVoltage);
     }
     else if (testlol == -1)
     {
-      m_leftMaster.setVoltage(testlol * rightVoltage);
-      m_rightMaster.setVoltage(testlol * -leftVoltage);
+      m_leftMaster.setVoltage(rightVoltage);
+      m_rightMaster.setVoltage(-leftVoltage);
     }
     m_differentialDrive.feed();
   }
