@@ -36,11 +36,7 @@ public class LEDs extends SubsystemBase
   public LEDs()
   {
       m_chamberLEDs = new AddressableLED(Constants.CHAMBER_LEDS_PORT);
-<<<<<<< HEAD
-      m_LEDBuffer = new AddressableLEDBuffer(Constants.CHAMBER_NUMBER_OF_LEDS);
-=======
       m_LEDLength = new AddressableLEDBuffer(Constants.CHAMBER_NUMBER_OF_LEDS);
->>>>>>> 3976beb820707a43c5a99893ee6582bbccf6b6db
 
       m_chamberLEDs.setLength(m_LEDLength.getLength());
   
