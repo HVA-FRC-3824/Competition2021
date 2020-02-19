@@ -20,7 +20,7 @@ public class Launcher extends SubsystemBase
 
   private WPI_TalonSRX m_feeder;
 
-  private PWM m_pivot;
+  private WPI_TalonSRX m_pivot;
 
   private DigitalInput m_ballSwitch;
   
@@ -44,14 +44,15 @@ public class Launcher extends SubsystemBase
     RobotContainer.configureTalonSRX(m_feeder, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
                                     Constants.LAUNCHER_FEEDER_F, Constants.LAUNCHER_FEEDER_P, Constants.LAUNCHER_FEEDER_I, 
                                     Constants.LAUNCHER_FEEDER_D, Constants.LAUNCHER_FEEDER_CRUISEVELOCITY, 
-                                    Constants.LAUNCHER_FEEDER_ACCELERATION);
+                                    Constants.LAUNCHER_FEEDER_ACCELERATION, true);
 
-    m_pivot = new PWM(0);
+    m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
+    RobotContainer.configureTalonSRX(m_pivot, true, FeedbackDevice.Analog, false, true, 
+                                    Constants.LAUNCHER_PIVOT_F, Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, 
+                                    Constants.LAUNCHER_PIVOT_D, Constants.LAUNCHER_PIVOT_CRUISEVELOCITY, 
+                                    Constants.LAUNCHER_PIVOT_ACCELERATION, false);
 
-    m_ballSwitch = new DigitalInput(Constants.LAUNCHER_BALL_SWITCH_PORT);
-
-    /**
-     * Put pivot angle on SmartDashboard.
+    /* Put pivot angle on SmartDashboard.
      * Hard to visually see on the field, so operator can use this value to measure.
      */
     SmartDashboard.putNumber("Pivot Angle", this.pivotCurrentAngle);
@@ -63,6 +64,10 @@ public class Launcher extends SubsystemBase
   @Override
   public void periodic()
   {
+    SmartDashboard.putNumber("Pivot Position", m_pivot.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Pivot Error", m_pivot.getClosedLoopError());    
+    SmartDashboard.putNumber("Pivot Voltage", m_pivot.getMotorOutputVoltage());
+    SmartDashboard.putNumber("Pivot Voltage", m_pivot.getMotorOutputVoltage());
   }
 
   /**
@@ -117,13 +122,13 @@ public class Launcher extends SubsystemBase
    * Sets the desired position of the launcher pivot angle.
    * @param position will be used as the setpoint for the PID controller
    */
-  public void setAngle(int angle, double power)
+  public void setAngle(int angle)
   {
     /* Verify desired angle is within the minimum and maximum launcher angle range. */
-    if (angle < Constants.LAUNCHER_PIVOT_MIN_ANGLE)
-      angle = Constants.LAUNCHER_PIVOT_MIN_ANGLE;
-    else if (angle > Constants.LAUNCHER_PIVOT_MAX_ANGLE)
-      angle = Constants.LAUNCHER_PIVOT_MAX_ANGLE;
+    // if (angle < Constants.LAUNCHER_PIVOT_MIN_ANGLE)
+    //   angle = Constants.LAUNCHER_PIVOT_MIN_ANGLE;
+    // else if (angle > Constants.LAUNCHER_PIVOT_MAX_ANGLE)
+    //   angle = Constants.LAUNCHER_PIVOT_MAX_ANGLE;
 
     /* Update current desired angle variable for other features like jogging up and down. */
     this.pivotCurrentAngle = angle;
@@ -138,11 +143,11 @@ public class Launcher extends SubsystemBase
      */
     int setpoint = angle; // TODO: Find equation and convert angle to setpoint.
 
-    SmartDashboard.putNumber("POWER", power);
-    
-    m_pivot.setSpeed(power);
+    // Analog Position fully retracted: 975u
+    // Analog Position fully extended : 169u
+    m_pivot.set(ControlMode.Position, setpoint);
   }
-
+ 
   /**
    * Returns the current angle.
    * Used for jogging the pivot angle up and down by taking the current angle and adding the jog magnitude.
@@ -155,11 +160,11 @@ public class Launcher extends SubsystemBase
   /**
    * This method is used to set the wheel RPMs and pivot angle for presets.
    */
-  public void setPreset(int topRPM, int bottomRPM, int pivotAngle, double power)
+  public void setPreset(int topRPM, int bottomRPM, int pivotAngle)
   {
     this.setTopWheelRPM(topRPM);
     this.setBottomWheelRPM(bottomRPM);
-    this.setAngle(pivotAngle, power);
+    this.setAngle(pivotAngle);
   }
 
   /**

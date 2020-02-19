@@ -149,9 +149,10 @@ public class RobotContainer
    * @param controlMode If true, configure with Motion Magic. If false, configure without Motion Magic.
    *                    (Motion Magic not required for TalonSRXs that will set with ControlMode.Velocity).        
    */
-  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, FeedbackDevice feedbackDevice, boolean setInverted, 
+  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, 
+                                       FeedbackDevice feedbackDevice, boolean setInverted, 
                                        boolean setSensorPhase, double kF, double kP, double kI, double kD, 
-                                       int kCruiseVelocity, int kAcceleration)
+                                       int kCruiseVelocity, int kAcceleration, boolean resetPos)
   {
     /* Factory default to reset TalonSRX and prevent unexpected behavior. */
     talonSRX.configFactoryDefault();
@@ -161,9 +162,11 @@ public class RobotContainer
 
     /* Configure TalonSRX to drive forward when LED is green. */
     talonSRX.setInverted(setInverted);
+
     /* Configure TalonSRX's sensor to increment its value as it moves forward. */
     talonSRX.setSensorPhase(setSensorPhase);
 
+    // Determine if the internal PID is being used
     if (controlMode) 
     {
       /* Set relevant frame periods (Base_PIDF0 and MotionMagic) to periodic rate (10ms). */
@@ -189,6 +192,7 @@ public class RobotContainer
     talonSRX.config_kI(Constants.K_SLOT_IDX, kI, Constants.K_TIMEOUT_MS);
     talonSRX.config_kD(Constants.K_SLOT_IDX, kD, Constants.K_TIMEOUT_MS);
 
+    // Determine if the internal PID is being used
     if (controlMode) 
     {
       /* Set acceleration and cruise velocity for Motion Magic. */
@@ -197,7 +201,10 @@ public class RobotContainer
     }
 
     /* Reset/zero the TalonSRX's sensor. */
-    talonSRX.setSelectedSensorPosition(0, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
+    if (resetPos)
+    {
+      talonSRX.setSelectedSensorPosition(0, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
+    }
   }
 
   /**

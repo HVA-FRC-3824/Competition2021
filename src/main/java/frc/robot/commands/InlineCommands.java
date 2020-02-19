@@ -204,22 +204,22 @@ public class InlineCommands {
                          RobotContainer.m_launcher);
 
     m_jogLauncherAngleUp =
-      new InstantCommand(() -> RobotContainer.m_launcher.setAngle(RobotContainer.m_launcher.getCurrentAngle() 
-                        + Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE, 0.0));
+      new InstantCommand(() -> RobotContainer.m_launcher.setAngle(500/*RobotContainer.m_launcher.getCurrentAngle() 
+                        + Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE*/));
     m_jogLauncherAngleDown =
-      new InstantCommand(() -> RobotContainer.m_launcher.setAngle(RobotContainer.m_launcher.getCurrentAngle() 
-                        - Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE, 0.0));
+      new InstantCommand(() -> RobotContainer.m_launcher.setAngle(200/*RobotContainer.m_launcher.getCurrentAngle() 
+                        - Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE*/));
     
     m_setLauncherForInitiationLine =
       new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_INITIATION_LINE_TOP_RPM, 
-                        Constants.LAUNCHER_INITIATION_LINE_BOTTOM_RPM, Constants.LAUNCHER_INITIATION_LINE_ANGLE, 0.75), 
+                        Constants.LAUNCHER_INITIATION_LINE_BOTTOM_RPM, Constants.LAUNCHER_INITIATION_LINE_ANGLE), 
                         RobotContainer.m_launcher);
     m_setLauncherForCloseTrench =
       new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_CLOSE_TRENCH_TOP_RPM, 
-                        Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_CLOSE_TRENCH_ANGLE, 1.0), RobotContainer.m_launcher);
+                        Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_CLOSE_TRENCH_ANGLE), RobotContainer.m_launcher);
     m_setLauncherForFarTrench =
       new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_FAR_TRENCH_TOP_RPM, 
-                        Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_FAR_TRENCH_ANGLE, 0.0), RobotContainer.m_launcher);
+                        Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_FAR_TRENCH_ANGLE), RobotContainer.m_launcher);
 
     m_setLauncherFeederPower =
       new InstantCommand(() -> RobotContainer.m_launcher.setFeederPower(Constants.LAUNCHER_FEEDER_POWER));

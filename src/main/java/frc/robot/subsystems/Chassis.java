@@ -216,17 +216,13 @@ public class Chassis extends SubsystemBase
    */
   public double getLeftEncoderDistance()
   {
-    if (testlol == 1)
-      return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
-    else
-      return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    // return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
   }
   public double getRightEncoderDistance()
   {
-    if (testlol == 1)
-      return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
-    else
-      return -m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    // return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    return -m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
   }
 
   /**
@@ -236,17 +232,13 @@ public class Chassis extends SubsystemBase
    */
   public double getLeftEncoderRate()
   {
-    if (testlol == 1)
-      return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
-    else
-      return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    // return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
   }
   public double getRightEncoderRate()
   {
-    if (testlol == 1)
-      return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
-    else
-      return -m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    // return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    return -m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
   }
 
   /**
@@ -293,34 +285,11 @@ public class Chassis extends SubsystemBase
    */
   public void driveWithVoltage(double leftVoltage, double rightVoltage)
   {
-    if (testlol == 1)
-    {
-      m_leftMaster.setVoltage(leftVoltage);
-      m_rightMaster.setVoltage(-rightVoltage);
-    }
-    else if (testlol == -1)
-    {
-      m_leftMaster.setVoltage(rightVoltage);
-      m_rightMaster.setVoltage(-leftVoltage);
-    }
+    // m_leftMaster.setVoltage(leftVoltage);
+    // m_rightMaster.setVoltage(-rightVoltage);
+    m_leftMaster.setVoltage(-rightVoltage);
+    m_rightMaster.setVoltage(leftVoltage);
     m_differentialDrive.feed();
-  }
-
-  private int testlol = 1;
-
-  public void reverseTest(boolean test)
-  {
-    m_leftMaster.setInverted(test);
-    m_leftSlave.setInverted(test);
-    m_rightMaster.setInverted(test);
-    m_rightSlave.setInverted(test);
-    if (test)
-      m_ahrs.setAngleAdjustment(180);
-
-    if (test)
-      testlol = -1;
-    else
-      testlol = 1;
   }
 
   /**
