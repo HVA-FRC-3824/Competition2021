@@ -26,19 +26,19 @@ public class Chamber extends SubsystemBase
     RobotContainer.configureTalonSRX(m_chamberElevatorFront, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_ELEVATOR_FRONT_F, Constants.CHAMBER_ELEVATOR_FRONT_P, Constants.CHAMBER_ELEVATOR_FRONT_I, 
                                     Constants.CHAMBER_ELEVATOR_FRONT_D, Constants.CHAMBER_ELEVATOR_FRONT_CRUISEVELOCITY, 
-                                    Constants.CHAMBER_ELEVATOR_FRONT_ACCELERATION);
+                                    Constants.CHAMBER_ELEVATOR_FRONT_ACCELERATION, true);
     
     m_chamberElevatorBack = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_BACK_ID);
     RobotContainer.configureTalonSRX(m_chamberElevatorBack, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_ELEVATOR_BACK_F, Constants.CHAMBER_ELEVATOR_BACK_P, Constants.CHAMBER_ELEVATOR_BACK_I, 
                                     Constants.CHAMBER_ELEVATOR_BACK_D, Constants.CHAMBER_ELEVATOR_BACK_CRUISEVELOCITY, 
-                                    Constants.CHAMBER_ELEVATOR_BACK_ACCELERATION);
+                                    Constants.CHAMBER_ELEVATOR_BACK_ACCELERATION, true);
 
     m_chamberBase = new WPI_TalonSRX(Constants.CHAMBER_BASE_ID);
     RobotContainer.configureTalonSRX(m_chamberBase, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_BASE_F, Constants.CHAMBER_BASE_P, Constants.CHAMBER_BASE_I, 
                                     Constants.CHAMBER_BASE_D, Constants.CHAMBER_BASE_CRUISEVELOCITY, 
-                                    Constants.CHAMBER_BASE_ACCELERATION);
+                                    Constants.CHAMBER_BASE_ACCELERATION, true);
 
     m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_ENTER_PORT_A, Constants.CHAMBER_BALL_POS_ENTER_PORT_B);
     m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_EXIT_PORT_A, Constants.CHAMBER_BALL_POS_EXIT_PORT_B);

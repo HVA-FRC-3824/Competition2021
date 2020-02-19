@@ -161,7 +161,7 @@ public class Constants
   public static final int    LAUNCHER_FEEDER_ACCELERATION                   = 0;
 
   public static final double LAUNCHER_PIVOT_F                               = 0.0;
-  public static final double LAUNCHER_PIVOT_P                               = 0.0;
+  public static final double LAUNCHER_PIVOT_P                               = 10.0;
   public static final double LAUNCHER_PIVOT_I                               = 0.0;
   public static final double LAUNCHER_PIVOT_D                               = 0.0;
   public static final int    LAUNCHER_PIVOT_CRUISEVELOCITY                  = 0;
@@ -278,10 +278,10 @@ public class Constants
 
   /* Launcher */
   public static final int    OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID          = 5;
-  public static final int    OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID            = 9;
+  public static final int    OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID            = 15;
   public static final int    OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID           = 6;
 
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 15;
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 9;
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 10;
 
   public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 7;

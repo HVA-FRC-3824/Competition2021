@@ -39,18 +39,18 @@ public class Climber extends SubsystemBase
     RobotContainer.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
                                     Constants.CLIMBER_STRING_PULLER_F, Constants.CLIMBER_STRING_PULLER_P, 
                                     Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
-                                    Constants.CLIMBER_STRING_PULLER_CRUISEVELOCITY, Constants.CLIMBER_STRING_PULLER_ACCELERATION);
+                                    Constants.CLIMBER_STRING_PULLER_CRUISEVELOCITY, Constants.CLIMBER_STRING_PULLER_ACCELERATION, true);
 
     m_reel = new WPI_TalonSRX(Constants.CLIMBER_REEL_ID);
     RobotContainer.configureTalonSRX(m_reel, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_REEL_F, 
                                     Constants.CLIMBER_REEL_P, Constants.CLIMBER_REEL_I, Constants.CLIMBER_REEL_D, 
-                                    Constants.CLIMBER_REEL_CRUISEVELOCITY, Constants.CLIMBER_REEL_ACCELERATION);
+                                    Constants.CLIMBER_REEL_CRUISEVELOCITY, Constants.CLIMBER_REEL_ACCELERATION, true);
 
     m_zipline = new WPI_TalonSRX(Constants.CLIMBER_ZIPLINE_ID);
     RobotContainer.configureTalonSRX(m_zipline, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
                                     Constants.CLIMBER_ZIPLINE_F, Constants.CLIMBER_ZIPLINE_P, Constants.CLIMBER_ZIPLINE_I, 
                                     Constants.CLIMBER_ZIPLINE_D, Constants.CLIMBER_ZIPLINE_CRUISEVELOCITY, 
-                                    Constants.CLIMBER_ZIPLINE_ACCELERATION);
+                                    Constants.CLIMBER_ZIPLINE_ACCELERATION, true);
     
     m_PTO = new DoubleSolenoid(Constants.CLIMBER_PTO_PORT_A, Constants.CLIMBER_PTO_PORT_B);
 

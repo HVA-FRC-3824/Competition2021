@@ -21,10 +21,13 @@ public class ControlPanel extends SubsystemBase
     m_panelSpinner = new WPI_TalonSRX(Constants.CONTROL_PANEL_SPINNER_ID);
     RobotContainer.configureTalonSRX(m_panelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
                                     Constants.CONTROL_PANEL_SPINNER_F, Constants.CONTROL_PANEL_SPINNER_P, 
-                                    Constants.CONTROL_PANEL_SPINNER_I, Constants.CONTROL_PANEL_SPINNER_D, 0, 0);
+                                    Constants.CONTROL_PANEL_SPINNER_I, Constants.CONTROL_PANEL_SPINNER_D, 0, 0, true);
 
     m_colorSensor = new DigitalInput(Constants.CONTROLPANEL_COLOR_SENSOR_PORT);
+
+    // m_colorSensor.
   }
+
 
   /**
    * This method will be called once per scheduler run.
