@@ -13,32 +13,31 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Chamber extends SubsystemBase
 {
-  private WPI_TalonSRX m_chamberElevatorFront;
-  private WPI_TalonSRX m_chamberElevatorBack;
-  private WPI_TalonSRX m_chamberBase;
+  private WPI_TalonSRX m_base;
+  private WPI_TalonSRX m_elevatorFront;
+  private WPI_TalonSRX m_elevatorBack;
 
   private Ultrasonic m_ballPos_entering;
   private Ultrasonic m_ballPos_exiting;
 
   public Chamber()
   {
-    m_chamberElevatorFront = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_FRONT_ID);
-    RobotContainer.configureTalonSRX(m_chamberElevatorFront, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+    m_base = new WPI_TalonSRX(Constants.CHAMBER_BASE_ID);
+    RobotContainer.configureTalonSRX(m_base, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, false,
+                                    Constants.CHAMBER_BASE_F, Constants.CHAMBER_BASE_P, Constants.CHAMBER_BASE_I, 
+                                    Constants.CHAMBER_BASE_D, 0, 0, true);
+
+    m_elevatorFront = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_FRONT_ID);
+    RobotContainer.configureTalonSRX(m_elevatorFront, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_ELEVATOR_FRONT_F, Constants.CHAMBER_ELEVATOR_FRONT_P, Constants.CHAMBER_ELEVATOR_FRONT_I, 
                                     Constants.CHAMBER_ELEVATOR_FRONT_D, Constants.CHAMBER_ELEVATOR_FRONT_CRUISEVELOCITY, 
                                     Constants.CHAMBER_ELEVATOR_FRONT_ACCELERATION, true);
     
-    m_chamberElevatorBack = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_BACK_ID);
-    RobotContainer.configureTalonSRX(m_chamberElevatorBack, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+    m_elevatorBack = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_BACK_ID);
+    RobotContainer.configureTalonSRX(m_elevatorBack, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_ELEVATOR_BACK_F, Constants.CHAMBER_ELEVATOR_BACK_P, Constants.CHAMBER_ELEVATOR_BACK_I, 
                                     Constants.CHAMBER_ELEVATOR_BACK_D, Constants.CHAMBER_ELEVATOR_BACK_CRUISEVELOCITY, 
                                     Constants.CHAMBER_ELEVATOR_BACK_ACCELERATION, true);
-
-    m_chamberBase = new WPI_TalonSRX(Constants.CHAMBER_BASE_ID);
-    RobotContainer.configureTalonSRX(m_chamberBase, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                                    Constants.CHAMBER_BASE_F, Constants.CHAMBER_BASE_P, Constants.CHAMBER_BASE_I, 
-                                    Constants.CHAMBER_BASE_D, Constants.CHAMBER_BASE_CRUISEVELOCITY, 
-                                    Constants.CHAMBER_BASE_ACCELERATION, true);
 
     m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_ENTER_PORT_A, Constants.CHAMBER_BALL_POS_ENTER_PORT_B);
     m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_EXIT_PORT_A, Constants.CHAMBER_BALL_POS_EXIT_PORT_B);
@@ -58,42 +57,50 @@ public class Chamber extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  public WPI_TalonSRX getChamberElevatorFrontTalonSRX()
+  public WPI_TalonSRX getBaseTalonSRX()
   {
-    return m_chamberElevatorFront;
+    return m_base;
   }
-  public WPI_TalonSRX getChamberElevatorBackTalonSRX()
+  public WPI_TalonSRX getElevatorFrontTalonSRX()
   {
-    return m_chamberElevatorBack;
+    return m_elevatorFront;
   }
-  public WPI_TalonSRX getChamberBaseTalonSRX()
+  public WPI_TalonSRX getElevatorBackTalonSRX()
   {
-    return m_chamberBase;
+    return m_elevatorBack;
   }
 
   /**
-   * Method to spin elevator chamber wheels with power.
+   * Method to spin base/elevator chamber belts with power.
    * @param power range is from 1.0 to -1.0
    */
-  public void setChamberElevatorPower(double power)
+  public void setBasePower(double power)
   {
-    m_chamberElevatorFront.set(ControlMode.PercentOutput, power);
-    m_chamberElevatorBack.set(ControlMode.PercentOutput, power);
+    m_base.set(ControlMode.PercentOutput, power);
   }
-
-  public void setChamberBasePower(double power)
+  public void setElevatorPower(double power)
   {
-    m_chamberBase.set(ControlMode.PercentOutput, -power);
+    m_elevatorFront.set(ControlMode.PercentOutput, power);
+    m_elevatorBack.set(ControlMode.PercentOutput, power);
   }
  
   /**
-   * Method to set elevator chamber wheels RPM with ControlMode.Velocity.
+   * Method to set base chamber belts RPM with ControlMode.Velocity.
    * @param rpm is converted to units per 100 milliseconds for ControlMode.Velocity.
    */
-  public void setChamberElevatorRMP(int rpm)
+  public void setBaseRPM(int rpm)
   {
-    m_chamberElevatorFront.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
-    m_chamberElevatorBack.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+    m_base.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+  }
+
+  /**
+   * Method to set elevator chamber belts position with ControlMode.MotionMagic.
+   * @param position is used as a setpoint for the PID controller.
+   */
+  public void setElevatorPosition(int position)
+  {
+    m_elevatorFront.set(ControlMode.MotionMagic, position);
+    m_elevatorBack.set(ControlMode.MotionMagic, position);
   }
 
   /**
@@ -101,10 +108,10 @@ public class Chamber extends SubsystemBase
    */
   public void stepChamberDistance(double distance)
   {
-    double presentPositionFront = m_chamberElevatorFront.getSelectedSensorPosition(0);
-    m_chamberElevatorFront.set(ControlMode.MotionMagic, presentPositionFront + distance);
-    double presentPositionBack = m_chamberElevatorBack.getSelectedSensorPosition(0);
-    m_chamberElevatorBack.set(ControlMode.MotionMagic, presentPositionBack + distance);
+    double presentPositionFront = m_elevatorFront.getSelectedSensorPosition();
+    m_elevatorFront.set(ControlMode.MotionMagic, presentPositionFront + distance);
+    double presentPositionBack = m_elevatorBack.getSelectedSensorPosition();
+    m_elevatorBack.set(ControlMode.MotionMagic, presentPositionBack + distance);
   }
 
   /**
@@ -116,6 +123,10 @@ public class Chamber extends SubsystemBase
     m_ballPos_exiting.setAutomaticMode(true);
   }
 
+  /**
+   * Methods to get ultrasonic readings to track if a ball is present or not.
+   * @return the distance the ultrasonic is reading.
+   */
   public double getEnteringRange()
   {
     return m_ballPos_entering.getRangeInches();
@@ -125,6 +136,11 @@ public class Chamber extends SubsystemBase
     return m_ballPos_exiting.getRangeInches();
   }
 
+  /**
+   * Gets the distance reading of a specified ultrasonic.
+   * @param sensor is the index of the ultrasonic in the sensors array to read the distance from.
+   * @return the distance of the specified ultrasonic.
+   */
   public double SensorDistance(int sensor)
   {
     Ultrasonic [] sensors = {m_ballPos_entering, m_ballPos_exiting};

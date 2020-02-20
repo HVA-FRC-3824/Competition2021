@@ -6,7 +6,6 @@ import frc.robot.RobotContainer;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -100,7 +99,7 @@ public class Chassis extends SubsystemBase
      */
     m_compressor = new Compressor();
 
-    m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_B, Constants.CHASSIS_GEARSHIFT_PORT_A);
+    m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_A, Constants.CHASSIS_GEARSHIFT_PORT_B);
 
     /**
      * Autonomous path following objects
@@ -126,8 +125,18 @@ public class Chassis extends SubsystemBase
   @Override
   public void periodic()
   {
+    /* Update odometry/position tracking of robot. */
     this.updateOdometry();
 
+    /* Update drivetrain information on SmartDashboard for testing. */
+    this.displayDrivetrainInfo();
+  }
+
+  /**
+   * Puts various drivetrain parameters on the SmartDashboard for testing.
+   */
+  private void displayDrivetrainInfo()
+  {
     SmartDashboard.putNumber("LEFT ENCODER", m_leftMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("RIGHT ENCODER", -m_rightMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("LEFT VELOCITY", m_leftMaster.getSelectedSensorVelocity());

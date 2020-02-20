@@ -9,16 +9,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase 
+public class Intake extends SubsystemBase
 {
   private DoubleSolenoid m_extender;
 
   private WPI_TalonSRX m_wheelIntake;
 
-  public Intake() 
+  public Intake()
   {
     m_extender = new DoubleSolenoid(Constants.INTAKE_EXTENDER_PORT_A, Constants.INTAKE_EXTENDER_PORT_B);
 
@@ -34,7 +33,6 @@ public class Intake extends SubsystemBase
   @Override
   public void periodic()
   {
-    RobotContainer.displayTalonSRXInfo(m_wheelIntake, "Intake Wheels PID Info");
   }
 
   /**
@@ -47,23 +45,23 @@ public class Intake extends SubsystemBase
   }
  
   /**
-   * Method that toggles the intake pistons between being retracted and extended.
-   */
-  public void toggleExtender()
-  {
-    m_extender.set(this.getExtenderValueToToggle());
-  }
-
-  /**
    * Gets the opposite value of the current solenoid value for toggling extender.
    * @return the solenoid value the extender should be set to in order to toggle.
    */
-  public Value getExtenderValueToToggle()
+  private Value getExtenderValueToToggle()
   {
     if (m_extender.get() == Value.kForward)
       return Value.kReverse;
     else
       return Value.kForward;
+  }
+
+  /**
+   * Method that toggles the intake pistons between being retracted and extended.
+   */
+  public void toggleExtender()
+  {
+    m_extender.set(this.getExtenderValueToToggle());
   }
 
   /**

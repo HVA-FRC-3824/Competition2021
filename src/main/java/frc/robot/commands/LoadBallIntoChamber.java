@@ -14,7 +14,6 @@ public class LoadBallIntoChamber extends CommandBase
 
   public LoadBallIntoChamber()
   {
-    //addRequirements(m_subsystem);
   }
 
   @Override
@@ -28,7 +27,7 @@ public class LoadBallIntoChamber extends CommandBase
     // Turn off intake if ball is present at the end of chamber
     if (RobotContainer.m_chamber.SensorDistance(Constants.CHAMBER_EXITING_BALLPOS) < Constants.CHAMBER_BALL_NEAR_DIST)
     {
-      RobotContainer.m_intake.setWheelRPM(0);
+      RobotContainer.m_intake.setWheelPower(0.0);
       m_ballPresentExiting = true;
     }
 

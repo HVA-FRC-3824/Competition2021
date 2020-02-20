@@ -174,4 +174,37 @@ public class Limelight
     this.setLEDMode(LEDMode.ON);
     this.setCamMode(CamMode.VISION);
   }
+
+  /**
+   * Methods to tell whether the limelight is in driver or vision mode.
+   * Driver mode will consist of the LEDs being off and the camera being in color.
+   * Vision mode will consist of the LEDs being on and the camera being in black and white.
+   */
+  private boolean isModeDriver()
+  {
+    return ledMode.getDouble(0.0) == LEDMode.OFF.modeValue && camMode.getDouble(0.0) == CamMode.DRIVER.modeValue;
+  }
+  private boolean isModeVision()
+  {
+    return ledMode.getDouble(0.0) == LEDMode.ON.modeValue && camMode.getDouble(0.0) == CamMode.VISION.modeValue;
+  }
+  
+  /**
+   * Method to toggle the type of video feed.
+   */
+  public void toggleMode()
+  {
+    if (this.isModeDriver())
+    {
+      this.setModeVision();
+    }
+    else if (this.isModeVision())
+    {
+      this.setModeDriver();
+    }
+    else
+    {
+      this.blinkLED();
+    }
+  }
 }

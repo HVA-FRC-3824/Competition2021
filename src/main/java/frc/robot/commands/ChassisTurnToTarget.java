@@ -25,9 +25,6 @@ public class ChassisTurnToTarget extends CommandBase
   @Override
   public void initialize()
   {
-    /* Set Limelight to vision mode to track target. */
-    RobotContainer.m_limelight.setModeVision();
-
     m_turn = 0.0;
   }
   
@@ -54,12 +51,6 @@ public class ChassisTurnToTarget extends CommandBase
     RobotContainer.m_chassis.autoDrive(RobotContainer.m_OI.getDriverJoystick().getY(), m_turn);
   }
 
-  @Override
-  public void end(boolean interrupted)
-  {
-    RobotContainer.m_limelight.setModeVision();
-  }
-
   /**
    * Returns true when the command should end.
    */
@@ -67,6 +58,5 @@ public class ChassisTurnToTarget extends CommandBase
   public boolean isFinished()
   {
     return (m_headingError < 0.5 && m_headingError > -0.5);
-    // return false;
   }
 }

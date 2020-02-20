@@ -15,130 +15,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Climber extends SubsystemBase
 {
 
+  private WPI_TalonSRX m_reelLeft;
+  private WPI_TalonSRX m_reelRight;
+
   private DoubleSolenoid m_PTO;
 
   private Servo m_lockRatchetLeft;
   private Servo m_lockRatchetRight;
-  private Servo m_ratchetLeft;
-  private Servo m_ratchetRight;
-  
-  private WPI_TalonSRX m_stringPuller;
-  private WPI_TalonSRX m_reel;
-  private WPI_TalonSRX m_zipline;
-
-  /**
-   * Displays current desired position of reel. 
-   * Used for jogging up and down feature and displaying on SmartDashboard for operator.
-   */
-  private int reelCurrentPosition = 0;
-  private int ziplineCurrentPostion = 0;
   
   public Climber()
   {
-    m_stringPuller = new WPI_TalonSRX(Constants.CLIMBER_STRING_PULLER_ID);
-    RobotContainer.configureTalonSRX(m_stringPuller, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-                                    Constants.CLIMBER_STRING_PULLER_F, Constants.CLIMBER_STRING_PULLER_P, 
-                                    Constants.CLIMBER_STRING_PULLER_I, Constants.CLIMBER_STRING_PULLER_D, 
-                                    Constants.CLIMBER_STRING_PULLER_CRUISEVELOCITY, Constants.CLIMBER_STRING_PULLER_ACCELERATION, true);
+    m_reelLeft = new WPI_TalonSRX(Constants.CLIMBER_REEL_LEFT_ID);
+    RobotContainer.configureTalonSRX(m_reelLeft, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.CLIMBER_REEL_LEFT_F, Constants.CLIMBER_REEL_LEFT_P, 
+                                    Constants.CLIMBER_REEL_LEFT_I, Constants.CLIMBER_REEL_LEFT_D, 
+                                    Constants.CLIMBER_REEL_LEFT_CRUISEVELOCITY, Constants.CLIMBER_REEL_LEFT_ACCELERATION, true);
 
-    m_reel = new WPI_TalonSRX(Constants.CLIMBER_REEL_ID);
-    RobotContainer.configureTalonSRX(m_reel, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, Constants.CLIMBER_REEL_F, 
-                                    Constants.CLIMBER_REEL_P, Constants.CLIMBER_REEL_I, Constants.CLIMBER_REEL_D, 
-                                    Constants.CLIMBER_REEL_CRUISEVELOCITY, Constants.CLIMBER_REEL_ACCELERATION, true);
-
-    m_zipline = new WPI_TalonSRX(Constants.CLIMBER_ZIPLINE_ID);
-    RobotContainer.configureTalonSRX(m_zipline, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-                                    Constants.CLIMBER_ZIPLINE_F, Constants.CLIMBER_ZIPLINE_P, Constants.CLIMBER_ZIPLINE_I, 
-                                    Constants.CLIMBER_ZIPLINE_D, Constants.CLIMBER_ZIPLINE_CRUISEVELOCITY, 
-                                    Constants.CLIMBER_ZIPLINE_ACCELERATION, true);
+    m_reelRight = new WPI_TalonSRX(Constants.CLIMBER_REEL_RIGHT_ID);
+    RobotContainer.configureTalonSRX(m_reelRight, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.CLIMBER_REEL_RIGHT_F, Constants.CLIMBER_REEL_RIGHT_P, 
+                                    Constants.CLIMBER_REEL_RIGHT_I, Constants.CLIMBER_REEL_RIGHT_D, 
+                                    Constants.CLIMBER_REEL_RIGHT_CRUISEVELOCITY, Constants.CLIMBER_REEL_RIGHT_ACCELERATION, true);
     
     m_PTO = new DoubleSolenoid(Constants.CLIMBER_PTO_PORT_A, Constants.CLIMBER_PTO_PORT_B);
 
     m_lockRatchetLeft  = new Servo(Constants.CLIMBER_LOCK_RATCHET_LEFT_PORT);
     m_lockRatchetRight = new Servo(Constants.CLIMBER_LOCK_RATCHET_RIGHT_PORT);
-    m_ratchetLeft      = new Servo(Constants.CLIMBER_RATCHET_LEFT_PORT);
-    m_ratchetRight     = new Servo(Constants.CLIMBER_RATCHET_RIGHT_PORT);
-  }
-
-  /**
-   * Sets the desired position of the reel.
-   * @param position will be used as the setpoint for the PID controller
-   */
-  public void setReelPosition(int position)
-  {
-    /* Verify desired position is within the minimum and maximum reel range. */
-    if (position < Constants.CLIMBER_REEL_MIN_POSITION)
-    {
-      position = Constants.CLIMBER_REEL_MIN_POSITION;
-    }
-    else if (position > Constants.CLIMBER_REEL_MAX_POSITION)
-    {
-      position = Constants.CLIMBER_REEL_MAX_POSITION;
-    }
-
-    /* Update current desired position variable for other features like jogging up and down. */
-    this.reelCurrentPosition = position;
-
-    /**
-     * Convert desired position to encoder ticks for PID setpoint.
-     * To do this, use pheonix software to get several points with x = position and y = encoder ticks.
-     * Compile points into a table and use linear regression (y=mx+b) to find an equation to convert position (x) to encoder ticks (y).
-     */
-    int setpoint = position; // TODO: Find equation and convert position to setpoint.
-
-    m_reel.set(ControlMode.MotionMagic, setpoint);
-  }
-
-  public void setZiplinePosition (int position)
-  {
-    /* Verify desired position is within the minimum and maximum zipline range. */
-    if (position < Constants.CLIMBER_ZIPLINE_MIN_POSITION)
-    {
-      position = Constants.CLIMBER_ZIPLINE_MIN_POSITION;
-    }
-    else if (position > Constants.CLIMBER_ZIPLINE_MAX_POSITION)
-    {
-      position = Constants.CLIMBER_ZIPLINE_MAX_POSITION;
-    }
-
-    /* Update current desired position variable for other features like jogging left and right. */
-    this.ziplineCurrentPostion = position;
-
-    /**
-     * Convert desired position to encoder ticks for PID setpoint.
-     * To do this, use phoenix software to get several points with x = position and y = encoder ticks.
-     * Compile points into a table and use linear regression (y=mx+b) to find an equation to convert position (x) to encoder ticks (y).
-     */
-    int setpoint = position;
-
-    m_zipline.set(ControlMode.MotionMagic, setpoint);
-
-    
-  }
-
-  public void extendHooks()
-  {
-    m_PTO.set(Value.kForward);
-  }
-
-  public void retractHooks()
-  {
-    m_PTO.set(Value.kReverse);
-  }
-
-
-  /**
-   * Returns the current reel position.
-   * Used for jogging the reel position up and down by taking the current position and adding the jog magnitude.
-   */
-  public int getReelCurrentPosition()
-  {
-    return this.reelCurrentPosition;
-  }
-
-  public int getZiplineCurrentPosition()
-  {
-    return this.ziplineCurrentPostion;
   }
  
   /**
@@ -153,14 +55,97 @@ public class Climber extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  public WPI_TalonSRX getStringPullerTalonSRX()
+  public WPI_TalonSRX getReelLeftTalonSRX()
   {
-      return m_stringPuller;
+      return m_reelLeft;
+  }
+  public WPI_TalonSRX getReelRightTalonSRX()
+  {
+      return m_reelRight;
   }
 
-  public void setZiplinePower (double power)
+  /**
+   * Method to extend/retract climber poles with power.
+   * @param power range is from 1.0 to -1.0
+   */
+  public void setReelsPower(double power)
   {
-    m_zipline.set(ControlMode.PercentOutput, power);
+    m_reelLeft.set(ControlMode.PercentOutput, power);
+    m_reelRight.set(ControlMode.PercentOutput, power);
+  }
+
+  /**
+   * Sets the desired position of the left and right reel.
+   * @param position will be used as the setpoint for the PID controller
+   */
+  public void setReelsPosition(int position)
+  {
+    /* Verify desired position is within the minimum and maximum reel range. */
+    if (position < Constants.CLIMBER_REEL_MIN_POSITION)
+    {
+      position = Constants.CLIMBER_REEL_MIN_POSITION;
+    }
+    else if (position > Constants.CLIMBER_REEL_MAX_POSITION)
+    {
+      position = Constants.CLIMBER_REEL_MAX_POSITION;
+    }
+
+    m_reelLeft.set(ControlMode.MotionMagic, position);
+    m_reelRight.set(ControlMode.MotionMagic, position);
+  }
+
+  /**
+   * Gets the opposite value of the current solenoid value for toggling the PTO.
+   * @return the solenoid value the PTO should be set to in order to toggle.
+   */
+  private Value getPTOValueToToggle()
+  {
+    if (m_PTO.get() == Value.kForward)
+      return Value.kReverse;
+    else
+      return Value.kForward;
+  }
+
+  /**
+   * Method that toggles the PTO between being engaged and disengaged.
+   */
+  public void togglePTO()
+  {
+    m_PTO.set(this.getPTOValueToToggle());
+  }
+
+  /**
+   * Method to determine which value to toggle the passed in servo to and then set said value.
+   * @param lockRatchet is the specified servo to set.
+   */
+  private void setLockRatchets(Servo lockRatchet)
+  {
+    /**
+     * Calculate the average setpoint in order to determine which value to toggle the servos to.
+     * This ensures that the servos are still toggled properly even if they drift a little from their initial setpoint.
+     * Example: the servo is set for 0.0, but is knocked into the position of 0.25. If the locked position is 1.0, the
+     * servo will still toggle to 1.0 because the current, knocked position is less than the average setpoint, 0.5 (between 0.0 and 1.0).
+     */
+    double averageSetpoint = (Constants.CLIMBER_LOCK_RATCHET_LOCKED_POSITION - Constants.CLIMBER_LOCK_RATCHET_RELEASED_POSITION) / 2;
+
+    /* Toggles lock ratchet based on if less than or more than/equal to average setpoint. */
+    if (lockRatchet.get() > averageSetpoint)
+    {
+      lockRatchet.set(Constants.CLIMBER_LOCK_RATCHET_RELEASED_POSITION);
+    }
+    else if (lockRatchet.get() <= averageSetpoint)
+    {
+      lockRatchet.set(Constants.CLIMBER_LOCK_RATCHET_LOCKED_POSITION);
+    }
+  }
+
+  /**
+   * Method to toggle lock ratchets' positions (released/locked).
+   */
+  public void toggleLockRatchets()
+  {
+    this.setLockRatchets(m_lockRatchetLeft);
+    this.setLockRatchets(m_lockRatchetRight);
   }
 }
   

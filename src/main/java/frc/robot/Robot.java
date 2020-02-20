@@ -139,8 +139,6 @@ public class Robot extends TimedRobot
      * will interfere with autonomous commands.
      */
     RobotContainer.initializeDefaultCommands();
-
-    RobotContainer.m_chamber.setChamberBasePower(0.2);
   }
 
   /**

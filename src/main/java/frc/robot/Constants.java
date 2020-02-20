@@ -17,24 +17,22 @@ public class Constants
   
   public static final int INTAKE_WHEEL_INTAKE_ID                            = 5;
 
+  public static final int CHAMBER_BASE_ID                                   = 15;
   public static final int CHAMBER_ELEVATOR_FRONT_ID                         = 6;
   public static final int CHAMBER_ELEVATOR_BACK_ID                          = 7;
-  public static final int CHAMBER_BASE_ID                                   = 15;
 
   public static final int LAUNCHER_TOP_WHEEL_ID                             = 8;
   public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 9;
-  public static final int LAUNCHER_FEEDER_ID                                = 10;
   public static final int LAUNCHER_PIVOT_ID                                 = 11;
 
-  public static final int CLIMBER_STRING_PULLER_ID                          = 12;
-  public static final int CLIMBER_REEL_ID                                   = 11;
-  public static final int CLIMBER_ZIPLINE_ID                                = 14;
+  public static final int CLIMBER_REEL_LEFT_ID                              = 12;
+  public static final int CLIMBER_REEL_RIGHT_ID                             = 14;
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 13;
  
   /* Pneumatic Ports */
-  public static final int CHASSIS_GEARSHIFT_PORT_A                          = 0;
-  public static final int CHASSIS_GEARSHIFT_PORT_B                          = 1;
+  public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
+  public static final int CHASSIS_GEARSHIFT_PORT_B                          = 0;
 
   public static final int INTAKE_EXTENDER_PORT_A                            = 2;
   public static final int INTAKE_EXTENDER_PORT_B                            = 3;
@@ -50,15 +48,11 @@ public class Constants
   
   public static final int CONTROLPANEL_COLOR_SENSOR_PORT                    = 10;
 
-  public static final int LAUNCHER_BALL_SWITCH_PORT                         = 11;
-
   /* PWM Ports */
   public static final int CHAMBER_LEDS_PORT                                 = 0;
 
-  public static final int CLIMBER_RATCHET_LEFT_PORT                         = 1;
-  public static final int CLIMBER_RATCHET_RIGHT_PORT                        = 2;
-  public static final int CLIMBER_LOCK_RATCHET_LEFT_PORT                    = 3;
-  public static final int CLIMBER_LOCK_RATCHET_RIGHT_PORT                   = 4;
+  public static final int CLIMBER_LOCK_RATCHET_LEFT_PORT                    = 1;
+  public static final int CLIMBER_LOCK_RATCHET_RIGHT_PORT                   = 2;
 
   /**
    * PID Constants
@@ -79,14 +73,6 @@ public class Constants
   public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.04;
 
   /* Chamber */
-  public static final int    CHAMBER_ENTERING_BALLPOS                       = 0;
-  public static final int    CHAMBER_EXITING_BALLPOS                        = 1;
-
-  public static final double CHAMBER_BALL_FAR_DIST                          = 10.0;
-  public static final double CHAMBER_BALL_NEAR_DIST                         = 5.0;
-
-  public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
-  
   public static final double CHAMBER_ELEVATOR_FRONT_F                       = 0.0;
   public static final double CHAMBER_ELEVATOR_FRONT_P                       = 0.0;
   public static final double CHAMBER_ELEVATOR_FRONT_I                       = 0.0;
@@ -105,30 +91,21 @@ public class Constants
   public static final double CHAMBER_BASE_P                                 = 0.0;
   public static final double CHAMBER_BASE_I                                 = 0.0;
   public static final double CHAMBER_BASE_D                                 = 0.0;
-  public static final int    CHAMBER_BASE_CRUISEVELOCITY                    = 0;
-  public static final int    CHAMBER_BASE_ACCELERATION                      = 0;
 
   /* Climber */
-  public static final double CLIMBER_STRING_PULLER_F                        = 0.0;
-  public static final double CLIMBER_STRING_PULLER_P                        = 0.0;
-  public static final double CLIMBER_STRING_PULLER_I                        = 0.0;
-  public static final double CLIMBER_STRING_PULLER_D                        = 0.0;
-  public static final int    CLIMBER_STRING_PULLER_CRUISEVELOCITY           = 0;
-  public static final int    CLIMBER_STRING_PULLER_ACCELERATION             = 0;
+  public static final double CLIMBER_REEL_LEFT_F                            = 0.0;
+  public static final double CLIMBER_REEL_LEFT_P                            = 0.0;
+  public static final double CLIMBER_REEL_LEFT_I                            = 0.0;
+  public static final double CLIMBER_REEL_LEFT_D                            = 0.0;
+  public static final int    CLIMBER_REEL_LEFT_CRUISEVELOCITY               = 0;
+  public static final int    CLIMBER_REEL_LEFT_ACCELERATION                 = 0;
 
-  public static final double CLIMBER_REEL_F                                 = 0.0;
-  public static final double CLIMBER_REEL_P                                 = 0.0;
-  public static final double CLIMBER_REEL_I                                 = 0.0;
-  public static final double CLIMBER_REEL_D                                 = 0.0;
-  public static final int    CLIMBER_REEL_CRUISEVELOCITY                    = 0;
-  public static final int    CLIMBER_REEL_ACCELERATION                      = 0;
-  
-  public static final double CLIMBER_ZIPLINE_F                              = 0;
-  public static final double CLIMBER_ZIPLINE_P                              = 0;
-  public static final double CLIMBER_ZIPLINE_I                              = 0;
-  public static final double CLIMBER_ZIPLINE_D                              = 0;
-  public static final int    CLIMBER_ZIPLINE_CRUISEVELOCITY                 = 0;
-  public static final int    CLIMBER_ZIPLINE_ACCELERATION                   = 0;
+  public static final double CLIMBER_REEL_RIGHT_F                           = 0.0;
+  public static final double CLIMBER_REEL_RIGHT_P                           = 0.0;
+  public static final double CLIMBER_REEL_RIGHT_I                           = 0.0;
+  public static final double CLIMBER_REEL_RIGHT_D                           = 0.0;
+  public static final int    CLIMBER_REEL_RIGHT_CRUISEVELOCITY              = 0;
+  public static final int    CLIMBER_REEL_RIGHT_ACCELERATION                = 0;
 
   /* Control Panel */   
   public static final double CONTROL_PANEL_SPINNER_F                        = 0.0;
@@ -153,47 +130,43 @@ public class Constants
   public static final double LAUNCHER_BOTTOM_WHEEL_I                        = 0.0;
   public static final double LAUNCHER_BOTTOM_WHEEL_D                        = 0.0;
 
-  public static final double LAUNCHER_FEEDER_F                              = 0.0;
-  public static final double LAUNCHER_FEEDER_P                              = 0.01;
-  public static final double LAUNCHER_FEEDER_I                              = 0.0001;
-  public static final double LAUNCHER_FEEDER_D                              = 0.0;
-  public static final int    LAUNCHER_FEEDER_CRUISEVELOCITY                 = 0;
-  public static final int    LAUNCHER_FEEDER_ACCELERATION                   = 0;
-
   public static final double LAUNCHER_PIVOT_F                               = 0.0;
   public static final double LAUNCHER_PIVOT_P                               = 10.0;
   public static final double LAUNCHER_PIVOT_I                               = 0.0;
   public static final double LAUNCHER_PIVOT_D                               = 0.0;
-  public static final int    LAUNCHER_PIVOT_CRUISEVELOCITY                  = 0;
-  public static final int    LAUNCHER_PIVOT_ACCELERATION                    = 0;
 
-  public static final int    CHAMBER_NUMBER_OF_LEDS                         = 60;
+  public static final int    LAUNCHER_AIM_VISION_RPM                        = 100000;
+  public static final double LAUNCHER_AIM_VISION_P                          = 0.04;
+  public static final double LAUNCHER_AIM_VISION_MIN                        = 0.03;
 
   /**
    * Subsystem-Specific Values For Commands
    */
 
-  /* Chassis */
-  public static final int    CHASSIS_INITIATION_LINE_ANGLE                  = 0;
-  public static final int    CHASSIS_CLOSE_TRENCH_ANGLE                     = 0;
-  public static final int    CHASSIS_FAR_TRENCH_ANGLE                       = 0;
-
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_POWER                         = 0.25;
-  public static final int    CHAMBER_ELEVATOR_RPM                           = 0;
 
   public static final double CHAMBER_BASE_POWER                             = 0.75;
+  public static final int    CHAMBER_BASE_RPM                               = 500;
+
+  public static final int    CHAMBER_ENTERING_BALLPOS                       = 0;
+  public static final int    CHAMBER_EXITING_BALLPOS                        = 1;
+
+  public static final double CHAMBER_BALL_FAR_DIST                          = 10.0;
+  public static final double CHAMBER_BALL_NEAR_DIST                         = 5.0;
+
+  public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
+
+  public static final int    CHAMBER_NUMBER_OF_LEDS                         = 60;
 
   /* Climber */
+  public static final double CLIMBER_REEL_POWER                             = 0.25;
+  
   public static final int    CLIMBER_REEL_MIN_POSITION                      = 0;
-  public static final int    CLIMBER_REEL_MAX_POSITION                      = 90;
-  public static final int    CLIMBER_REEL_JOG_MAGNITUDE                     = 5;
+  public static final int    CLIMBER_REEL_MAX_POSITION                      = 4096;
 
-  public static final int    CLIMBER_ZIPLINE_MIN_POSITION                   = 0;
-  public static final int    CLIMBER_ZIPLINE_MAX_POSITION                   = 90;
-  public static final int    CLIMBER_ZIPLINE_JOG_MAGNITUDE                  = 0;
-
-  public static final double CLIMBER_ZIPLINE_POWER                          = 0;
+  public static final double CLIMBER_LOCK_RATCHET_RELEASED_POSITION         = 0.0;
+  public static final double CLIMBER_LOCK_RATCHET_LOCKED_POSITION           = 1.0;
 
   /* Control Panel */
   public static final int    CONTROL_PANEL_SPINNER_POWER                    = 0;
@@ -201,9 +174,15 @@ public class Constants
 
   /* Intake */
   public static final double INTAKE_WHEEL_POWER                             = -0.5;
-  public static final int    INTAKE_WHEEL_RPM                               = 120;
+  public static final int    INTAKE_WHEEL_RPM                               = 500;
 
   /* Launcher */
+  public static final int    LAUNCHER_WHEEL_MAX_RPM                         = 6380; // Max RPM from TalonFX tech specs on CTRE.
+
+  public static final int    LAUNCHER_PIVOT_MIN_ANGLE                       = 0;
+  public static final int    LAUNCHER_PIVOT_MAX_ANGLE                       = 90;
+  public static final int    LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 5; // in degrees.
+
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 0;
   public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 0;
   public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 0;
@@ -216,15 +195,6 @@ public class Constants
   public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 0;
   public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 0;
 
-  public static final double LAUNCHER_FEEDER_POWER                          = 0;
-  public static final int    LAUNCHER_FEEDER_RPM                            = 120;
-
-  public static final int    LAUNCHER_PIVOT_MIN_ANGLE                       = 0;
-  public static final int    LAUNCHER_PIVOT_MAX_ANGLE                       = 90;
-  public static final int    LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 5;
-
-  public static final int    LAUNCHER_WHEEL_MAX_RPM                         = 6380; // Max RPM from TalonFX tech specs on CTRE.
-
   /**
    * Driver Joystick Map
    */
@@ -235,11 +205,9 @@ public class Constants
   /* Buttons */
   public static final int    DRIVER_GEAR_SHIFT_BTN_ID                       = 2;
 
-  public static final int    DRIVER_CHASSIS_TURN_TO_TARGET_BTN_ID           = 1;
+  public static final int    DRIVER_TOGGLE_LL_BTN_ID                        = 7;
 
-  public static final int    DRIVER_TURN_CHASSIS_FOR_INITIATION_LINE_BTN_ID = 3;
-  public static final int    DRIVER_TURN_CHASSIS_FOR_CLOSE_TRENCH_BTN_ID    = 4;
-  public static final int    DRIVER_TURN_CHASSIS_FOR_FAR_TRENCH_BTN_ID      = 5;
+  public static final int    DRIVER_CHASSIS_TURN_TO_TARGET_BTN_ID           = 1;
 
   /**
    * Operator Joystick Map
@@ -248,24 +216,26 @@ public class Constants
   /* Joystick */
   public static final int    OPERATOR_JOYSTICK_PORT                         = 1;
   
-
   /**
    * Buttons
    */
 
   /* Chamber */
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID         = 2;
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_RPM_BTN_ID           = 16;
   public static final int    OPERATOR_CHAMBER_BASE_POWER_BTN_ID             = 3;
+  public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 26;
+  
+  public static final int    OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID         = 2;
 
   /* Climber */
-  public static final int    OPERATOR_CLIMBER_JOG_REEL_POSITION_UP_BTN_ID   = 19;
-  public static final int    OPERATOR_CLIMBER_JOG_REEL_POSITION_DOWN_BTN_ID = 20;
+  public static final int    OPERATOR_CLIMBER_EXTEND_POWER_BTN_ID           = 30;
+  public static final int    OPERATOR_CLIMBER_RETRACT_POWER_BTN_ID          = 31;
+  
+  public static final int    OPERATOR_CLIMBER_EXTEND_POSITION_BTN_ID        = 32;
+  public static final int    OPERATOR_CLIMBER_RETRACT_POSITION_BTN_ID       = 33;
 
-  public static final int    OPERATOR_CLIMBER_JOG_ZIPLINE_LEFT_BTN_ID       = 21;
-  public static final int    OPERATOR_CLIMBER_JOG_ZIPLINE_RIGHT_BTN_ID      = 22;
+  public static final int    OPERATOR_CLIMBER_TOGGLE_PTO_BTN_ID             = 34;
 
-  public static final int    OPERATOR_CLIMBER_POWER_BTN_ID                  = 23;
+  public static final int    OPERATOR_CLIMBER_TOGGLE_LOCK_RATCHETS_BTN_ID   = 35;
 
   /* Control Panel */
   public static final int    OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID    = 17;
@@ -287,9 +257,6 @@ public class Constants
   public static final int    OPERATOR_LAUNCHER_INIT_LINE_BTN_ID             = 7;
   public static final int    OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID          = 8;
   public static final int    OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID            = 25;
-
-  public static final int    OPERATOR_LAUNCHER_FEEDER_POWER_BTN_ID          = 13;
-  public static final int    OPERATOR_LAUNCHER_FEEDER_RPM_BTN_ID            = 14;
   
   /* Axes */
   public static final int    OPERATOR_LAUNCHER_WHEELS_SLIDER_ID             = 5;
