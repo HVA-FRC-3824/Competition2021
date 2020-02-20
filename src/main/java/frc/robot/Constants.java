@@ -134,8 +134,7 @@ public class Constants
   public static final double LAUNCHER_PIVOT_P                               = 10.0;
   public static final double LAUNCHER_PIVOT_I                               = 0.0;
   public static final double LAUNCHER_PIVOT_D                               = 0.0;
-
-  public static final int    LAUNCHER_AIM_VISION_RPM                        = 100000;
+  
   public static final double LAUNCHER_AIM_VISION_P                          = 0.04;
   public static final double LAUNCHER_AIM_VISION_MIN                        = 0.03;
 
