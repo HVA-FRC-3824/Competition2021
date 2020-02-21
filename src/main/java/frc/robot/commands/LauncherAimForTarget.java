@@ -53,15 +53,15 @@ public class LauncherAimForTarget extends CommandBase
     m_targetArea = RobotContainer.m_limelight.getTargetArea();
 
     /* Multiplier to calculate RPM so when target area is large, the RPM is small (because closer). Vice versa with "ta" being small. */
-    m_outputMultiplier = (1 - (m_targetArea / 100));
+    m_outputMultiplier = (1 - (m_targetArea / 90));
 
     /* Calculate RPM based on how far away from the target the robot is (how big the target area is). */
     m_topWheelOutput = (int) (Constants.LAUNCHER_WHEEL_MAX_RPM * m_outputMultiplier); // TODO: Tune this so it actually works properly...
     m_bottomWheelOutput = (int) (Constants.LAUNCHER_WHEEL_MAX_RPM * m_outputMultiplier); // TODO: Tune this.
 
     /* Give output to launcher wheels. */
-    RobotContainer.m_launcher.setTopWheelRPM(m_topWheelOutput);
-    RobotContainer.m_launcher.setBottomWheelRPM(m_bottomWheelOutput);
+    RobotContainer.m_launcher.setTopWheelRPM(Constants.LAUNCHER_WHEEL_MAX_RPM);
+    RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_WHEEL_MAX_RPM);
 
     /**
      * Aiming launcher pivot tilt based on vision.

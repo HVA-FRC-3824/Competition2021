@@ -91,9 +91,9 @@ public class InlineCommands {
 
     /* Chamber Inline Command Instantiations */
     m_setChamberElevatorPower =
-      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(Constants.CHAMBER_ELEVATOR_POWER));
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(Constants.CHAMBER_ELEVATOR_POWER), RobotContainer.m_chamber);
     m_stopChamberElevator =
-      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.0));
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.0), RobotContainer.m_chamber);
 
     m_setChamberBasePower =
       new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(Constants.CHAMBER_BASE_POWER));
@@ -116,7 +116,7 @@ public class InlineCommands {
 
     // TODO: Change this command name to something better and relocate since controlling both the chassis turn and launcher aim.
     m_chassisTurnToTarget =
-      new ChassisTurnToTarget().alongWith(new LauncherAimForTarget()).andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()));
+      new ChassisTurnToTarget().alongWith(new LauncherAimForTarget()).andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()), new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0)));
     m_chassisAutoTurnToTarget =
       new ChassisTurnToTarget();
     m_stopChassisTurnToTarget =

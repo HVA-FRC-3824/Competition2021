@@ -43,6 +43,9 @@ public class SetPIDValues extends CommandBase
       this.setPIDValuesTalonFX();  
     else
       System.out.println("\nError retrieving TalonSRX/TalonFX object to configure PIDs for via SmartDashboard.\n");
+
+
+    SmartDashboard.putString("SHOULD BE WORKING", "YES");
   }
   
   @Override

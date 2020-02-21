@@ -8,7 +8,9 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Launcher extends SubsystemBase 
@@ -17,6 +19,7 @@ public class Launcher extends SubsystemBase
   private WPI_TalonFX m_bottomWheel;
 
   private WPI_TalonSRX m_pivot;
+  private AnalogInput m_pivotFeedback;
 
   /**
    * Used to track current desired angle of pivot. 
@@ -39,11 +42,15 @@ public class Launcher extends SubsystemBase
                                     Constants.LAUNCHER_PIVOT_F, Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, 
                                     Constants.LAUNCHER_PIVOT_D, 0, 0, false);
 
+    m_pivotFeedback = new AnalogInput(Constants.LAUNCHER_PIVOT_FEEDBACK_PORT);
+
     /**
      * Because the analog position value of the pivot is absolute, current angle will not be zero on startup. To keep
      * this in mind, set currentAngle to -1.
      */
     currentAngle = -1;
+    SmartDashboard.putData("Set Launcher 1", new InstantCommand(() -> this.setTopWheelRPM(2500)));
+    SmartDashboard.putData("Set Launcher 2", new InstantCommand(() -> this.setTopWheelRPM(1000)));
   }
 
   /**
@@ -52,11 +59,14 @@ public class Launcher extends SubsystemBase
   @Override
   public void periodic()
   {
-    SmartDashboard.putNumber("Pivot Angle Setpoint", currentAngle);
-    SmartDashboard.putNumber("Pivot Setpoint", m_pivot.getClosedLoopTarget());
-    SmartDashboard.putNumber("Pivot Position", m_pivot.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Pivot Error", m_pivot.getClosedLoopError());    
-    SmartDashboard.putNumber("Pivot Voltage", m_pivot.getMotorOutputVoltage());
+    // SmartDashboard.putNumber("Pivot Angle Setpoint", currentAngle);
+    // SmartDashboard.putNumber("Pivot Setpoint", m_pivot.getClosedLoopTarget());
+    // SmartDashboard.putNumber("Pivot Position", m_pivot.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("Pivot Error", m_pivot.getClosedLoopError());    
+    // SmartDashboard.putNumber("Pivot Voltage", m_pivot.getMotorOutputVoltage());
+
+    SmartDashboard.putNumber("Pivot Angle Encoder", this.getPivotADC());
+    RobotContainer.displayTalonFXInfo(m_topWheel, "Top Wheel");
   }
 
   /**
@@ -116,7 +126,7 @@ public class Launcher extends SubsystemBase
    */
   public void setPivotPower(double power)
   {
-    m_pivot.set(ControlMode.PercentOutput, power);
+    m_pivot.set(ControlMode.PercentOutput, -power);
   }
 
   /**
@@ -138,9 +148,20 @@ public class Launcher extends SubsystemBase
      */
     int setpoint = angle; // TODO: Find equation and convert angle to setpoint.
 
-    // Analog Position fully retracted: 975u
-    // Analog Position fully extended : 169u
-    m_pivot.set(ControlMode.Position, setpoint);
+    /* Angle error is how off the robot is from the target in the "y" direction. */
+    int angleError = setpoint - this.getPivotADC();
+    double pivotOutput = 0.0;
+
+    /* Calculate output to launcher angle pivot based on offset from target. */
+    if (angleError > 0.5)
+    {
+      pivotOutput = Constants.LAUNCHER_AIM_VISION_P * angleError - Constants.LAUNCHER_AIM_VISION_MIN;
+    }
+    else if (angleError < -0.5)
+    {
+      pivotOutput = Constants.LAUNCHER_AIM_VISION_P * angleError + Constants.LAUNCHER_AIM_VISION_MIN;
+    }
+    this.verifyPivotValue(pivotOutput);
   }
   
   /**
@@ -149,6 +170,43 @@ public class Launcher extends SubsystemBase
   public int getCurrentDesiredAngle()
   {
     return currentAngle;
+  }
+
+  /**
+   * Get current ADC of pivot linear actuator to verify it is not overdriven.
+   */
+  private int getPivotADC()
+  {
+    return m_pivotFeedback.getValue();
+  }
+
+  /**
+   * Method to prevent linear actuator from overdriving itself.
+   * @return whether or not to allow pivot to be set.
+   */
+  public void verifyPivotValue(double output)
+  {
+    if (this.getPivotADC() > Constants.LAUNCHER_PIVOT_MAX_ADC && output < 0.0)
+    {
+      m_pivot.set(ControlMode.PercentOutput, output);
+    }
+    else if (this.getPivotADC() > Constants.LAUNCHER_PIVOT_MAX_ADC)
+    {
+      m_pivot.set(ControlMode.PercentOutput, 0.0);
+    }
+    else if (this.getPivotADC() <= Constants.LAUNCHER_PIVOT_MIN_ADC && output > 0.0)
+    {
+      m_pivot.set(ControlMode.PercentOutput, output);
+    }
+    else if (this.getPivotADC() <= Constants.LAUNCHER_PIVOT_MIN_ADC)
+    {
+      m_pivot.set(ControlMode.PercentOutput, 0.0);
+    }
+    else
+    {
+      m_pivot.set(ControlMode.PercentOutput, 0.0);
+      System.out.println("\nPIVOT ANGLE ERROR- Pivot ADC:" + this.getPivotADC() + "\n");
+    }
   }
 
   /**

@@ -17,18 +17,18 @@ public class Constants
   
   public static final int INTAKE_WHEEL_INTAKE_ID                            = 5;
 
-  public static final int CHAMBER_BASE_ID                                   = 15;
-  public static final int CHAMBER_ELEVATOR_FRONT_ID                         = 6;
-  public static final int CHAMBER_ELEVATOR_BACK_ID                          = 7;
+  public static final int CHAMBER_BASE_ID                                   = 6;
+  public static final int CHAMBER_ELEVATOR_FRONT_ID                         = 7;
+  public static final int CHAMBER_ELEVATOR_BACK_ID                          = 8;
 
-  public static final int LAUNCHER_TOP_WHEEL_ID                             = 8;
-  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 9;
+  public static final int LAUNCHER_TOP_WHEEL_ID                             = 9;
+  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 10;
   public static final int LAUNCHER_PIVOT_ID                                 = 11;
 
   public static final int CLIMBER_REEL_LEFT_ID                              = 12;
-  public static final int CLIMBER_REEL_RIGHT_ID                             = 14;
+  public static final int CLIMBER_REEL_RIGHT_ID                             = 13;
 
-  public static final int CONTROL_PANEL_SPINNER_ID                          = 13;
+  public static final int CONTROL_PANEL_SPINNER_ID                          = 14;
  
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
@@ -54,6 +54,9 @@ public class Constants
   public static final int CLIMBER_LOCK_RATCHET_LEFT_PORT                    = 1;
   public static final int CLIMBER_LOCK_RATCHET_RIGHT_PORT                   = 2;
 
+  /* Analog Ports */
+  public static final int LAUNCHER_PIVOT_FEEDBACK_PORT                      = 0;
+
   /**
    * PID Constants
    */
@@ -69,8 +72,8 @@ public class Constants
   public static final double K_TURN_TOLERANCE_DEG                           = 0;
   public static final double K_TURN_RATE_TOLERANCE_DEG_PER_SEC              = 0;
 
-  public static final double K_CHASSIS_TURN_VISION_P                        = 0.05;
-  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.04;
+  public static final double K_CHASSIS_TURN_VISION_P                        = 0.02;
+  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.06;
 
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_FRONT_F                       = 0.0;
@@ -121,21 +124,24 @@ public class Constants
 
   /* Launcher */
   public static final double LAUNCHER_TOP_WHEEL_F                           = 0.0;
-  public static final double LAUNCHER_TOP_WHEEL_P                           = 0.0;
-  public static final double LAUNCHER_TOP_WHEEL_I                           = 0.0;
+  public static final double LAUNCHER_TOP_WHEEL_P                           = 0.01;
+  public static final double LAUNCHER_TOP_WHEEL_I                           = 0.0001;
   public static final double LAUNCHER_TOP_WHEEL_D                           = 0.0;
 
   public static final double LAUNCHER_BOTTOM_WHEEL_F                        = 0.0;
-  public static final double LAUNCHER_BOTTOM_WHEEL_P                        = 0.0;
-  public static final double LAUNCHER_BOTTOM_WHEEL_I                        = 0.0;
+  public static final double LAUNCHER_BOTTOM_WHEEL_P                        = 0.01;
+  public static final double LAUNCHER_BOTTOM_WHEEL_I                        = 0.0001;
   public static final double LAUNCHER_BOTTOM_WHEEL_D                        = 0.0;
 
   public static final double LAUNCHER_PIVOT_F                               = 0.0;
   public static final double LAUNCHER_PIVOT_P                               = 10.0;
   public static final double LAUNCHER_PIVOT_I                               = 0.0;
   public static final double LAUNCHER_PIVOT_D                               = 0.0;
-  
-  public static final double LAUNCHER_AIM_VISION_P                          = 0.04;
+
+  public static final int    LAUNCHER_PIVOT_MIN_ADC                         = 250;
+  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3700;
+
+  public static final double LAUNCHER_AIM_VISION_P                          = 0.07;
   public static final double LAUNCHER_AIM_VISION_MIN                        = 0.03;
 
   /**
@@ -176,7 +182,7 @@ public class Constants
   public static final int    INTAKE_WHEEL_RPM                               = 500;
 
   /* Launcher */
-  public static final int    LAUNCHER_WHEEL_MAX_RPM                         = 6380; // Max RPM from TalonFX tech specs on CTRE.
+  public static final int    LAUNCHER_WHEEL_MAX_RPM                         = 2500; // Max RPM from TalonFX at full power
 
   public static final int    LAUNCHER_PIVOT_MIN_ANGLE                       = 0;
   public static final int    LAUNCHER_PIVOT_MAX_ANGLE                       = 90;
