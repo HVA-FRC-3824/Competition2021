@@ -72,6 +72,7 @@ public class Constants
 
   public static final double K_CHASSIS_TURN_VISION_P                        = 0.03;
   public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.05;
+  public static final double CHASSIS_TURN_ERROR_THRESHOLD                   = 0.5;
 
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
@@ -138,11 +139,6 @@ public class Constants
   public static final double LAUNCHER_BOTTOM_WHEEL_I                        = 0.0001;
   public static final double LAUNCHER_BOTTOM_WHEEL_D                        = 0.0;
 
-  public static final double LAUNCHER_PIVOT_F                               = 0.0;
-  public static final double LAUNCHER_PIVOT_P                               = 10.0;
-  public static final double LAUNCHER_PIVOT_I                               = 0.0;
-  public static final double LAUNCHER_PIVOT_D                               = 0.0;
-
   public static final int    LAUNCHER_PIVOT_ADC_THRESHOLD                   = 10;
   public static final double LAUNCHER_PIVOT_ANGLE_P                         = 0.0005;
   public static final double LAUNCHER_PIVOT_ANGLE_MIN                       = 0.02;
@@ -189,10 +185,12 @@ public class Constants
   
   public static final int    LAUNCHER_TOP_WHEEL_TPR                         = 2048;
   public static final int    LAUNCHER_BOTTOM_WHEEL_TPR                      = 2048;
+  public static final int    LAUNCHER_RPM_ERROR_TRESHOLD                    = 500;
 
   public static final int    LAUNCHER_PIVOT_MIN_ADC                         = 1700;
   public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3500;
   public static final double LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 0.25;
+  public static final double LAUNCHER_PIVOT_ERROR_TRESHOLD                  = 0.5;
 
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 0;
   public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 0;
@@ -218,7 +216,7 @@ public class Constants
 
   public static final int    DRIVER_TOGGLE_LL_BTN_ID                        = 7;
 
-  public static final int    DRIVER_CHASSIS_TURN_TO_TARGET_BTN_ID           = 1;
+  public static final int    DRIVER_LAUNCHER_VISION_BTN_ID                  = 1;
 
   /**
    * Operator Joystick Map
@@ -257,6 +255,8 @@ public class Constants
   public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 13;
 
   public static final int    OPERATOR_LAUNCHER_PRESET_BTN_ID                = 1;
+  public static final int    OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID           = 8;
+  public static final int    OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID          = 9;
   
   /**
    * Autonomous Constants

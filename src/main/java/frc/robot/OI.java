@@ -18,7 +18,7 @@ public class OI
 
   private static JoystickButton m_toggleLimelightBtn;
 
-  private static JoystickButton m_chassisTurnToTargetBtn;
+  private static JoystickButton m_setLauncherVisionBtn;
 
   /* 
    * Operator Joystick
@@ -67,7 +67,7 @@ public class OI
 
     m_toggleLimelightBtn              = new JoystickButton(m_driverJoystick, Constants.DRIVER_TOGGLE_LL_BTN_ID);
 
-    m_chassisTurnToTargetBtn          = new JoystickButton(m_driverJoystick, Constants.DRIVER_CHASSIS_TURN_TO_TARGET_BTN_ID);
+    m_setLauncherVisionBtn            = new JoystickButton(m_driverJoystick, Constants.DRIVER_LAUNCHER_VISION_BTN_ID);
 
     /* 
      * Operator Joystick
@@ -139,9 +139,6 @@ public class OI
 
     m_toggleLimelightBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleLimelight);
 
-    m_chassisTurnToTargetBtn.whenPressed(RobotContainer.m_inlineCommands.m_chassisTurnToTarget);
-    m_chassisTurnToTargetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChassisTurnToTarget);
-
     /* Climber Buttons */
     m_extendClimberReelPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberReelPosition);
     m_extendClimberReelPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopExtendClimberReelPos);
@@ -172,7 +169,11 @@ public class OI
     m_jogLauncherAngleDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleDown);
     m_jogLauncherAngleDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherAngle);
 
+    m_setLauncherVisionBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherVision);
+    m_setLauncherVisionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
     m_setLauncherPresetBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
+    m_setLauncherPresetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
   }
   
   //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey, at least indent your comment properly. -Jovi

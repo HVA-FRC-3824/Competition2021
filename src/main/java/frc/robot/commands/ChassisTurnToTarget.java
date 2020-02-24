@@ -38,13 +38,20 @@ public class ChassisTurnToTarget extends CommandBase
     m_headingError = RobotContainer.m_limelight.getTargetOffsetX();
 
     /* Calculate turn based on offset from target. */
-    if (m_headingError > 0.5)
+    if (m_headingError > Constants.CHASSIS_TURN_ERROR_THRESHOLD)
     {
       m_turn = Constants.K_CHASSIS_TURN_VISION_P * m_headingError - Constants.K_CHASSIS_TURN_VISION_MIN;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(3, false);
     }
-    else if (m_headingError < -0.5)
+    else if (m_headingError < -Constants.CHASSIS_TURN_ERROR_THRESHOLD)
     {
       m_turn = Constants.K_CHASSIS_TURN_VISION_P * m_headingError + Constants.K_CHASSIS_TURN_VISION_MIN;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(3, false);
+    }
+    else
+    {
+      m_turn = 0.0;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(3, true);
     }
 
     /* Give output to drive train. */
@@ -57,6 +64,7 @@ public class ChassisTurnToTarget extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return (m_headingError < 0.5 && m_headingError > -0.5);
+    /* Command will end when joystick button is released due to requirement of chassis class of stop command. */
+    return false;
   }
 }

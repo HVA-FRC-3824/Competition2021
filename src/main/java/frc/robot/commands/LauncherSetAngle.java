@@ -34,10 +34,17 @@ public class LauncherSetAngle extends CommandBase
     if (m_angleError > Constants.LAUNCHER_PIVOT_ADC_THRESHOLD)
     {
       m_pivotOutput = Constants.LAUNCHER_PIVOT_ANGLE_P * m_angleError - Constants.LAUNCHER_AIM_VISION_MIN;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(0, false);
     }
     else if (m_angleError < -Constants.LAUNCHER_PIVOT_ADC_THRESHOLD)
     {
       m_pivotOutput = Constants.LAUNCHER_PIVOT_ANGLE_P * m_angleError + Constants.LAUNCHER_AIM_VISION_MIN;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(0, false);
+    }
+    else
+    {
+      m_pivotOutput = 0.0;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(0, true);
     }
 
     /* Give output to launcher pivot. */

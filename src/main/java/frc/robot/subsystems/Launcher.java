@@ -23,22 +23,32 @@ public class Launcher extends SubsystemBase
   private WPI_TalonSRX m_pivot;
   private AnalogInput m_pivotFeedback;
 
+  private boolean[] m_readyToLaunch;
+
   public Launcher()
   {
     m_topWheel = new WPI_TalonFX(Constants.LAUNCHER_TOP_WHEEL_ID);
     RobotContainer.configureTalonFX(m_topWheel, false, false, Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
-                            Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D);
+                                    Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D);
 
     m_bottomWheel = new WPI_TalonFX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
     RobotContainer.configureTalonFX(m_bottomWheel, false, false, Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P,
-                            Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
+                                    Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
 
     m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
-    RobotContainer.configureTalonSRX(m_pivot, false, FeedbackDevice.Analog, false, true, 
-                                    Constants.LAUNCHER_PIVOT_F, Constants.LAUNCHER_PIVOT_P, Constants.LAUNCHER_PIVOT_I, 
-                                    Constants.LAUNCHER_PIVOT_D, 0, 0, false);
+    RobotContainer.configureTalonSRX(m_pivot, false, FeedbackDevice.Analog, false, false, 
+                                     0.0, 0.0, 0.0, 0.0, 0, 0, false);
 
     m_pivotFeedback = new AnalogInput(Constants.LAUNCHER_PIVOT_FEEDBACK_PORT);
+
+    /**
+     * Ready to launch array of booleans tells LEDs (thus telling driver/operator) if ready to launch.
+     */
+    m_readyToLaunch = new boolean[4];
+    m_readyToLaunch[0] = false; // Launcher Pivot is at the setpoint angle (little to no error).
+    m_readyToLaunch[1] = false; // Launcher Top is at the setpoint RPM (within a range).
+    m_readyToLaunch[2] = false; // Launcher Bottom is at the setpoint RPM (within a range).
+    m_readyToLaunch[3] = false; // (VISION ONLY) Chassis is turned towards target (little to no error).
 
     SmartDashboard.putData("LAUNCHER PRESET TEST", new InstantCommand(() -> this.setPreset(3000, 3000, 2000)));
   }
@@ -49,6 +59,17 @@ public class Launcher extends SubsystemBase
   @Override
   public void periodic()
   {
+    SmartDashboard.putNumber("LAUNCHER TOP SETPOINT", m_topWheel.getClosedLoopTarget());
+    SmartDashboard.putNumber("LAUNCHER TOP VELOCITY", m_topWheel.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LAUNCHER BOTTOM SETPOINT", m_bottomWheel.getClosedLoopTarget());
+    SmartDashboard.putNumber("LAUNCHER BOTTOM VELOCITY", m_bottomWheel.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LAUNCHER PIVOT ADC", this.getPivotADC());
+
+    /**
+     * Updates whether or not the launcher RPMs are ready to launch.
+     */
+    this.updateRPMsLaunchReadyStatus(m_topWheel, 1);
+    this.updateRPMsLaunchReadyStatus(m_bottomWheel, 2);
   }
 
   /**
@@ -95,15 +116,6 @@ public class Launcher extends SubsystemBase
   }
 
   /**
-   * Stops launcher wheels.
-   */
-  public void stopWheels()
-  {
-    m_topWheel.set(0.0);
-    m_bottomWheel.set(0.0);
-  }
-
-  /**
    * Sets power of linear actuator for launcher pivot angle.
    */
   public void setPivotPower(double power)
@@ -146,5 +158,70 @@ public class Launcher extends SubsystemBase
     this.setBottomWheelRPM(bottomRPM);
 
     this.setAngle(pivotSetpoint);
+  }
+
+  /**
+   * Stops launcher wheels and pivot.
+   */
+  public void stopLauncher()
+  {
+    this.setTopWheelPower(0.0);
+    this.setBottomWheelPower(0.0);
+
+    this.setPivotPower(0.0);
+  }
+
+  /**
+   * Updates launch ready status for RPMs of top and bottom wheels.
+   */
+  public void updateRPMsLaunchReadyStatus(WPI_TalonFX talonFX, int launchReadyIndex)
+  {
+    int error = Math.abs((int) talonFX.getClosedLoopTarget() - talonFX.getSelectedSensorVelocity());
+    if (error < Constants.LAUNCHER_RPM_ERROR_TRESHOLD)
+    {
+      this.updateLaunchReadyStatus(launchReadyIndex, true);
+    }
+    else
+    {
+      this.updateLaunchReadyStatus(launchReadyIndex, false);
+    }
+  }
+
+  /**
+   * Method to update m_readyToLaunch array to tell whether the launcher is ready to launch or not.
+   * @param index is the item in the m_readyToLaunch array to edit.
+   * @param value is the value to update the item to. (0: Angle, 1: Top, 2: Bottom, 3: Chassis)
+   */
+  public void updateLaunchReadyStatus(int index, boolean value)
+  {
+    m_readyToLaunch[index] = value;
+  }
+
+  /**
+   * Get whether or not the launcher is ready to launch.
+   * This factors in angle of chassis, launcher angle, and rpms.
+   * @return true if ready to launch, false if not.
+   */
+  public boolean getLaunchReadyStatus()
+  {
+    boolean ready = true;
+    String factorsReady = "";
+
+    for (int i = 0; i < m_readyToLaunch.length; i++)
+    {
+      if (m_readyToLaunch[i])
+      {
+        factorsReady += i + "-";
+      }
+      else
+      {
+        ready = false;
+      }
+    }
+
+    /* Display which factors are ready (0: Pivot, 1: Top, 2: Bottom, 3: Chassis) */
+    SmartDashboard.putString("LAUNCHER STATUS", factorsReady);
+
+    return ready;
   }
 }

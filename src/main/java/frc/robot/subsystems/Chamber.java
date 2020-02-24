@@ -49,7 +49,6 @@ public class Chamber extends SubsystemBase
   @Override
   public void periodic()
   {
-    RobotContainer.displayTalonSRXInfo(m_base, "BASE");
   }
 
   /**

@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-
+import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -22,7 +22,6 @@ public class LEDs extends SubsystemBase
   /* Launching Sequence */
   private int m_rainbowFirstPixleHue;
   private boolean m_isLaunching = false;
-  private boolean m_readyToLaunch = false;
 
   private class class_color
   {
@@ -68,6 +67,11 @@ public class LEDs extends SubsystemBase
     //   setLEDsForBallCount(LoadBallIntoChamber.getBallCount());
     // }
     m_chamberLEDs.setData(m_LEDLength);
+  }
+
+  public void resetSequences()
+  {
+    m_isLaunching = false;
   }
 
   // private void setColor(int r, int g, int b)
@@ -177,7 +181,7 @@ public class LEDs extends SubsystemBase
 
     for (var i = Constants.CHAMBER_SIDE_NUM_OF_LEDS; i < Constants.CHAMBER_SIDE_NUM_OF_LEDS + Constants.CHAMBER_TOP_NUM_OF_LEDS; i++)
     {
-      if (m_readyToLaunch)
+      if (RobotContainer.m_launcher.getLaunchReadyStatus())
       {
         m_LEDLength.setRGB(i, 0, 255, 0);
       }
@@ -190,11 +194,6 @@ public class LEDs extends SubsystemBase
     m_rainbowFirstPixleHue += 3;
 
     m_rainbowFirstPixleHue %= 180;
-  }
-
-  public void setLaunchReadyStatus(boolean readyToLaunch)
-  {
-    m_readyToLaunch = readyToLaunch;
   }
 
   public void setLaunchingStatus(boolean isLaunching)

@@ -71,13 +71,20 @@ public class LauncherAimForTarget extends CommandBase
     m_angleError = RobotContainer.m_limelight.getTargetOffsetY();
 
     /* Calculate output to launcher angle pivot based on offset from target. */
-    if (m_angleError > 0.5)
+    if (m_angleError >= Constants.LAUNCHER_PIVOT_ERROR_TRESHOLD)
     {
       m_pivotOutput = Constants.LAUNCHER_AIM_VISION_P * m_angleError - Constants.LAUNCHER_AIM_VISION_MIN;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(0, false);
     }
-    else if (m_angleError < -0.5)
+    else if (m_angleError <= -Constants.LAUNCHER_PIVOT_ERROR_TRESHOLD)
     {
       m_pivotOutput = Constants.LAUNCHER_AIM_VISION_P * m_angleError + Constants.LAUNCHER_AIM_VISION_MIN;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(0, false);
+    }
+    else
+    {
+      m_pivotOutput = 0.0;
+      RobotContainer.m_launcher.updateLaunchReadyStatus(0, true);
     }
 
     /* Give output to launcher pivot. */
@@ -90,6 +97,6 @@ public class LauncherAimForTarget extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return (m_angleError < 0.5 && m_angleError > -0.5);
+    return (m_angleError < Constants.LAUNCHER_PIVOT_ERROR_TRESHOLD && m_angleError > -Constants.LAUNCHER_PIVOT_ERROR_TRESHOLD);
   }
 }

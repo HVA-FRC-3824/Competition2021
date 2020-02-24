@@ -35,10 +35,6 @@ public class InlineCommands {
 
   public final Command m_toggleLimelight;
   
-  public final Command m_chassisTurnToTarget;
-  public final Command m_chassisAutoTurnToTarget;
-  public final Command m_stopChassisTurnToTarget;
-  
   /* Climber Inline Command Declarations */
   public final Command m_extendClimberReelPosition;
   public final Command m_stopExtendClimberReelPos;
@@ -66,7 +62,9 @@ public class InlineCommands {
   public final Command m_jogLauncherAngleDown;
   public final Command m_stopLauncherAngle;
 
-  public final Command m_setLauncherPreset;
+  public final Command m_setLauncherVision; // Turns chassis and sets launcher angle & rpms.
+  public final Command m_setLauncherPreset; // Set launcher angle & rpms to a specified setpoint.
+  public final Command m_stopLaunchSequence; // Enables teleop driving and stops launcher angle & rpms.
   
   public InlineCommands()
   {
@@ -99,14 +97,6 @@ public class InlineCommands {
 
     m_toggleLimelight =
       new InstantCommand(() -> RobotContainer.m_limelight.toggleMode());
-
-    // TODO: Change this command name to something better and relocate since controlling both the chassis turn and launcher aim.
-    m_chassisTurnToTarget =
-      new ChassisTurnToTarget().alongWith(new LauncherAimForTarget()).andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()), new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0)));
-    m_chassisAutoTurnToTarget =
-      new ChassisTurnToTarget();
-    m_stopChassisTurnToTarget =
-      new InstantCommand(() -> this.m_chassisTurnToTarget.cancel());
 
     /* Climber Inline Command Instantiations */
     // m_extendClimberReelPosition =
@@ -169,8 +159,14 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
     m_stopLauncherAngle =
       new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0));
-    
+
+    m_setLauncherVision =
+      new ChassisTurnToTarget().alongWith(new LauncherAimForTarget(), new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)))
+                               .andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()));
     m_setLauncherPreset =
-      new LauncherSetPreset();
+      new LauncherSetPreset().alongWith(new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)));
+    m_stopLaunchSequence =
+      m_driveWithJoystick.alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
+                                    new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(false)));
   }
 }

@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase
@@ -21,9 +20,6 @@ public class Climber extends SubsystemBase
 
   private WPI_TalonFX m_liftLeft;
   private WPI_TalonFX m_liftRight;
-
-  private Servo m_lockRatchetLeft;
-  private Servo m_lockRatchetRight;
   
   public Climber()
   {

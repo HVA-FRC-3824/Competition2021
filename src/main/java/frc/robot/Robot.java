@@ -77,6 +77,9 @@ public class Robot extends TimedRobot
   {
     /* Turn off Limelight LED when disabled so it doesn't blind drive team. */
     RobotContainer.m_limelight.turnOffLED();
+
+    /* Switch to neutral LEDs animation --> set other factors that trigger other animations to false. */
+    RobotContainer.m_LEDs.resetSequences();
   }
 
   /**
