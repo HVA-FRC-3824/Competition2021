@@ -129,7 +129,7 @@ public class Chassis extends SubsystemBase
     this.updateOdometry();
 
     /* Update drivetrain information on SmartDashboard for testing. */
-    this.displayDrivetrainInfo();
+    // this.displayDrivetrainInfo();
   }
 
   /**
@@ -137,18 +137,18 @@ public class Chassis extends SubsystemBase
    */
   private void displayDrivetrainInfo()
   {
-    // SmartDashboard.putNumber("LEFT ENCODER", m_leftMaster.getSelectedSensorPosition());
-    // SmartDashboard.putNumber("RIGHT ENCODER", -m_rightMaster.getSelectedSensorPosition());
-    // SmartDashboard.putNumber("LEFT VELOCITY", m_leftMaster.getSelectedSensorVelocity());
-    // SmartDashboard.putNumber("RIGHT VELOCITY", -m_rightMaster.getSelectedSensorVelocity());
-    // SmartDashboard.putNumber("LEFT DISTANCE", this.getLeftEncoderDistance());
-    // SmartDashboard.putNumber("RIGHT DISTANCE", this.getRightEncoderDistance());
-    // SmartDashboard.putNumber("LEFT RATE", this.getLeftEncoderRate());
-    // SmartDashboard.putNumber("RIGHT RATE", this.getRightEncoderRate());
-    // SmartDashboard.putNumber("ANGLE", this.getAngle());
-    // SmartDashboard.putNumber("HEADING", this.getHeading());
-    // SmartDashboard.putNumber("LEFT VOLTAGE", m_leftMaster.getMotorOutputVoltage());
-    // SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
+    SmartDashboard.putNumber("LEFT ENCODER", m_leftMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RIGHT ENCODER", -m_rightMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("LEFT VELOCITY", m_leftMaster.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RIGHT VELOCITY", -m_rightMaster.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LEFT DISTANCE", this.getLeftEncoderDistance());
+    SmartDashboard.putNumber("RIGHT DISTANCE", this.getRightEncoderDistance());
+    SmartDashboard.putNumber("LEFT RATE", this.getLeftEncoderRate());
+    SmartDashboard.putNumber("RIGHT RATE", this.getRightEncoderRate());
+    SmartDashboard.putNumber("ANGLE", this.getAngle());
+    SmartDashboard.putNumber("HEADING", this.getHeading());
+    SmartDashboard.putNumber("LEFT VOLTAGE", m_leftMaster.getMotorOutputVoltage());
+    SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
   }
 
   /**
@@ -296,8 +296,8 @@ public class Chassis extends SubsystemBase
   {
     // m_leftMaster.setVoltage(leftVoltage);
     // m_rightMaster.setVoltage(-rightVoltage);
-    m_leftMaster.setVoltage(-rightVoltage);
-    m_rightMaster.setVoltage(leftVoltage);
+    m_leftMaster.setVoltage(rightVoltage); // negative
+    m_rightMaster.setVoltage(leftVoltage); // positive
     m_differentialDrive.feed();
   }
 

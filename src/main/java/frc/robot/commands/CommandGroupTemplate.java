@@ -10,12 +10,8 @@ public class CommandGroupTemplate extends SequentialCommandGroup
   {
     addCommands(
         new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
-        RobotContainer.m_chassis.generateRamsete("straight", true),
+        RobotContainer.m_chassis.generateRamsete("straightForward", true),
         new InstantCommand(() -> RobotContainer.m_limelight.turnOnLED())
-        // new WaitCommand(3.0),
-        // new InstantCommand(() -> RobotContainer.m_limelight.blinkLED()),
-        // RobotContainer.m_chassis.generateRamsete("straight2", false),
-        // new InstantCommand(() -> RobotContainer.m_limelight.turnOnLED())
     );
   }
 }

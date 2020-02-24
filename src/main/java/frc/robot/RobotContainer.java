@@ -116,8 +116,8 @@ public class RobotContainer
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", "default");
-    m_autoChooser.addOption("TEST", "test");
-    m_autoChooser.addOption("TEN BALL", "ten_ball");
+    m_autoChooser.addOption("TEST", "straight");
+    m_autoChooser.addOption("TEN BALL", "six_ball");
 
     /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
@@ -133,10 +133,10 @@ public class RobotContainer
     {
       case "default":
         return null;
-      case "test":
+      case "straight":
         return new CommandGroupTemplate();
-      case "ten_ball":
-        return new AutonomousTenBall();
+      case "six_ball":
+        return new AutonomousSixBall();
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;

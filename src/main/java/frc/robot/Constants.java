@@ -109,12 +109,12 @@ public class Constants
   public static final int    CLIMBER_LIFT_LEFT_CRUISEVELOCITY               = 0;
   public static final int    CLIMBER_LIFT_LEFT_ACCELERATION                 = 0;
 
-  public static final double CLIMBER_LIFT_RIGHT_F                            = 0.0;
-  public static final double CLIMBER_LIFT_RIGHT_P                            = 0.0;
-  public static final double CLIMBER_LIFT_RIGHT_I                            = 0.0;
-  public static final double CLIMBER_LIFT_RIGHT_D                            = 0.0;
-  public static final int    CLIMBER_LIFT_RIGHT_CRUISEVELOCITY               = 0;
-  public static final int    CLIMBER_LIFT_RIGHT_ACCELERATION                 = 0;
+  public static final double CLIMBER_LIFT_RIGHT_F                           = 0.0;
+  public static final double CLIMBER_LIFT_RIGHT_P                           = 0.0;
+  public static final double CLIMBER_LIFT_RIGHT_I                           = 0.0;
+  public static final double CLIMBER_LIFT_RIGHT_D                           = 0.0;
+  public static final int    CLIMBER_LIFT_RIGHT_CRUISEVELOCITY              = 0;
+  public static final int    CLIMBER_LIFT_RIGHT_ACCELERATION                = 0;
 
   /* Control Panel */   
   public static final double CONTROL_PANEL_SPINNER_F                        = 0.0;
