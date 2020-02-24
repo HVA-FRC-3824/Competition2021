@@ -16,8 +16,6 @@ public class LEDs extends SubsystemBase
 
   /* Neutral Sequence */
   private int m_neutralStepValue = 0; // step G for blue, B for red, step R for purple
-  // private int m_neutralLastChanged = 0;
-  // private boolean m_neutralChangeNext = false;
   private int m_neutralPixelToChange = 0;
   private boolean m_neutralChasingDirection = false; // false: inwards - true: outwards
 
@@ -137,7 +135,7 @@ public class LEDs extends SubsystemBase
     else
     {
       m_neutralChasingDirection = true; // chase outwards
-      m_neutralStepValue = 100;
+      m_neutralStepValue = 255;
     }
   }
 

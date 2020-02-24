@@ -96,7 +96,7 @@ public class ControlPanel extends SubsystemBase
 
   public void setPanelSpinnerRPM(int rpm)
   {
-    m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+    m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.CONTROL_PANEL_SPINNER_TPR));
   }
 
   // public void spinPanel()
