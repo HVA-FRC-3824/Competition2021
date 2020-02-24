@@ -4,11 +4,12 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -18,7 +19,8 @@ public class Climber extends SubsystemBase
   private WPI_TalonSRX m_reelLeft;
   private WPI_TalonSRX m_reelRight;
 
-  private DoubleSolenoid m_PTO;
+  private WPI_TalonFX m_liftLeft;
+  private WPI_TalonFX m_liftRight;
 
   private Servo m_lockRatchetLeft;
   private Servo m_lockRatchetRight;
@@ -36,11 +38,26 @@ public class Climber extends SubsystemBase
                                     Constants.CLIMBER_REEL_RIGHT_F, Constants.CLIMBER_REEL_RIGHT_P, 
                                     Constants.CLIMBER_REEL_RIGHT_I, Constants.CLIMBER_REEL_RIGHT_D, 
                                     Constants.CLIMBER_REEL_RIGHT_CRUISEVELOCITY, Constants.CLIMBER_REEL_RIGHT_ACCELERATION, true);
-    
-    m_PTO = new DoubleSolenoid(Constants.CLIMBER_PTO_PORT_A, Constants.CLIMBER_PTO_PORT_B);
 
-    m_lockRatchetLeft  = new Servo(Constants.CLIMBER_LOCK_RATCHET_LEFT_PORT);
-    m_lockRatchetRight = new Servo(Constants.CLIMBER_LOCK_RATCHET_RIGHT_PORT);
+    m_liftLeft = new WPI_TalonFX(Constants.CLIMBER_LIFT_LEFT_ID);
+    RobotContainer.configureTalonFX(m_liftLeft, true, false, Constants.CLIMBER_LIFT_LEFT_F, Constants.CLIMBER_LIFT_LEFT_P,
+                            Constants.CLIMBER_LIFT_LEFT_I, Constants.CLIMBER_LIFT_LEFT_D);
+    m_liftLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.K_TIMEOUT_MS);
+    m_liftLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.K_TIMEOUT_MS);
+    m_liftLeft.configMotionCruiseVelocity(Constants.CLIMBER_LIFT_LEFT_CRUISEVELOCITY, Constants.K_TIMEOUT_MS);
+    m_liftLeft.configMotionAcceleration(Constants.CLIMBER_LIFT_LEFT_ACCELERATION, Constants.K_TIMEOUT_MS);
+    /* Set brake mode to prevent the robot from falling after the match ends. */
+    m_liftLeft.setNeutralMode(NeutralMode.Brake);
+
+    m_liftRight = new WPI_TalonFX(Constants.CLIMBER_LIFT_RIGHT_ID);
+    RobotContainer.configureTalonFX(m_liftRight, false, false, Constants.CLIMBER_LIFT_RIGHT_F, Constants.CLIMBER_LIFT_RIGHT_P,
+                            Constants.CLIMBER_LIFT_RIGHT_I, Constants.CLIMBER_LIFT_RIGHT_D);
+    m_liftRight.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.K_TIMEOUT_MS);
+    m_liftRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.K_TIMEOUT_MS);
+    m_liftRight.configMotionCruiseVelocity(Constants.CLIMBER_LIFT_RIGHT_CRUISEVELOCITY, Constants.K_TIMEOUT_MS);
+    m_liftRight.configMotionAcceleration(Constants.CLIMBER_LIFT_RIGHT_ACCELERATION, Constants.K_TIMEOUT_MS);
+    /* Set brake mode to prevent the robot from falling after the match ends. */
+    m_liftRight.setNeutralMode(NeutralMode.Brake);
   }
  
   /**
@@ -57,11 +74,19 @@ public class Climber extends SubsystemBase
    */
   public WPI_TalonSRX getReelLeftTalonSRX()
   {
-      return m_reelLeft;
+    return m_reelLeft;
   }
   public WPI_TalonSRX getReelRightTalonSRX()
   {
-      return m_reelRight;
+    return m_reelRight;
+  }
+  public WPI_TalonFX getLiftLeftTalonFX()
+  {
+    return m_liftLeft;
+  }
+  public WPI_TalonFX getLiftRightTalonFX()
+  {
+    return m_liftRight;
   }
 
   /**
@@ -81,71 +106,69 @@ public class Climber extends SubsystemBase
   public void setReelsPosition(int position)
   {
     /* Verify desired position is within the minimum and maximum reel range. */
-    if (position < Constants.CLIMBER_REEL_MIN_POSITION)
-    {
-      position = Constants.CLIMBER_REEL_MIN_POSITION;
-    }
-    else if (position > Constants.CLIMBER_REEL_MAX_POSITION)
-    {
-      position = Constants.CLIMBER_REEL_MAX_POSITION;
-    }
+    // if (position < Constants.CLIMBER_REEL_MIN_POSITION)
+    // {
+    //   position = Constants.CLIMBER_REEL_MIN_POSITION;
+    // }
+    // else if (position > Constants.CLIMBER_REEL_MAX_POSITION)
+    // {
+    //   position = Constants.CLIMBER_REEL_MAX_POSITION;
+    // }
 
     m_reelLeft.set(ControlMode.MotionMagic, position);
     m_reelRight.set(ControlMode.MotionMagic, position);
   }
 
   /**
-   * Gets the opposite value of the current solenoid value for toggling the PTO.
-   * @return the solenoid value the PTO should be set to in order to toggle.
+   * Method to move climber while button is pressed and stop at current position when button is released.
    */
-  private Value getPTOValueToToggle()
+  public void stepReels(double distance)
   {
-    if (m_PTO.get() == Value.kForward)
-      return Value.kReverse;
-    else
-      return Value.kForward;
+    double presentPositionLeft = m_reelLeft.getSelectedSensorPosition();
+    m_reelLeft.set(ControlMode.MotionMagic, presentPositionLeft + distance);
+    double presentPositionRight = m_reelRight.getSelectedSensorPosition();
+    m_reelRight.set(ControlMode.MotionMagic, presentPositionRight + distance);
   }
 
   /**
-   * Method that toggles the PTO between being engaged and disengaged.
+   * Method to extend/retract climber poles with power.
+   * @param power range is from 1.0 to -1.0
    */
-  public void togglePTO()
+  public void setLiftsPower(double power)
   {
-    m_PTO.set(this.getPTOValueToToggle());
+    m_liftLeft.set(ControlMode.PercentOutput, power);
+    m_liftRight.set(ControlMode.PercentOutput, power);
   }
 
   /**
-   * Method to determine which value to toggle the passed in servo to and then set said value.
-   * @param lockRatchet is the specified servo to set.
+   * Sets the desired position of the left and right reel.
+   * @param position will be used as the setpoint for the PID controller
    */
-  private void setLockRatchets(Servo lockRatchet)
+  public void setLiftsPosition(int position)
   {
-    /**
-     * Calculate the average setpoint in order to determine which value to toggle the servos to.
-     * This ensures that the servos are still toggled properly even if they drift a little from their initial setpoint.
-     * Example: the servo is set for 0.0, but is knocked into the position of 0.25. If the locked position is 1.0, the
-     * servo will still toggle to 1.0 because the current, knocked position is less than the average setpoint, 0.5 (between 0.0 and 1.0).
-     */
-    double averageSetpoint = (Constants.CLIMBER_LOCK_RATCHET_LOCKED_POSITION - Constants.CLIMBER_LOCK_RATCHET_RELEASED_POSITION) / 2;
+    /* Verify desired position is within the minimum and maximum reel range. */
+    // if (position < Constants.CLIMBER_REEL_MIN_POSITION)
+    // {
+    //   position = Constants.CLIMBER_REEL_MIN_POSITION;
+    // }
+    // else if (position > Constants.CLIMBER_REEL_MAX_POSITION)
+    // {
+    //   position = Constants.CLIMBER_REEL_MAX_POSITION;
+    // }
 
-    /* Toggles lock ratchet based on if less than or more than/equal to average setpoint. */
-    if (lockRatchet.get() > averageSetpoint)
-    {
-      lockRatchet.set(Constants.CLIMBER_LOCK_RATCHET_RELEASED_POSITION);
-    }
-    else if (lockRatchet.get() <= averageSetpoint)
-    {
-      lockRatchet.set(Constants.CLIMBER_LOCK_RATCHET_LOCKED_POSITION);
-    }
+    m_liftLeft.set(ControlMode.MotionMagic, position);
+    m_liftRight.set(ControlMode.MotionMagic, position);
   }
 
   /**
-   * Method to toggle lock ratchets' positions (released/locked).
+   * Method to move climber while button is pressed and stop at current position when button is released.
    */
-  public void toggleLockRatchets()
+  public void stepLifts(double distance)
   {
-    this.setLockRatchets(m_lockRatchetLeft);
-    this.setLockRatchets(m_lockRatchetRight);
+    double presentPositionLeft = m_liftLeft.getSelectedSensorPosition();
+    m_liftLeft.set(ControlMode.MotionMagic, presentPositionLeft + distance);
+    double presentPositionRight = m_liftRight.getSelectedSensorPosition();
+    m_liftRight.set(ControlMode.MotionMagic, presentPositionRight + distance);
   }
 }
   

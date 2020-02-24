@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Chamber extends SubsystemBase
 {
   private WPI_TalonSRX m_base;
-  private WPI_TalonSRX m_elevatorFront;
-  private WPI_TalonSRX m_elevatorBack;
+  private WPI_TalonSRX m_elevatorMaster;
+  private WPI_TalonSRX m_elevatorSlave;
 
   private Ultrasonic m_ballPos_entering;
   private Ultrasonic m_ballPos_exiting;
@@ -23,21 +23,21 @@ public class Chamber extends SubsystemBase
   public Chamber()
   {
     m_base = new WPI_TalonSRX(Constants.CHAMBER_BASE_ID);
-    RobotContainer.configureTalonSRX(m_base, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, false,
+    RobotContainer.configureTalonSRX(m_base, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, true,
                                     Constants.CHAMBER_BASE_F, Constants.CHAMBER_BASE_P, Constants.CHAMBER_BASE_I, 
                                     Constants.CHAMBER_BASE_D, 0, 0, true);
 
-    m_elevatorFront = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_FRONT_ID);
-    RobotContainer.configureTalonSRX(m_elevatorFront, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                                    Constants.CHAMBER_ELEVATOR_FRONT_F, Constants.CHAMBER_ELEVATOR_FRONT_P, Constants.CHAMBER_ELEVATOR_FRONT_I, 
-                                    Constants.CHAMBER_ELEVATOR_FRONT_D, Constants.CHAMBER_ELEVATOR_FRONT_CRUISEVELOCITY, 
-                                    Constants.CHAMBER_ELEVATOR_FRONT_ACCELERATION, true);
-    
-    m_elevatorBack = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_BACK_ID);
-    RobotContainer.configureTalonSRX(m_elevatorBack, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
-                                    Constants.CHAMBER_ELEVATOR_BACK_F, Constants.CHAMBER_ELEVATOR_BACK_P, Constants.CHAMBER_ELEVATOR_BACK_I, 
-                                    Constants.CHAMBER_ELEVATOR_BACK_D, Constants.CHAMBER_ELEVATOR_BACK_CRUISEVELOCITY, 
-                                    Constants.CHAMBER_ELEVATOR_BACK_ACCELERATION, true);
+    m_elevatorMaster = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_MASTER_ID);
+    RobotContainer.configureTalonSRX(m_elevatorMaster, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, true,
+                                    Constants.CHAMBER_ELEVATOR_F, Constants.CHAMBER_ELEVATOR_P, Constants.CHAMBER_ELEVATOR_I, 
+                                    Constants.CHAMBER_ELEVATOR_D, Constants.CHAMBER_ELEVATOR_CRUISEVELOCITY, 
+                                    Constants.CHAMBER_ELEVATOR_ACCELERATION, true);
+
+    m_elevatorSlave = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_SLAVE_ID);
+    RobotContainer.configureTalonSRX(m_elevatorSlave, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
+                                    0.0, 0.0, 0.0, 0.0, 0, 0, true);
+
+    m_elevatorSlave.follow(m_elevatorMaster);
 
     m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_ENTER_PORT_A, Constants.CHAMBER_BALL_POS_ENTER_PORT_B);
     m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_EXIT_PORT_A, Constants.CHAMBER_BALL_POS_EXIT_PORT_B);
@@ -49,8 +49,7 @@ public class Chamber extends SubsystemBase
   @Override
   public void periodic()
   {
-    SmartDashboard.putNumber("BALL ENTERING POS DISTANCE", this.getEnteringRange());
-    SmartDashboard.putNumber("BALL EXITING POS DISTANCE", this.getExitingRange());
+    RobotContainer.displayTalonSRXInfo(m_base, "BASE");
   }
 
   /**
@@ -61,13 +60,13 @@ public class Chamber extends SubsystemBase
   {
     return m_base;
   }
-  public WPI_TalonSRX getElevatorFrontTalonSRX()
+  public WPI_TalonSRX getElevatorMasterTalonSRX()
   {
-    return m_elevatorFront;
+    return m_elevatorMaster;
   }
-  public WPI_TalonSRX getElevatorBackTalonSRX()
+  public WPI_TalonSRX getElevatorSlaveTalonSRX()
   {
-    return m_elevatorBack;
+    return m_elevatorSlave;
   }
 
   /**
@@ -80,8 +79,7 @@ public class Chamber extends SubsystemBase
   }
   public void setElevatorPower(double power)
   {
-    m_elevatorFront.set(ControlMode.PercentOutput, power);
-    m_elevatorBack.set(ControlMode.PercentOutput, power);
+    m_elevatorMaster.set(ControlMode.PercentOutput, power);
   }
  
   /**
@@ -90,7 +88,7 @@ public class Chamber extends SubsystemBase
    */
   public void setBaseRPM(int rpm)
   {
-    m_base.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm));
+    m_base.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.CHAMBER_BASE_TPR));
   }
 
   /**
@@ -99,8 +97,7 @@ public class Chamber extends SubsystemBase
    */
   public void setElevatorPosition(int position)
   {
-    m_elevatorFront.set(ControlMode.MotionMagic, position);
-    m_elevatorBack.set(ControlMode.MotionMagic, position);
+    m_elevatorMaster.set(ControlMode.MotionMagic, position);
   }
 
   /**
@@ -108,10 +105,8 @@ public class Chamber extends SubsystemBase
    */
   public void stepChamberDistance(double distance)
   {
-    double presentPositionFront = m_elevatorFront.getSelectedSensorPosition();
-    m_elevatorFront.set(ControlMode.MotionMagic, presentPositionFront + distance);
-    double presentPositionBack = m_elevatorBack.getSelectedSensorPosition();
-    m_elevatorBack.set(ControlMode.MotionMagic, presentPositionBack + distance);
+    double presentPosition = m_elevatorMaster.getSelectedSensorPosition();
+    m_elevatorMaster.set(ControlMode.MotionMagic, presentPosition + distance);
   }
 
   /**

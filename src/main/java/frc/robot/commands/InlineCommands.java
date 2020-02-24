@@ -4,7 +4,6 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
@@ -21,12 +20,12 @@ public class InlineCommands {
    */
 
   /* Chamber Inline Command Declarations */
-  public final Command m_setChamberElevatorPower;
-  public final Command m_stopChamberElevator;
-
-  public final Command m_setChamberBasePower;
   public final Command m_setChamberBaseRPM;
   public final Command m_stopChamberBase;
+
+  public final Command m_setChamberElevatorToLaunch;
+  public final Command m_setChamberElevatorDown;
+  public final Command m_setChamberElevatorAuto;
 
   /* Chassis Inline Command Declarations */
   public final Command m_driveWithJoystick;
@@ -41,47 +40,33 @@ public class InlineCommands {
   public final Command m_stopChassisTurnToTarget;
   
   /* Climber Inline Command Declarations */
-  public final Command m_extendClimberPower;
-  public final Command m_retractClimberPower;
+  public final Command m_extendClimberReelPosition;
+  public final Command m_stopExtendClimberReelPos;
+  public final Command m_retractClimberReelPosition;
+  public final Command m_stopRetractClimberReelPos;
 
-  public final Command m_extendClimberPosition;
-  public final Command m_retractClimberPosition;
-
-  public final Command m_stopClimber;
-
-  public final Command m_toggleClimberPTO;
-
-  public final Command m_toggleClimberLockRatchets;
+  public final Command m_extendClimberLiftPosition;
+  public final Command m_stopExtendClimberLiftPos;
+  public final Command m_retractClimberLiftPosition;
+  public final Command m_stopRetractClimberLiftPos;
 
   /* Control Panel Command Declarations */
-  public final Command m_setControlPanelSpinnerPower;
-  public final Command m_setControlPanelSpinnerRPM;
-  public final Command m_stopControlPanelSpinner;
+  // public final Command m_setControlPanelSpinnerPower;
+  // public final Command m_setControlPanelSpinnerRPM;
+  // public final Command m_stopControlPanelSpinner;
   
   /* Intake Inline Command Declarations */
   public final Command m_toggleIntakePistons;
 
-  public final Command m_setIntakeWheelsPower;
   public final Command m_setIntakeWheelsRPM;
   public final Command m_stopIntakeWheels;
 
   /* Launcher Inline Command Declarations */
-  public final Command m_setLauncherTopWheelPower;
-  public final Command m_setLauncherBottomWheelPower;
-  public final ParallelCommandGroup m_setLauncherWheelsPower;
-
-  public final Command m_setLauncherTopWheelRPM;
-  public final Command m_setLauncherBottomWheelRPM;
-  public final ParallelCommandGroup m_setLauncherWheelsRPM;
-
-  public final Command m_stopLauncherWheels;
-
   public final Command m_jogLauncherAngleUp;
   public final Command m_jogLauncherAngleDown;
+  public final Command m_stopLauncherAngle;
 
-  public final Command m_setLauncherForInitiationLine;
-  public final Command m_setLauncherForCloseTrench;
-  public final Command m_setLauncherForFarTrench;
+  public final Command m_setLauncherPreset;
   
   public InlineCommands()
   {
@@ -90,22 +75,23 @@ public class InlineCommands {
      */
 
     /* Chamber Inline Command Instantiations */
-    m_setChamberElevatorPower =
-      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(Constants.CHAMBER_ELEVATOR_POWER), RobotContainer.m_chamber);
-    m_stopChamberElevator =
-      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.0), RobotContainer.m_chamber);
-
-    m_setChamberBasePower =
-      new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(Constants.CHAMBER_BASE_POWER));
     m_setChamberBaseRPM =
       new InstantCommand(() -> RobotContainer.m_chamber.setBaseRPM(Constants.CHAMBER_BASE_RPM));
     m_stopChamberBase =
       new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(0.0));
 
+    m_setChamberElevatorToLaunch =
+      new RunCommand(() -> RobotContainer.m_chamber.stepChamberDistance(Constants.CHAMBER_BALL_STEP_DIST), RobotContainer.m_chamber);
+    m_setChamberElevatorDown =
+      new RunCommand(() -> RobotContainer.m_chamber.stepChamberDistance(-Constants.CHAMBER_BALL_STEP_DIST), RobotContainer.m_chamber);
+    m_setChamberElevatorAuto =
+      new ChamberIndexBalls();
+
     /* Chassis Inline Command Instantiations */
     m_driveWithJoystick =
       new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
                     RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis);
+                    
     m_shiftHighGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftHighGear());
     m_shiftLowGear =
@@ -123,85 +109,68 @@ public class InlineCommands {
       new InstantCommand(() -> this.m_chassisTurnToTarget.cancel());
 
     /* Climber Inline Command Instantiations */
-    m_extendClimberPower =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(Constants.CLIMBER_REEL_POWER));
-    m_retractClimberPower =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(-Constants.CLIMBER_REEL_POWER));
+    // m_extendClimberReelPosition =
+    //   new RunCommand(() -> RobotContainer.m_climber.stepReels(Constants.CLIMBER_REEL_STEP_MAGNITUDE), RobotContainer.m_climber);
+    // m_stopExtendClimberReelPos =
+    //   new InstantCommand(() -> this.m_extendClimberReelPosition.cancel());
+    // m_retractClimberReelPosition =
+    //   new RunCommand(() -> RobotContainer.m_climber.stepReels(-Constants.CLIMBER_REEL_STEP_MAGNITUDE), RobotContainer.m_climber);
+    // m_stopRetractClimberReelPos =
+    //   new InstantCommand(() -> this.m_retractClimberReelPosition.cancel());
 
-    m_extendClimberPosition =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPosition(Constants.CLIMBER_REEL_MAX_POSITION));
-    m_retractClimberPosition =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPosition(Constants.CLIMBER_REEL_MIN_POSITION));
+    // m_extendClimberLiftPosition =
+    //   new RunCommand(() -> RobotContainer.m_climber.stepLifts(Constants.CLIMBER_LIFT_STEP_MAGNITUDE), RobotContainer.m_climber);
+    // m_stopExtendClimberLiftPos =
+    //   new InstantCommand(() -> this.m_extendClimberLiftPosition.cancel());
+    // m_retractClimberLiftPosition =
+    //   new RunCommand(() -> RobotContainer.m_climber.stepLifts(-Constants.CLIMBER_LIFT_STEP_MAGNITUDE), RobotContainer.m_climber);
+    // m_stopRetractClimberLiftPos =
+    //   new InstantCommand(() -> this.m_retractClimberLiftPosition.cancel());
 
-    m_stopClimber =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.0));
+    m_extendClimberReelPosition =
+      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.5), RobotContainer.m_climber);
+    m_stopExtendClimberReelPos =
+      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.0), RobotContainer.m_climber);
+    m_retractClimberReelPosition =
+      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(-0.5), RobotContainer.m_climber);
+    m_stopRetractClimberReelPos =
+      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.0), RobotContainer.m_climber);
 
-    m_toggleClimberPTO =
-      new InstantCommand(() -> RobotContainer.m_climber.togglePTO());
-
-    m_toggleClimberLockRatchets =
-      new InstantCommand(() -> RobotContainer.m_climber.toggleLockRatchets());
+    m_extendClimberLiftPosition =
+      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(0.6), RobotContainer.m_climber);
+    m_stopExtendClimberLiftPos =
+      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(0.0), RobotContainer.m_climber);
+    m_retractClimberLiftPosition =
+      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(-0.6), RobotContainer.m_climber);
+    m_stopRetractClimberLiftPos =
+      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(0.0), RobotContainer.m_climber);
 
     /* Control Panel Command Instantiations */
-    m_setControlPanelSpinnerPower =
-      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(Constants.CONTROL_PANEL_SPINNER_POWER));
-    m_setControlPanelSpinnerRPM = 
-      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerRPM(Constants.CONTROL_PANEL_SPINNER_RPM));
-    m_stopControlPanelSpinner =
-      new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(0.0));
+    // m_setControlPanelSpinnerPower =
+    //   new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(Constants.CONTROL_PANEL_SPINNER_POWER));
+    // m_setControlPanelSpinnerRPM = 
+    //   new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerRPM(Constants.CONTROL_PANEL_SPINNER_RPM));
+    // m_stopControlPanelSpinner =
+    //   new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(0.0));
 
     /* Intake Inline Command Instantiations */ 
     m_toggleIntakePistons =
       new InstantCommand(() -> RobotContainer.m_intake.toggleExtender());
 
-    m_setIntakeWheelsPower =
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(Constants.INTAKE_WHEEL_POWER), RobotContainer.m_intake);
     m_setIntakeWheelsRPM = 
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM));
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM), RobotContainer.m_intake);
     m_stopIntakeWheels = 
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(0.0));
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(0), RobotContainer.m_intake);
       
     /* Launcher Inline Command Instantiations */
-    m_setLauncherTopWheelPower =
-      new RunCommand(() -> RobotContainer.m_launcher.setTopWheelPower(RobotContainer.m_OI.getOperatorController().
-                    getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
-    m_setLauncherBottomWheelPower =
-      new RunCommand(() -> RobotContainer.m_launcher.setBottomWheelPower(RobotContainer.m_OI.getOperatorController().
-                    getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID)));
-    m_setLauncherWheelsPower = new ParallelCommandGroup(m_setLauncherTopWheelPower, m_setLauncherBottomWheelPower);
-    m_setLauncherWheelsPower.addRequirements(RobotContainer.m_launcher);
-
-    m_setLauncherTopWheelRPM =
-      new RunCommand(() -> RobotContainer.m_launcher.setTopWheelRPM((int)(RobotContainer.m_OI.getOperatorController().
-                        getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
-    m_setLauncherBottomWheelRPM =
-      new RunCommand(() -> RobotContainer.m_launcher.setBottomWheelRPM((int)(RobotContainer.m_OI.getOperatorController().
-                        getRawAxis(Constants.OPERATOR_LAUNCHER_WHEELS_SLIDER_ID) * Constants.LAUNCHER_WHEEL_MAX_RPM)));
-    m_setLauncherWheelsRPM = new ParallelCommandGroup(m_setLauncherTopWheelRPM, m_setLauncherBottomWheelRPM);
-    m_setLauncherWheelsRPM.addRequirements(RobotContainer.m_launcher);
-
-    m_stopLauncherWheels =
-      new InstantCommand(() -> RobotContainer.m_launcher.stopWheels(), 
-                         RobotContainer.m_launcher);
-
     m_jogLauncherAngleUp =
-      new InstantCommand(() -> RobotContainer.m_launcher.setAngle(RobotContainer.m_launcher.getCurrentDesiredAngle() 
-                        + Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(-Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
     m_jogLauncherAngleDown =
-      new InstantCommand(() -> RobotContainer.m_launcher.setAngle(RobotContainer.m_launcher.getCurrentDesiredAngle() 
-                        - Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+    m_stopLauncherAngle =
+      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0));
     
-    m_setLauncherForInitiationLine =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_INITIATION_LINE_TOP_RPM, 
-                        Constants.LAUNCHER_INITIATION_LINE_BOTTOM_RPM, Constants.LAUNCHER_INITIATION_LINE_ANGLE), 
-                        RobotContainer.m_launcher);
-    m_setLauncherForCloseTrench =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_CLOSE_TRENCH_TOP_RPM, 
-                        Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_CLOSE_TRENCH_ANGLE), 
-                        RobotContainer.m_launcher);
-    m_setLauncherForFarTrench =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_FAR_TRENCH_TOP_RPM, 
-                        Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM, Constants.LAUNCHER_FAR_TRENCH_ANGLE),
-                        RobotContainer.m_launcher);
+    m_setLauncherPreset =
+      new LauncherSetPreset();
   }
 }

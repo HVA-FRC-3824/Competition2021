@@ -100,7 +100,7 @@ public class RobotContainer
   {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
-    // m_chamber.setDefaultCommand(null);
+    m_chamber.setDefaultCommand(new ChamberIndexBalls());
     // m_launcher.setDefaultCommand(null);
     // m_climber.setDefaultCommand(null);
     // m_controlPanel.setDefaultCommand(null);
@@ -277,7 +277,7 @@ public class RobotContainer
      * TalonFX object (pass in null if configuring TalonSRX).
      * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
      */
-    // SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_launcher.getTopWheelTalonFX(), false));
+    SmartDashboard.putData("Set PID Values", new SetPIDValues(m_intake.getWheelIntakeTalonSRX(), null, false));
   }
 
   /**
@@ -307,11 +307,13 @@ public class RobotContainer
   }
 
   /**
-   * Convert RPM to units/100ms for TalonSRX/TalonFX to use for ControlMode.Velocity
+   * Convert RPM to units/100ms for TalonSRX/TalonFX to use for ControlMode.Velocity.
+   * @param rpm is desired revolutions per minute.
+   * @param tpr is the encoder ticks per revolution.
    */
-  public static double convertRPMToVelocity(int rpm)
+  public static double convertRPMToVelocity(int rpm, int tpr)
   {
-    /* (RPM * 4096 Units/Revolution / 600 100ms/min) */
-    return rpm * 4096 / 600;
+    /* (RPM * TPR Units/Revolution / 600 100ms/min) */
+    return rpm * tpr / 600;
   }
 }

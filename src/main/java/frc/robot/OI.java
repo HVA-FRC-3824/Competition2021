@@ -26,42 +26,31 @@ public class OI
   private static Joystick       m_operatorJoystick;
   
   /* Chamber */
-  private static JoystickButton m_setChamberBasePowerBtn;
   private static JoystickButton m_setChamberBaseRPMBtn;
 
-  private static JoystickButton m_setChamberElevatorPowerBtn;
+  private static JoystickButton m_setChamberElevatorToLaunchBtn;
+  private static JoystickButton m_setChamberElevatorDownBtn;
 
   /* Climber */
-  private static JoystickButton m_extendClimberPowerBtn;
-  private static JoystickButton m_retractClimberPowerBtn;
+  private static JoystickButton m_extendClimberReelPositionBtn;
+  private static JoystickButton m_retractClimberReelPositionBtn;
 
-  private static JoystickButton m_extendClimberPositionBtn;
-  private static JoystickButton m_retractClimberPositionBtn;
-
-  private static JoystickButton m_toggleClimberPTOBtn;
-
-  private static JoystickButton m_toggleClimberLockRatchetsBtn;
+  private static JoystickButton m_extendClimberLiftPositionBtn;
+  private static JoystickButton m_retractClimberLiftPositionBtn;
   
   /* Control Panel */
-  private static JoystickButton m_setControlPanelSpinnerPowerBtn;
-  private static JoystickButton m_setControlPanelSpinnerRPMBtn;
+  // private static JoystickButton m_setControlPanelSpinnerPowerBtn;
+  // private static JoystickButton m_setControlPanelSpinnerRPMBtn;
   
   /* Intake */
   private static JoystickButton m_toggleIntakePistonsBtn;
-  private static JoystickButton m_setIntakeWheelPowerBtn;
   private static JoystickButton m_setIntakeWheelRPMBtn;
 
   /* Launcher */
-  private static JoystickButton m_setLauncherWheelsPowerBtn;
-  private static JoystickButton m_setLauncherWheelsRPMBtn;
-  private static JoystickButton m_stopLauncherWheelsBtn;
-
   private static JoystickButton m_jogLauncherAngleUpBtn;
   private static JoystickButton m_jogLauncherAngleDownBtn;
 
-  private static JoystickButton m_setLauncherForInitiationLineBtn;
-  private static JoystickButton m_setLauncherForCloseTrenchBtn;
-  private static JoystickButton m_setLauncherForFarTrenchBtn;
+  private static JoystickButton m_setLauncherPresetBtn;
 
   public OI() 
   {
@@ -86,42 +75,31 @@ public class OI
     m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
 
     /* Chamber */
-    m_setChamberBasePowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_BASE_POWER_BTN_ID);
     m_setChamberBaseRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_BASE_RPM_BTN_ID);
 
-    m_setChamberElevatorPowerBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_POWER_BTN_ID);
+    m_setChamberElevatorToLaunchBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_LAUNCH_BTN_ID);
+    m_setChamberElevatorDownBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID);
 
     /* Climber */
-    m_extendClimberPowerBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_POWER_BTN_ID);
-    m_retractClimberPowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_POWER_BTN_ID);
+    m_extendClimberReelPositionBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_REEL_POSITION_BTN_ID);
+    m_retractClimberReelPositionBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_REEL_POSITION_BTN_ID);
 
-    m_extendClimberPositionBtn        = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_POSITION_BTN_ID);
-    m_retractClimberPositionBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_POSITION_BTN_ID);
-
-    m_toggleClimberPTOBtn             = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_TOGGLE_PTO_BTN_ID);
-
-    m_toggleClimberLockRatchetsBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_TOGGLE_LOCK_RATCHETS_BTN_ID);
+    m_extendClimberLiftPositionBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_LIFT_POSITION_BTN_ID);
+    m_retractClimberLiftPositionBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_LIFT_POSITION_BTN_ID);
 
     /* Control Panel */
-    m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
-    m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
+    // m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
+    // m_setControlPanelSpinnerRPMBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID);
 
     /* Intake */
     m_toggleIntakePistonsBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_TOGGLE_INTAKE_BTN_ID);
-    m_setIntakeWheelPowerBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_POWER_BTN_ID);
     m_setIntakeWheelRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_INTAKE_WHEEL_RPM_BTN_ID);
 
     /* Launcher */
-    m_setLauncherWheelsPowerBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_POWER_BTN_ID);
-    m_setLauncherWheelsRPMBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_RPM_BTN_ID);
-    m_stopLauncherWheelsBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_WHEELS_STOP_BTN_ID);
-
     m_jogLauncherAngleUpBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID);
     m_jogLauncherAngleDownBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID);
 
-    m_setLauncherForInitiationLineBtn = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_INIT_LINE_BTN_ID);
-    m_setLauncherForCloseTrenchBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_CLOSE_TRENCH_BTN_ID);
-    m_setLauncherForFarTrenchBtn      = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_FAR_TRENCH_BTN_ID);
+    m_setLauncherPresetBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_PRESET_BTN_ID);
   }
 
   /**
@@ -146,13 +124,14 @@ public class OI
   public void configureButtonBindings()
   {
     /* Chamber Buttons */
-    m_setChamberBasePowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberBasePower);
-    m_setChamberBasePowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberBase);
     m_setChamberBaseRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberBaseRPM);
     m_setChamberBaseRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberBase);
 
-    m_setChamberElevatorPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorPower);
-    m_setChamberElevatorPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
+    m_setChamberElevatorToLaunchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorToLaunch);
+    m_setChamberElevatorToLaunchBtn.whenReleased(RobotContainer.m_inlineCommands.m_setChamberElevatorAuto);
+
+    m_setChamberElevatorDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorDown);
+    m_setChamberElevatorDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_setChamberElevatorAuto);
 
     /* Chassis Buttons */
     m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
@@ -164,47 +143,36 @@ public class OI
     m_chassisTurnToTargetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChassisTurnToTarget);
 
     /* Climber Buttons */
-    m_extendClimberPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberPower);
-    m_extendClimberPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimber);
+    m_extendClimberReelPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberReelPosition);
+    m_extendClimberReelPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopExtendClimberReelPos);
+    m_retractClimberReelPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberReelPosition);
+    m_retractClimberReelPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopRetractClimberReelPos);
 
-    m_retractClimberPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberPower);
-    m_retractClimberPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimber);
-
-    m_extendClimberPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberPosition);
-    m_retractClimberPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberPosition);
-
-    m_toggleClimberPTOBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleClimberPTO);
-
-    m_toggleClimberLockRatchetsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleClimberLockRatchets);
+    m_extendClimberLiftPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberLiftPosition);
+    m_extendClimberLiftPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopExtendClimberLiftPos);
+    m_retractClimberLiftPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberLiftPosition);
+    m_retractClimberLiftPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopRetractClimberLiftPos);
 
     /* Control Panel Buttons */
-    m_setControlPanelSpinnerPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerPower);
-    m_setControlPanelSpinnerPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
-    m_setControlPanelSpinnerRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerRPM);
-    m_setControlPanelSpinnerRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
+    // m_setControlPanelSpinnerPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerPower);
+    // m_setControlPanelSpinnerPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
+    // m_setControlPanelSpinnerRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerRPM);
+    // m_setControlPanelSpinnerRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
 
     /* Intake Buttons */
     m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
-
-    m_setIntakeWheelPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setIntakeWheelsPower);
-    m_setIntakeWheelPowerBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopIntakeWheels);
 
     m_setIntakeWheelRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setIntakeWheelsRPM);
     m_setIntakeWheelRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopIntakeWheels);
 
     /* Launcher Buttons */
-    m_setLauncherWheelsPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherWheelsPower);
-    m_setLauncherWheelsRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherWheelsRPM);
-    m_stopLauncherWheelsBtn.whenPressed(RobotContainer.m_inlineCommands.m_stopLauncherWheels);
-
     m_jogLauncherAngleUpBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleUp);
+    m_jogLauncherAngleUpBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherAngle);
+
     m_jogLauncherAngleDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleDown);
+    m_jogLauncherAngleDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherAngle);
 
-    m_setLauncherForInitiationLineBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherForInitiationLine);
-    m_setLauncherForCloseTrenchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherForCloseTrench);
-    m_setLauncherForFarTrenchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherForFarTrench);
-
-    
+    m_setLauncherPresetBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
   }
   
   //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey, at least indent your comment properly. -Jovi
