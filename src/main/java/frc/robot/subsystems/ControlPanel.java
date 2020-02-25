@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
+
+import javax.annotation.meta.When;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -9,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -77,7 +81,6 @@ public class ControlPanel extends SubsystemBase
     currentBlue = m_colorSensor.getBlue();
     SmartDashboard.putNumber("Blue", currentBlue);
     getCurrentColor();
-    // spinPanel();
   }
 
   /**
@@ -99,28 +102,7 @@ public class ControlPanel extends SubsystemBase
     m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.CONTROL_PANEL_SPINNER_TPR));
   }
 
-  // public void spinPanel()
-  // {
-    //get current color
-    // int halfTurn = 0;
-
-    // SmartDashboard.putString("color2", color);
-
-    // spin panel until you see the same color 4 times
-    // for (int halfhalfTurn = 0 ; halfTurn > 4; halfTurn++)
-    // {
-    //   setPanelSpinnerPower(Constants.CONTROL_PANEL_SPINNER_POWER);
-
-    //   //when color detected, add one to halfTurn
-    //   if (currentColor == color)
-    //   {
-    //     halfTurn++;
-    //   }
-    // }
-    // m_panelSpinner.stopMotor();
-  
-
-  public void getCurrentColor()
+  public String getCurrentColor()
   {
     if(currentRed > currentBlue && currentRed > currentGreen)
     {
@@ -141,6 +123,8 @@ public class ControlPanel extends SubsystemBase
     }
     
     SmartDashboard.putString("Color", currentColor);
+
+    return currentColor;
   }
 
 }
