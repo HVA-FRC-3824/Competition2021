@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -29,6 +30,8 @@ public class LauncherSetAngle extends CommandBase
   {
     /* Angle error is how off the robot is from the setpoint. */
     m_angleError = m_setpoint - RobotContainer.m_launcher.getPivotADC();
+    SmartDashboard.putNumber("ANGLE SETPOINT", m_setpoint);
+    SmartDashboard.putNumber("ANGLE ADC", RobotContainer.m_launcher.getPivotADC());
 
     /* Calculate output to launcher angle pivot based on offset from target. */
     if (m_angleError > Constants.LAUNCHER_PIVOT_ADC_THRESHOLD)

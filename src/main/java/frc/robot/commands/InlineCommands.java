@@ -148,17 +148,17 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_intake.toggleExtender());
 
     m_setIntakeWheelsRPM = 
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(Constants.INTAKE_WHEEL_RPM), RobotContainer.m_intake);
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(0.5), RobotContainer.m_intake);
     m_stopIntakeWheels = 
-      new InstantCommand(() -> RobotContainer.m_intake.setWheelRPM(0), RobotContainer.m_intake);
+      new InstantCommand(() -> RobotContainer.m_intake.setWheelPower(0.0), RobotContainer.m_intake);
       
     /* Launcher Inline Command Instantiations */
     m_jogLauncherAngleUp =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(-Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+      new RunCommand(() -> RobotContainer.m_launcher.setPivotPower(-Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
     m_jogLauncherAngleDown =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
+      new RunCommand(() -> RobotContainer.m_launcher.setPivotPower(Constants.LAUNCHER_PIVOT_JOG_MAGNITUDE));
     m_stopLauncherAngle =
-      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0));
+      new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0)).alongWith(new InstantCommand(() -> this.m_jogLauncherAngleUp.cancel()), new InstantCommand(() -> this.m_jogLauncherAngleDown.cancel()));
 
     m_setLauncherVision =
       new ChassisTurnToTarget().alongWith(new LauncherAimForTarget(), new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)))
@@ -166,7 +166,8 @@ public class InlineCommands {
     m_setLauncherPreset =
       new LauncherSetPreset().alongWith(new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)));
     m_stopLaunchSequence =
-      m_driveWithJoystick.alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
+    new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
+    RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis).alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
                                     new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(false)));
   }
 }

@@ -53,6 +53,8 @@ public class Launcher extends SubsystemBase
     SmartDashboard.putData("LAUNCHER PRESET TEST", new InstantCommand(() -> this.setPreset(3000, 3000, 2000)));
   }
 
+  private double test = 0;
+
   /**
    * This method will be called once per scheduler run.
    */
@@ -64,6 +66,7 @@ public class Launcher extends SubsystemBase
     SmartDashboard.putNumber("LAUNCHER BOTTOM SETPOINT", m_bottomWheel.getClosedLoopTarget());
     SmartDashboard.putNumber("LAUNCHER BOTTOM VELOCITY", m_bottomWheel.getSelectedSensorVelocity());
     SmartDashboard.putNumber("LAUNCHER PIVOT ADC", this.getPivotADC());
+    SmartDashboard.putNumber("LAUNCHER PIVOT POWER", test);
 
     /**
      * Updates whether or not the launcher RPMs are ready to launch.
@@ -120,15 +123,15 @@ public class Launcher extends SubsystemBase
    */
   public void setPivotPower(double power)
   {
-    // if ((this.getPivotADC() <= 1700 && power >= 0.0) || (this.getPivotADC() >= 3500 && power <= 0.0))
-    // {
-    //   m_pivot.set(ControlMode.PercentOutput, 0.0);
-    // }
-    // else
-    // {
-    //   m_pivot.set(ControlMode.PercentOutput, -power);
-    // }
-    m_pivot.set(ControlMode.PercentOutput, -power);
+    test = power;
+    if ((this.getPivotADC() <= 2000 && power <= 0.0) || (this.getPivotADC() >= 3500 && power >= 0.0))
+    {
+      m_pivot.set(ControlMode.PercentOutput, 0.0);
+    }
+    else
+    {
+      m_pivot.set(ControlMode.PercentOutput, -power);
+    }
   }
 
   /**
@@ -156,6 +159,8 @@ public class Launcher extends SubsystemBase
   {
     this.setTopWheelRPM(topRPM);
     this.setBottomWheelRPM(bottomRPM);
+
+    // this.updateLaunchReadyStatus(0, true);
 
     this.setAngle(pivotSetpoint);
   }

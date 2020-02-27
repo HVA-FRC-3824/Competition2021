@@ -159,8 +159,7 @@ public class Chassis extends SubsystemBase
   public void teleopDrive(double power, double turn)
   {
     /* Creates deadband for joystick twist input. */
-    if (turn > -0.1 && turn < 0.1)
-      turn = 0;
+    turn = turn/1.5;
 
     m_differentialDrive.arcadeDrive(power, turn, true);
   }
@@ -296,8 +295,8 @@ public class Chassis extends SubsystemBase
   {
     // m_leftMaster.setVoltage(leftVoltage);
     // m_rightMaster.setVoltage(-rightVoltage);
-    m_leftMaster.setVoltage(rightVoltage); // negative
-    m_rightMaster.setVoltage(leftVoltage); // positive
+    m_leftMaster.setVoltage(-rightVoltage); // negative
+    m_rightMaster.setVoltage(leftVoltage); // positive because right side is inverted for the arcadeDrive method.
     m_differentialDrive.feed();
   }
 

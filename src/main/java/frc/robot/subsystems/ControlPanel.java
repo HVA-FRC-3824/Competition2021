@@ -17,50 +17,50 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ControlPanel extends SubsystemBase
 {
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private WPI_TalonSRX m_panelSpinner;
+  // private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  // private WPI_TalonSRX m_panelSpinner;
 
-  private ColorSensorV3 m_colorSensor;
+  // private ColorSensorV3 m_colorSensor;
 
-  public String gameData = DriverStation.getInstance().getGameSpecificMessage();
-  public int currentRed;
-  public int currentBlue;
-  public int currentGreen;
-  public String currentColor;
+  // public String gameData = DriverStation.getInstance().getGameSpecificMessage();
+  // public int currentRed;
+  // public int currentBlue;
+  // public int currentGreen;
+  // public String currentColor;
 
   public ControlPanel() 
   {
-    m_panelSpinner = new WPI_TalonSRX(Constants.CONTROL_PANEL_SPINNER_ID);
-    RobotContainer.configureTalonSRX(m_panelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
-                                    Constants.CONTROL_PANEL_SPINNER_F, Constants.CONTROL_PANEL_SPINNER_P, 
-                                    Constants.CONTROL_PANEL_SPINNER_I, Constants.CONTROL_PANEL_SPINNER_D, 0, 0, true);
+    // m_panelSpinner = new WPI_TalonSRX(Constants.CONTROL_PANEL_SPINNER_ID);
+    // RobotContainer.configureTalonSRX(m_panelSpinner, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+    //                                 Constants.CONTROL_PANEL_SPINNER_F, Constants.CONTROL_PANEL_SPINNER_P, 
+    //                                 Constants.CONTROL_PANEL_SPINNER_I, Constants.CONTROL_PANEL_SPINNER_D, 0, 0, true);
 
-    m_colorSensor = new ColorSensorV3(i2cPort);
+    // m_colorSensor = new ColorSensorV3(i2cPort);
 
-    if(gameData.length() > 0)
-    {
-      switch (gameData.charAt(0))
-      {
-        case 'B' :
-          //Blue case code
-          break;
-        case 'G' :
-          //Green case code
-          break;
-        case 'R' :
-          //Red case code
-          break;
-        case 'Y' :
-          //Yellow case code
-          break;
-        default :
-          //This is corrupt data
-          break;
-      }
-    } else 
-      {
-      //Code for no data received yet
-      }
+    // if(gameData.length() > 0)
+    // {
+    //   switch (gameData.charAt(0))
+    //   {
+    //     case 'B' :
+    //       //Blue case code
+    //       break;
+    //     case 'G' :
+    //       //Green case code
+    //       break;
+    //     case 'R' :
+    //       //Red case code
+    //       break;
+    //     case 'Y' :
+    //       //Yellow case code
+    //       break;
+    //     default :
+    //       //This is corrupt data
+    //       break;
+    //   }
+    // } else 
+    //   {
+    //   //Code for no data received yet
+    //   }
   }
 
 
@@ -70,13 +70,13 @@ public class ControlPanel extends SubsystemBase
   @Override
   public void periodic() 
   {
-    currentRed = m_colorSensor.getRed();
-    SmartDashboard.putNumber("Red", currentRed);
-    currentGreen = m_colorSensor.getGreen() / 2;
-    SmartDashboard.putNumber("Green", currentGreen);
-    currentBlue = m_colorSensor.getBlue();
-    SmartDashboard.putNumber("Blue", currentBlue);
-    getCurrentColor();
+    // currentRed = m_colorSensor.getRed();
+    // SmartDashboard.putNumber("Red", currentRed);
+    // currentGreen = m_colorSensor.getGreen() / 2;
+    // SmartDashboard.putNumber("Green", currentGreen);
+    // currentBlue = m_colorSensor.getBlue();
+    // SmartDashboard.putNumber("Blue", currentBlue);
+    // getCurrentColor();
     // spinPanel();
   }
 
@@ -84,20 +84,20 @@ public class ControlPanel extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  public WPI_TalonSRX getPanelSpinnerTalonSRX() 
-  {
-    return m_panelSpinner;
-  }
+  // public WPI_TalonSRX getPanelSpinnerTalonSRX() 
+  // {
+  //   return m_panelSpinner;
+  // }
 
-  public void setPanelSpinnerPower(double power)
-  {
-    m_panelSpinner.set(ControlMode.PercentOutput, power);
-  }
+  // public void setPanelSpinnerPower(double power)
+  // {
+  //   m_panelSpinner.set(ControlMode.PercentOutput, power);
+  // }
 
-  public void setPanelSpinnerRPM(int rpm)
-  {
-    m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.CONTROL_PANEL_SPINNER_TPR));
-  }
+  // public void setPanelSpinnerRPM(int rpm)
+  // {
+  //   m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.CONTROL_PANEL_SPINNER_TPR));
+  // }
 
   // public void spinPanel()
   // {
@@ -120,27 +120,27 @@ public class ControlPanel extends SubsystemBase
     // m_panelSpinner.stopMotor();
   
 
-  public void getCurrentColor()
-  {
-    if(currentRed > currentBlue && currentRed > currentGreen)
-    {
-      currentColor = "Yellow";
-      if (currentRed > currentGreen*2)
-      {
-        currentColor = "Red";
-      }
+  // public void getCurrentColor()
+  // {
+  //   if(currentRed > currentBlue && currentRed > currentGreen)
+  //   {
+  //     currentColor = "Yellow";
+  //     if (currentRed > currentGreen*2)
+  //     {
+  //       currentColor = "Red";
+  //     }
       
-    }
-    else if (currentBlue > currentRed && currentBlue > currentGreen)
-    {
-      currentColor = "Blue";
-    }
-    else if (currentGreen > currentRed && currentGreen > currentBlue)
-    {
-      currentColor = "Green";
-    }
+  //   }
+  //   else if (currentBlue > currentRed && currentBlue > currentGreen)
+  //   {
+  //     currentColor = "Blue";
+  //   }
+  //   else if (currentGreen > currentRed && currentGreen > currentBlue)
+  //   {
+  //     currentColor = "Green";
+  //   }
     
-    SmartDashboard.putString("Color", currentColor);
-  }
+  //   SmartDashboard.putString("Color", currentColor);
+  // }
 
 }
