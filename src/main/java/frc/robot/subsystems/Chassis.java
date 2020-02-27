@@ -129,7 +129,7 @@ public class Chassis extends SubsystemBase
     this.updateOdometry();
 
     /* Update drivetrain information on SmartDashboard for testing. */
-    // this.displayDrivetrainInfo();
+    this.displayDrivetrainInfo();
   }
 
   /**
@@ -137,10 +137,10 @@ public class Chassis extends SubsystemBase
    */
   private void displayDrivetrainInfo()
   {
-    SmartDashboard.putNumber("LEFT ENCODER", m_leftMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("RIGHT ENCODER", -m_rightMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("LEFT VELOCITY", m_leftMaster.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("RIGHT VELOCITY", -m_rightMaster.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LEFT ENCODER", m_rightMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RIGHT ENCODER", -m_leftMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("LEFT VELOCITY", m_rightMaster.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RIGHT VELOCITY", -m_leftMaster.getSelectedSensorVelocity());
     SmartDashboard.putNumber("LEFT DISTANCE", this.getLeftEncoderDistance());
     SmartDashboard.putNumber("RIGHT DISTANCE", this.getRightEncoderDistance());
     SmartDashboard.putNumber("LEFT RATE", this.getLeftEncoderRate());

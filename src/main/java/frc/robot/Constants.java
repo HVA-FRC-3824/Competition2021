@@ -269,13 +269,13 @@ public class Constants
   public static final boolean K_GYRO_REVERSED                               = true;
 
   /* Use robot characterization tool for these values. */
-  public static final double K_S_VOLTS                                      = 0.372;
+  public static final double K_S_VOLTS                                      = 0.439;
   public static final double K_V_VOLT_SECONDS_PER_METER                     = 3.09;
-  public static final double K_A_VOLT_SECONDS_SQUARED_PER_METER             = 0.154;
+  public static final double K_A_VOLT_SECONDS_SQUARED_PER_METER             = 0.0319;
   
-  public static final double K_P_DRIVE_VEL                                  = 0.00425;
+  public static final double K_P_DRIVE_VEL                                  = 0.00433;
 
-  public static final double K_TRACK_WIDTH_METERS                           = 0.774;
+  public static final double K_TRACK_WIDTH_METERS                           = 0.715;
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS        = new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
   /* Maximum voltage is 10V rather than nominal battery voltage of 12V for 

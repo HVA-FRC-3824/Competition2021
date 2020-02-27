@@ -161,13 +161,13 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_launcher.setPivotPower(0.0)).alongWith(new InstantCommand(() -> this.m_jogLauncherAngleUp.cancel()), new InstantCommand(() -> this.m_jogLauncherAngleDown.cancel()));
 
     m_setLauncherVision =
-      new ChassisTurnToTarget().alongWith(new LauncherAimForTarget(), new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)))
-                               .andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()));
+      new ChassisTurnToTarget().andThen(new InstantCommand(() -> RobotContainer.m_limelight.setModeDriver()));
+      //.alongWith(new LauncherAimForTarget(), new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)))
     m_setLauncherPreset =
       new LauncherSetPreset().alongWith(new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)));
     m_stopLaunchSequence =
-    new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
-    RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis).alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
+      new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
+      RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis).alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
                                     new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(false)));
   }
 }
