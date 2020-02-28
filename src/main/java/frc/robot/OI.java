@@ -32,12 +32,17 @@ public class OI
   private static JoystickButton m_setChamberElevatorDownBtn;
 
   /* Climber */
-  private static JoystickButton m_extendClimberReelPositionBtn;
-  private static JoystickButton m_retractClimberReelPositionBtn;
+  // private static JoystickButton m_extendClimberReelPositionBtn;
+  // private static JoystickButton m_retractClimberReelPositionBtn;
 
-  private static JoystickButton m_extendClimberLiftPositionBtn;
-  private static JoystickButton m_retractClimberLiftPositionBtn;
-  
+  // private static JoystickButton m_extendClimberLiftPositionBtn;
+  // private static JoystickButton m_retractClimberLiftPositionBtn;
+  private static JoystickButton m_extendClimberLeftBtn;
+  private static JoystickButton m_retractClimberLeftBtn;
+
+  private static JoystickButton m_extendClimberRightBtn;
+  private static JoystickButton m_retractClimberRightBtn;
+
   /* Control Panel */
   // private static JoystickButton m_setControlPanelSpinnerPowerBtn;
   // private static JoystickButton m_setControlPanelSpinnerRPMBtn;
@@ -81,11 +86,11 @@ public class OI
     m_setChamberElevatorDownBtn       = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID);
 
     /* Climber */
-    m_extendClimberReelPositionBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_REEL_POSITION_BTN_ID);
-    m_retractClimberReelPositionBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_REEL_POSITION_BTN_ID);
+    m_extendClimberLeftBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_LEFT_BTN_ID);
+    m_retractClimberLeftBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_LEFT_BTN_ID);
 
-    m_extendClimberLiftPositionBtn    = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_LIFT_POSITION_BTN_ID);
-    m_retractClimberLiftPositionBtn   = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_LIFT_POSITION_BTN_ID);
+    m_extendClimberRightBtn           = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_EXTEND_RIGHT_BTN_ID);
+    m_retractClimberRightBtn          = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CLIMBER_RETRACT_RIGHT_BTN_ID);
 
     /* Control Panel */
     // m_setControlPanelSpinnerPowerBtn  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID);
@@ -140,15 +145,17 @@ public class OI
     m_toggleLimelightBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleLimelight);
 
     /* Climber Buttons */
-    m_extendClimberReelPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberReelPosition);
-    m_extendClimberReelPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopExtendClimberReelPos);
-    m_retractClimberReelPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberReelPosition);
-    m_retractClimberReelPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopRetractClimberReelPos);
+    m_extendClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberLeft);
+    m_extendClimberLeftBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberLeft);
 
-    m_extendClimberLiftPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberLiftPosition);
-    m_extendClimberLiftPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopExtendClimberLiftPos);
-    m_retractClimberLiftPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberLiftPosition);
-    m_retractClimberLiftPositionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopRetractClimberLiftPos);
+    m_retractClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberLeft);
+    m_retractClimberLeftBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberLeft);
+
+    m_extendClimberRightBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberRight);
+    m_extendClimberRightBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberRight);
+
+    m_retractClimberRightBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberRight);
+    m_retractClimberRightBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberRight);
 
     /* Control Panel Buttons */
     // m_setControlPanelSpinnerPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerPower);

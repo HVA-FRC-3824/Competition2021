@@ -116,7 +116,6 @@ public class RobotContainer
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", "default");
-    m_autoChooser.addOption("TEST", "straight");
     m_autoChooser.addOption("THREE BALL", "three_ball");
     m_autoChooser.addOption("SIX BALL", "six_ball");
 
@@ -134,8 +133,6 @@ public class RobotContainer
     {
       case "default":
         return null;
-      case "straight":
-        return new CommandGroupTemplate();
       case "three_ball":
         return new AutonomousThreeBall();
       case "six_ball":
@@ -261,13 +258,13 @@ public class RobotContainer
   private void initializePIDValues() 
   {
     /* Generate number fields on SmartDashboard for PID values to be input into. */
-    SmartDashboard.putNumber("F Value", 0.0);
-    SmartDashboard.putNumber("P Value", 0.0);
-    SmartDashboard.putNumber("I Value", 0.0);
-    SmartDashboard.putNumber("D Value", 0.0);
+    // SmartDashboard.putNumber("F Value", 0.0);
+    // SmartDashboard.putNumber("P Value", 0.0);
+    // SmartDashboard.putNumber("I Value", 0.0);
+    // SmartDashboard.putNumber("D Value", 0.0);
 
-    SmartDashboard.putNumber("Cruise Velocity Value", 0);
-    SmartDashboard.putNumber("Acceleration Value", 0);
+    // SmartDashboard.putNumber("Cruise Velocity Value", 0);
+    // SmartDashboard.putNumber("Acceleration Value", 0);
     
     /**
      * Create button for when pressed on SmartDashboard will configure the PID of the hard coded TalonSRX/TalonFX.
@@ -280,7 +277,7 @@ public class RobotContainer
      * TalonFX object (pass in null if configuring TalonSRX).
      * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
      */
-    SmartDashboard.putData("Set PID Values", new SetPIDValues(m_intake.getWheelIntakeTalonSRX(), null, false));
+    // SmartDashboard.putData("Set PID Values", new SetPIDValues(m_intake.getWheelIntakeTalonSRX(), null, false));
   }
 
   /**

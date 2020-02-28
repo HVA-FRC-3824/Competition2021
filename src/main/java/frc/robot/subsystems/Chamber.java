@@ -49,6 +49,8 @@ public class Chamber extends SubsystemBase
   @Override
   public void periodic()
   {
+    SmartDashboard.putNumber("ULTRASONIC ENTERING", this.getEnteringRange());
+    SmartDashboard.putNumber("ULTRASONIC EXITING", this.getExitingRange());
   }
 
   /**

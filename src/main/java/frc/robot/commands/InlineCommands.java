@@ -36,15 +36,13 @@ public class InlineCommands {
   public final Command m_toggleLimelight;
   
   /* Climber Inline Command Declarations */
-  public final Command m_extendClimberReelPosition;
-  public final Command m_stopExtendClimberReelPos;
-  public final Command m_retractClimberReelPosition;
-  public final Command m_stopRetractClimberReelPos;
+  public final Command m_extendClimberLeft;
+  public final Command m_retractClimberLeft;
+  public final Command m_stopClimberLeft;
 
-  public final Command m_extendClimberLiftPosition;
-  public final Command m_stopExtendClimberLiftPos;
-  public final Command m_retractClimberLiftPosition;
-  public final Command m_stopRetractClimberLiftPos;
+  public final Command m_extendClimberRight;
+  public final Command m_retractClimberRight;
+  public final Command m_stopClimberRight;
 
   /* Control Panel Command Declarations */
   // public final Command m_setControlPanelSpinnerPower;
@@ -99,41 +97,21 @@ public class InlineCommands {
       new InstantCommand(() -> RobotContainer.m_limelight.toggleMode());
 
     /* Climber Inline Command Instantiations */
-    // m_extendClimberReelPosition =
-    //   new RunCommand(() -> RobotContainer.m_climber.stepReels(Constants.CLIMBER_REEL_STEP_MAGNITUDE), RobotContainer.m_climber);
-    // m_stopExtendClimberReelPos =
-    //   new InstantCommand(() -> this.m_extendClimberReelPosition.cancel());
-    // m_retractClimberReelPosition =
-    //   new RunCommand(() -> RobotContainer.m_climber.stepReels(-Constants.CLIMBER_REEL_STEP_MAGNITUDE), RobotContainer.m_climber);
-    // m_stopRetractClimberReelPos =
-    //   new InstantCommand(() -> this.m_retractClimberReelPosition.cancel());
+    m_extendClimberLeft =
+      new ClimberSetLeftPower(1);
+    m_retractClimberLeft =
+      new ClimberSetLeftPower(-1);
+    m_stopClimberLeft =
+      new InstantCommand(() -> this.m_extendClimberLeft.cancel()).alongWith(new InstantCommand(() -> this.m_retractClimberLeft.cancel()))
+        .andThen(new InstantCommand(() -> RobotContainer.m_climber.setLeftLiftPower(0.0)).alongWith(new InstantCommand(() -> RobotContainer.m_climber.setLeftReelPower(0.0))));
 
-    // m_extendClimberLiftPosition =
-    //   new RunCommand(() -> RobotContainer.m_climber.stepLifts(Constants.CLIMBER_LIFT_STEP_MAGNITUDE), RobotContainer.m_climber);
-    // m_stopExtendClimberLiftPos =
-    //   new InstantCommand(() -> this.m_extendClimberLiftPosition.cancel());
-    // m_retractClimberLiftPosition =
-    //   new RunCommand(() -> RobotContainer.m_climber.stepLifts(-Constants.CLIMBER_LIFT_STEP_MAGNITUDE), RobotContainer.m_climber);
-    // m_stopRetractClimberLiftPos =
-    //   new InstantCommand(() -> this.m_retractClimberLiftPosition.cancel());
-
-    m_extendClimberReelPosition =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.5), RobotContainer.m_climber);
-    m_stopExtendClimberReelPos =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.0), RobotContainer.m_climber);
-    m_retractClimberReelPosition =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(-0.5), RobotContainer.m_climber);
-    m_stopRetractClimberReelPos =
-      new InstantCommand(() -> RobotContainer.m_climber.setReelsPower(0.0), RobotContainer.m_climber);
-
-    m_extendClimberLiftPosition =
-      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(0.6), RobotContainer.m_climber);
-    m_stopExtendClimberLiftPos =
-      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(0.0), RobotContainer.m_climber);
-    m_retractClimberLiftPosition =
-      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(-0.6), RobotContainer.m_climber);
-    m_stopRetractClimberLiftPos =
-      new InstantCommand(() -> RobotContainer.m_climber.setLiftsPower(0.0), RobotContainer.m_climber);
+    m_extendClimberRight =
+      new ClimberSetRightPower(1);
+    m_retractClimberRight =
+      new ClimberSetRightPower(-1);
+    m_stopClimberRight =
+      new InstantCommand(() -> this.m_extendClimberRight.cancel()).alongWith(new InstantCommand(() -> this.m_retractClimberRight.cancel()))
+        .andThen(new InstantCommand(() -> RobotContainer.m_climber.setRightLiftPower(0.0)).alongWith(new InstantCommand(() -> RobotContainer.m_climber.setRightReelPower(0.0))));
 
     /* Control Panel Command Instantiations */
     // m_setControlPanelSpinnerPower =

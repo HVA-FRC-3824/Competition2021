@@ -155,7 +155,7 @@ public class Constants
   public static final int    CHAMBER_BASE_RPM                               = 500;
 
   public static final double CHAMBER_BALL_THRESHOLD                         = 3.0;
-  public static final double CHAMBER_BALL_STEP_DIST                         = 2000;
+  public static final double CHAMBER_BALL_STEP_DIST                         = 3500;
 
   public static final int    CHAMBER_TOTAL_NUM_OF_LEDS                      = 150;
   public static final int    CHAMBER_SIDE_NUM_OF_LEDS                       = 56;
@@ -169,6 +169,14 @@ public class Constants
   public static final int    CLIMBER_LIFT_MIN_POSITION                      = 0;
   public static final int    CLIMBER_LIFT_MAX_POSITION                      = 4096;
   public static final int    CLIMBER_LIFT_STEP_MAGNITUDE                    = 2000;
+
+  public static final double CLIMBER_REEL_EXTEND_POWER                      = 0.6;
+  public static final double CLIMBER_REEL_RETRACT_POWER                     = -0.6;
+
+  public static final double CLIMBER_LIFT_UNREEL_POWER                      = 1.0;
+
+  public static final double CLIMBER_LIFT_EXTEND_POWER                      = 1.0;
+  public static final double CLIMBER_LIFT_RETRACT_POWER                     = -1.0;
 
   /* Control Panel */
   public static final int    CONTROL_PANEL_SPINNER_TPR                      = 0;
@@ -204,6 +212,10 @@ public class Constants
   public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 3000;
   public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 3500;
 
+  public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4000;
+  public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4000;
+  public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3150;
+
   /**
    * Driver Joystick Map
    */
@@ -236,11 +248,19 @@ public class Constants
   public static final int    OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID          = 10;
 
   /* Climber */
-  public static final int    OPERATOR_CLIMBER_EXTEND_REEL_POSITION_BTN_ID   = 3;
-  public static final int    OPERATOR_CLIMBER_RETRACT_REEL_POSITION_BTN_ID  = 6;
+  // public static final int    OPERATOR_CLIMBER_EXTEND_REEL_POSITION_BTN_ID   = 3;
+  // public static final int    OPERATOR_CLIMBER_RETRACT_REEL_POSITION_BTN_ID  = 6;
 
-  public static final int    OPERATOR_CLIMBER_EXTEND_LIFT_POSITION_BTN_ID   = 4;
-  public static final int    OPERATOR_CLIMBER_RETRACT_LIFT_POSITION_BTN_ID  = 5;
+  // public static final int    OPERATOR_CLIMBER_EXTEND_LIFT_POSITION_BTN_ID   = 4;
+  // public static final int    OPERATOR_CLIMBER_RETRACT_LIFT_POSITION_BTN_ID  = 5;
+  public static final int    OPERATOR_CLIMBER_EXTEND_LEFT_BTN_ID            = 3;
+  public static final int    OPERATOR_CLIMBER_RETRACT_LEFT_BTN_ID           = 6;
+
+  public static final int    OPERATOR_CLIMBER_EXTEND_RIGHT_BTN_ID           = 4;
+  public static final int    OPERATOR_CLIMBER_RETRACT_RIGHT_BTN_ID          = 5;
+
+  public static final int    OPERATOR_CLIMBER_REEL_BTN_ID                   = 7;
+  public static final int    OPERATOR_CLIMBER_LIFT_BTN_ID                   = 19;
 
   /* Control Panel */
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID    = 19;
@@ -269,13 +289,11 @@ public class Constants
   public static final boolean K_GYRO_REVERSED                               = true;
 
   /* Use robot characterization tool for these values. */
-  public static final double K_S_VOLTS                                      = 0.439;
+  public static final double K_S_VOLTS                                      = 0.372;
   public static final double K_V_VOLT_SECONDS_PER_METER                     = 3.09;
-  public static final double K_A_VOLT_SECONDS_SQUARED_PER_METER             = 0.0319;
-  
-  public static final double K_P_DRIVE_VEL                                  = 0.00433;
-
-  public static final double K_TRACK_WIDTH_METERS                           = 0.715;
+  public static final double K_A_VOLT_SECONDS_SQUARED_PER_METER             = 0.154;
+  public static final double K_P_DRIVE_VEL                                  = 0.00425;
+  public static final double K_TRACK_WIDTH_METERS                           = 0.774;
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS        = new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
   /* Maximum voltage is 10V rather than nominal battery voltage of 12V for 
@@ -283,7 +301,7 @@ public class Constants
   public static final int    K_MAX_VOLTAGE                                  = 10;
   
   /* If these values are changed, must also edit max velocity/acceleration in PathWeaver. */
-  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 1.0;//2.5;
+  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 2.0;//2.5;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 3.0;
 
   public static final double K_RAMSETE_B                                    = 2;

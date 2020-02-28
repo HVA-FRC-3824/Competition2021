@@ -67,6 +67,18 @@ public class Intake extends SubsystemBase
   }
 
   /**
+   * Methods to extend/retract intake pistons.
+   */
+  public void extendExtender()
+  {
+    m_extender.set(Value.kForward);
+  }
+  public void retractExtender()
+  {
+    m_extender.set(Value.kReverse);
+  }
+
+  /**
    * Method that spins intake wheels with power.
    * @param power range is from -1.0 to 1.0.
    */

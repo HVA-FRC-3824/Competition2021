@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase
@@ -62,6 +63,8 @@ public class Climber extends SubsystemBase
   @Override
   public void periodic()
   {
+    SmartDashboard.putNumber("LEFT CLIMBER", m_liftLeft.getSelectedSensorPosition());
+    SmartDashboard.putNumber("RIGHT CLIMBER", m_liftRight.getSelectedSensorPosition());
   }
 
   /**
@@ -92,6 +95,16 @@ public class Climber extends SubsystemBase
   public void setReelsPower(double power)
   {
     m_reelLeft.set(ControlMode.PercentOutput, power);
+    m_reelRight.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setLeftReelPower(double power)
+  {
+    m_reelLeft.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setRightReelPower(double power)
+  {
     m_reelRight.set(ControlMode.PercentOutput, power);
   }
 
@@ -134,6 +147,28 @@ public class Climber extends SubsystemBase
   {
     m_liftLeft.set(ControlMode.PercentOutput, power);
     m_liftRight.set(ControlMode.PercentOutput, power);
+  }
+
+  public void setLeftLiftPower(double power)
+  {
+    if (-m_liftLeft.getSelectedSensorPosition() <= 0 && power > 0.0)
+    {
+      m_liftLeft.set(ControlMode.PercentOutput, 0.0);
+    } else
+    {
+      m_liftLeft.set(ControlMode.PercentOutput, power);
+    }
+  }
+
+  public void setRightLiftPower(double power)
+  {
+    if (-m_liftRight.getSelectedSensorPosition() <= 0 && power > 0.0)
+    {
+      m_liftRight.set(ControlMode.PercentOutput, 0.0);
+    } else
+    {
+      m_liftRight.set(ControlMode.PercentOutput, power);
+    }
   }
 
   /**

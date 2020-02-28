@@ -61,12 +61,12 @@ public class Launcher extends SubsystemBase
   @Override
   public void periodic()
   {
-    SmartDashboard.putNumber("LAUNCHER TOP SETPOINT", m_topWheel.getClosedLoopTarget());
-    SmartDashboard.putNumber("LAUNCHER TOP VELOCITY", m_topWheel.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("LAUNCHER BOTTOM SETPOINT", m_bottomWheel.getClosedLoopTarget());
-    SmartDashboard.putNumber("LAUNCHER BOTTOM VELOCITY", m_bottomWheel.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("LAUNCHER PIVOT ADC", this.getPivotADC());
-    SmartDashboard.putNumber("LAUNCHER PIVOT POWER", test);
+    // SmartDashboard.putNumber("LAUNCHER TOP SETPOINT", m_topWheel.getClosedLoopTarget());
+    // SmartDashboard.putNumber("LAUNCHER TOP VELOCITY", m_topWheel.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("LAUNCHER BOTTOM SETPOINT", m_bottomWheel.getClosedLoopTarget());
+    // SmartDashboard.putNumber("LAUNCHER BOTTOM VELOCITY", m_bottomWheel.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("LAUNCHER PIVOT ADC", this.getPivotADC());
+    // SmartDashboard.putNumber("LAUNCHER PIVOT POWER", test);
 
     /**
      * Updates whether or not the launcher RPMs are ready to launch.

@@ -109,6 +109,7 @@ public class Chassis extends SubsystemBase
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.getHeading()));
 
     m_trajTransform = null;
+    
 
     /**
      * Various methods to call when chassis subsystem first starts up.
@@ -211,6 +212,14 @@ public class Chassis extends SubsystemBase
   {
     m_ahrs.reset();
     m_ahrs.setAngleAdjustment(0.0);
+  }
+
+  /**
+   * Set gyro to a certain heading.
+   */
+  public void setHeading(double heading)
+  {
+    m_ahrs.setAngleAdjustment(heading);
   }
 
   /**
