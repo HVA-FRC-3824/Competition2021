@@ -196,7 +196,7 @@ public class Constants
   public static final int    LAUNCHER_RPM_ERROR_TRESHOLD                    = 500;
 
   public static final int    LAUNCHER_PIVOT_MIN_ADC                         = 1700;
-  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3500;
+  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3750;
   public static final double LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 0.25;
   public static final double LAUNCHER_PIVOT_ERROR_TRESHOLD                  = 0.5;
 
@@ -210,11 +210,15 @@ public class Constants
 
   public static final int    LAUNCHER_INITIATION_LINE_TOP_RPM               = 3000;
   public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 3000;
-  public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 3500;
+  public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 3750;
 
-  public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4000;
-  public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4000;
-  public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3150;
+  public static final int    LAUNCHER_AUTO_INIT_TOP_RPM                     = 3250;
+  public static final int    LAUNCHER_AUTO_INIT_BOTTOM_RPM                  = 3250;
+  public static final int    LAUNCHER_AUTO_INIT_ANGLE                       = 3750;
+
+  public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4500;
+  public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4500;
+  public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3500;//3350;
 
   /**
    * Driver Joystick Map
@@ -301,7 +305,7 @@ public class Constants
   public static final int    K_MAX_VOLTAGE                                  = 10;
   
   /* If these values are changed, must also edit max velocity/acceleration in PathWeaver. */
-  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 2.0;//2.5;
+  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 1.0;//2.5;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 3.0;
 
   public static final double K_RAMSETE_B                                    = 2;

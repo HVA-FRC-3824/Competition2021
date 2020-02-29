@@ -23,9 +23,10 @@ public class Chamber extends SubsystemBase
   public Chamber()
   {
     m_base = new WPI_TalonSRX(Constants.CHAMBER_BASE_ID);
-    RobotContainer.configureTalonSRX(m_base, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, true,
+    RobotContainer.configureTalonSRX(m_base, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false,
                                     Constants.CHAMBER_BASE_F, Constants.CHAMBER_BASE_P, Constants.CHAMBER_BASE_I, 
                                     Constants.CHAMBER_BASE_D, 0, 0, true);
+    m_base.setSafetyEnabled(false);
 
     m_elevatorMaster = new WPI_TalonSRX(Constants.CHAMBER_ELEVATOR_MASTER_ID);
     RobotContainer.configureTalonSRX(m_elevatorMaster, true, FeedbackDevice.CTRE_MagEncoder_Relative, false, true,

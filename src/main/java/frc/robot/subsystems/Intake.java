@@ -27,6 +27,8 @@ public class Intake extends SubsystemBase
     RobotContainer.configureTalonSRX(m_wheelIntake, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, true, 
                                     Constants.INTAKE_WHEEL_INTAKE_F, Constants.INTAKE_WHEEL_INTAKE_P, 
                                     Constants.INTAKE_WHEEL_INTAKE_I, Constants.INTAKE_WHEEL_INTAKE_D, 0, 0, true);
+
+    SmartDashboard.putData("RETRACT", new InstantCommand(() -> this.retractExtender()));
   }
 
   /**
@@ -71,11 +73,11 @@ public class Intake extends SubsystemBase
    */
   public void extendExtender()
   {
-    m_extender.set(Value.kForward);
+    m_extender.set(Value.kReverse);
   }
   public void retractExtender()
   {
-    m_extender.set(Value.kReverse);
+    m_extender.set(Value.kForward);
   }
 
   /**

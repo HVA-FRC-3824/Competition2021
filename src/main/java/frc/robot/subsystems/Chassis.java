@@ -58,6 +58,7 @@ public class Chassis extends SubsystemBase
   private final DifferentialDriveOdometry m_odometry;
 
   private Transform2d m_trajTransform;
+  private Trajectory m_traj;
 
   public Chassis() 
   {
@@ -109,6 +110,19 @@ public class Chassis extends SubsystemBase
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.getHeading()));
 
     m_trajTransform = null;
+    m_traj = null;
+
+    String trajectoryJSONFilePath = "paths/sixBall.wpilib.json";
+    try
+    {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
+      m_traj = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      System.out.println("\nPath being initialized: sixBall\n");
+    } catch (IOException ex)
+    {
+      System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
+    }
+
     
 
     /**
@@ -328,17 +342,24 @@ public class Chassis extends SubsystemBase
    */
   public SequentialCommandGroup generateRamsete(String pathName, boolean isFirstPath)
   {
-    /* Get path/trajectory to follow from PathWeaver json file. */
-    String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
     Trajectory trajectory = null;
-    try
+
+    /* Get path/trajectory to follow from PathWeaver json file. */
+    if (pathName == "sixBall")
     {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-      System.out.println("\nPath being initialized: " + pathName + "\n");
-    } catch (IOException ex)
+      trajectory = m_traj;
+    } else
     {
-      System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
+      String trajectoryJSONFilePath = "paths/" + pathName + ".wpilib.json";
+      try
+      {
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSONFilePath);
+        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        System.out.println("\nPath being initialized: " + pathName + "\n");
+      } catch (IOException ex)
+      {
+        System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
+      }
     }
 
     /**
