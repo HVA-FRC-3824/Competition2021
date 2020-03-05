@@ -85,7 +85,8 @@ public class RobotContainer
    * robotInit() in Robot.java because subsystems may not be instantiated at that
    * point.
    */
-  private void initializeStartup() {
+  private void initializeStartup()
+  {
     /*
      * Turn off Limelight LED when first started up so it doesn't blind drive team.
      */
@@ -101,7 +102,8 @@ public class RobotContainer
    * default command is set to null, there will be no default command for the
    * subsystem.
    */
-  public static void initializeDefaultCommands() {
+  public static void initializeDefaultCommands()
+  {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
     m_chamber.setDefaultCommand(new ChamberIndexBalls());
@@ -117,7 +119,8 @@ public class RobotContainer
    * This may cause problems (e.g. initial trajectory position is from a different
    * command's path).
    */
-  private void initializeAutoChooser() {
+  private void initializeAutoChooser()
+  {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", "default");
     m_autoChooser.addOption("THREE BALL", "three_ball");
@@ -135,7 +138,6 @@ public class RobotContainer
    * 
    * @return the command to run during the autonomous period.
    */
-<<<<<<< HEAD
   public Command getAutonomousCommand() 
   {
     switch (m_autoChooser.getSelected())
@@ -149,20 +151,6 @@ public class RobotContainer
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;
-=======
-  public Command getAutonomousCommand() {
-    switch (m_autoChooser.getSelected()) {
-    case "default":
-      return null;
-    case "straight":
-      return new CommandGroupTemplate();
-    case "six_ball":
-      return new AutonomousSixBall();
-    default:
-      System.out
-          .println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
-      return null;
->>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
     }
   }
 
@@ -175,7 +163,8 @@ public class RobotContainer
    */
   public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, FeedbackDevice feedbackDevice,
       boolean setInverted, boolean setSensorPhase, double kF, double kP, double kI, double kD, int kCruiseVelocity,
-      int kAcceleration, boolean resetPos) {
+      int kAcceleration, boolean resetPos)
+  {
     /* Factory default to reset TalonSRX and prevent unexpected behavior. */
     talonSRX.configFactoryDefault();
 
@@ -189,7 +178,8 @@ public class RobotContainer
     talonSRX.setSensorPhase(setSensorPhase);
 
     // Determine if the internal PID is being used
-    if (controlMode) {
+    if (controlMode)
+    {
       /*
        * Set relevant frame periods (Base_PIDF0 and MotionMagic) to periodic rate
        * (10ms).
@@ -217,14 +207,16 @@ public class RobotContainer
     talonSRX.config_kD(Constants.K_SLOT_IDX, kD, Constants.K_TIMEOUT_MS);
 
     // Determine if the internal PID is being used
-    if (controlMode) {
+    if (controlMode)
+    {
       /* Set acceleration and cruise velocity for Motion Magic. */
       talonSRX.configMotionCruiseVelocity(kCruiseVelocity, Constants.K_TIMEOUT_MS);
       talonSRX.configMotionAcceleration(kAcceleration, Constants.K_TIMEOUT_MS);
     }
 
     /* Reset/zero the TalonSRX's sensor. */
-    if (resetPos) {
+    if (resetPos)
+    {
       talonSRX.setSelectedSensorPosition(0, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
     }
   }
@@ -236,7 +228,8 @@ public class RobotContainer
    * be used instead).
    */
   public static void configureTalonFX(WPI_TalonFX talonFX, boolean setInverted, boolean setSensorPhase, double kF,
-      double kP, double kI, double kD) {
+      double kP, double kI, double kD) 
+  {
     /* Factory default to reset TalonFX and prevent unexpected behavior. */
     talonFX.configFactoryDefault();
 
@@ -278,22 +271,17 @@ public class RobotContainer
    * Initializes SmartDashboard data for PID tuning. Creates fields for gains and
    * button for initiating PID configuration.
    */
-  private void initializePIDValues() {
+  private void initializePIDValues()
+  {
     /* Generate number fields on SmartDashboard for PID values to be input into. */
     // SmartDashboard.putNumber("F Value", 0.0);
     // SmartDashboard.putNumber("P Value", 0.0);
     // SmartDashboard.putNumber("I Value", 0.0);
     // SmartDashboard.putNumber("D Value", 0.0);
 
-<<<<<<< HEAD
     // SmartDashboard.putNumber("Cruise Velocity Value", 0);
     // SmartDashboard.putNumber("Acceleration Value", 0);
     
-=======
-    SmartDashboard.putNumber("Cruise Velocity Value", 0);
-    SmartDashboard.putNumber("Acceleration Value", 0);
-
->>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
     /**
      * Create button for when pressed on SmartDashboard will configure the PID of
      * the hard coded TalonSRX/TalonFX. Get TalonSRX/TalonFX with get method written
