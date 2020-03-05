@@ -76,15 +76,19 @@ public class RobotContainer
 
     /* Initialize PID tuning for use on the SmartDashboard. */
     this.initializePIDValues();
+
+    this.testColorSensing();
   }
 
   /**
-   * Various methods to run when robot is initialized.
-   * Cannot put these in robotInit() in Robot.java because subsystems may not be instantiated at that point.
+   * Various methods to run when robot is initialized. Cannot put these in
+   * robotInit() in Robot.java because subsystems may not be instantiated at that
+   * point.
    */
-  private void initializeStartup()
-  {
-    /* Turn off Limelight LED when first started up so it doesn't blind drive team. */
+  private void initializeStartup() {
+    /*
+     * Turn off Limelight LED when first started up so it doesn't blind drive team.
+     */
     m_limelight.turnOffLED();
 
     /* Start ultrasonics. */
@@ -92,12 +96,12 @@ public class RobotContainer
   }
 
   /**
-   * Set default command for subsystems.
-   * Default commands are commands that run automatically whenever a subsystem is not being used by another command.
-   * If default command is set to null, there will be no default command for the subsystem.
+   * Set default command for subsystems. Default commands are commands that run
+   * automatically whenever a subsystem is not being used by another command. If
+   * default command is set to null, there will be no default command for the
+   * subsystem.
    */
-  public static void initializeDefaultCommands()
-  {
+  public static void initializeDefaultCommands() {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
     m_chamber.setDefaultCommand(new ChamberIndexBalls());
@@ -107,26 +111,31 @@ public class RobotContainer
   }
 
   /**
-   * Set options for autonomous command chooser and display them for selection on the SmartDashboard.
-   * Using string chooser rather than command chooser because if using a command chooser, will instantiate
-   * all the autonomous commands. This may cause problems (e.g. initial trajectory position is from a
-   * different command's path).
+   * Set options for autonomous command chooser and display them for selection on
+   * the SmartDashboard. Using string chooser rather than command chooser because
+   * if using a command chooser, will instantiate all the autonomous commands.
+   * This may cause problems (e.g. initial trajectory position is from a different
+   * command's path).
    */
-  private void initializeAutoChooser()
-  {
+  private void initializeAutoChooser() {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", "default");
     m_autoChooser.addOption("THREE BALL", "three_ball");
     m_autoChooser.addOption("SIX BALL", "six_ball");
 
-    /* Display chooser on SmartDashboard for operators to select which autonomous command to run during the auto period. */
+    /*
+     * Display chooser on SmartDashboard for operators to select which autonomous
+     * command to run during the auto period.
+     */
     SmartDashboard.putData("Autonomous Command", m_autoChooser);
   }
 
   /**
    * This method is used to pass the autonomous command to the main Robot class.
+   * 
    * @return the command to run during the autonomous period.
    */
+<<<<<<< HEAD
   public Command getAutonomousCommand() 
   {
     switch (m_autoChooser.getSelected())
@@ -140,20 +149,33 @@ public class RobotContainer
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;
+=======
+  public Command getAutonomousCommand() {
+    switch (m_autoChooser.getSelected()) {
+    case "default":
+      return null;
+    case "straight":
+      return new CommandGroupTemplate();
+    case "six_ball":
+      return new AutonomousSixBall();
+    default:
+      System.out
+          .println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
+      return null;
+>>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
     }
   }
 
   /**
    * Configures TalonSRX objects with passed in parameters.
    * 
-   * @param controlMode If true, configure with Motion Magic. If false, configure without Motion Magic.
-   *                    (Motion Magic not required for TalonSRXs that will set with ControlMode.Velocity).        
+   * @param controlMode If true, configure with Motion Magic. If false, configure
+   *                    without Motion Magic. (Motion Magic not required for
+   *                    TalonSRXs that will set with ControlMode.Velocity).
    */
-  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, 
-                                       FeedbackDevice feedbackDevice, boolean setInverted, 
-                                       boolean setSensorPhase, double kF, double kP, double kI, double kD, 
-                                       int kCruiseVelocity, int kAcceleration, boolean resetPos)
-  {
+  public static void configureTalonSRX(WPI_TalonSRX talonSRX, boolean controlMode, FeedbackDevice feedbackDevice,
+      boolean setInverted, boolean setSensorPhase, double kF, double kP, double kI, double kD, int kCruiseVelocity,
+      int kAcceleration, boolean resetPos) {
     /* Factory default to reset TalonSRX and prevent unexpected behavior. */
     talonSRX.configFactoryDefault();
 
@@ -167,18 +189,20 @@ public class RobotContainer
     talonSRX.setSensorPhase(setSensorPhase);
 
     // Determine if the internal PID is being used
-    if (controlMode) 
-    {
-      /* Set relevant frame periods (Base_PIDF0 and MotionMagic) to periodic rate (10ms). */
+    if (controlMode) {
+      /*
+       * Set relevant frame periods (Base_PIDF0 and MotionMagic) to periodic rate
+       * (10ms).
+       */
       talonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.K_TIMEOUT_MS);
       talonSRX.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.K_TIMEOUT_MS);
     }
 
-    /** 
+    /**
      * Configure the nominal and peak output forward/reverse.
      * 
-     * Nominal Output: minimal/weakest motor output allowed during closed-loop.
-     * Peak Output: maximal/strongest motor output allowed during closed-loop.
+     * Nominal Output: minimal/weakest motor output allowed during closed-loop. Peak
+     * Output: maximal/strongest motor output allowed during closed-loop.
      */
     talonSRX.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
     talonSRX.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
@@ -193,44 +217,43 @@ public class RobotContainer
     talonSRX.config_kD(Constants.K_SLOT_IDX, kD, Constants.K_TIMEOUT_MS);
 
     // Determine if the internal PID is being used
-    if (controlMode) 
-    {
+    if (controlMode) {
       /* Set acceleration and cruise velocity for Motion Magic. */
       talonSRX.configMotionCruiseVelocity(kCruiseVelocity, Constants.K_TIMEOUT_MS);
       talonSRX.configMotionAcceleration(kAcceleration, Constants.K_TIMEOUT_MS);
     }
 
     /* Reset/zero the TalonSRX's sensor. */
-    if (resetPos)
-    {
+    if (resetPos) {
       talonSRX.setSelectedSensorPosition(0, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
     }
   }
 
   /**
-   * Configures TalonFX (Falcon 500) objects with passed in parameters.
-   * Falcon 500s will be used for the chassis and launcher wheels only, thus Motion Magic is not required.
-   * (PIDController with Gyro/Vision or ControlMode.Velocity will be used instead).
+   * Configures TalonFX (Falcon 500) objects with passed in parameters. Falcon
+   * 500s will be used for the chassis and launcher wheels only, thus Motion Magic
+   * is not required. (PIDController with Gyro/Vision or ControlMode.Velocity will
+   * be used instead).
    */
-  public static void configureTalonFX(WPI_TalonFX talonFX, boolean setInverted, boolean setSensorPhase,
-                               double kF, double kP, double kI, double kD) 
-  {
+  public static void configureTalonFX(WPI_TalonFX talonFX, boolean setInverted, boolean setSensorPhase, double kF,
+      double kP, double kI, double kD) {
     /* Factory default to reset TalonFX and prevent unexpected behavior. */
     talonFX.configFactoryDefault();
 
     /* Configure Sensor Source for Primary PID. */
-    talonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
+    talonFX.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, Constants.K_PID_LOOP_IDX,
+        Constants.K_TIMEOUT_MS);
 
     /* Configure TalonFX to drive forward when LED is green. */
     talonFX.setInverted(setInverted);
     /* Configure TalonFX's sensor to increment its value as it moves forward. */
     talonFX.setSensorPhase(setSensorPhase);
 
-    /** 
+    /**
      * Configure the nominal and peak output forward/reverse.
      * 
-     * Nominal Output: minimal/weakest motor output allowed during closed-loop.
-     * Peak Output: maximal/strongest motor output allowed during closed-loop.
+     * Nominal Output: minimal/weakest motor output allowed during closed-loop. Peak
+     * Output: maximal/strongest motor output allowed during closed-loop.
      */
     talonFX.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
     talonFX.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
@@ -245,39 +268,53 @@ public class RobotContainer
     talonFX.config_kD(Constants.K_SLOT_IDX, kD, Constants.K_TIMEOUT_MS);
 
     /**
-     * Reset/zero the TalonFX's sensor.
-     * Will be required for implementation into chassis (position considered), but not launcher (velocity only). 
+     * Reset/zero the TalonFX's sensor. Will be required for implementation into
+     * chassis (position considered), but not launcher (velocity only).
      */
     talonFX.setSelectedSensorPosition(0, Constants.K_PID_LOOP_IDX, Constants.K_TIMEOUT_MS);
   }
 
   /**
-   * Initializes SmartDashboard data for PID tuning.
-   * Creates fields for gains and button for initiating PID configuration.
+   * Initializes SmartDashboard data for PID tuning. Creates fields for gains and
+   * button for initiating PID configuration.
    */
-  private void initializePIDValues() 
-  {
+  private void initializePIDValues() {
     /* Generate number fields on SmartDashboard for PID values to be input into. */
     // SmartDashboard.putNumber("F Value", 0.0);
     // SmartDashboard.putNumber("P Value", 0.0);
     // SmartDashboard.putNumber("I Value", 0.0);
     // SmartDashboard.putNumber("D Value", 0.0);
 
+<<<<<<< HEAD
     // SmartDashboard.putNumber("Cruise Velocity Value", 0);
     // SmartDashboard.putNumber("Acceleration Value", 0);
     
+=======
+    SmartDashboard.putNumber("Cruise Velocity Value", 0);
+    SmartDashboard.putNumber("Acceleration Value", 0);
+
+>>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
     /**
-     * Create button for when pressed on SmartDashboard will configure the PID of the hard coded TalonSRX/TalonFX.
-     * Get TalonSRX/TalonFX with get method written in each subsystem for each TalonSRX/TalonFX.
-     * When desiring to set the PID values for another TalonSRX/TalonFX, you must hard code in the new parameters for
-     * the SetPIDValues command then re-deploy.
+     * Create button for when pressed on SmartDashboard will configure the PID of
+     * the hard coded TalonSRX/TalonFX. Get TalonSRX/TalonFX with get method written
+     * in each subsystem for each TalonSRX/TalonFX. When desiring to set the PID
+     * values for another TalonSRX/TalonFX, you must hard code in the new parameters
+     * for the SetPIDValues command then re-deploy.
      * 
-     * SetPIDValues Parameters:
-     * TalonSRX object (pass in null if configuring TalonFX).
-     * TalonFX object (pass in null if configuring TalonSRX).
-     * ControlMode boolean: if true, Motion Magic is being used, if false, Motion Magic is not being used.
+     * SetPIDValues Parameters: TalonSRX object (pass in null if configuring
+     * TalonFX). TalonFX object (pass in null if configuring TalonSRX). ControlMode
+     * boolean: if true, Motion Magic is being used, if false, Motion Magic is not
+     * being used.
      */
     // SmartDashboard.putData("Set PID Values", new SetPIDValues(m_intake.getWheelIntakeTalonSRX(), null, false));
+  }
+
+  /**
+   * Method to spin color wheel four times with color inuput.
+   */
+  public void testColorSensing()
+  {
+    SmartDashboard.putData("Color Wheel Spinning", new ControlPanelSpinFour());
   }
 
   /**

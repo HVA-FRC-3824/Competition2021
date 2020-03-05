@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
+
+import javax.annotation.meta.When;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -9,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorSensorV3.RawColor;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -70,6 +74,7 @@ public class ControlPanel extends SubsystemBase
   @Override
   public void periodic() 
   {
+<<<<<<< HEAD
     // currentRed = m_colorSensor.getRed();
     // SmartDashboard.putNumber("Red", currentRed);
     // currentGreen = m_colorSensor.getGreen() / 2;
@@ -78,6 +83,15 @@ public class ControlPanel extends SubsystemBase
     // SmartDashboard.putNumber("Blue", currentBlue);
     // getCurrentColor();
     // spinPanel();
+=======
+    currentRed = m_colorSensor.getRed();
+    SmartDashboard.putNumber("Red", currentRed);
+    currentGreen = m_colorSensor.getGreen() / 2;
+    SmartDashboard.putNumber("Green", currentGreen);
+    currentBlue = m_colorSensor.getBlue();
+    SmartDashboard.putNumber("Blue", currentBlue);
+    getCurrentColor();
+>>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
   }
 
   /**
@@ -99,6 +113,7 @@ public class ControlPanel extends SubsystemBase
   //   m_panelSpinner.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.CONTROL_PANEL_SPINNER_TPR));
   // }
 
+<<<<<<< HEAD
   // public void spinPanel()
   // {
     //get current color
@@ -129,6 +144,17 @@ public class ControlPanel extends SubsystemBase
   //     {
   //       currentColor = "Red";
   //     }
+=======
+  public String getCurrentColor()
+  {
+    if(currentRed > currentBlue && currentRed > currentGreen)
+    {
+      currentColor = "Yellow";
+      if (currentRed > currentGreen*2)
+      {
+        currentColor = "Red";
+      }
+>>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
       
   //   }
   //   else if (currentBlue > currentRed && currentBlue > currentGreen)
@@ -140,7 +166,14 @@ public class ControlPanel extends SubsystemBase
   //     currentColor = "Green";
   //   }
     
+<<<<<<< HEAD
   //   SmartDashboard.putString("Color", currentColor);
   // }
+=======
+    SmartDashboard.putString("Color", currentColor);
+
+    return currentColor;
+  }
+>>>>>>> 388cf8e7fc034c58320c1c929903d6475b4326ed
 
 }
