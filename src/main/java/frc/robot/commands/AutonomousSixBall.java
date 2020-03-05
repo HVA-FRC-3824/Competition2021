@@ -44,7 +44,7 @@ public class AutonomousSixBall extends SequentialCommandGroup
       // align with vision with timeout OR pray straight voltage turns the right amount
       new InstantCommand(() -> RobotContainer.m_chassis.autoDrive(0.0, -0.25)),
       // turn for half a second
-      new WaitCommand(0.1),
+      new WaitCommand(0.25),
       // stop turning
       new InstantCommand(() -> RobotContainer.m_chassis.autoDrive(0.0, 0.0)),
       // launch balls
