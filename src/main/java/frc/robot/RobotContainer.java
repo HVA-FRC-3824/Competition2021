@@ -30,7 +30,7 @@ public class RobotContainer
   public static final Chamber m_chamber = new Chamber();
   public static final Chassis m_chassis = new Chassis();
   public static final Climber m_climber = new Climber();
-  public static final ControlPanel m_controlPanel = new ControlPanel();
+  // public static final ControlPanel m_controlPanel = new ControlPanel();
   public static final Intake m_intake = new Intake();
   public static final Launcher m_launcher = new Launcher();
 
@@ -302,7 +302,7 @@ public class RobotContainer
    */
   public void testColorSensing()
   {
-    SmartDashboard.putData("Color Wheel Spinning", new ControlPanelSpinFour());
+    // SmartDashboard.putData("Color Wheel Spinning", new ControlPanelSpinFour());
   }
 
   /**
