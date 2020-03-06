@@ -5,6 +5,7 @@ import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * Inline commands are a convenient way of creating commands without the need
@@ -63,6 +64,9 @@ public class InlineCommands {
   public final Command m_setLauncherVision; // Turns chassis and sets launcher angle & rpms.
   public final Command m_setLauncherPreset; // Set launcher angle & rpms to a specified setpoint.
   public final Command m_stopLaunchSequence; // Enables teleop driving and stops launcher angle & rpms.
+
+  /* Defense Mode Commands */
+  public final Command m_startDefenseMode;
   
   public InlineCommands()
   {
@@ -147,5 +151,9 @@ public class InlineCommands {
       new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
       RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis).alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
                                     new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(false)));
+
+    /* Defense Mode Command Instantiations */
+    m_startDefenseMode = 
+    new DefenseMode();
   }
 }

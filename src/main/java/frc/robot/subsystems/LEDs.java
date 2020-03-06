@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class LEDs extends SubsystemBase
 {
@@ -13,6 +14,9 @@ public class LEDs extends SubsystemBase
   private static AddressableLEDBuffer m_LEDLength;
 
   private DriverStation m_ds = DriverStation.getInstance();
+
+  private boolean m_defenseLEDs = false;
+  private boolean m_isDefending = false;
 
   /* Neutral Sequence */
   private int m_neutralStepValue = 0; // step G for blue, B for red, step R for purple
@@ -57,6 +61,10 @@ public class LEDs extends SubsystemBase
     if (m_isLaunching)
     {
       this.rainbow();
+    }
+    else if (m_isDefending)
+    {
+      this.defenseModeLEDs();
     }
     else
     {
@@ -194,6 +202,32 @@ public class LEDs extends SubsystemBase
     m_rainbowFirstPixleHue += 3;
 
     m_rainbowFirstPixleHue %= 180;
+  }
+
+  public void setIsDefending(boolean status)
+  {
+    m_isDefending = status;
+  }
+
+  public void defenseModeLEDs()
+  {
+    if (m_defenseLEDs == false)
+    {
+      for (var i = 0; i < Constants.CHAMBER_TOTAL_NUM_OF_LEDS; i++)
+      {
+        m_LEDLength.setRGB(i, 255, 0, 0);
+      }
+      m_defenseLEDs = true;
+    }
+    else 
+    {
+      for (var i = 0; i < Constants.CHAMBER_TOTAL_NUM_OF_LEDS; i++)
+      {
+        m_LEDLength.setRGB(i, 0, 0, 0);
+      }
+      m_defenseLEDs = false;
+    }
+    new WaitCommand(1);
   }
 
   public void setLaunchingStatus(boolean isLaunching)

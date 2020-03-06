@@ -2,7 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DefenseMode;
 
 public class OI 
 {
@@ -58,6 +60,9 @@ public class OI
 
   private static JoystickButton m_setLauncherPresetBtn;
 
+  /* Defense mode */
+  private static JoystickButton m_startDeffenseModeBtn;
+
   public OI() 
   {
     /**
@@ -79,6 +84,9 @@ public class OI
      * Operator Joystick
      */    
     m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
+
+    /* Defense Mode */
+    m_startDeffenseModeBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_START_DEFENSE_MODE_BTN_ID);
 
     /* Chamber */
     m_setChamberBaseRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_BASE_RPM_BTN_ID);
@@ -182,7 +190,10 @@ public class OI
 
     m_setLauncherPresetBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
     m_setLauncherPresetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
+    /* Defense Mode */
+    m_startDeffenseModeBtn.whenPressed(RobotContainer.m_inlineCommands.m_startDefenseMode);
   }
   
-  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know -Joey, at least indent your comment properly. -Jovi
+  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know. -Joey, at least indent your comment properly. -Jovi, Stop me. -Joey
 }

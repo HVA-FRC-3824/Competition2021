@@ -245,7 +245,10 @@ public class Constants
    * Buttons
    */
 
-  /* Chamber */
+  // Defense Mode
+  public static final int    OPERATOR_START_DEFENSE_MODE_BTN_ID             = 2;
+
+   /* Chamber */
   public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 14;
   
   public static final int    OPERATOR_CHAMBER_ELEVATOR_LAUNCH_BTN_ID        = 11;
