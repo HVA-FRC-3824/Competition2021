@@ -70,8 +70,8 @@ public class Constants
   public static final double K_TURN_TOLERANCE_DEG                           = 0;
   public static final double K_TURN_RATE_TOLERANCE_DEG_PER_SEC              = 0;
 
-  public static final double K_CHASSIS_TURN_VISION_P                        = 0.025;
-  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.07;
+  public static final double K_CHASSIS_TURN_VISION_P                        = 0.02;
+  public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.1;
   public static final double CHASSIS_TURN_ERROR_THRESHOLD                   = 0.5;
 
   /* Chamber */
@@ -196,29 +196,29 @@ public class Constants
   public static final int    LAUNCHER_RPM_ERROR_TRESHOLD                    = 500;
 
   public static final int    LAUNCHER_PIVOT_MIN_ADC                         = 1700;
-  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3650;
+  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3250;
   public static final double LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 0.25;
   public static final double LAUNCHER_PIVOT_ERROR_TRESHOLD                  = 0.5;
 
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 4500;
   public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 4500;
-  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3500;
+  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3250;
 
-  public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM                    = 3750;
-  public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM                 = 3750;
-  public static final int    LAUNCHER_FAR_TRENCH_ANGLE                      = 3100;
+  public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM                    = 4500;
+  public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM                 = 4500;
+  public static final int    LAUNCHER_FAR_TRENCH_ANGLE                      = 3000;
 
-  public static final int    LAUNCHER_INITIATION_LINE_TOP_RPM               = 5500;
-  public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 5500;
-  public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 3650;
+  public static final int    LAUNCHER_INITIATION_LINE_TOP_RPM               = 2750;
+  public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 2750;
+  public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 3600;
 
-  public static final int    LAUNCHER_AUTO_INIT_TOP_RPM                     = 5500;
-  public static final int    LAUNCHER_AUTO_INIT_BOTTOM_RPM                  = 5500;
-  public static final int    LAUNCHER_AUTO_INIT_ANGLE                       = 3650;
+  public static final int    LAUNCHER_AUTO_INIT_TOP_RPM                     = 2750;
+  public static final int    LAUNCHER_AUTO_INIT_BOTTOM_RPM                  = 2750;
+  public static final int    LAUNCHER_AUTO_INIT_ANGLE                       = 3600;
 
   public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4500;
-  public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3500;//3350;
+  public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3000;//3350;
 
   /**
    * Driver Joystick Map

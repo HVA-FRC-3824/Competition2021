@@ -52,6 +52,7 @@ public class Chassis extends SubsystemBase
 
   private DoubleSolenoid m_gearShift;
 
+
   /**
    * Declaring objects for autonomous path following.
    */
@@ -59,6 +60,9 @@ public class Chassis extends SubsystemBase
 
   private Transform2d m_trajTransform;
   private Trajectory m_traj;
+
+  private double m_totalLeftDist;
+  private double m_totalRightDist;
 
   public Chassis() 
   {
@@ -83,6 +87,8 @@ public class Chassis extends SubsystemBase
 
     m_differentialDrive = new DifferentialDrive(m_leftMaster, m_rightMaster);
     m_differentialDrive.setSafetyEnabled(false);
+
+
 
     /**
      * Try to instantiate the navx gyro with exception catch
@@ -122,8 +128,6 @@ public class Chassis extends SubsystemBase
     {
       System.out.println("\nUnable to open trajectory: " + trajectoryJSONFilePath + "\n" + ex.getStackTrace() + "\n");
     }
-
-    
 
     /**
      * Various methods to call when chassis subsystem first starts up.
