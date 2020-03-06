@@ -87,13 +87,14 @@ public class RobotContainer
    */
   private void initializeStartup()
   {
-    /*
-     * Turn off Limelight LED when first started up so it doesn't blind drive team.
-     */
+    /* Turn off Limelight LED when first started up so it doesn't blind drive team. */
     m_limelight.turnOffLED();
 
     /* Start ultrasonics. */
     m_chamber.startUltrasonics();
+
+    /* Read trajectory files for path following. */
+    m_chassis.readTrajectories();
   }
 
   /**

@@ -88,33 +88,6 @@ public class Constants
   public static final double CHAMBER_BASE_D                                 = 0.0;
 
   /* Climber */
-  public static final double CLIMBER_REEL_LEFT_F                            = 0.0;
-  public static final double CLIMBER_REEL_LEFT_P                            = 0.0;
-  public static final double CLIMBER_REEL_LEFT_I                            = 0.0;
-  public static final double CLIMBER_REEL_LEFT_D                            = 0.0;
-  public static final int    CLIMBER_REEL_LEFT_CRUISEVELOCITY               = 0;
-  public static final int    CLIMBER_REEL_LEFT_ACCELERATION                 = 0;
-
-  public static final double CLIMBER_REEL_RIGHT_F                           = 0.0;
-  public static final double CLIMBER_REEL_RIGHT_P                           = 0.0;
-  public static final double CLIMBER_REEL_RIGHT_I                           = 0.0;
-  public static final double CLIMBER_REEL_RIGHT_D                           = 0.0;
-  public static final int    CLIMBER_REEL_RIGHT_CRUISEVELOCITY              = 0;
-  public static final int    CLIMBER_REEL_RIGHT_ACCELERATION                = 0;
-
-  public static final double CLIMBER_LIFT_LEFT_F                            = 0.0;
-  public static final double CLIMBER_LIFT_LEFT_P                            = 0.0;
-  public static final double CLIMBER_LIFT_LEFT_I                            = 0.0;
-  public static final double CLIMBER_LIFT_LEFT_D                            = 0.0;
-  public static final int    CLIMBER_LIFT_LEFT_CRUISEVELOCITY               = 0;
-  public static final int    CLIMBER_LIFT_LEFT_ACCELERATION                 = 0;
-
-  public static final double CLIMBER_LIFT_RIGHT_F                           = 0.0;
-  public static final double CLIMBER_LIFT_RIGHT_P                           = 0.0;
-  public static final double CLIMBER_LIFT_RIGHT_I                           = 0.0;
-  public static final double CLIMBER_LIFT_RIGHT_D                           = 0.0;
-  public static final int    CLIMBER_LIFT_RIGHT_CRUISEVELOCITY              = 0;
-  public static final int    CLIMBER_LIFT_RIGHT_ACCELERATION                = 0;
 
   /* Control Panel */   
   public static final double CONTROL_PANEL_SPINNER_F                        = 0.0;
@@ -149,6 +122,11 @@ public class Constants
   /**
    * Subsystem-Specific Values For Commands
    */
+
+  /* Chassis */
+  public static final String[] CHASSIS_TRAJECTORIES_NAMES                   = {"sixBall",
+                                                                               "straightForward",
+                                                                               "straightBackward"};
 
   /* Chamber */
   public static final int    CHAMBER_BASE_TPR                               = 4096;
@@ -255,11 +233,6 @@ public class Constants
   public static final int    OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID          = 10;
 
   /* Climber */
-  // public static final int    OPERATOR_CLIMBER_EXTEND_REEL_POSITION_BTN_ID   = 3;
-  // public static final int    OPERATOR_CLIMBER_RETRACT_REEL_POSITION_BTN_ID  = 6;
-
-  // public static final int    OPERATOR_CLIMBER_EXTEND_LIFT_POSITION_BTN_ID   = 4;
-  // public static final int    OPERATOR_CLIMBER_RETRACT_LIFT_POSITION_BTN_ID  = 5;
   public static final int    OPERATOR_CLIMBER_EXTEND_LEFT_BTN_ID            = 3;
   public static final int    OPERATOR_CLIMBER_RETRACT_LEFT_BTN_ID           = 6;
 
