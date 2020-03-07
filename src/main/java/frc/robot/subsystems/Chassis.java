@@ -64,6 +64,13 @@ public class Chassis extends SubsystemBase
   /* HashMap for trajectories serves as an array with referable strings. */
   private HashMap<String, Trajectory> m_trajs;
 
+  /* These variables will be used in allowing the robot to go forwards AND backwards with trajectories. */
+  private boolean m_isReversed;
+
+  /* Left/right sides for accumulated distance relative to left and right side of field. */
+  private double m_leftAccumDist;
+  private double m_rightAccumDist;
+
   public Chassis() 
   {
     /**
@@ -117,6 +124,11 @@ public class Chassis extends SubsystemBase
     
     m_trajs = new HashMap<String, Trajectory>();
 
+    m_isReversed = false;
+
+    m_leftAccumDist = 0.0;
+    m_rightAccumDist = 0.0;
+
     /**
      * Various methods to call when chassis subsystem first starts up.
      */
@@ -150,6 +162,10 @@ public class Chassis extends SubsystemBase
     SmartDashboard.putNumber("RIGHT VELOCITY", -m_leftMaster.getSelectedSensorVelocity());
     SmartDashboard.putNumber("LEFT DISTANCE", this.getLeftEncoderDistance());
     SmartDashboard.putNumber("RIGHT DISTANCE", this.getRightEncoderDistance());
+    SmartDashboard.putNumber("LEFT ACCUM DIST", m_leftAccumDist);
+    SmartDashboard.putNumber("RIGHT ACCUM DIST", m_rightAccumDist);
+    SmartDashboard.putNumber("LEFT TOTAL DISTANCE", this.getLeftTotalDistance());
+    SmartDashboard.putNumber("RIGHT TOTAL DISTANCE", this.getRightTotalDistance());
     SmartDashboard.putNumber("LEFT RATE", this.getLeftEncoderRate());
     SmartDashboard.putNumber("RIGHT RATE", this.getRightEncoderRate());
     SmartDashboard.putNumber("ANGLE", this.getAngle());
@@ -165,7 +181,7 @@ public class Chassis extends SubsystemBase
    */
   public void teleopDrive(double power, double turn)
   {
-    /* Creates deadband for joystick twist input. */
+    /* Reduces sensitivity of twist for turning. */
     turn = turn/1.5;
 
     m_differentialDrive.arcadeDrive(power, turn, true);
@@ -194,21 +210,21 @@ public class Chassis extends SubsystemBase
   }
 
   /**
-   * Get heading of the robot (no domain).
-   * @return the angle of the gyro in degrees.
-   */
-  public double getAngle()
-  {
-    return m_ahrs.getAngle();
-  }
-
-  /**
    * Reset left and right encoder positions.
    */
   public void resetEncoders()
   {
     m_leftMaster.setSelectedSensorPosition(0);
     m_rightMaster.setSelectedSensorPosition(0);
+  }
+
+  /**
+   * Get heading of the robot (no domain).
+   * @return the angle of the gyro in degrees.
+   */
+  public double getAngle()
+  {
+    return m_ahrs.getAngle();
   }
 
   /**
@@ -264,13 +280,65 @@ public class Chassis extends SubsystemBase
    */
   public double getLeftEncoderDistance()
   {
-    // return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
-    return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    if (m_isReversed)
+    {
+      return m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    } else if (!m_isReversed)
+    {
+      return m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    } else
+    {
+      System.out.println("\nThere was an error trying to get the left encoder distance.");
+      return 0.0;
+    }
   }
   public double getRightEncoderDistance()
   {
-    // return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
-    return -m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    if (m_isReversed)
+    {
+      return -m_rightMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    } else if (!m_isReversed)
+    {
+      return -m_leftMaster.getSelectedSensorPosition() * Constants.K_ENCODER_DISTANCE_PER_PULSE;
+    } else
+    {
+      System.out.println("\nThere was an error trying to get the right encoder distance.");
+      return 0.0;
+    }
+  }
+
+  /**
+   * Add the accumulated distances to the current encoder positions to find total distance traveled.
+   * This total distance is required for reversing the drive train.
+   * @return the total distance traveled by the specified drive train side.
+   */
+  public double getLeftTotalDistance()
+  {
+    if (m_isReversed)
+    {
+      return m_rightAccumDist + this.getLeftEncoderDistance();
+    } else if (!m_isReversed)
+    {
+      return m_leftAccumDist + this.getLeftEncoderDistance();
+    } else
+    {
+      System.out.println("\nThere was an error when trying to get the left total distance.");
+      return 0.0;
+    }
+  }
+  public double getRightTotalDistance()
+  {
+    if (m_isReversed)
+    {
+      return m_leftAccumDist + this.getRightEncoderDistance();
+    } else if (!m_isReversed)
+    {
+      return m_rightAccumDist + this.getRightEncoderDistance();
+    } else
+    {
+      System.out.println("\nThere was an error when trying to get the right total distance.");
+      return 0.0;
+    }
   }
 
   /**
@@ -280,13 +348,31 @@ public class Chassis extends SubsystemBase
    */
   public double getLeftEncoderRate()
   {
-    // return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
-    return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    if (m_isReversed)
+    {
+      return m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    } else if (!m_isReversed)
+    {
+      return m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    } else
+    {
+      System.out.println("\nThere was an error trying to get the velocity of the left side.\n");
+      return 0.0;
+    }
   }
   public double getRightEncoderRate()
   {
-    // return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
-    return -m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    if (m_isReversed)
+    {
+      return -m_rightMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    } else if (!m_isReversed)
+    {
+      return -m_leftMaster.getSelectedSensorVelocity() * Constants.K_ENCODER_DISTANCE_PER_PULSE * 1000;
+    } else
+    {
+      System.out.println("\nThere was an error trying to get the velocity of the left side.\n");
+      return 0.0;
+    }
   }
 
   /**
@@ -313,7 +399,7 @@ public class Chassis extends SubsystemBase
    */
   public void updateOdometry()
   {
-    m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftEncoderDistance(), this.getRightEncoderDistance());
+    m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
   }
 
   /**
@@ -333,11 +419,50 @@ public class Chassis extends SubsystemBase
    */
   public void driveWithVoltage(double leftVoltage, double rightVoltage)
   {
-    // m_leftMaster.setVoltage(leftVoltage);
-    // m_rightMaster.setVoltage(-rightVoltage);
-    m_leftMaster.setVoltage(-rightVoltage); // negative
-    m_rightMaster.setVoltage(leftVoltage); // positive because right side is inverted for the arcadeDrive method.
+    if (m_isReversed)
+    {
+      m_leftMaster.setVoltage(leftVoltage); // positive
+      m_rightMaster.setVoltage(-rightVoltage); // negative because right side is inverted for the arcadeDrive method.
+    } else if (!m_isReversed)
+    {
+      m_leftMaster.setVoltage(-rightVoltage); // negative
+      m_rightMaster.setVoltage(leftVoltage); // positive because right side is inverted for the arcadeDrive method.
+    } else
+    {
+      System.out.println("\nThere was an error setting the drive motors' voltages.\n");
+      m_leftMaster.setVoltage(0.0);
+      m_rightMaster.setVoltage(0.0);
+    }
     m_differentialDrive.feed();
+  }
+
+  /**
+   * Performs actions that will allow the robot to follow trajectories in the opposite direction.
+   */
+  public void setReversed(boolean reverse)
+  {
+    /* Reverse drive train for forwards/backwards trajectories if passed in reverse is not equal to m_isReversed. */
+    if (m_isReversed != reverse)
+    {
+      /* Add current position to accumulated distance. Then, reset encoders to go in opposite direction. */
+      if (m_isReversed)
+      {
+        m_rightAccumDist += this.getLeftEncoderDistance();
+        m_leftAccumDist += this.getRightEncoderDistance();
+      } else if (!m_isReversed)
+      {
+        m_leftAccumDist += this.getLeftEncoderDistance();
+        m_rightAccumDist += this.getRightEncoderDistance();
+      }
+      this.resetEncoders();
+
+      /* Reverse gyro angle -- change by 180 degrees. */
+      double tempHeading = this.getHeading();
+      this.zeroHeading();
+      this.setHeading(tempHeading - 180);
+
+      m_isReversed = reverse;
+    }
   }
 
   /**
