@@ -124,6 +124,7 @@ public class RobotContainer
   {
     /* Add options (which autonomous commands can be selected) to chooser. */
     m_autoChooser.setDefaultOption("DEFAULT COMMAND NAME HERE", "default");
+    m_autoChooser.addOption("TEST", "test");
     m_autoChooser.addOption("THREE BALL FORWARD", "three_ball_forward");
     m_autoChooser.addOption("THREE BALL BACKWARD", "three_ball_backward");
     m_autoChooser.addOption("SIX BALL", "six_ball");
@@ -146,6 +147,8 @@ public class RobotContainer
     {
       case "default":
         return null;
+      case "test":
+        return new CommandGroupTemplate();
       case "three_ball_forward":
         return new AutonomousThreeBall(1, 2.0);
       case "three_ball_backward":
