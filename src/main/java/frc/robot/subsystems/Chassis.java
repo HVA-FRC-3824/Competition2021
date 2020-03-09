@@ -399,7 +399,13 @@ public class Chassis extends SubsystemBase
    */
   public void updateOdometry()
   {
-    m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
+    if (m_isReversed)
+    {
+      m_odometry.update(Rotation2d.fromDegrees(-this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
+    } else
+    {
+      m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
+    }
   }
 
   /**
@@ -423,6 +429,8 @@ public class Chassis extends SubsystemBase
     {
       m_leftMaster.setVoltage(leftVoltage); // positive
       m_rightMaster.setVoltage(-rightVoltage); // negative because right side is inverted for the arcadeDrive method.
+      SmartDashboard.putNumber("LEFT VOLTAGE VAR", -leftVoltage);
+      SmartDashboard.putNumber("RIGHT VOLTAGE VAR", rightVoltage);
     } else if (!m_isReversed)
     {
       m_leftMaster.setVoltage(-rightVoltage); // negative
@@ -482,7 +490,7 @@ public class Chassis extends SubsystemBase
    * @param isFirstPath is to set the transform for all trajectories if is first path.
    * @return sequential command group that follows the path and stops when complete.
    */
-  public SequentialCommandGroup generateRamsete(String pathName, boolean isFirstPath)
+  public SequentialCommandGroup generateRamsete(String pathName, boolean isFirstPath, boolean isReversed)
   {
     /* Get specified path/trajectory from m_trajs HashMap. */
     Trajectory trajectory = m_trajs.get(pathName);
@@ -492,11 +500,21 @@ public class Chassis extends SubsystemBase
      * If is the first path being followed, initialize the trajectory transform.
      * Transform trajectory based on the first path's initial position.
      */
+    System.out.println("BEFORE" + trajectory);
     if (isFirstPath)
     {
       this.initializeTrajTransform(trajectory);
     }
-    trajectory = trajectory.transformBy(m_trajTransform);
+    if (isReversed)
+    {
+      trajectory = trajectory.transformBy(m_trajTransform.times(-1.0));
+      System.out.println("TRANSFORMATION" + m_trajTransform.times(-1.0));
+    } else
+    {
+      trajectory = trajectory.transformBy(m_trajTransform);
+      System.out.println("TRANSFORMATION" + m_trajTransform);
+    }
+    System.out.println("AFTER" + trajectory);
 
     /* Create command that will follow the trajectory. */
     RamseteCommand ramseteCommand = new RamseteCommand(
