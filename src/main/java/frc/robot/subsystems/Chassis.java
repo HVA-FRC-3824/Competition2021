@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -70,6 +71,8 @@ public class Chassis extends SubsystemBase
   /* Left/right sides for accumulated distance relative to left and right side of field. */
   private double m_leftAccumDist;
   private double m_rightAccumDist;
+
+  public boolean K_GYRO_REVERSED = true;
 
   public Chassis() 
   {
@@ -128,6 +131,8 @@ public class Chassis extends SubsystemBase
 
     m_leftAccumDist = 0.0;
     m_rightAccumDist = 0.0;
+
+    
 
     /**
      * Various methods to call when chassis subsystem first starts up.
@@ -391,7 +396,7 @@ public class Chassis extends SubsystemBase
    */
   public double getHeading()
   {
-    return Math.IEEEremainder(m_ahrs.getAngle(), 360) * (Constants.K_GYRO_REVERSED ? -1.0 : 1.0);
+    return Math.IEEEremainder(m_ahrs.getAngle(), 720) * (K_GYRO_REVERSED ? -1.0 : 1.0);
   }
 
   /**
@@ -399,13 +404,13 @@ public class Chassis extends SubsystemBase
    */
   public void updateOdometry()
   {
-    if (m_isReversed)
-    {
-      m_odometry.update(Rotation2d.fromDegrees(-this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
-    } else
-    {
+    // if (m_isReversed)
+    // {
+    //   m_odometry.update(Rotation2d.fromDegrees(-this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
+    // } else
+    // {
       m_odometry.update(Rotation2d.fromDegrees(this.getHeading()), this.getLeftTotalDistance(), this.getRightTotalDistance());
-    }
+    // }
   }
 
   /**
@@ -467,7 +472,11 @@ public class Chassis extends SubsystemBase
       /* Reverse gyro angle -- change by 180 degrees. */
       double tempHeading = this.getHeading();
       this.zeroHeading();
-      this.setHeading(tempHeading - 180);
+      this.setHeading((tempHeading + 180));
+      // if (K_GYRO_REVERSED)
+      //   K_GYRO_REVERSED = false;
+      // else
+      //   K_GYRO_REVERSED = true;
 
       m_isReversed = reverse;
     }
@@ -507,8 +516,17 @@ public class Chassis extends SubsystemBase
     }
     if (isReversed)
     {
+      Transform2d transformation = m_trajTransform.times(-1.0);
+      Translation2d translation = transformation.getTranslation();
+      Translation2d translation2 = new Translation2d(translation.getX()*-1.0, translation.getY());
+      Rotation2d rotation = new Rotation2d();
+      Rotation2d rotation2 = new Rotation2d(180);
+      Pose2d pose = new Pose2d(0, 0, rotation);
+      Pose2d poseLast = new Pose2d(translation2, transformation.getRotation().minus(rotation2));
+      m_trajTransform = pose.minus(poseLast);
+      System.out.println("TRANSFORMATION 222222: " + m_trajTransform);
       trajectory = trajectory.transformBy(m_trajTransform.times(-1.0));
-      System.out.println("TRANSFORMATION" + m_trajTransform.times(-1.0));
+      System.out.println("TRANSFORMATION REVERSED" + m_trajTransform.times(-1.0));
     } else
     {
       trajectory = trajectory.transformBy(m_trajTransform);

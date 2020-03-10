@@ -184,7 +184,7 @@ public class Constants
 
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 4500;
   public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 4500;
-  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3250;
+  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3000;
 
   public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM                    = 4500;
   public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM                 = 4500;
@@ -270,7 +270,7 @@ public class Constants
   public static final double K_ENCODER_DISTANCE_PER_PULSE                   = (K_WHEEL_DIAMETER_METERS * Math.PI) / 
                                                                               (double) K_ENCODER_TICKS_PER_REVOLUTION;
 
-  public static final boolean K_GYRO_REVERSED                               = true;
+  // public static final boolean K_GYRO_REVERSED                               = true;
 
   /* Use robot characterization tool for these values. */
   public static final double K_S_VOLTS                                      = 0.372;
