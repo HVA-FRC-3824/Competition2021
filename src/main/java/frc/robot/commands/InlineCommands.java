@@ -49,6 +49,9 @@ public class InlineCommands {
   // public final Command m_setControlPanelSpinnerRPM;
   // public final Command m_stopControlPanelSpinner;
   
+  /* Defense Mode Commands */
+  public final Command m_toggleDefenseMode;
+  
   /* Intake Inline Command Declarations */
   public final Command m_toggleIntakePistons;
 
@@ -64,8 +67,6 @@ public class InlineCommands {
   public final Command m_setLauncherPreset; // Set launcher angle & rpms to a specified setpoint.
   public final Command m_stopLaunchSequence; // Enables teleop driving and stops launcher angle & rpms.
 
-  /* Defense Mode Commands */
-  public final Command m_startDefenseMode;
   
   public InlineCommands()
   {
@@ -124,6 +125,10 @@ public class InlineCommands {
     // m_stopControlPanelSpinner =
     //   new InstantCommand(() -> RobotContainer.m_controlPanel.setPanelSpinnerPower(0.0));
 
+    /* Defense Mode Command Instantiations */
+    m_toggleDefenseMode =
+      new InstantCommand(() -> RobotContainer.m_LEDs.toggleDefenseMode());
+
     /* Intake Inline Command Instantiations */ 
     m_toggleIntakePistons =
       new InstantCommand(() -> RobotContainer.m_intake.toggleExtender());
@@ -151,8 +156,5 @@ public class InlineCommands {
       RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis).alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
                                     new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(false)));
 
-    /* Defense Mode Command Instantiations */
-    m_startDefenseMode = 
-      new DefenseMode();
   }
 }

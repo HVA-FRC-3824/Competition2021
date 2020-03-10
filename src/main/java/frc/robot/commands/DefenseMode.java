@@ -7,6 +7,8 @@ public class DefenseMode extends CommandBase
 {
   // The subsystem the command runs on
 
+  public boolean isDefending = false;
+
   public DefenseMode()
   {
   }
@@ -16,12 +18,12 @@ public class DefenseMode extends CommandBase
   {   
     // Retract intake
     RobotContainer.m_intake.retractExtender();
-    
-    //Sets isDefending to true
-    RobotContainer.m_LEDs.setIsDefending(true);
 
     //angle launcher straight
     RobotContainer.m_launcher.setAngle(1700);
+
+    //changes LEDs
+    RobotContainer.m_LEDs.defenseModeLEDs();
   }
   
   @Override
@@ -38,6 +40,6 @@ public class DefenseMode extends CommandBase
   @Override
   public boolean isFinished()
   {
-    return true;
+    return isDefending;
   }
 }

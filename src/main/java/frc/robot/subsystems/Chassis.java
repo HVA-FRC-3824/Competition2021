@@ -496,6 +496,7 @@ public class Chassis extends SubsystemBase
     {
       this.initializeTrajTransform(trajectory);
     }
+
     trajectory = trajectory.transformBy(m_trajTransform);
 
     /* Create command that will follow the trajectory. */

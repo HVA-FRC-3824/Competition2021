@@ -61,7 +61,7 @@ public class OI
   private static JoystickButton m_setLauncherPresetBtn;
 
   /* Defense mode */
-  private static JoystickButton m_startDeffenseModeBtn;
+  private static JoystickButton m_toggleDefenseModeBtn;
 
   public OI() 
   {
@@ -80,13 +80,12 @@ public class OI
 
     m_setLauncherVisionBtn            = new JoystickButton(m_driverJoystick, Constants.DRIVER_LAUNCHER_VISION_BTN_ID);
 
+    m_toggleDefenseModeBtn            = new JoystickButton(m_driverJoystick, Constants.DRIVER_TOGGLE_DEFENSE_MODE_BTN_ID);
+
     /* 
      * Operator Joystick
      */    
     m_operatorJoystick                = new Joystick(Constants.OPERATOR_JOYSTICK_PORT);
-
-    /* Defense Mode */
-    m_startDeffenseModeBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_START_DEFENSE_MODE_BTN_ID);
 
     /* Chamber */
     m_setChamberBaseRPMBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_CHAMBER_BASE_RPM_BTN_ID);
@@ -172,6 +171,10 @@ public class OI
     // m_setControlPanelSpinnerRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerRPM);
     // m_setControlPanelSpinnerRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopControlPanelSpinner);
 
+    
+    /* Defense Mode */
+    m_toggleDefenseModeBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleDefenseMode);
+
     /* Intake Buttons */
     m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
 
@@ -191,9 +194,8 @@ public class OI
     m_setLauncherPresetBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
     m_setLauncherPresetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
 
-    /* Defense Mode */
-    m_startDeffenseModeBtn.whenPressed(RobotContainer.m_inlineCommands.m_startDefenseMode);
   }
   
-  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know. -Joey, at least indent your comment properly. -Jovi, Stop me. -Joey
+  //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know. -Joey, at least indent your comment properly. -Jovi, 
+  //Stop me. -Joey
 }

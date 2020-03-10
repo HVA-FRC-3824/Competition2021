@@ -2,9 +2,11 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.DefenseMode;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -15,8 +17,11 @@ public class LEDs extends SubsystemBase
 
   private DriverStation m_ds = DriverStation.getInstance();
 
+  /* Defense mode variables */
+
   private boolean m_defenseLEDs = false;
   private boolean m_isDefending = false;
+  private int m_periodicIteration = 0;
 
   /* Neutral Sequence */
   private int m_neutralStepValue = 0; // step G for blue, B for red, step R for purple
@@ -62,11 +67,12 @@ public class LEDs extends SubsystemBase
     {
       this.rainbow();
     }
-    else if (m_isDefending)
+    else if (m_periodicIteration >= 3 && m_isDefending)
     {
-      this.defenseModeLEDs();
+      this.defenseMode();
+      m_periodicIteration = 0;
     }
-    else
+    else if (m_isDefending == false)
     {
       this.neutral();
     }
@@ -75,6 +81,7 @@ public class LEDs extends SubsystemBase
     //   setLEDsForBallCount(LoadBallIntoChamber.getBallCount());
     // }
     m_chamberLEDs.setData(m_LEDLength);
+    m_periodicIteration++;
   }
 
   public void resetSequences()
@@ -204,9 +211,16 @@ public class LEDs extends SubsystemBase
     m_rainbowFirstPixleHue %= 180;
   }
 
-  public void setIsDefending(boolean status)
+  public void toggleDefenseMode()
   {
-    m_isDefending = status;
+    if (m_isDefending == true)
+    {
+      m_isDefending = false;
+    }
+    else 
+    {
+      m_isDefending = true;
+    }
   }
 
   public void defenseModeLEDs()
@@ -227,7 +241,18 @@ public class LEDs extends SubsystemBase
       }
       m_defenseLEDs = false;
     }
-    new WaitCommand(1);
+  }
+
+  public void defenseMode()
+  {   
+    // Retract intake
+    RobotContainer.m_intake.retractExtender();
+
+    //angle launcher straight
+    RobotContainer.m_launcher.setAngle(1700);
+
+    //changes LEDs
+    defenseModeLEDs();
   }
 
   public void setLaunchingStatus(boolean isLaunching)
