@@ -92,9 +92,6 @@ public class RobotContainer
 
     /* Start ultrasonics. */
     m_chamber.startUltrasonics();
-
-    /* Read trajectory files for path following. */
-    m_chassis.readTrajectories();
   }
 
   /**
