@@ -125,8 +125,12 @@ public class Constants
 
   /* Chassis */
   public static final String[] CHASSIS_TRAJECTORIES_NAMES                   = {"sixBall",
+                                                                               "sixBall2",
                                                                                "straightForward",
-                                                                               "straightBackward"};
+                                                                               "straightForward2",
+                                                                               "straightBackward",
+                                                                               "test",
+                                                                               "test2"};
 
   /* Chamber */
   public static final int    CHAMBER_BASE_TPR                               = 4096;
@@ -174,13 +178,13 @@ public class Constants
   public static final int    LAUNCHER_RPM_ERROR_TRESHOLD                    = 500;
 
   public static final int    LAUNCHER_PIVOT_MIN_ADC                         = 1700;
-  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3250;
+  public static final int    LAUNCHER_PIVOT_MAX_ADC                         = 3600;
   public static final double LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 0.25;
   public static final double LAUNCHER_PIVOT_ERROR_TRESHOLD                  = 0.5;
 
   public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 4500;
   public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 4500;
-  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3250;
+  public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3000;
 
   public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM                    = 4500;
   public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM                 = 4500;
