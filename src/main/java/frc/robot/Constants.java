@@ -217,6 +217,9 @@ public class Constants
 
   public static final int    DRIVER_LAUNCHER_VISION_BTN_ID                  = 1;
 
+  // Defense Mode
+  public static final int    DRIVER_TOGGLE_DEFENSE_MODE_BTN_ID              = 3;
+
   /**
    * Operator Joystick Map
    */
@@ -227,9 +230,6 @@ public class Constants
   /**
    * Buttons
    */
-
-  // Defense Mode
-  public static final int    OPERATOR_START_DEFENSE_MODE_BTN_ID             = 2;
 
    /* Chamber */
   public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 14;
@@ -250,7 +250,7 @@ public class Constants
   /* Control Panel */
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID    = 19;
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID      = 18;
-  
+
   /* Intake */
   public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 15;
   public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 16;
