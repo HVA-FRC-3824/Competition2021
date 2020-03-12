@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ChamberIndexBalls;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -9,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Chamber extends SubsystemBase
@@ -142,5 +144,17 @@ public class Chamber extends SubsystemBase
   {
     Ultrasonic [] sensors = {m_ballPos_entering, m_ballPos_exiting};
     return sensors[sensor].getRangeInches();
+  }
+
+  /**
+   * Method to start command that automatically indexes chamber balls.
+   * Use a method to start autoIndexBalls instead of making new instance of ChamberIndexBalls command
+   * in command group because command group will not progress through if a run command that never
+   * ends (ChamberIndexBalls command) is added to the command group.
+   */
+  public void initAutoIndex()
+  {
+    Command autoIndexBalls = new ChamberIndexBalls();
+    autoIndexBalls.schedule();
   }
 }
