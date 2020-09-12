@@ -131,7 +131,7 @@ t
     this.updateOdometry();
 
     /* Update drivetrain information on SmartDashboard for testing. */
-    this.displayDrivetrainInfo();
+    // this.displayDrivetrainInfo();
   }
 
   /**
@@ -306,11 +306,14 @@ t
 
   /**
    * Generates ramsete command for following passed in path in autonomous.
-   * @param pathName is the path file generated from PathWeaver.
-   * @param isFirstPath is to set the transform for all trajectories if is first path.
+   * @param startingPose is the position at which the robot starts up at.
+   * @param waypoints are the points in which the robot travels through to arrive at its end point.
+   * @param endingPose is the position at which the robot ends up at.
+   * @param maxVelocity controls how fast the robot will move through the trajectory/path.
+   * @param isReversed controls whether the robot travels forwards or backwards through the waypoints.
    * @return sequential command group that follows the path and stops when complete.
    */
-  public SequentialCommandGroup generateRamsete(Pose2d startingPose, List<Translation2d> waypoints, Pose2d endingPose, boolean isReversed)
+  public SequentialCommandGroup generateRamsete(Pose2d startingPose, List<Translation2d> waypoints, Pose2d endingPose, double maxVelocity, boolean isReversed)
   {
     /* Voltage constraint so never telling robot to move faster than it is capable of achieving. */
     var autoVoltageConstraint =
@@ -323,7 +326,7 @@ t
     
     /* Configuration for trajectory that wraps path constraints. */
     TrajectoryConfig trajConfig =
-      new TrajectoryConfig(Constants.K_MAX_SPEED_METERS_PER_SECOND,
+      new TrajectoryConfig(maxVelocity,
                            Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           /* Add kinematics to track robot speed and ensure max speed is obeyed. */
           .setKinematics(Constants.K_DRIVE_KINEMATICS)

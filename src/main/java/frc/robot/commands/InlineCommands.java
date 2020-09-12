@@ -76,7 +76,7 @@ public class InlineCommands {
 
     /* Chamber Inline Command Instantiations */
     m_setChamberBaseRPM =
-      new InstantCommand(() -> RobotContainer.m_chamber.setBaseRPM(Constants.CHAMBER_BASE_RPM-200));
+      new InstantCommand(() -> RobotContainer.m_chamber.setBaseRPM(Constants.CHAMBER_BASE_RPM));
     m_stopChamberBase =
       new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(0.0));
 

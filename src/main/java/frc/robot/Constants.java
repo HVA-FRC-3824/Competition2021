@@ -79,7 +79,7 @@ public class Constants
   public static final double CHAMBER_ELEVATOR_P                             = 1.0;
   public static final double CHAMBER_ELEVATOR_I                             = 0.0;
   public static final double CHAMBER_ELEVATOR_D                             = 0.0;
-  public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 2000;
+  public static final int    CHAMBER_ELEVATOR_CRUISEVELOCITY                = 2500;
   public static final int    CHAMBER_ELEVATOR_ACCELERATION                  = 5000;
 
   public static final double CHAMBER_BASE_F                                 = 0.0;
@@ -134,7 +134,7 @@ public class Constants
 
   /* Chamber */
   public static final int    CHAMBER_BASE_TPR                               = 4096;
-  public static final int    CHAMBER_BASE_RPM                               = 500;
+  public static final int    CHAMBER_BASE_RPM                               = 300;
 
   public static final double CHAMBER_BALL_THRESHOLD                         = 3.0;
   public static final double CHAMBER_BALL_STEP_DIST                         = 4000;
@@ -169,6 +169,7 @@ public class Constants
   /* Intake */
   public static final int    INTAKE_WHEEL_TPR                               = 16000;
   public static final int    INTAKE_WHEEL_RPM                               = 750;
+  public static final double INTAKE_WHEEL_POWER                             = 0.5;
 
   /* Launcher */
   public static final int    LAUNCHER_WHEEL_MAX_RPM                         = 6000;
@@ -182,20 +183,20 @@ public class Constants
   public static final double LAUNCHER_PIVOT_JOG_MAGNITUDE                   = 0.25;
   public static final double LAUNCHER_PIVOT_ERROR_TRESHOLD                  = 0.5;
 
-  public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 4500;
-  public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 4500;
+  public static final int    LAUNCHER_CLOSE_TRENCH_TOP_RPM                  = 5500;
+  public static final int    LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM               = 5500;
   public static final int    LAUNCHER_CLOSE_TRENCH_ANGLE                    = 3000;
 
-  public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM                    = 4500;
-  public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM                 = 4500;
+  public static final int    LAUNCHER_FAR_TRENCH_TOP_RPM                    = 3000;
+  public static final int    LAUNCHER_FAR_TRENCH_BOTTOM_RPM                 = 3000;
   public static final int    LAUNCHER_FAR_TRENCH_ANGLE                      = 3000;
 
-  public static final int    LAUNCHER_INITIATION_LINE_TOP_RPM               = 2750;
-  public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 2750;
+  public static final int    LAUNCHER_INITIATION_LINE_TOP_RPM               = 2600;
+  public static final int    LAUNCHER_INITIATION_LINE_BOTTOM_RPM            = 2600;
   public static final int    LAUNCHER_INITIATION_LINE_ANGLE                 = 3600;
 
-  public static final int    LAUNCHER_AUTO_INIT_TOP_RPM                     = 2750;
-  public static final int    LAUNCHER_AUTO_INIT_BOTTOM_RPM                  = 2750;
+  public static final int    LAUNCHER_AUTO_INIT_TOP_RPM                     = 3000;
+  public static final int    LAUNCHER_AUTO_INIT_BOTTOM_RPM                  = 3000;
   public static final int    LAUNCHER_AUTO_INIT_ANGLE                       = 3600;
 
   public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4500;
@@ -284,8 +285,6 @@ public class Constants
     "headroom" in dealing with "voltage sag." */
   public static final int    K_MAX_VOLTAGE                                  = 10;
   
-  /* If these values are changed, must also edit max velocity/acceleration in PathWeaver. */
-  public static final double K_MAX_SPEED_METERS_PER_SECOND                  = 1.0;//2.5;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 3.0;
 
   public static final double K_RAMSETE_B                                    = 2;
