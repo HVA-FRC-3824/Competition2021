@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 public class Constants 
@@ -33,6 +34,15 @@ public class Constants
   public static final int CLIMBER_LIFT_RIGHT_ID                             = 15;
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
+
+  public static final int SWERVE_FRONTLEFT_ID                               = 17;
+  public static final int SWERVE_FRONTRIGHT_ID                              = 18;
+  public static final int SWERVE_BACKLEFT_ID                                = 19;
+  public static final int SWERVE_BACKRIGHT_ID                               = 20;
+  public static final int SWERVE_FRONTLEFT_STEER_ID                         = 21;
+  public static final int SWERVE_FRONTRIGHT_STEER_ID                        = 22;
+  public static final int SWERVE_BACKLEFT_STEER_ID                          = 23;
+  public static final int SWERVE_BACKRIGHT_STEER_ID                         = 24;
  
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
@@ -119,6 +129,10 @@ public class Constants
   public static final double LAUNCHER_AIM_VISION_P                          = 0.07;
   public static final double LAUNCHER_AIM_VISION_MIN                        = 0.03;
 
+  /* Swerve */
+  public static final double SWERVE_WHEEL_DISTANCE_X                        = 0.5;
+  public static final double SWERVE_WHEEL_DISTANCE_Y                        = 0.5;
+  
   /**
    * Subsystem-Specific Values For Commands
    */
