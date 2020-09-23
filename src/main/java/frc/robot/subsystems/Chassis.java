@@ -162,7 +162,15 @@ public class Chassis extends SubsystemBase
   {
     /* Reduces sensitivity of twist for turning. */
     turn = turn/1.5;
-
+    if (power > Constants.CHASSIS_MAX_POWER)
+    {
+      power = Constants.CHASSIS_MAX_POWER;
+    }
+    else if (power < -Constants.CHASSIS_MAX_POWER)
+    {
+      power = -Constants.CHASSIS_MAX_POWER;
+    }
+    
     m_differentialDrive.arcadeDrive(power, turn, true);
   }
 

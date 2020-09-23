@@ -146,6 +146,8 @@ public class Constants
                                                                                "test",
                                                                                "test2"};
 
+  public static final double CHASSIS_MAX_POWER                              = 0.6;
+
   /* Chamber */
   public static final int    CHAMBER_BASE_TPR                               = 4096;
   public static final int    CHAMBER_BASE_RPM                               = 300;

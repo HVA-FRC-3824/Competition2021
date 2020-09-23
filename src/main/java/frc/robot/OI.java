@@ -147,8 +147,8 @@ public class OI
     m_setChamberElevatorDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_setChamberElevatorAuto);
 
     /* Chassis Buttons */
-    m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
-    m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
+    //m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
+    //m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
 
     m_toggleLimelightBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleLimelight);
 
