@@ -8,10 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.SwerveDrive;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,30 +22,31 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot 
-{
+public class Robot extends TimedRobot {
   /**
-   * Declare autonomous command object to later be instantiated and scheduled based on chooser in RobotContainer.java.
+   * Declare autonomous command object to later be instantiated and scheduled
+   * based on chooser in RobotContainer.java.
    */
   private Command m_autonomousCommand;
 
   /**
-   * Declare object for RobotContainer.java.
-   * This object will be used when desiring to perform an action requiring an external subsystem, command, etc.
-   * Because of the static attribute, other classes can use this instance with just RobotContainer.desiredAction.
+   * Declare object for RobotContainer.java. This object will be used when
+   * desiring to perform an action requiring an external subsystem, command, etc.
+   * Because of the static attribute, other classes can use this instance with
+   * just RobotContainer.desiredAction.
    */
   public static RobotContainer m_robotContainer;
 
   /**
-   * This function is run when the robot is first started up and should be
-   * used for any initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
-  public void robotInit()
-  {
+  public void robotInit() {
     /**
-     * By instantiating the RobotContainer, all other initializations will be performed.
-     * The RobotContainer object will also be ready for use throughout the project.
+     * By instantiating the RobotContainer, all other initializations will be
+     * performed. The RobotContainer object will also be ready for use throughout
+     * the project.
      */
     m_robotContainer = new RobotContainer();
 
@@ -52,28 +55,30 @@ public class Robot extends TimedRobot
   }
 
   /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like diagnostics that you want ran during disabled, autonomous,
+   * teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic()
-  {
+  public void robotPeriodic() {
     /**
-     * Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-     * commands, running already-scheduled commands, removing finished or interrupted commands,
-     * and running subsystem periodic() methods.  This must be called from the robot's periodic
-     * block in order for anything in the Command-based framework to work.
+     * Runs the Scheduler. This is responsible for polling buttons, adding
+     * newly-scheduled commands, running already-scheduled commands, removing
+     * finished or interrupted commands, and running subsystem periodic() methods.
+     * This must be called from the robot's periodic block in order for anything in
+     * the Command-based framework to work.
      */
     CommandScheduler.getInstance().run();
 
-    // for (int i = 1; i <= RobotContainer.m_OI.getOperatorController().getButtonCount(); i++)
+    // for (int i = 1; i <=
+    // RobotContainer.m_OI.getOperatorController().getButtonCount(); i++)
     // {
-    //   if (RobotContainer.m_OI.getOperatorController().getRawButton(i))
-    //     SmartDashboard.putNumber("BUTTON PRESSED", i);
+    // if (RobotContainer.m_OI.getOperatorController().getRawButton(i))
+    // SmartDashboard.putNumber("BUTTON PRESSED", i);
     // }
   }
 
@@ -81,12 +86,14 @@ public class Robot extends TimedRobot
    * This function is called once each time the robot enters Disabled mode.
    */
   @Override
-  public void disabledInit()
-  {
+  public void disabledInit() {
     /* Turn off Limelight LED when disabled so it doesn't blind drive team. */
     RobotContainer.m_limelight.turnOffLED();
 
-    /* Switch to neutral LEDs animation --> set other factors that trigger other animations to false. */
+    /*
+     * Switch to neutral LEDs animation --> set other factors that trigger other
+     * animations to false.
+     */
     RobotContainer.m_LEDs.resetSequences();
   }
 
@@ -94,16 +101,14 @@ public class Robot extends TimedRobot
    * This function is called periodically when disabled.
    */
   @Override
-  public void disabledPeriodic()
-  {
+  public void disabledPeriodic() {
   }
 
   /**
    * This function is called at the start of autonomous.
    */
   @Override
-  public void autonomousInit()
-  {
+  public void autonomousInit() {
     /* Zero robot heading to current heading. */
     RobotContainer.m_chassis.zeroHeading();
     RobotContainer.m_chassis.resetEncoders();
@@ -120,21 +125,18 @@ public class Robot extends TimedRobot
    * This function is called periodically during autonomous.
    */
   @Override
-  public void autonomousPeriodic()
-  {
+  public void autonomousPeriodic() {
   }
 
   /**
    * This function is called at the start of operator control.
    */
   @Override
-  public void teleopInit() 
-  {
+  public void teleopInit() {
     /**
-     * This makes sure that the autonomous stops running when
-     * teleop starts running. If you want the autonomous to
-     * continue until interrupted by another command, remove
-     * this line or comment it out.
+     * This makes sure that the autonomous stops running when teleop starts running.
+     * If you want the autonomous to continue until interrupted by another command,
+     * remove this line or comment it out.
      */
     if (m_autonomousCommand != null)
       m_autonomousCommand.cancel();
@@ -144,19 +146,21 @@ public class Robot extends TimedRobot
     RobotContainer.m_limelight.setModeVision();
 
     /**
-     * Initialize default commands for all subsystems.
-     * Do this in teleopInit rather than robotInit or autonomousInit because default commands 
-     * will interfere with autonomous commands.
+     * Initialize default commands for all subsystems. Do this in teleopInit rather
+     * than robotInit or autonomousInit because default commands will interfere with
+     * autonomous commands.
      */
     RobotContainer.initializeDefaultCommands();
   }
 
+  private Joystick joystick = new Joystick (0);
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() 
   {
+    //SwerveDrive.drive(joystick.getRawAxis(1), joystick.getRawAxis(0), joystick.getRawAxis(4));
   }
 
   /**

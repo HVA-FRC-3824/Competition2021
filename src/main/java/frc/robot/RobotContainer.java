@@ -60,6 +60,14 @@ public class RobotContainer
    */
   private final SendableChooser<String> m_autoChooser = new SendableChooser<>();
 
+  private WheelDrive backRight = (new WheelDrive(0, 1, 0));
+  private WheelDrive backLeft = (new WheelDrive(2, 3, 1));
+  private WheelDrive frontRight = (new WheelDrive(4, 5, 2));
+  private WheelDrive frontLeft = (new WheelDrive(6, 7, 3));
+
+  private SwerveDrive swerveDrive = new SwerveDrive(backRight, backLeft, frontRight, frontLeft);
+
+
   /**
    * This code runs at robotInit.
    */

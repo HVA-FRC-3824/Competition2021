@@ -18,7 +18,7 @@ public class WheelDrive extends SubsystemBase
 
     private final double MAX_VOLTS = 12;
 
-    public WheelDrive(int m_angleMotor, int m_speedMotor, int encoder)
+    public WheelDrive( int m_angleMotor, int m_speedMotor, int encoder)
     {
         this.m_angleMotor = new TalonFX(m_angleMotor);
         this.m_speedMotor = new TalonFX(m_speedMotor);
@@ -29,7 +29,7 @@ public class WheelDrive extends SubsystemBase
         // m_pidController.enable();
     }
 
-    public void drive(double speed, double angle)
+    public void drive( double speed, double angle)
     {
         m_speedMotor.set(ControlMode.Velocity, speed);
 
@@ -44,5 +44,7 @@ public class WheelDrive extends SubsystemBase
         }
 
         //pidController.setSetpoint (setpoint);
+
+        
     }
 }
