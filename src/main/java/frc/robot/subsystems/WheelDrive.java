@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -15,6 +16,8 @@ public class WheelDrive extends SubsystemBase
     private TalonFX m_angleMotor;
     private PIDController m_pidController;
 
+    private final double MAX_VOLTS = 12;
+
     public WheelDrive(int m_angleMotor, int m_speedMotor, int encoder)
     {
         this.m_angleMotor = new TalonFX(m_angleMotor);
@@ -28,6 +31,18 @@ public class WheelDrive extends SubsystemBase
 
     public void drive(double speed, double angle)
     {
-        
+        m_speedMotor.set(ControlMode.Velocity, speed);
+
+        double setpoint = angle * (MAX_VOLTS * 0.5) + (MAX_VOLTS * 0.5);
+        if (setpoint < 0) 
+        {
+            setpoint = MAX_VOLTS + setpoint;
+        }
+        if (setpoint > MAX_VOLTS) 
+        {
+            setpoint = setpoint - MAX_VOLTS;
+        }
+
+        //pidController.setSetpoint (setpoint);
     }
 }
