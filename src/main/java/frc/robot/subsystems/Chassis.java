@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -57,6 +59,9 @@ public class Chassis extends SubsystemBase
   private Compressor m_compressor;
 
   private DoubleSolenoid m_gearShift;
+
+  private WPI_TalonFX m_angleMotor;
+  private WPI_TalonFX m_speedMotor;
 
   /**
    * Declaring objects for autonomous path following.
@@ -119,6 +124,14 @@ public class Chassis extends SubsystemBase
     /* Reset encoders & gyro to ensure autonomous path following is correct. */
     this.resetEncoders();
     this.zeroHeading();
+
+    m_angleMotor = new WPI_TalonFX(Constants.WHEEL_DRIVE_ANGLE_MOTOR_ID);
+    RobotContainer.configureTalonFX(m_angleMotor, false, false, Constants.WHEEL_DRIVE_WHEEL_F, Constants.WHEEL_DRIVE_WHEEL_P, 
+    Constants.WHEEL_DRIVE_WHEEL_I, Constants.WHEEL_DRIVE_WHEEL_D);
+
+    m_speedMotor = new WPI_TalonFX(Constants.WHEEL_DRIVE_SPEED_MOTOR_ID);
+    RobotContainer.configureTalonFX(m_speedMotor, false, false, 0.0, 0.0, 0.0, 0.0);
+
   }
 
   /**
@@ -172,6 +185,47 @@ public class Chassis extends SubsystemBase
     }
     
     m_differentialDrive.arcadeDrive(power, turn, true);
+  }
+
+public void convertSwerveValues (double x1, double y1, double x2)
+  {
+      y1 *= -1;
+      
+      double a = x1 - x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_LENGTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
+      double b = x1 + x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_LENGTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
+      double c = y1 - x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_WIDTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
+      double d = y1 - x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_WIDTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
+      
+      double backRightSpeed = Math.sqrt((a * a) + (d * d));
+      double backLeftSpeed = Math.sqrt((a * a) + (c * c));
+      double frontRightSpeed = Math.sqrt((b * b) + (d * d));
+      double frontLeftSpeed = Math.sqrt((b * b) + (c * c));
+
+      double backRightAngle = Math.atan2(a, d) / Math.PI;
+      double backLeftAngle = Math.atan2(a, c) / Math.PI;
+      double frontRightAngle = Math.atan2(b, d) / Math.PI;
+      double frontLeftAngle = Math.atan2(b, c) / Math.PI;
+
+      drive(backRightSpeed, backRightAngle);
+  }
+
+  public void drive (double speed, double angle)
+  {
+    m_speedMotor.set(speed);
+
+    double setpoint = angle * (Constants.SWERVE_DRIVE_MAX_VOLTAGE * 0.5) + (Constants.SWERVE_DRIVE_MAX_VOLTAGE);
+    
+    if (setpoint < 0) 
+    {
+      setpoint = Constants.SWERVE_DRIVE_MAX_VOLTAGE + setpoint;
+    }
+
+    if (setpoint > Constants.SWERVE_DRIVE_MAX_VOLTAGE)
+    {
+      setpoint = setpoint - Constants.SWERVE_DRIVE_MAX_VOLTAGE;
+    }
+
+    m_angleMotor.set(TalonFXControlMode.Position, 0.0);
   }
 
   /**
@@ -374,4 +428,6 @@ public class Chassis extends SubsystemBase
     /* Return command group that will run path following command, then stop the robot at the end. */
     return ramseteCommand.andThen(new InstantCommand(() -> RobotContainer.m_chassis.driveWithVoltage(0, 0)));
   }
+  
+
 }

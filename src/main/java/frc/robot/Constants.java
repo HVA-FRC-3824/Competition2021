@@ -35,15 +35,9 @@ public class Constants
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
 
-  public static final int SWERVE_FRONTLEFT_ID                               = 17;
-  public static final int SWERVE_FRONTRIGHT_ID                              = 18;
-  public static final int SWERVE_BACKLEFT_ID                                = 19;
-  public static final int SWERVE_BACKRIGHT_ID                               = 20;
-  public static final int SWERVE_FRONTLEFT_STEER_ID                         = 21;
-  public static final int SWERVE_FRONTRIGHT_STEER_ID                        = 22;
-  public static final int SWERVE_BACKLEFT_STEER_ID                          = 23;
-  public static final int SWERVE_BACKRIGHT_STEER_ID                         = 24;
- 
+  public static final int WHEEL_DRIVE_ANGLE_MOTOR_ID                        = 17;
+  public static final int WHEEL_DRIVE_SPEED_MOTOR_ID                        = 18;
+
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
   public static final int CHASSIS_GEARSHIFT_PORT_B                          = 0;
@@ -128,10 +122,6 @@ public class Constants
 
   public static final double LAUNCHER_AIM_VISION_P                          = 0.07;
   public static final double LAUNCHER_AIM_VISION_MIN                        = 0.03;
-
-  /* Swerve */
-  public static final double SWERVE_WHEEL_DISTANCE_X                        = 0.5;
-  public static final double SWERVE_WHEEL_DISTANCE_Y                        = 0.5;
   
   /**
    * Subsystem-Specific Values For Commands
@@ -147,6 +137,12 @@ public class Constants
                                                                                "test2"};
 
   public static final double CHASSIS_MAX_POWER                              = 0.6;
+
+  public static final double WHEEL_DRIVE_WHEEL_F                            = 0.0;
+  public static final double WHEEL_DRIVE_WHEEL_P                            = 0.0;
+  public static final double WHEEL_DRIVE_WHEEL_I                            = 0.0;
+  public static final double WHEEL_DRIVE_WHEEL_D                            = 0.0;
+
 
   /* Chamber */
   public static final int    CHAMBER_BASE_TPR                               = 4096;
@@ -218,7 +214,11 @@ public class Constants
   public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3000;//3350;
-
+ 
+  // Swerve Drive
+  public static final double SWERVE_DRIVE_WHEEL_AXLE_LENGTH                 = 0;
+  public static final double SWERVE_DRIVE_WHEEL_AXLE_WIDTH                  = 0;
+  public static final double SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL               = 0;
   /**
    * Driver Joystick Map
    */
@@ -305,5 +305,8 @@ public class Constants
 
   public static final double K_RAMSETE_B                                    = 2;
   public static final double K_RAMSETE_ZETA                                 = 0.7;
+
+  /* Ask build captains what type of swerve module we have. */
+  public static final double SWERVE_DRIVE_MAX_VOLTAGE                      = 4.95;
 
 }
