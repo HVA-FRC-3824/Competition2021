@@ -78,6 +78,10 @@ public class Constants
   public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.1;
   public static final double CHASSIS_TURN_ERROR_THRESHOLD                   = 0.5;
 
+  public static final double K_CHASSIS_ANGLE_P                              = 0.1;
+  public static final double K_CHASSIS_ANGLE_I                              = 0;
+  public static final double K_CHASSIS_ANGLE_D                              = 0;
+
   /* Chamber */
   public static final double CHAMBER_ELEVATOR_F                             = 0.0;
   public static final double CHAMBER_ELEVATOR_P                             = 1.0;
@@ -216,9 +220,9 @@ public class Constants
   public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3000;//3350;
  
   // Swerve Drive
-  public static final double SWERVE_DRIVE_WHEEL_AXLE_LENGTH                 = 0;
-  public static final double SWERVE_DRIVE_WHEEL_AXLE_WIDTH                  = 0;
-  public static final double SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL               = 0;
+  public static final double SWERVE_DRIVE_WHEEL_AXLE_LENGTH                 = 36;
+  public static final double SWERVE_DRIVE_WHEEL_AXLE_WIDTH                  = 48;
+  public static final double SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL               = 60;
   /**
    * Driver Joystick Map
    */

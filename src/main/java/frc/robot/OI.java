@@ -23,6 +23,9 @@ public class OI
 
   private static JoystickButton m_setLauncherVisionBtn;
 
+  private static JoystickButton m_setPositionBtn;
+  private static JoystickButton m_resetPositionBtn;
+
   /* 
    * Operator Joystick
    */
@@ -81,6 +84,9 @@ public class OI
     m_setLauncherVisionBtn            = new JoystickButton(m_driverJoystick, Constants.DRIVER_LAUNCHER_VISION_BTN_ID);
 
     m_toggleDefenseModeBtn            = new JoystickButton(m_driverJoystick, Constants.DRIVER_TOGGLE_DEFENSE_MODE_BTN_ID);
+
+    m_setPositionBtn                  = new JoystickButton(m_driverJoystick, 4);
+    m_resetPositionBtn                = new JoystickButton(m_driverJoystick, 6);
 
     /* 
      * Operator Joystick
@@ -151,6 +157,8 @@ public class OI
     //m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
 
     m_toggleLimelightBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleLimelight);
+    m_setPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_test);
+    m_resetPositionBtn.whenPressed(RobotContainer.m_inlineCommands.m_reset);
 
     /* Climber Buttons */
     m_extendClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberLeft);

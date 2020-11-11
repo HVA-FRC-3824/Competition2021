@@ -126,8 +126,8 @@ public class Chassis extends SubsystemBase
     this.zeroHeading();
 
     m_angleMotor = new WPI_TalonFX(Constants.WHEEL_DRIVE_ANGLE_MOTOR_ID);
-    RobotContainer.configureTalonFX(m_angleMotor, false, false, Constants.WHEEL_DRIVE_WHEEL_F, Constants.WHEEL_DRIVE_WHEEL_P, 
-    Constants.WHEEL_DRIVE_WHEEL_I, Constants.WHEEL_DRIVE_WHEEL_D);
+    RobotContainer.configureTalonFX(m_angleMotor, false, false, 0.0, Constants.K_CHASSIS_ANGLE_P, 
+    Constants.K_CHASSIS_ANGLE_I, Constants.K_CHASSIS_ANGLE_D);
 
     m_speedMotor = new WPI_TalonFX(Constants.WHEEL_DRIVE_SPEED_MOTOR_ID);
     RobotContainer.configureTalonFX(m_speedMotor, false, false, 0.0, 0.0, 0.0, 0.0);
@@ -206,6 +206,10 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double frontRightAngle = Math.atan2(b, d) / Math.PI;
       double frontLeftAngle = Math.atan2(b, c) / Math.PI;
 
+      SmartDashboard.putNumber("backRightSpeed", backRightSpeed);
+      SmartDashboard.putNumber("y1", y1);
+      SmartDashboard.putNumber("Angle", backRightAngle);
+
       drive(backRightSpeed, backRightAngle);
   }
 
@@ -226,6 +230,24 @@ public void convertSwerveValues (double x1, double y1, double x2)
     }
 
     m_angleMotor.set(TalonFXControlMode.Position, 0.0);
+
+    System.out.println("Speed" + speed);
+    System.out.println("Angle" + angle);
+  }
+
+  public void setPosition ()
+  {
+    m_angleMotor.set(TalonFXControlMode.Position, 12000);
+  }
+
+  public WPI_TalonFX getMotor ()
+  {
+    return m_angleMotor;
+  }
+  
+  public void resetPosition ()
+  {
+    m_angleMotor.set(TalonFXControlMode.Position, 0);
   }
 
   /**
@@ -352,6 +374,8 @@ public void convertSwerveValues (double x1, double y1, double x2)
   {
     return m_odometry.getPoseMeters();
   }
+
+
 
   /**
    * Controls the left and right sides of the drive train directly with voltages.

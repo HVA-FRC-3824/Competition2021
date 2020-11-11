@@ -93,5 +93,7 @@ public class SetPIDValues extends CommandBase
     m_talonFX.config_kP(Constants.K_SLOT_IDX, SmartDashboard.getNumber("P Value", 0.0), Constants.K_TIMEOUT_MS);
     m_talonFX.config_kI(Constants.K_SLOT_IDX, SmartDashboard.getNumber("I Value", 0.0), Constants.K_TIMEOUT_MS);
     m_talonFX.config_kD(Constants.K_SLOT_IDX, SmartDashboard.getNumber("D Value", 0.0), Constants.K_TIMEOUT_MS);
+
+    System.out.println("iufhuewf");
   }
 }

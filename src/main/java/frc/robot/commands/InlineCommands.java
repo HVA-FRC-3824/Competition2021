@@ -36,6 +36,9 @@ public class InlineCommands {
 
   public final Command m_toggleLimelight;
   
+  public final Command m_test;
+  public final Command m_reset;
+
   /* Climber Inline Command Declarations */
   public final Command m_extendClimberLeft;
   public final Command m_retractClimberLeft;
@@ -105,6 +108,11 @@ public class InlineCommands {
 
     m_toggleLimelight =
       new InstantCommand(() -> RobotContainer.m_limelight.toggleMode());
+
+    m_test = 
+      new InstantCommand(() -> RobotContainer.m_chassis.setPosition());
+    m_reset = 
+      new InstantCommand(() -> RobotContainer.m_chassis.resetPosition());
 
     /* Climber Inline Command Instantiations */
     m_extendClimberLeft =

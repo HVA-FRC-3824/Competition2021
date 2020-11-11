@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
      * the Command-based framework to work.
      */
     CommandScheduler.getInstance().run();
+    RobotContainer.displayTalonFXInfo(RobotContainer.m_chassis.getMotor(), "Angle Motor");
 
     // for (int i = 1; i <=
     // RobotContainer.m_OI.getOperatorController().getButtonCount(); i++)

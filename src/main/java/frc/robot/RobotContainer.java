@@ -278,10 +278,10 @@ public class RobotContainer
   private void initializePIDValues()
   {
     /* Generate number fields on SmartDashboard for PID values to be input into. */
-    // SmartDashboard.putNumber("F Value", 0.0);
-    // SmartDashboard.putNumber("P Value", 0.0);
-    // SmartDashboard.putNumber("I Value", 0.0);
-    // SmartDashboard.putNumber("D Value", 0.0);
+    SmartDashboard.putNumber("F Value", 0.0);
+    SmartDashboard.putNumber("P Value", 0.0);
+    SmartDashboard.putNumber("I Value", 0.0);
+    SmartDashboard.putNumber("D Value", 0.0);
 
     // SmartDashboard.putNumber("Cruise Velocity Value", 0);
     // SmartDashboard.putNumber("Acceleration Value", 0);
@@ -298,7 +298,7 @@ public class RobotContainer
      * boolean: if true, Motion Magic is being used, if false, Motion Magic is not
      * being used.
      */
-    // SmartDashboard.putData("Set PID Values", new SetPIDValues(m_intake.getWheelIntakeTalonSRX(), null, false));
+    SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_chassis.getMotor(), false));
   }
 
   /**
