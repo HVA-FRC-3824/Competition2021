@@ -118,7 +118,7 @@ public class Chassis extends SubsystemBase
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(this.getHeading()));
 
     /**
-     * Various methods to call when chassis subsystem first starts up.
+     * doubleious methods to call when chassis subsystem first starts up.
      */
 
     /* Reset encoders & gyro to ensure autonomous path following is correct. */
@@ -148,7 +148,7 @@ public class Chassis extends SubsystemBase
   }
 
   /**
-   * Puts various drivetrain parameters on the SmartDashboard for testing.
+   * Puts doubleious drivetrain parameters on the SmartDashboard for testing.
    */
   private void displayDrivetrainInfo()
   {
@@ -189,28 +189,84 @@ public class Chassis extends SubsystemBase
 
 public void convertSwerveValues (double x1, double y1, double x2)
   {
-      y1 *= -1;
-      
-      double a = x1 - x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_LENGTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
-      double b = x1 + x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_LENGTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
-      double c = y1 - x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_WIDTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
-      double d = y1 - x2 * (Constants.SWERVE_DRIVE_WHEEL_AXLE_WIDTH/ Constants.SWERVE_DRIVE_WHEEL_AXLE_DIAGONAL);
-      
-      double backRightSpeed = Math.sqrt((a * a) + (d * d));
-      double backLeftSpeed = Math.sqrt((a * a) + (c * c));
-      double frontRightSpeed = Math.sqrt((b * b) + (d * d));
-      double frontLeftSpeed = Math.sqrt((b * b) + (c * c));
+      //width and length
+      double w = 150;
+      double l = 200;
 
-      double backRightAngle = Math.atan2(a, d) / Math.PI;
-      double backLeftAngle = Math.atan2(a, c) / Math.PI;
-      double frontRightAngle = Math.atan2(b, d) / Math.PI;
-      double frontLeftAngle = Math.atan2(b, c) / Math.PI;
+      //width and length relative ratios
+      double wr;
+      double lr;
 
-      SmartDashboard.putNumber("backRightSpeed", backRightSpeed);
-      SmartDashboard.putNumber("y1", y1);
-      SmartDashboard.putNumber("Angle", backRightAngle);
+      //input velocities and turn
+      double VX = 0;
+      double VY = 0;
+      double turn = 0;
 
-      drive(backRightSpeed, backRightAngle);
+      //turn velocities
+      double tvx;
+      double tvy;
+
+      //simplificaton for adding turn and strafe velocity for each wheel
+      double a;
+      double b;
+      double c;
+      double d;
+
+      //turn
+      if (Math.abs(x2) > 0.015) {turn = x2;}
+      //Input Velocity
+      if (Math.abs(x1) > 0.15) {VX = x1;}
+      if (Math.abs(y1) > 0.15) {VY = y1;}
+
+
+      //ratio of width to length
+      wr = w / Math.max(l, w) * 2;
+      lr = l / Math.max(l, w) * 2;
+
+      //turn velocities
+      tvx = turn * lr / 2;
+      tvy = turn * wr / 2;
+
+      //calculation
+
+      a = VX - turn * lr / 2;
+      b = VX + turn * lr / 2;
+      c = VY - turn * wr / 2;
+      d = VY + turn * wr / 2;
+
+      //output wheel velocities and angles
+      //[vx, vy, speed, angle];
+      double [] wheel_one = {b, c, 0, 0};
+      double [] wheel_two = {b, d, 0, 0};
+      double [] wheel_three = {a, d, 0, 0};
+      double [] wheel_four = {a, c, 0, 0};
+
+      // finding speed of each wheel based off their x and y velocities
+      wheel_one[2] = Math.sqrt(Math.abs(b * b + c * c));
+      wheel_two[2] = Math.sqrt(Math.abs(b * b + d * d));
+      wheel_three[2] = Math.sqrt(Math.abs(a * a + d * d));
+      wheel_four[2] = Math.sqrt(Math.abs(a * a + c * c));
+
+      //adjust for overturning of wheels
+      double highest_wheelspeed = Math.max(Math.max(Math.max(Math.abs(wheel_one[2]), 
+                                  Math.abs(wheel_two[2])), Math.abs(wheel_three[2])), Math.abs(wheel_four[2]));
+      if (highest_wheelspeed > 1) {
+          wheel_one[2] = wheel_one[2] / highest_wheelspeed;
+          wheel_two[2] = wheel_two[2] / highest_wheelspeed;
+          wheel_three[2] = wheel_three[2] / highest_wheelspeed;
+          wheel_four[2] = wheel_four[2] / highest_wheelspeed;
+      }
+
+      //finding angle of each wheel based off their velocities
+      wheel_one[3] = Math.atan2(b, c) / (2 * Math.PI) * 6000;
+      wheel_two[3] = Math.atan2(b, d) / (2 * Math.PI) * 6000;
+      wheel_three[3] = Math.atan2(a, d) / (2 * Math.PI) * 6000;
+      wheel_four[3] = Math.atan2(a, c) / (2 * Math.PI) * 6000;
+
+      drive(wheel_one[2], wheel_one[3]);
+
+      SmartDashboard.putNumber("Angle", wheel_one[3]);
+      SmartDashboard.putNumber("Speed", wheel_one[2]);
   }
 
   public void drive (double speed, double angle)
@@ -229,7 +285,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       setpoint = setpoint - Constants.SWERVE_DRIVE_MAX_VOLTAGE;
     }
 
-    m_angleMotor.set(TalonFXControlMode.Position, 0.0);
+    m_angleMotor.set(TalonFXControlMode.Position, angle);
 
     System.out.println("Speed" + speed);
     System.out.println("Angle" + angle);
