@@ -330,6 +330,7 @@ public class RobotContainer
   {
     SmartDashboard.putNumber(label + " Setpoint", talonFX.getClosedLoopTarget());
     SmartDashboard.putNumber(label + " Position", talonFX.getSelectedSensorPosition());
+    SmartDashboard.putNumber(label + " Position Graph", talonFX.getSelectedSensorPosition());
     SmartDashboard.putNumber(label + " Velocity", talonFX.getSelectedSensorVelocity());
     SmartDashboard.putNumber(label + " Error",    talonFX.getClosedLoopError());
     SmartDashboard.putNumber(label + " Output",   talonFX.getMotorOutputVoltage());
