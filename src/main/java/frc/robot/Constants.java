@@ -78,8 +78,8 @@ public class Constants
   public static final double K_CHASSIS_TURN_VISION_MIN                      = 0.1;
   public static final double CHASSIS_TURN_ERROR_THRESHOLD                   = 0.5;
 
-  public static final double K_CHASSIS_ANGLE_P                              = 0.1;
-  public static final double K_CHASSIS_ANGLE_I                              = 0;
+  public static final double K_CHASSIS_ANGLE_P                              = 0.06;
+  public static final double K_CHASSIS_ANGLE_I                              = 0.000015;   //previous: 0.0000175
   public static final double K_CHASSIS_ANGLE_D                              = 0;
 
   /* Chamber */
