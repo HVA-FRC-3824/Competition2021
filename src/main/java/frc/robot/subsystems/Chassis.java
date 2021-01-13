@@ -264,7 +264,11 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_three[3] = Math.atan2(a, d) / (2 * Math.PI) * 24800;
       wheel_four[3] = Math.atan2(a, c) / (2 * Math.PI) * 24800;
 
+<<<<<<< HEAD
       getAngleDifferenceWithLeftRight(wheel_one[3]/ 24800,0 );
+=======
+      getAngleDifferenceWithLeftRight(wheel_one[3]/ 24800, );
+>>>>>>> master
 
       drive(wheel_one[2], wheel_one[3]);
 
@@ -317,6 +321,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
         return Math.PI;
     else {
         System.out.println("\nERROR: Could not calculate angle difference. (left and right difference would not compute)\n");
+<<<<<<< HEAD
         return 0;}
     }
   // public double getAngleDifference() {
@@ -325,10 +330,21 @@ public void convertSwerveValues (double x1, double y1, double x2)
   //   double desired_heading = Pathfinder.r2d(left_follower.getHeading()) % 360;
   //   // Create variable that will hold the difference in angle
   //   double angleDifference = 0;
+=======
+        return 0;
+    }
+  public double getAngleDifference() {
+    // Get gyro heading and desired heading from 0-360 degrees (x modulus 360 accomplishes this)
+    double gyro_heading = this.getGyroAngle() % 360;
+    double desired_heading = Pathfinder.r2d(left_follower.getHeading()) % 360;
+    // Create variable that will hold the difference in angle
+    double angleDifference = 0;
+>>>>>>> master
 
     // Change gyro heading and desired heading to a degree between -180 and 180
     // Example: 270 degrees is translated to -90 degrees
     // This allows angleDifference to be efficiently computed
+<<<<<<< HEAD
 //     if (gyro_heading > 180) {
 //         gyro_heading = gyro_heading - 360;
 //     } else if (gyro_heading < -180) {
@@ -416,6 +432,95 @@ public void convertSwerveValues (double x1, double y1, double x2)
 // }
 
 // }
+=======
+    if (gyro_heading > 180) {
+        gyro_heading = gyro_heading - 360;
+    } else if (gyro_heading < -180) {
+        gyro_heading = gyro_heading + 360;
+    }
+    if (desired_heading > 180) {
+        desired_heading = desired_heading - 360;
+    } else if (desired_heading < -180) {
+        desired_heading = desired_heading + 360;
+    }
+
+    // If path is reversed, robot will be facing in the opposite direction and 
+    // thus the gyro heading will be 180 degrees off --> this compensates for that
+    if (pathIsReversed)
+        gyro_heading -= 180;
+
+    // Calculate the angle difference keeping in mind the fastest route between angles
+    // Example: Gyro Angle: -179 degrees, Desired Angle: 179 degrees,
+    // set angle difference as -2 degrees, not 358 degrees.
+    if ((gyro_heading > 0 && desired_heading > 0) || (gyro_heading < 0 && desired_heading < 0))
+        angleDifference = desired_heading - gyro_heading;
+    else if (gyro_heading > 0 && desired_heading < 0)
+        angleDifference = getAngleDifferenceWithLeftRight(gyro_heading, desired_heading, true);
+    else if (gyro_heading < 0 && desired_heading > 0)
+        angleDifference = getAngleDifferenceWithLeftRight(desired_heading, gyro_heading, false);
+    else if ((gyro_heading == 0 && desired_heading > 0) || (gyro_heading == 0 && desired_heading < 0))
+        angleDifference = desired_heading;
+    else if ((gyro_heading > 0 && desired_heading == 0) || (gyro_heading < 0 && desired_heading == 0))
+        angleDifference = -gyro_heading;
+    else if (gyro_heading == desired_heading)
+        angleDifference = 0;
+    else
+        System.out.println("\nERROR: Could not calculate angle difference. (no criteria met)\n");
+
+    // Send angleDifference value back to caller
+    return angleDifference;
+  }
+
+  public double getAngleDifference() {
+    // Get gyro heading and desired heading from 0-360 degrees (x modulus 360 accomplishes this)
+    double gyro_heading = this.getGyroAngle() % 360;
+    double desired_heading = Pathfinder.r2d(left_follower.getHeading()) % 360;
+    // Create variable that will hold the difference in angle
+    double angleDifference = 0;
+
+    // Change gyro heading and desired heading to a degree between -180 and 180
+    // Example: 270 degrees is translated to -90 degrees
+    // This allows angleDifference to be efficiently computed
+    if (gyro_heading > 180) {
+        gyro_heading = gyro_heading - 360;
+    } else if (gyro_heading < -180) {
+        gyro_heading = gyro_heading + 360;
+    }
+    if (desired_heading > 180) {
+        desired_heading = desired_heading - 360;
+    } else if (desired_heading < -180) {
+        desired_heading = desired_heading + 360;
+    }
+
+    // If path is reversed, robot will be facing in the opposite direction and 
+    // thus the gyro heading will be 180 degrees off --> this compensates for that
+    if (pathIsReversed)
+        gyro_heading -= 180;
+
+    // Calculate the angle difference keeping in mind the fastest route between angles
+    // Example: Gyro Angle: -179 degrees, Desired Angle: 179 degrees,
+    // set angle difference as -2 degrees, not 358 degrees.
+    if ((gyro_heading > 0 && desired_heading > 0) || (gyro_heading < 0 && desired_heading < 0))
+        angleDifference = desired_heading - gyro_heading;
+    else if (gyro_heading > 0 && desired_heading < 0)
+        angleDifference = getAngleDifferenceWithLeftRight(gyro_heading, desired_heading);
+    else if (gyro_heading < 0 && desired_heading > 0)
+        angleDifference = getAngleDifferenceWithLeftRight(desired_heading, gyro_heading);
+    else if ((gyro_heading == 0 && desired_heading > 0) || (gyro_heading == 0 && desired_heading < 0))
+        angleDifference = desired_heading;
+    else if ((gyro_heading > 0 && desired_heading == 0) || (gyro_heading < 0 && desired_heading == 0))
+        angleDifference = -gyro_heading;
+    else if (gyro_heading == desired_heading)
+        angleDifference = 0;
+    else
+        System.out.println("\nERROR: Could not calculate angle difference. (no criteria met)\n");
+
+    // Send angleDifference value back to caller
+    return angleDifference;
+}
+
+}
+>>>>>>> master
 
   public void setPosition ()
   {
