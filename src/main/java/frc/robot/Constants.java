@@ -151,10 +151,8 @@ public class Constants
 
   public static final double CHASSIS_MAX_POWER                              = 0.6;
 
-  public static final double WHEEL_DRIVE_WHEEL_F                            = 0.0;
-  public static final double WHEEL_DRIVE_WHEEL_P                            = 0.0;
-  public static final double WHEEL_DRIVE_WHEEL_I                            = 0.0;
-  public static final double WHEEL_DRIVE_WHEEL_D                            = 0.0;
+  public static final double WHEEL_MOTOR_TICKS_PER_REVOLUTION               = 24800;
+
 
 
   /* Chamber */
@@ -311,7 +309,7 @@ public class Constants
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS        = new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
   /* Maximum voltage is 10V rather than nominal battery voltage of 12V for 
-    "headroom" in dealing with "voltage sag." */
+    "headroom" in dealing with voltage sag." */
   public static final int    K_MAX_VOLTAGE                                  = 10;
   
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED   = 3.0;
