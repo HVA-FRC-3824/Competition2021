@@ -73,6 +73,11 @@ public class Chassis extends SubsystemBase
   private WPI_TalonFX m_angleMotorFour;
   private WPI_TalonFX m_speedMotorFour;
 
+  public double [] wheel_one = {0, 0, 0, 0, 0, 0};
+  public double [] wheel_two = {0, 0, 0, 0, 0, 0};
+  public double [] wheel_three = {0, 0, 0, 0, 0, 0};
+  public double [] wheel_four = {0, 0, 0, 0, 0, 0};
+
   /**
    * Declaring objects for autonomous path following.
    */
@@ -272,10 +277,20 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
       //output wheel velocities and angles
       //[vx, vy, speed, angle, last angle, offset];
-      double [] wheel_one = {b, c, 0, 0, 1, 2};
-      double [] wheel_two = {b, d, 0, 0, 0, 0};
-      double [] wheel_three = {a, d, 0, 0, 0, 0};
-      double [] wheel_four = {a, c, 0, 0, 0, 0};
+
+      wheel_one[0] = b;
+      wheel_one[1] = c;
+      wheel_two[0] = b;
+      wheel_two[1] = d;
+      wheel_three[0] = a;
+      wheel_three[1] = d;
+      wheel_four[0] = a;
+      wheel_four[1] = c;
+
+      // double [] wheel_one = {b, c, 0, 0, 0, 0};
+      // double [] wheel_two = {b, d, 0, 0, 0, 0};
+      // double [] wheel_three = {a, d, 0, 0, 0, 0};
+      // double [] wheel_four = {a, c, 0, 0, 0, 0};
 
 
       // finding speed of each wheel based off their x and y velocities
@@ -295,14 +310,10 @@ public void convertSwerveValues (double x1, double y1, double x2)
       }
 
       //updating last angle
-      m = wheel_one[3];
-      n = wheel_two[3];
-      o = wheel_three[3];
-      p = wheel_four[3];
-      wheel_one[4] = m;
-      wheel_two[4] = n;
-      wheel_three[4] = o;
-      wheel_four[4] = p;
+      wheel_one[4] = wheel_one[3];
+      wheel_two[4] = wheel_two[3];
+      wheel_three[4] = wheel_three[3];
+      wheel_four[4] = wheel_four[3];
 
       //finding angle of each wheel based off their velocities
       wheel_one[3] = Math.atan2(b, c) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
@@ -311,20 +322,14 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_four[3] = Math.atan2(a, c) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
 
       //offset the wheels angle when they cross 180 degrees and change signs
-      if (wheel_one[4] < 0 && wheel_one[3] > 0) {
-        wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
-        SmartDashboard.putString("WheelOffset", "added 1 rotation");
-      }
-      if (wheel_one[4] > 0 && wheel_one[3] < 0) {
-        wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
-        SmartDashboard.putString("WheelOffset", "subtracted 1 rotation");
-      }
-      if (wheel_two[4] < 0 && wheel_two[3] > 0) {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_two[4] > 0 && wheel_two[3] < 0) {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_three[4] < 0 && wheel_three[3] > 0) {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_three[4] > 0 && wheel_three[3] < 0) {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_four[4] < 0 && wheel_four[3] > 0) {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_four[4] > 0 && wheel_four[3] < 0) {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_one[4] < 0 && wheel_one[3] > 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_one[4] > 0 && wheel_one[3] < 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_two[4] < 0 && wheel_two[3] > 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_two[4] > 0 && wheel_two[3] < 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_three[4] < 0 && wheel_three[3] > 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_three[4] > 0 && wheel_three[3] < 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_four[4] < 0 && wheel_four[3] > 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_four[4] > 0 && wheel_four[3] < 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
 
       //getAngleDifferenceWithLeftRight(wheel_one[3]/ Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION,0 );
 
@@ -333,7 +338,9 @@ public void convertSwerveValues (double x1, double y1, double x2)
       drive(m_speedMotorThree, m_angleMotorThree, wheel_three[2], wheel_three[3] + wheel_three[5]);
       drive(m_speedMotorFour, m_angleMotorFour, wheel_four[2], wheel_four[3] + wheel_four[5]);
 
-      SmartDashboard.putNumber("Total Angle", (wheel_one[3] + wheel_one[5]) / Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION * 2);
+      SmartDashboard.putNumber("Wheel one offset", wheel_one[5]);
+      
+      SmartDashboard.putNumber("Total Angle", (wheel_one[3] + wheel_one[5]));
       SmartDashboard.putNumber("Last Angle", wheel_one[4]);
       SmartDashboard.putNumber("Current Angle", wheel_one[3]);  }
 
