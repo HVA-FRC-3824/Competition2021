@@ -209,15 +209,15 @@ public class Chassis extends SubsystemBase
   public void teleopDrive(double power, double turn)
   {
     /* Reduces sensitivity of twist for turning. */
-    // turn = turn/1.2;
-    // if (power > Constants.CHASSIS_MAX_POWER)
-    // {
-    //   power = Constants.CHASSIS_MAX_POWER;
-    // }
-    // else if (power < -Constants.CHASSIS_MAX_POWER)
-    // {
-    //   power = -Constants.CHASSIS_MAX_POWER;
-    // }
+    turn = turn/1.5;
+    if (power > Constants.CHASSIS_MAX_POWER)
+    {
+      power = Constants.CHASSIS_MAX_POWER;
+    }
+    else if (power < -Constants.CHASSIS_MAX_POWER)
+    {
+      power = -Constants.CHASSIS_MAX_POWER;
+    }
     
     m_differentialDrive.arcadeDrive(power, turn, true);
   }
@@ -491,7 +491,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
   public void setPosition ()
   {
-    m_angleMotorOne.set(TalonFXControlMode.Position, 12000);
+    m_angleMotorOne.set(TalonFXControlMode.Position, 18000);
   }
 
   public WPI_TalonFX getMotor ()
