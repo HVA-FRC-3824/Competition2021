@@ -151,7 +151,10 @@ public class Constants
 
   public static final double CHASSIS_MAX_POWER                              = 0.6;
 
-  public static final double WHEEL_MOTOR_TICKS_PER_REVOLUTION               = 24800;
+  //public static final double kSensorUnitsPerRotation                        = 4096;
+  //public static final double kGearRatio                                     = 3 / 20;
+
+  public static final double WHEEL_MOTOR_TICKS_PER_REVOLUTION               = 2048 * 12;//kSensorUnitsPerRotation / kGearRatio;
 
 
 

@@ -225,8 +225,8 @@ public class Chassis extends SubsystemBase
 public void convertSwerveValues (double x1, double y1, double x2)
   {
       //width and length
-      double w = 150;
-      double l = 200;
+      double w = 17;
+      double l = 25;
 
       //width and length relative ratios
       double wr;
@@ -303,6 +303,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double highest_wheelspeed = Math.max(Math.max(Math.max(Math.abs(wheel_one[2]), 
                                   Math.abs(wheel_two[2])), Math.abs(wheel_three[2])), Math.abs(wheel_four[2]));
       if (highest_wheelspeed > 1) {
+        
           wheel_one[2] = wheel_one[2] / highest_wheelspeed;
           wheel_two[2] = wheel_two[2] / highest_wheelspeed;
           wheel_three[2] = wheel_three[2] / highest_wheelspeed;
