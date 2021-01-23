@@ -245,7 +245,7 @@ public class RobotContainer
     talonFX.setInverted(setInverted);
     /* Configure TalonFX's sensor to increment its value as it moves forward. */
     talonFX.setSensorPhase(setSensorPhase);
-
+    
     /**
      * Configure the nominal and peak output forward/reverse.
      * 

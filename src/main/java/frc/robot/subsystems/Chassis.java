@@ -225,8 +225,8 @@ public class Chassis extends SubsystemBase
 public void convertSwerveValues (double x1, double y1, double x2)
   {
       //width and length
-      double w = 17;
-      double l = 25;
+      double w = 25;
+      double l = 17;
 
       //width and length relative ratios
       double wr;
@@ -256,8 +256,8 @@ public void convertSwerveValues (double x1, double y1, double x2)
       //turn
       if (Math.abs(x2) > 0.15) {turn = x2;}    
       //Input Velocity
-      if (Math.abs(x1) > 0.15) {VX = x1;}
-      if (Math.abs(y1) > 0.15) {VY = y1;}
+      if (Math.abs(-x1) > 0.15) {VX = x1;}
+      if (Math.abs(y1) > 0.15) {VY = -y1;}
 
 
       //ratio of width to length
@@ -316,21 +316,31 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_three[4] = wheel_three[3];
       wheel_four[4] = wheel_four[3];
 
+      if(!(VX == 0 && VY == 0 && turn == 0)) // set new angles
+      {
       //finding angle of each wheel based off their velocities
       wheel_one[3] = Math.atan2(b, c) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
       wheel_two[3] = Math.atan2(b, d) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
       wheel_three[3] = Math.atan2(a, d) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
       wheel_four[3] = Math.atan2(a, c) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
-
+      }
       //offset the wheels angle when they cross 180 degrees and change signs
-      if (wheel_one[4] < 0 && wheel_one[3] > 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_one[4] > 0 && wheel_one[3] < 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_two[4] < 0 && wheel_two[3] > 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_two[4] > 0 && wheel_two[3] < 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_three[4] < 0 && wheel_three[3] > 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_three[4] > 0 && wheel_three[3] < 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_four[4] < 0 && wheel_four[3] > 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_four[4] > 0 && wheel_four[3] < 0 && (Math.abs(wheel_one[3]) + Math.abs(wheel_one[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_one[4] < 0 && wheel_one[3] > 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_one[4] > 0 && wheel_one[3] < 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_two[4] < 0 && wheel_two[3] > 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_two[4] > 0 && wheel_two[3] < 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_three[4] < 0 && wheel_three[3] > 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_three[4] > 0 && wheel_three[3] < 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_four[4] < 0 && wheel_four[3] > 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      if (wheel_four[4] > 0 && wheel_four[3] < 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
 
       //getAngleDifferenceWithLeftRight(wheel_one[3]/ Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION,0 );
 
@@ -343,7 +353,14 @@ public void convertSwerveValues (double x1, double y1, double x2)
       
       SmartDashboard.putNumber("Total Angle", (wheel_one[3] + wheel_one[5]));
       SmartDashboard.putNumber("Last Angle", wheel_one[4]);
-      SmartDashboard.putNumber("Current Angle", wheel_one[3]);  }
+      SmartDashboard.putNumber("Current Angle 1", wheel_one[3]);  
+      SmartDashboard.putNumber("Current Angle 2", wheel_two[3]);  
+      SmartDashboard.putNumber("Current Angle 3", wheel_three[3]);  
+      SmartDashboard.putNumber("Current Angle 4", wheel_four[3]);  
+
+      SmartDashboard.putNumber("Speed x", VX);
+
+    }
 
   public void drive (WPI_TalonFX speedMotor, WPI_TalonFX angleMotor, double speed, double angle)
   {
