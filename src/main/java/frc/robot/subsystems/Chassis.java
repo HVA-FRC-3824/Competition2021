@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 import java.io.IOException;
@@ -227,7 +228,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       //width and length
       double w = 25;
       double l = 17;
-
+      
       //width and length relative ratios
       double wr;
       double lr;
@@ -237,43 +238,29 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double VY = 0;
       double turn = 0;
 
-      //turn velocities
-      double tvx;
-      double tvy;
-
       //simplificaton for adding turn and strafe velocity for each wheel
       double a;
       double b;
       double c;
       double d;
 
-      //saving last angle for offset
-      double m;
-      double n;
-      double o;
-      double p;
-
       //turn
       if (Math.abs(x2) > 0.15) {turn = x2;}    
-      //Input Velocity
-      if (Math.abs(-x1) > 0.15) {VX = x1;}
-      if (Math.abs(y1) > 0.15) {VY = -y1;}
-
 
       //ratio of width to length
-      wr = w / Math.max(l, w) * 2;
-      lr = l / Math.max(l, w) * 2;
+      wr = w / Math.max(l, w);
+      lr = l / Math.max(l, w);
 
-      //turn velocities
-      tvx = turn * lr / 2;
-      tvy = turn * wr / 2;
+      //Input Velocity
+      if (Math.abs(x1) > 0.15) {VX = x1;}
+      if (Math.abs(y1) > 0.15) {VY = -y1;}
 
       //calculation
 
-      a = VX - turn * lr / 2;
-      b = VX + turn * lr / 2;
-      c = VY - turn * wr / 2;
-      d = VY + turn * wr / 2;
+      a = VX - turn * lr;
+      b = VX + turn * lr;
+      c = VY - turn * wr;
+      d = VY + turn * wr;
 
       //output wheel velocities and angles
       //[vx, vy, speed, angle, last angle, offset];
@@ -287,12 +274,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_four[0] = a;
       wheel_four[1] = c;
 
-      // double [] wheel_one = {b, c, 0, 0, 0, 0};
-      // double [] wheel_two = {b, d, 0, 0, 0, 0};
-      // double [] wheel_three = {a, d, 0, 0, 0, 0};
-      // double [] wheel_four = {a, c, 0, 0, 0, 0};
-
-
       // finding speed of each wheel based off their x and y velocities
       wheel_one[2] = Math.sqrt(Math.abs(b * b + c * c));
       wheel_two[2] = Math.sqrt(Math.abs(b * b + d * d));
@@ -303,7 +284,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double highest_wheelspeed = Math.max(Math.max(Math.max(Math.abs(wheel_one[2]), 
                                   Math.abs(wheel_two[2])), Math.abs(wheel_three[2])), Math.abs(wheel_four[2]));
       if (highest_wheelspeed > 1) {
-        
           wheel_one[2] = wheel_one[2] / highest_wheelspeed;
           wheel_two[2] = wheel_two[2] / highest_wheelspeed;
           wheel_three[2] = wheel_three[2] / highest_wheelspeed;
@@ -319,35 +299,43 @@ public void convertSwerveValues (double x1, double y1, double x2)
       if(!(VX == 0 && VY == 0 && turn == 0)) // set new angles
       {
       //finding angle of each wheel based off their velocities
-      wheel_one[3] = Math.atan2(b, c) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
-      wheel_two[3] = Math.atan2(b, d) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
-      wheel_three[3] = Math.atan2(a, d) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
-      wheel_four[3] = Math.atan2(a, c) / (2 * Math.PI) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;
+      wheel_one[3] = Math.atan2(c, b) - Math.PI / 2;
+      wheel_two[3] = Math.atan2(d, b) - Math.PI / 2;
+      wheel_three[3] = Math.atan2(d, a) - Math.PI / 2;
+      wheel_four[3] = Math.atan2(c, a) - Math.PI / 2;
       }
       //offset the wheels angle when they cross 180 degrees and change signs
-      if (wheel_one[4] < 0 && wheel_one[3] > 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_one[4] > 0 && wheel_one[3] < 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_two[4] < 0 && wheel_two[3] > 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_two[4] > 0 && wheel_two[3] < 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_three[4] < 0 && wheel_three[3] > 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_three[4] > 0 && wheel_three[3] < 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_four[4] < 0 && wheel_four[3] > 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      if (wheel_four[4] > 0 && wheel_four[3] < 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_one[4] < 0 && wheel_one[3] > 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_one[4] > 0 && wheel_one[3] < 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_two[4] < 0 && wheel_two[3] > 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_two[4] > 0 && wheel_two[3] < 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_three[4] < 0 && wheel_three[3] > 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_three[4] > 0 && wheel_three[3] < 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_four[4] < 0 && wheel_four[3] > 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
+      // if (wheel_four[4] > 0 && wheel_four[3] < 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
+      // {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
 
-      //getAngleDifferenceWithLeftRight(wheel_one[3]/ Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION,0 );
+      //when a wheel moves more than PI in one direction, offset so it goes the other way around
+      if (Math.abs(wheel_one[4] - wheel_one[3]) > Math.PI && wheel_one[4] < wheel_one[3]) {wheel_one[5] -= 2 * Math.PI;}
+      if (Math.abs(wheel_one[4] - wheel_one[3]) > Math.PI && wheel_one[4] > wheel_one[3]) {wheel_one[5] += 2 * Math.PI;}
+      if (Math.abs(wheel_two[4] - wheel_two[3]) > Math.PI && wheel_two[4] < wheel_two[3]) {wheel_two[5] -= 2 * Math.PI;}
+      if (Math.abs(wheel_two[4] - wheel_two[3]) > Math.PI && wheel_two[4] > wheel_two[3]) {wheel_two[5] += 2 * Math.PI;}
+      if (Math.abs(wheel_three[4] - wheel_three[3]) > Math.PI && wheel_three[4] < wheel_three[3]) {wheel_three[5] -= 2 * Math.PI;}
+      if (Math.abs(wheel_three[4] - wheel_three[3]) > Math.PI && wheel_three[4] > wheel_three[3]) {wheel_three[5] += 2 * Math.PI;}
+      if (Math.abs(wheel_four[4] - wheel_four[3]) > Math.PI && wheel_four[4] < wheel_four[3]) {wheel_four[5] -= 2 * Math.PI;}
+      if (Math.abs(wheel_four[4] - wheel_four[3]) > Math.PI && wheel_four[4] > wheel_four[3]) {wheel_four[5] += 2 * Math.PI;}
 
-      drive(m_speedMotorOne, m_angleMotorOne, wheel_one[2], wheel_one[3] + wheel_one[5]);
-      drive(m_speedMotorTwo, m_angleMotorTwo, wheel_two[2], wheel_two[3] + wheel_two[5]);
-      drive(m_speedMotorThree, m_angleMotorThree, wheel_three[2], wheel_three[3] + wheel_three[5]);
-      drive(m_speedMotorFour, m_angleMotorFour, wheel_four[2], wheel_four[3] + wheel_four[5]);
+      drive(m_speedMotorOne, m_angleMotorOne, wheel_one[2], (wheel_one[3] + wheel_one[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorTwo, m_angleMotorTwo, wheel_two[2], (wheel_two[3] + wheel_two[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorThree, m_angleMotorThree, wheel_three[2], (wheel_three[3] + wheel_three[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorFour, m_angleMotorFour, wheel_four[2], (wheel_four[3] + wheel_four[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
 
       SmartDashboard.putNumber("Wheel one offset", wheel_one[5]);
       
@@ -358,7 +346,10 @@ public void convertSwerveValues (double x1, double y1, double x2)
       SmartDashboard.putNumber("Current Angle 3", wheel_three[3]);  
       SmartDashboard.putNumber("Current Angle 4", wheel_four[3]);  
 
-      SmartDashboard.putNumber("Speed x", VX);
+      SmartDashboard.putNumber("Speed 1", wheel_one[2]);
+      SmartDashboard.putNumber("Speed 2", wheel_two[2]);
+      SmartDashboard.putNumber("Speed 3", wheel_three[2]);
+      SmartDashboard.putNumber("Speed 4", wheel_four[2]);
 
     }
 
@@ -382,6 +373,35 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
     System.out.println("Speed" + speed);
     System.out.println("Angle" + angle);
+  }
+
+  public double correctSwerveAngleForward()
+  {
+    double rcw = RobotContainer.m_OI.getDriverJoystick().getRawAxis(4);
+    double forward = RobotContainer.m_OI.getDriverJoystick().getRawAxis(1) * -1;
+    double strafe = RobotContainer.m_OI.getDriverJoystick().getRawAxis(0);
+
+    double gyro_degrees = m_ahrs.getYaw();
+    double gyro_radiants = gyro_degrees * (Math.PI/180);
+    double temp = (forward * Math.cos(gyro_radiants)) + (strafe * Math.sin(gyro_radiants));
+    strafe = (-forward * Math.sin(gyro_radiants)) + (strafe * Math.cos(gyro_radiants));
+    forward = temp;
+
+    return forward;
+  }
+  public double correctSwerveAngleStrafe()
+  {
+    double rcw = RobotContainer.m_OI.getDriverJoystick().getRawAxis(4);
+    double forward = RobotContainer.m_OI.getDriverJoystick().getRawAxis(1) * -1;
+    double strafe = RobotContainer.m_OI.getDriverJoystick().getRawAxis(0);
+
+    double gyro_degrees = m_ahrs.getYaw();
+    double gyro_radiants = gyro_degrees * (Math.PI/180);
+    double temp = (forward * Math.cos(gyro_radiants)) + (strafe * Math.sin(gyro_radiants));
+    strafe = (-forward * Math.sin(gyro_radiants)) + (strafe * Math.cos(gyro_radiants));
+    forward = temp;
+
+    return strafe;
   }
 
   public double getAngleDifferenceWithLeftRight(double positiveAngle, double negativeAngle) {
