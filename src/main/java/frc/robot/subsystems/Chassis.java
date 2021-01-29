@@ -244,6 +244,8 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double c;
       double d;
 
+      double forward_robot_header = 0;
+
       //turn
       if (Math.abs(x2) > 0.15) {turn = x2;}    
 
@@ -254,6 +256,17 @@ public void convertSwerveValues (double x1, double y1, double x2)
       //Input Velocity
       if (Math.abs(x1) > 0.15) {VX = x1;}
       if (Math.abs(y1) > 0.15) {VY = -y1;}
+
+      //Swerve Gyro Diffence Establishing
+      double gyro_current = m_ahrs.getYaw();  
+      //adjust strafe vector so that moving forward goes in the set direction and not towards where the robot is facing
+      double r = Math.sqrt(VX * VX + VY * VY);
+      double  strafe_angle = Math.atan2(VY, VX);
+      strafe_angle += (gyro_current - forward_robot_header) / 360 * 2 * Math.PI;
+      VX = r * Math.cos(strafe_angle);
+      VY = r * Math.sin(strafe_angle);
+
+      SmartDashboard.putNumber("Robot Header", forward_robot_header);
 
       //calculation
 
@@ -332,10 +345,10 @@ public void convertSwerveValues (double x1, double y1, double x2)
       if (Math.abs(wheel_four[4] - wheel_four[3]) > Math.PI && wheel_four[4] < wheel_four[3]) {wheel_four[5] -= 2 * Math.PI;}
       if (Math.abs(wheel_four[4] - wheel_four[3]) > Math.PI && wheel_four[4] > wheel_four[3]) {wheel_four[5] += 2 * Math.PI;}
 
-      drive(m_speedMotorOne, m_angleMotorOne, wheel_one[2], (wheel_one[3] + wheel_one[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
-      drive(m_speedMotorTwo, m_angleMotorTwo, wheel_two[2], (wheel_two[3] + wheel_two[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
-      drive(m_speedMotorThree, m_angleMotorThree, wheel_three[2], (wheel_three[3] + wheel_three[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
-      drive(m_speedMotorFour, m_angleMotorFour, wheel_four[2], (wheel_four[3] + wheel_four[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorOne, m_angleMotorOne, wheel_one[2], -(wheel_one[3] + wheel_one[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorTwo, m_angleMotorTwo, wheel_two[2], -(wheel_two[3] + wheel_two[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorThree, m_angleMotorThree, wheel_three[2], -(wheel_three[3] + wheel_three[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorFour, m_angleMotorFour, wheel_four[2], -(wheel_four[3] + wheel_four[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
 
       SmartDashboard.putNumber("Wheel one offset", wheel_one[5]);
       
@@ -350,6 +363,9 @@ public void convertSwerveValues (double x1, double y1, double x2)
       SmartDashboard.putNumber("Speed 2", wheel_two[2]);
       SmartDashboard.putNumber("Speed 3", wheel_three[2]);
       SmartDashboard.putNumber("Speed 4", wheel_four[2]);
+
+      SmartDashboard.putNumber("Swerve Yaw", m_ahrs.getYaw());
+      SmartDashboard.putNumber("Swerve Compass", m_ahrs.getCompassHeading());
 
     }
 
