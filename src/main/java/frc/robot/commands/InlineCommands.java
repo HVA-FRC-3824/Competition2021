@@ -35,9 +35,8 @@ public class InlineCommands {
   public final Command m_shiftLowGear;
 
   public final Command m_toggleLimelight;
-  
-  public final Command m_test;
-  public final Command m_reset;
+
+  public final Command m_setHeading;
 
   /* Climber Inline Command Declarations */
   public final Command m_extendClimberLeft;
@@ -98,8 +97,8 @@ public class InlineCommands {
                     
     m_driveWithJoystick =
     new RunCommand(() -> RobotContainer.m_chassis.convertSwerveValues(RobotContainer.m_OI.getDriverJoystick().getRawAxis(0), 
-                  RobotContainer.m_OI.getDriverJoystick().getRawAxis(1), RobotContainer.m_OI.getDriverJoystick().getRawAxis(4)), RobotContainer.m_chassis);
-                
+                  RobotContainer.m_OI.getDriverJoystick().getRawAxis(1), RobotContainer.m_OI.getDriverJoystick().getRawAxis(4)), 
+                  RobotContainer.m_chassis);
   
     m_shiftHighGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftHighGear());
@@ -109,10 +108,8 @@ public class InlineCommands {
     m_toggleLimelight =
       new InstantCommand(() -> RobotContainer.m_limelight.toggleMode());
 
-    m_test = 
-      new InstantCommand(() -> RobotContainer.m_chassis.setPosition());
-    m_reset = 
-      new InstantCommand(() -> RobotContainer.m_chassis.resetPosition());
+    m_setHeading =
+      new InstantCommand(() -> RobotContainer.m_chassis.zeroHeading());
 
     /* Climber Inline Command Instantiations */
     m_extendClimberLeft =

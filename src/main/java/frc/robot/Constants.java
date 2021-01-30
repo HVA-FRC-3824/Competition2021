@@ -248,6 +248,8 @@ public class Constants
 
   public static final int    DRIVER_LAUNCHER_VISION_BTN_ID                  = 1;
 
+  public static final int    DRIVER_SET_HEADING_BTN_ID                      = 8;
+
   // Defense Mode
   public static final int    DRIVER_TOGGLE_DEFENSE_MODE_BTN_ID              = 3;
 

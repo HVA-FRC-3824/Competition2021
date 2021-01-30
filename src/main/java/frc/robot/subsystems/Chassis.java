@@ -202,6 +202,10 @@ public class Chassis extends SubsystemBase
     SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
   }
 
+  public WPI_TalonFX getMotor ()
+  {
+    return m_angleMotorOne;
+  }
   /**
    * Controls movement of robot drivetrain with passed in power and turn values
    * from driver input of joystick.
@@ -244,40 +248,38 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double c;
       double d;
 
-      double forward_robot_header = 0;
+      //temporary constant for the heading of the robot (which direciton on the gyro is forwards)
 
-      //turn
+      //turn amount
       if (Math.abs(x2) > 0.15) {turn = x2;}    
 
-      //ratio of width to length
-      wr = w / Math.max(l, w);
-      lr = l / Math.max(l, w);
+      //similar triangle to chassis with radius 1 for turn vectors
+      double turn_angle = Math.atan2(l, w);
+      wr = Math.cos(turn_angle);
+      lr = Math.sin(turn_angle);
 
-      //Input Velocity
+      //input velocities
       if (Math.abs(x1) > 0.15) {VX = x1;}
       if (Math.abs(y1) > 0.15) {VY = -y1;}
 
-      //Swerve Gyro Diffence Establishing
+      //Swerve Gyro Difference Establishing
       double gyro_current = m_ahrs.getYaw();  
       //adjust strafe vector so that moving forward goes in the set direction and not towards where the robot is facing
       double r = Math.sqrt(VX * VX + VY * VY);
-      double  strafe_angle = Math.atan2(VY, VX);
-      strafe_angle += (gyro_current - forward_robot_header) / 360 * 2 * Math.PI;
+      double strafe_angle = Math.atan2(VY, VX);
+      strafe_angle += (gyro_current) / 360 * 2 * Math.PI;
       VX = r * Math.cos(strafe_angle);
       VY = r * Math.sin(strafe_angle);
 
-      SmartDashboard.putNumber("Robot Header", forward_robot_header);
-
-      //calculation
-
+      //simplification for adding strafe and turn vectors for each wheel
       a = VX - turn * lr;
       b = VX + turn * lr;
       c = VY - turn * wr;
-      d = VY + turn * wr;
+      d = VY +
+      turn * wr;
 
-      //output wheel velocities and angles
+      //X and Y velocities for each wheel (not sent to wheels)
       //[vx, vy, speed, angle, last angle, offset];
-
       wheel_one[0] = b;
       wheel_one[1] = c;
       wheel_two[0] = b;
@@ -293,7 +295,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_three[2] = Math.sqrt(Math.abs(a * a + d * d));
       wheel_four[2] = Math.sqrt(Math.abs(a * a + c * c));
 
-      //adjust for overturning of wheels
+      //adjust for exceeding max speed of wheels
       double highest_wheelspeed = Math.max(Math.max(Math.max(Math.abs(wheel_one[2]), 
                                   Math.abs(wheel_two[2])), Math.abs(wheel_three[2])), Math.abs(wheel_four[2]));
       if (highest_wheelspeed > 1) {
@@ -317,23 +319,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_three[3] = Math.atan2(d, a) - Math.PI / 2;
       wheel_four[3] = Math.atan2(c, a) - Math.PI / 2;
       }
-      //offset the wheels angle when they cross 180 degrees and change signs
-      // if (wheel_one[4] < 0 && wheel_one[3] > 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_one[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_one[4] > 0 && wheel_one[3] < 0 && Math.abs(wheel_one[3]) + Math.abs(wheel_one[4]) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_one[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_two[4] < 0 && wheel_two[3] > 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_two[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_two[4] > 0 && wheel_two[3] < 0 && (Math.abs(wheel_two[3]) + Math.abs(wheel_two[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_two[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_three[4] < 0 && wheel_three[3] > 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_three[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_three[4] > 0 && wheel_three[3] < 0 && (Math.abs(wheel_three[3]) + Math.abs(wheel_three[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_three[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_four[4] < 0 && wheel_four[3] > 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_four[5] -= Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
-      // if (wheel_four[4] > 0 && wheel_four[3] < 0 && (Math.abs(wheel_four[3]) + Math.abs(wheel_four[4])) > Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION / 2) 
-      // {wheel_four[5] += Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION;}
 
       //when a wheel moves more than PI in one direction, offset so it goes the other way around
       if (Math.abs(wheel_one[4] - wheel_one[3]) > Math.PI && wheel_one[4] < wheel_one[3]) {wheel_one[5] -= 2 * Math.PI;}
@@ -366,7 +351,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
       SmartDashboard.putNumber("Swerve Yaw", m_ahrs.getYaw());
       SmartDashboard.putNumber("Swerve Compass", m_ahrs.getCompassHeading());
-
     }
 
   public void drive (WPI_TalonFX speedMotor, WPI_TalonFX angleMotor, double speed, double angle)
@@ -542,21 +526,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
 // }
 
 // }
-
-  public void setPosition ()
-  {
-    m_angleMotorOne.set(TalonFXControlMode.Position, 18000);
-  }
-
-  public WPI_TalonFX getMotor ()
-  {
-    return m_angleMotorOne;
-  }
-  
-  public void resetPosition ()
-  {
-    m_angleMotorOne.set(TalonFXControlMode.Position, 0);
-  }
 
   /**
    * Controls movement of robot drivetrain with passed in power and turn values
