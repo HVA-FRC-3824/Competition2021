@@ -1,8 +1,9 @@
 {
   "lengthUnit": "Meter",
+  "exportUnit": "Same as Project",
   "maxVelocity": 1.0,
   "maxAcceleration": 3.0,
   "wheelBase": 0.774,
-  "gameName": "Infinite Recharge",
+  "gameName": "Barrel Racing Path",
   "outputDir": ""
 }

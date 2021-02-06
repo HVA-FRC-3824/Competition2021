@@ -74,6 +74,7 @@ public class Chassis extends SubsystemBase
   private WPI_TalonFX m_angleMotorFour;
   private WPI_TalonFX m_speedMotorFour;
 
+  //{VX, VY, Speed, Angle, Previous Angle, Offset}
   public double [] wheel_one = {0, 0, 0, 0, 0, 0};
   public double [] wheel_two = {0, 0, 0, 0, 0, 0};
   public double [] wheel_three = {0, 0, 0, 0, 0, 0};
@@ -248,7 +249,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double c;
       double d;
 
-      //temporary constant for the heading of the robot (which direciton on the gyro is forwards)
 
       //turn amount
       if (Math.abs(x2) > 0.15) {turn = x2;}    
@@ -275,8 +275,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       a = VX - turn * lr;
       b = VX + turn * lr;
       c = VY - turn * wr;
-      d = VY +
-      turn * wr;
+      d = VY + turn * wr;
 
       //X and Y velocities for each wheel (not sent to wheels)
       //[vx, vy, speed, angle, last angle, offset];
@@ -314,10 +313,10 @@ public void convertSwerveValues (double x1, double y1, double x2)
       if(!(VX == 0 && VY == 0 && turn == 0)) // set new angles
       {
       //finding angle of each wheel based off their velocities
-      wheel_one[3] = Math.atan2(c, b) - Math.PI / 2;
-      wheel_two[3] = Math.atan2(d, b) - Math.PI / 2;
-      wheel_three[3] = Math.atan2(d, a) - Math.PI / 2;
-      wheel_four[3] = Math.atan2(c, a) - Math.PI / 2;
+        wheel_one[3] = Math.atan2(c, b) - Math.PI / 2;
+        wheel_two[3] = Math.atan2(d, b) - Math.PI / 2;
+        wheel_three[3] = Math.atan2(d, a) - Math.PI / 2;
+        wheel_four[3] = Math.atan2(c, a) - Math.PI / 2;
       }
 
       //when a wheel moves more than PI in one direction, offset so it goes the other way around
@@ -373,35 +372,6 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
     System.out.println("Speed" + speed);
     System.out.println("Angle" + angle);
-  }
-
-  public double correctSwerveAngleForward()
-  {
-    double rcw = RobotContainer.m_OI.getDriverJoystick().getRawAxis(4);
-    double forward = RobotContainer.m_OI.getDriverJoystick().getRawAxis(1) * -1;
-    double strafe = RobotContainer.m_OI.getDriverJoystick().getRawAxis(0);
-
-    double gyro_degrees = m_ahrs.getYaw();
-    double gyro_radiants = gyro_degrees * (Math.PI/180);
-    double temp = (forward * Math.cos(gyro_radiants)) + (strafe * Math.sin(gyro_radiants));
-    strafe = (-forward * Math.sin(gyro_radiants)) + (strafe * Math.cos(gyro_radiants));
-    forward = temp;
-
-    return forward;
-  }
-  public double correctSwerveAngleStrafe()
-  {
-    double rcw = RobotContainer.m_OI.getDriverJoystick().getRawAxis(4);
-    double forward = RobotContainer.m_OI.getDriverJoystick().getRawAxis(1) * -1;
-    double strafe = RobotContainer.m_OI.getDriverJoystick().getRawAxis(0);
-
-    double gyro_degrees = m_ahrs.getYaw();
-    double gyro_radiants = gyro_degrees * (Math.PI/180);
-    double temp = (forward * Math.cos(gyro_radiants)) + (strafe * Math.sin(gyro_radiants));
-    strafe = (-forward * Math.sin(gyro_radiants)) + (strafe * Math.cos(gyro_radiants));
-    forward = temp;
-
-    return strafe;
   }
 
   public double getAngleDifferenceWithLeftRight(double positiveAngle, double negativeAngle) {
