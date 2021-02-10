@@ -271,6 +271,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       VX = r * Math.cos(strafe_angle);
       VY = r * Math.sin(strafe_angle);
 
+
       //simplification for adding strafe and turn vectors for each wheel
       a = VX - turn * lr;
       b = VX + turn * lr;
@@ -309,6 +310,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wheel_two[4] = wheel_two[3];
       wheel_three[4] = wheel_three[3];
       wheel_four[4] = wheel_four[3];
+      
 
       if(!(VX == 0 && VY == 0 && turn == 0)) // set new angles
       {
