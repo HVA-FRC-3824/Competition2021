@@ -125,12 +125,13 @@ public class RobotContainer
     m_autoChooser.addOption("THREE BALL FORWARD", "three_ball_forward");
     m_autoChooser.addOption("THREE BALL BACKWARD", "three_ball_backward");
     m_autoChooser.addOption("SIX BALL", "six_ball");
+    m_autoChooser.addOption("BARREL", "barrel");
 
     /*
      * Display chooser on SmartDashboard for operators to select which autonomous
      * command to run during the auto period.
      */
-    SmartDashboard.putData("Autonomous Command", m_autoChooser);
+    SmartDashboard.putData("Autonomous Commands", m_autoChooser);
   }
 
   /**
@@ -152,6 +153,8 @@ public class RobotContainer
         return new AutonomousThreeBall(-1, 3.0);
       case "six_ball":
         return new AutonomousSixBall();
+      case "barrel":
+        return new AutoNavBarrel();
       default:
         System.out.println("\nError selecting autonomous command:\nCommand selected: " + m_autoChooser.getSelected() + "\n");
         return null;

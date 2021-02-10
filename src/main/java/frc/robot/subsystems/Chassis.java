@@ -251,7 +251,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
 
       //turn amount
-      if (Math.abs(x2) > 0.15) {turn = x2;}    
+      if (Math.abs(x2) > 0.2) {turn = x2;}    
 
       //similar triangle to chassis with radius 1 for turn vectors
       double turn_angle = Math.atan2(l, w);
@@ -259,8 +259,8 @@ public void convertSwerveValues (double x1, double y1, double x2)
       lr = Math.sin(turn_angle);
 
       //input velocities
-      if (Math.abs(x1) > 0.15) {VX = x1;}
-      if (Math.abs(y1) > 0.15) {VY = -y1;}
+      if (Math.abs(x1) > 0.2) {VX = -x1;}
+      if (Math.abs(y1) > 0.2) {VY = y1;}
 
       //Swerve Gyro Difference Establishing
       double gyro_current = m_ahrs.getYaw();  

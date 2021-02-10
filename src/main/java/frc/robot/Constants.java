@@ -12,10 +12,10 @@ public class Constants
    */
 
   /* CAN IDs */
-  public static final int CHASSIS_LEFT_MASTER_ID                            = 14;  //14
-  public static final int CHASSIS_LEFT_SLAVE_ID                             = 15;  //15
-  public static final int CHASSIS_RIGHT_MASTER_ID                           = 0;  //0
-  public static final int CHASSIS_RIGHT_SLAVE_ID                            = 1;  //1
+  public static final int CHASSIS_LEFT_MASTER_ID                            = 140;  //14
+  public static final int CHASSIS_LEFT_SLAVE_ID                             = 150;  //15
+  public static final int CHASSIS_RIGHT_MASTER_ID                           = 90;  //0
+  public static final int CHASSIS_RIGHT_SLAVE_ID                            = 100;  //1
   
   public static final int INTAKE_WHEEL_INTAKE_ID                            = 5;
 
@@ -38,11 +38,11 @@ public class Constants
   public static final int WHEEL_ONE_ANGLE_MOTOR_ID                          = 13; //13
   public static final int WHEEL_ONE_SPEED_MOTOR_ID                          = 12; //12
 
-  public static final int WHEEL_TWO_ANGLE_MOTOR_ID                          = 140; //14
-  public static final int WHEEL_TWO_SPEED_MOTOR_ID                          = 150; //15
+  public static final int WHEEL_TWO_ANGLE_MOTOR_ID                          = 14; //14
+  public static final int WHEEL_TWO_SPEED_MOTOR_ID                          = 15; //15
 
-  public static final int WHEEL_THREE_ANGLE_MOTOR_ID                        = 100; //1
-  public static final int WHEEL_THREE_SPEED_MOTOR_ID                        = 90; //0
+  public static final int WHEEL_THREE_ANGLE_MOTOR_ID                        = 1; //1
+  public static final int WHEEL_THREE_SPEED_MOTOR_ID                        = 0; //0
 
   public static final int WHEEL_FOUR_ANGLE_MOTOR_ID                         = 3; //3
   public static final int WHEEL_FOUR_SPEED_MOTOR_ID                         = 2; //2
@@ -149,7 +149,7 @@ public class Constants
                                                                                "test",
                                                                                "test2"};
 
-  public static final double CHASSIS_MAX_POWER                              = 0.6;
+  public static final double CHASSIS_MAX_POWER                              = 0.7;
 
   //public static final double kSensorUnitsPerRotation                        = 4096;
   //public static final double kGearRatio                                     = 3 / 20;

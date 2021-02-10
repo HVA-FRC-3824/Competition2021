@@ -141,8 +141,8 @@ public class OI
   public void configureButtonBindings()
   {
     /* Chamber Buttons */
-    m_setChamberBaseRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberBaseRPM);
-    m_setChamberBaseRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberBase);
+    // m_setChamberBaseRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberBaseRPM);
+    // m_setChamberBaseRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberBase);
 
     m_setChamberElevatorToLaunchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorToLaunch);
     m_setChamberElevatorToLaunchBtn.whenReleased(RobotContainer.m_inlineCommands.m_setChamberElevatorAuto);

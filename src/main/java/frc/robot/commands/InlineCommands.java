@@ -21,8 +21,8 @@ public class InlineCommands {
    */
 
   /* Chamber Inline Command Declarations */
-  public final Command m_setChamberBaseRPM;
-  public final Command m_stopChamberBase;
+  // public final Command m_setChamberBaseRPM;
+  // public final Command m_stopChamberBase;
 
   public final Command m_setChamberElevatorToLaunch;
   public final Command m_setChamberElevatorDown;
@@ -78,10 +78,10 @@ public class InlineCommands {
      */
 
     /* Chamber Inline Command Instantiations */
-    m_setChamberBaseRPM =
-      new InstantCommand(() -> RobotContainer.m_chamber.setBaseRPM(Constants.CHAMBER_BASE_RPM));
-    m_stopChamberBase =
-      new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(0.0));
+    // m_setChamberBaseRPM =
+    //   new InstantCommand(() -> RobotContainer.m_chamber.setBaseRPM(Constants.CHAMBER_BASE_RPM));
+    // m_stopChamberBase =
+    //   new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(0.0));
 
     m_setChamberElevatorToLaunch =
       new RunCommand(() -> RobotContainer.m_chamber.stepChamberDistance(Constants.CHAMBER_BALL_STEP_DIST), RobotContainer.m_chamber);
@@ -91,14 +91,14 @@ public class InlineCommands {
       new ChamberIndexBalls();
 
     /* Chassis Inline Command Instantiations */
-    m_driveWithJoystick =
-      new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
-                    RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis);
-                    
     // m_driveWithJoystick =
-    // new RunCommand(() -> RobotContainer.m_chassis.convertSwerveValues(RobotContainer.m_OI.getDriverJoystick().getRawAxis(0), 
-    //               RobotContainer.m_OI.getDriverJoystick().getRawAxis(1), RobotContainer.m_OI.getDriverJoystick().getRawAxis(4)), 
-    //               RobotContainer.m_chassis);
+    //   new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
+    //                 RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis);
+                    
+    m_driveWithJoystick =
+    new RunCommand(() -> RobotContainer.m_chassis.convertSwerveValues(RobotContainer.m_OI.getDriverJoystick().getRawAxis(0), 
+                  RobotContainer.m_OI.getDriverJoystick().getRawAxis(1), RobotContainer.m_OI.getDriverJoystick().getRawAxis(2)), 
+                  RobotContainer.m_chassis);
   
     m_shiftHighGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftHighGear());
