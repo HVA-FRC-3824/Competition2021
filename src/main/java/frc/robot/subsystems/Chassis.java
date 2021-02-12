@@ -251,7 +251,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
 
       //turn amount
-      if (Math.abs(x2) > 0.2) {turn = x2;}    
+      if (Math.abs(x2) > 0.2) {turn = x2 *0.7;}    
 
       //similar triangle to chassis with radius 1 for turn vectors
       double turn_angle = Math.atan2(l, w);
@@ -259,7 +259,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       lr = Math.sin(turn_angle);
 
       //input velocities
-      if (Math.abs(x1) > 0.2) {VX = -x1;}
+      if (Math.abs(x1) > 0.2) {VX = x1;}
       if (Math.abs(y1) > 0.2) {VY = y1;}
 
       //Swerve Gyro Difference Establishing
@@ -356,7 +356,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
   public void drive (WPI_TalonFX speedMotor, WPI_TalonFX angleMotor, double speed, double angle)
   {
-    speedMotor.set(speed);
+    speedMotor.set(speed *0.7);
 
     double setpoint = angle * (Constants.SWERVE_DRIVE_MAX_VOLTAGE * 0.5) + (Constants.SWERVE_DRIVE_MAX_VOLTAGE);
     
