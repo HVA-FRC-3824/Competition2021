@@ -131,7 +131,7 @@ public class LEDs extends SubsystemBase
     }
   }
 
-  private void chaseInward()
+  public void chaseInward()
   {
     for (var i = 0; i < Constants.CHAMBER_SIDE_NUM_OF_LEDS / 2; i++)
     {
@@ -158,7 +158,7 @@ public class LEDs extends SubsystemBase
     }
   }
 
-  private void chaseOutward()
+  public void chaseOutward()
   {
     for (var i = (Constants.CHAMBER_SIDE_NUM_OF_LEDS / 2) - 1; i >= 0; i--)
     {
@@ -185,7 +185,7 @@ public class LEDs extends SubsystemBase
     }
   }
 
-  private void rainbow()
+  public void rainbow()
   {
     for (var i = 0; i < Constants.CHAMBER_SIDE_NUM_OF_LEDS; i++)
     {

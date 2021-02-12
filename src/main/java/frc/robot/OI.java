@@ -62,6 +62,12 @@ public class OI
 
   private static JoystickButton m_setLauncherPresetBtn;
 
+  /* LEDs */
+  private static JoystickButton m_LEDsChaseInwardBtn;
+  private static JoystickButton m_LEDsChaseOutwardBtn;
+  private static JoystickButton m_LEDsRainbowBtn;
+
+
   /* Defense mode */
   private static JoystickButton m_toggleDefenseModeBtn;
 
@@ -117,6 +123,12 @@ public class OI
     m_jogLauncherAngleDownBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID);
 
     m_setLauncherPresetBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_PRESET_BTN_ID);
+  
+    /* LEDs */
+    m_LEDsChaseInwardBtn              = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LEDS_CHASE_INWARD_BTN_ID);
+    m_LEDsChaseOutwardBtn             = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LEDS_CHASE_OUTWARD_BTN_ID);
+    m_LEDsRainbowBtn                  = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LEDS_RAINBOW_BTN_ID);
+
   }
 
   /**
@@ -157,17 +169,17 @@ public class OI
     m_toggleLimelightBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleLimelight);
 
     /* Climber Buttons */
-    m_extendClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberLeft);
-    m_extendClimberLeftBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberLeft);
+    // m_extendClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberLeft);
+    // m_extendClimberLeftBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberLeft);
 
-    m_retractClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberLeft);
-    m_retractClimberLeftBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberLeft);
+    // m_retractClimberLeftBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberLeft);
+    // m_retractClimberLeftBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberLeft);
 
-    m_extendClimberRightBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberRight);
-    m_extendClimberRightBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberRight);
+    // m_extendClimberRightBtn.whenPressed(RobotContainer.m_inlineCommands.m_extendClimberRight);
+    // m_extendClimberRightBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberRight);
 
-    m_retractClimberRightBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberRight);
-    m_retractClimberRightBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberRight);
+    // m_retractClimberRightBtn.whenPressed(RobotContainer.m_inlineCommands.m_retractClimberRight);
+    // m_retractClimberRightBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopClimberRight);
 
     /* Control Panel Buttons */
     // m_setControlPanelSpinnerPowerBtn.whenPressed(RobotContainer.m_inlineCommands.m_setControlPanelSpinnerPower);
@@ -197,6 +209,11 @@ public class OI
 
     m_setLauncherPresetBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
     m_setLauncherPresetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
+    /*LED buttons */
+    m_LEDsChaseInwardBtn.whenPressed(RobotContainer.m_inlineCommands.m_chaseInwards);
+    m_LEDsChaseOutwardBtn.whenPressed(RobotContainer.m_inlineCommands.m_chaseOutwards);
+    m_LEDsRainbowBtn.whenPressed(RobotContainer.m_inlineCommands.m_rainbow);
 
   }
   
