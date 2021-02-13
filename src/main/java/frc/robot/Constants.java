@@ -12,24 +12,11 @@ public class Constants
    */
 
   /* CAN IDs */
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
   public static final int CHASSIS_LEFT_MASTER_ID                            = 140;  //14
   public static final int CHASSIS_LEFT_SLAVE_ID                             = 150;  //15
   public static final int CHASSIS_RIGHT_MASTER_ID                           = 90;  //0
   public static final int CHASSIS_RIGHT_SLAVE_ID                            = 100;  //1
-=======
-  public static final int CHASSIS_LEFT_MASTER_ID                            = 1;  //1
-  public static final int CHASSIS_LEFT_SLAVE_ID                             = 2;  //2
-  public static final int CHASSIS_RIGHT_MASTER_ID                           = 3;  //3
-  public static final int CHASSIS_RIGHT_SLAVE_ID                            = 4;  //4
->>>>>>> Stashed changes
-=======
-  public static final int CHASSIS_LEFT_MASTER_ID                            = 14;  //14
-  public static final int CHASSIS_LEFT_SLAVE_ID                             = 15;  //15
-  public static final int CHASSIS_RIGHT_MASTER_ID                           = 0;  //0
-  public static final int CHASSIS_RIGHT_SLAVE_ID                            = 1;  //1
->>>>>>> master
   
   public static final int INTAKE_WHEEL_INTAKE_ID                            = 5;
 
@@ -44,35 +31,22 @@ public class Constants
   public static final int CLIMBER_REEL_LEFT_ID                              = 18;  //12
   public static final int CLIMBER_REEL_RIGHT_ID                             = 19;  //13
 
-  public static final int CLIMBER_LIFT_LEFT_ID                              = 14;  //14
-  public static final int CLIMBER_LIFT_RIGHT_ID                             = 15;  //15
+  public static final int CLIMBER_LIFT_LEFT_ID                              = 140;  //14
+  public static final int CLIMBER_LIFT_RIGHT_ID                             = 150;  //15
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
 
   public static final int WHEEL_ONE_ANGLE_MOTOR_ID                          = 13; //13
   public static final int WHEEL_ONE_SPEED_MOTOR_ID                          = 12; //12
 
-  public static final int WHEEL_TWO_ANGLE_MOTOR_ID                          = 140; //14
-  public static final int WHEEL_TWO_SPEED_MOTOR_ID                          = 150; //15
+  public static final int WHEEL_TWO_ANGLE_MOTOR_ID                          = 14; //14
+  public static final int WHEEL_TWO_SPEED_MOTOR_ID                          = 15; //15
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
   public static final int WHEEL_THREE_ANGLE_MOTOR_ID                        = 1; //1
   public static final int WHEEL_THREE_SPEED_MOTOR_ID                        = 0; //0
-=======
-  public static final int WHEEL_THREE_ANGLE_MOTOR_ID                        = 100; //1
-  public static final int WHEEL_THREE_SPEED_MOTOR_ID                        = 90; //0
->>>>>>> master
 
   public static final int WHEEL_FOUR_ANGLE_MOTOR_ID                         = 3; //3
   public static final int WHEEL_FOUR_SPEED_MOTOR_ID                         = 2; //2
-=======
-  public static final int WHEEL_THREE_ANGLE_MOTOR_ID                        = 100;
-  public static final int WHEEL_THREE_SPEED_MOTOR_ID                        = 70;
-
-  public static final int WHEEL_FOUR_ANGLE_MOTOR_ID                         = 300;
-  public static final int WHEEL_FOUR_SPEED_MOTOR_ID                         = 200;
->>>>>>> Stashed changes
 
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;

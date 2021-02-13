@@ -260,7 +260,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
       //input velocities
       if (Math.abs(x1) > 0.2) {VX = -x1;}
-      if (Math.abs(y1) > 0.2) {VY = y1;}
+      if (Math.abs(y1) > 0.2) {VY = -y1;}
 
       //Swerve Gyro Difference Establishing
       double gyro_current = m_ahrs.getYaw();  

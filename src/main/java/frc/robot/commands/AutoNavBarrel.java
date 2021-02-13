@@ -28,12 +28,7 @@ public class AutoNavBarrel extends SequentialCommandGroup
 
     public AutoNavBarrel()
     {
-<<<<<<< Updated upstream
         addCommands(RobotContainer.m_chassis.generateRamsete(startingPose, wayPoints, endingPose, 1, false)
-=======
-        addCommands(
-            RobotContainer.m_chassis.generateRamsete(startingPose, wayPoints, endingPose, 1, false)
->>>>>>> Stashed changes
         );
     }
 }

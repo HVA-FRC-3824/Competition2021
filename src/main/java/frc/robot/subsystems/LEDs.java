@@ -101,7 +101,7 @@ public class LEDs extends SubsystemBase
   //   m_chamberLEDs.setData(m_LEDLength);
   // }
 
-  private void neutral()
+  public void neutral()
   {
     // side LEDs
     if (m_neutralChasingDirection)

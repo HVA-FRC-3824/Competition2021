@@ -74,6 +74,7 @@ public class InlineCommands {
   public final Command m_chaseInwards;
   public final Command m_chaseOutwards;
   public final Command m_rainbow;
+  public final Command m_neutral;
 
 
   
@@ -97,14 +98,14 @@ public class InlineCommands {
       new ChamberIndexBalls();
 
     /* Chassis Inline Command Instantiations */
-    m_driveWithJoystick =
-      new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
-                    RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis);
-                    
     // m_driveWithJoystick =
-    // new RunCommand(() -> RobotContainer.m_chassis.convertSwerveValues(RobotContainer.m_OI.getDriverJoystick().getRawAxis(0), 
-    //               RobotContainer.m_OI.getDriverJoystick().getRawAxis(1), RobotContainer.m_OI.getDriverJoystick().getRawAxis(2)), 
-    //               RobotContainer.m_chassis);
+    //   new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
+    //                 RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis);
+                    
+    m_driveWithJoystick =
+    new RunCommand(() -> RobotContainer.m_chassis.convertSwerveValues(RobotContainer.m_OI.getDriverJoystick().getRawAxis(0), 
+                  RobotContainer.m_OI.getDriverJoystick().getRawAxis(1), RobotContainer.m_OI.getDriverJoystick().getRawAxis(2)), 
+                  RobotContainer.m_chassis);
   
     m_shiftHighGear =
       new InstantCommand(() -> RobotContainer.m_chassis.shiftHighGear());
@@ -180,5 +181,7 @@ public class InlineCommands {
       new RunCommand(() -> RobotContainer.m_LEDs.chaseOutward()); 
     m_rainbow =
       new RunCommand(() -> RobotContainer.m_LEDs.rainbow()); 
+    m_neutral = 
+      new RunCommand(() -> RobotContainer.m_LEDs.neutral());
   }
 }

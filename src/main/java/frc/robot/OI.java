@@ -212,9 +212,13 @@ public class OI
 
     /*LED buttons */
     m_LEDsChaseInwardBtn.whenPressed(RobotContainer.m_inlineCommands.m_chaseInwards);
-    m_LEDsChaseOutwardBtn.whenPressed(RobotContainer.m_inlineCommands.m_chaseOutwards);
-    m_LEDsRainbowBtn.whenPressed(RobotContainer.m_inlineCommands.m_rainbow);
+    m_LEDsChaseInwardBtn.whenReleased(RobotContainer.m_inlineCommands.m_neutral);
 
+    m_LEDsChaseOutwardBtn.whenPressed(RobotContainer.m_inlineCommands.m_chaseOutwards);
+    m_LEDsChaseOutwardBtn.whenReleased(RobotContainer.m_inlineCommands.m_neutral);
+
+    m_LEDsRainbowBtn.whenPressed(RobotContainer.m_inlineCommands.m_rainbow);
+    m_LEDsRainbowBtn.whenReleased(RobotContainer.m_inlineCommands.m_neutral);
   }
   
   //BRUH JOVI MOMENT <-- Excuse me, what is this? -Jovi, you know. -Joey, at least indent your comment properly. -Jovi, 
