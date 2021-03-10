@@ -259,13 +259,8 @@ public void convertSwerveValues (double x1, double y1, double x2)
       lr = Math.sin(turn_angle);
 
       //input velocities
-<<<<<<< HEAD
-      if (Math.abs(x1) > 0.2) {VX = -x1;}
-      if (Math.abs(y1) > 0.2) {VY = -y1;}
-=======
       if (Math.abs(x1) > 0.2) {VX = x1;}
       if (Math.abs(y1) > 0.2) {VY = y1;}
->>>>>>> master
 
       //Swerve Gyro Difference Establishing
       double gyro_current = m_ahrs.getYaw();  
@@ -706,6 +701,4 @@ public void convertSwerveValues (double x1, double y1, double x2)
     /* Return command group that will run path following command, then stop the robot at the end. */
     return ramseteCommand.andThen(new InstantCommand(() -> RobotContainer.m_chassis.driveWithVoltage(0, 0)));
   }
-  
-
 }
