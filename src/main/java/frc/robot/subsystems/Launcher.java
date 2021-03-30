@@ -18,12 +18,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Launcher extends SubsystemBase 
 {
   private WPI_TalonFX m_topWheel;
-  private WPI_TalonFX m_bottomWheel;
+  // private WPI_TalonFX m_bottomWheel;
 
   private WPI_TalonSRX m_pivot;
   private AnalogInput m_pivotFeedback;
 
   private boolean[] m_readyToLaunch;
+
+  private WPI_TalonSRX m_topRightWheel;
+  private WPI_TalonSRX m_topLeftWheel;
+  private WPI_TalonSRX m_bottomWheel;
 
   public Launcher()
   {
@@ -31,9 +35,20 @@ public class Launcher extends SubsystemBase
     RobotContainer.configureTalonFX(m_topWheel, false, false, Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
                                     Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D);
 
-    m_bottomWheel = new WPI_TalonFX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
-    RobotContainer.configureTalonFX(m_bottomWheel, false, false, Constants.LAUNCHER_BOTTOM_WHEEL_F, Constants.LAUNCHER_BOTTOM_WHEEL_P,
-                                    Constants.LAUNCHER_BOTTOM_WHEEL_I, Constants.LAUNCHER_BOTTOM_WHEEL_D);
+    m_topRightWheel = new WPI_TalonSRX(Constants.LAUNCHER_TOP_RIGHT_MOTOR_ID);
+    RobotContainer.configureTalonSRX(m_topRightWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
+                                    Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0, false);
+
+    m_topLeftWheel = new WPI_TalonSRX(Constants.LAUNCHER_TOP_LEFT_MOTOR_ID);
+    RobotContainer.configureTalonSRX(m_topLeftWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
+                                    Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0, false);
+
+    m_bottomWheel = new WPI_TalonSRX(Constants.LAUNCHER_BOTTOM_WHEEL_ID);
+    RobotContainer.configureTalonSRX(m_bottomWheel, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.LAUNCHER_TOP_WHEEL_F, Constants.LAUNCHER_TOP_WHEEL_P,
+                                    Constants.LAUNCHER_TOP_WHEEL_I, Constants.LAUNCHER_TOP_WHEEL_D, 0, 0, false);
 
     m_pivot = new WPI_TalonSRX(Constants.LAUNCHER_PIVOT_ID);
     RobotContainer.configureTalonSRX(m_pivot, false, FeedbackDevice.Analog, false, false, 
@@ -67,7 +82,7 @@ public class Launcher extends SubsystemBase
      * Updates whether or not the launcher RPMs are ready to launch.
      */
     this.updateRPMsLaunchReadyStatus(m_topWheel, 1);
-    this.updateRPMsLaunchReadyStatus(m_bottomWheel, 2);
+    // this.updateRPMsLaunchReadyStatus(m_bottomWheel, 2);
   }
 
   /**
@@ -78,10 +93,20 @@ public class Launcher extends SubsystemBase
   {
     return m_topWheel;
   }
-  public WPI_TalonFX getBottomWheelTalonFX()
+  public WPI_TalonSRX getBottomWheelTalonSRX()
   {
     return m_bottomWheel;
   }
+
+  public WPI_TalonSRX getTopRightWheelTalonSRX()
+  {
+    return m_topRightWheel;
+  }
+  public WPI_TalonSRX getTopLeftWheelTalonSRX()
+  {
+    return m_topLeftWheel;
+  }
+
   public WPI_TalonSRX getPivotTalonSRX()
   {
     return m_pivot;
@@ -94,6 +119,14 @@ public class Launcher extends SubsystemBase
   public void setTopWheelPower(double power)
   {
     m_topWheel.set(ControlMode.PercentOutput, power);
+  }
+  public void setTopRightWheelPower(double power)
+  {
+    m_topRightWheel.set(ControlMode.PercentOutput, power);
+  }
+  public void setTopLeftWheelPower(double power)
+  {
+    m_topLeftWheel.set(ControlMode.PercentOutput, power);
   }
   public void setBottomWheelPower(double power)
   {
@@ -108,6 +141,16 @@ public class Launcher extends SubsystemBase
   {
     m_topWheel.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.LAUNCHER_TOP_WHEEL_TPR));
   }
+
+  public void setTopLeftWheelRPM(int rpm)
+  {
+    m_topLeftWheel.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.LAUNCHER_TOP_WHEEL_TPR));
+  }
+  public void setTopRightWheelRPM(int rpm)
+  {
+    m_topRightWheel.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.LAUNCHER_TOP_WHEEL_TPR));
+  }
+
   public void setBottomWheelRPM(int rpm)
   {
     m_bottomWheel.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.LAUNCHER_BOTTOM_WHEEL_TPR));
@@ -149,9 +192,10 @@ public class Launcher extends SubsystemBase
   /**
    * This method is used to set the wheel RPMs and pivot angle for presets.
    */
-  public void setPreset(int topRPM, int bottomRPM, int pivotSetpoint)
+  public void setPreset(int topLeftRPM, int topRightRPM, int bottomRPM, int pivotSetpoint)
   {
-    this.setTopWheelRPM(topRPM);
+    this.setTopLeftWheelRPM(topLeftRPM);
+    this.setTopRightWheelRPM(topRightRPM);
     this.setBottomWheelRPM(bottomRPM);
 
     // this.updateLaunchReadyStatus(0, true);
@@ -164,7 +208,8 @@ public class Launcher extends SubsystemBase
    */
   public void stopLauncher()
   {
-    this.setTopWheelPower(0.0);
+    this.setTopLeftWheelPower(0.0);
+    this.setTopRightWheelPower(0.0);
     this.setBottomWheelPower(0.0);
 
     this.setPivotPower(0.0);

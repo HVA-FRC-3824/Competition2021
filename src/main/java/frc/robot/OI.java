@@ -189,10 +189,10 @@ public class OI
 
     
     /* Defense Mode */
-    m_toggleDefenseModeBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleDefenseMode);
+    // m_toggleDefenseModeBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleDefenseMode);
 
     /* Intake Buttons */
-    m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
+    // m_toggleIntakePistonsBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleIntakePistons);
 
     m_setIntakeWheelRPMBtn.whenPressed(RobotContainer.m_inlineCommands.m_setIntakeWheelsRPM);
     m_setIntakeWheelRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopIntakeWheels);
@@ -202,7 +202,7 @@ public class OI
     m_jogLauncherAngleUpBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherAngle);
 
     m_jogLauncherAngleDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_jogLauncherAngleDown);
-    m_jogLauncherAngleDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherAngle);
+    m_jogLauncherAngleDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLauncherAngle);  
 
     m_setLauncherVisionBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherVision);
     m_setLauncherVisionBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);

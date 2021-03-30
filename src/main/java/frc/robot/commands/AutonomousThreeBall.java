@@ -12,7 +12,7 @@ public class AutonomousThreeBall extends SequentialCommandGroup
   {
     addCommands(
         new InstantCommand(() -> RobotContainer.m_limelight.turnOnLED()),
-        new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_AUTO_INIT_TOP_RPM, Constants.LAUNCHER_AUTO_INIT_BOTTOM_RPM, Constants.LAUNCHER_AUTO_INIT_ANGLE)),
+        // new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_AUTO_INIT_TOP_RPM, Constants.LAUNCHER_AUTO_INIT_BOTTOM_RPM, Constants.LAUNCHER_AUTO_INIT_ANGLE)),
         new WaitCommand(3.0),
         new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPosition(50000)),
         new WaitCommand(6.0),

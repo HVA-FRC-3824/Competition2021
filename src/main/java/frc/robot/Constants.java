@@ -22,11 +22,14 @@ public class Constants
 
   public static final int CHAMBER_BASE_ID                                   = 60;
   public static final int CHAMBER_ELEVATOR_SLAVE_ID                         = 70;
-  public static final int CHAMBER_ELEVATOR_MASTER_ID                        = 8;
+  public static final int CHAMBER_ELEVATOR_MASTER_ID                        = 80; //8
+  public static final int CHAMBER_WHEEL_ID                                  = 8;
 
-  public static final int LAUNCHER_TOP_WHEEL_ID                             = 9;
-  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 10;
-  public static final int LAUNCHER_PIVOT_ID                                 = 11;
+  public static final int LAUNCHER_TOP_WHEEL_ID                             = 900; //9
+  public static final int LAUNCHER_TOP_LEFT_MOTOR_ID                        = 9;
+  public static final int LAUNCHER_TOP_RIGHT_MOTOR_ID                       = 10; 
+  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 11;  //10
+  public static final int LAUNCHER_PIVOT_ID                                 = 110; //11
 
   public static final int CLIMBER_REEL_LEFT_ID                              = 18;  //12
   public static final int CLIMBER_REEL_RIGHT_ID                             = 19;  //13
@@ -104,6 +107,11 @@ public class Constants
   public static final double CHAMBER_BASE_P                                 = 0.1;
   public static final double CHAMBER_BASE_I                                 = 0.001;
   public static final double CHAMBER_BASE_D                                 = 0.0;
+
+  public static final double CHAMBER_F                                     = 0.0;
+  public static final double CHAMBER_P                                     = 1.0;
+  public static final double CHAMBER_I                                     = 0.0;
+  public static final double CHAMBER_D                                     = 0.0;
 
   /* Climber */
 
@@ -229,6 +237,11 @@ public class Constants
   public static final int    LAUNCHER_AUTO_TRENCH_TOP_RPM                   = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3000;//3350;
+
+  public static final int    LAUNCHER_GREEN_ZONE_MOTOR_RPM                  = 3000;
+  public static final int    LAUNCHER_YELLOW_ZONE_MOTOR_RPM                 = 3500;
+  public static final int    LAUNCHER_BLUE_ZONE_MOTOR_RPM                   = 4000;
+  public static final int    LAUNCHER_RED_ZONE_MOTOR_RPM                    = 4500;
  
   // Swerve Drive
   public static final double SWERVE_DRIVE_WHEEL_AXLE_LENGTH                 = 36;
@@ -266,41 +279,46 @@ public class Constants
    */
 
    /* Chamber */
-  public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 14;
+  public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 140; //14
   
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_LAUNCH_BTN_ID        = 11;
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID          = 10;
+  public static final int    OPERATOR_CHAMBER_ELEVATOR_LAUNCH_BTN_ID        = 8; //11
+  public static final int    OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID          = 9; //10
 
   /* Climber */
   public static final int    OPERATOR_CLIMBER_EXTEND_LEFT_BTN_ID            = 300; //3
   public static final int    OPERATOR_CLIMBER_RETRACT_LEFT_BTN_ID           = 600; //6
 
-  public static final int    OPERATOR_CLIMBER_EXTEND_RIGHT_BTN_ID           = 4;
-  public static final int    OPERATOR_CLIMBER_RETRACT_RIGHT_BTN_ID          = 5;
+  public static final int    OPERATOR_CLIMBER_EXTEND_RIGHT_BTN_ID           = 4; //4
+  public static final int    OPERATOR_CLIMBER_RETRACT_RIGHT_BTN_ID          = 5; //5
 
-  public static final int    OPERATOR_CLIMBER_REEL_BTN_ID                   = 7;
-  public static final int    OPERATOR_CLIMBER_LIFT_BTN_ID                   = 19;
+  public static final int    OPERATOR_CLIMBER_REEL_BTN_ID                   = 70; //7
+  public static final int    OPERATOR_CLIMBER_LIFT_BTN_ID                   = 19; //19
 
   /* Control Panel */
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID    = 19;
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID      = 18;
 
   /* Intake */
-  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 15;
-  public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 16;
+  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 15; //15
+  public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 11;
 
   /* Launcher */
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 12;
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 13;
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 120; //12
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 130; //13
 
-  public static final int    OPERATOR_LAUNCHER_PRESET_BTN_ID                = 6; //6
-  public static final int    OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID           = 8;
-  public static final int    OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID          = 9;
+  public static final int    OPERATOR_LAUNCHER_PRESET_BTN_ID                = 60; //6
+  public static final int    OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID           = 80; //8
+  public static final int    OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID          = 90; //9
+
+  public static final int    OP_LAUNCHER_PRESET_GREEN_BTN_ID                = 3;
+  public static final int    OP_LAUNCHER_PRESET_YELLOW_BTN_ID               = 6; 
+  public static final int    OP_LAUNCHER_PRESET_BLUE_BTN_ID                 = 4;
+  public static final int    OP_LAUNCHER_PRESET_RED_BTN_ID                  = 5;
 
   /* LEDs */
-  public static final int    OPERATOR_LEDS_CHASE_INWARD_BTN_ID              = 1;
-  public static final int    OPERATOR_LEDS_CHASE_OUTWARD_BTN_ID             = 2;
-  public static final int    OPERATOR_LEDS_RAINBOW_BTN_ID                   = 3;
+  public static final int    OPERATOR_LEDS_CHASE_INWARD_BTN_ID              = 1000; //1
+  public static final int    OPERATOR_LEDS_CHASE_OUTWARD_BTN_ID             = 200; //2
+  public static final int    OPERATOR_LEDS_RAINBOW_BTN_ID                   = 30; //3
 
   
   /**

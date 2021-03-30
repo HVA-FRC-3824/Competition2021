@@ -62,6 +62,8 @@ public class LauncherAimForTarget extends CommandBase
     /* Give output to launcher wheels. */
     RobotContainer.m_launcher.setTopWheelRPM(Constants.LAUNCHER_WHEEL_MAX_RPM);
     RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_WHEEL_MAX_RPM);
+    RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_WHEEL_MAX_RPM);
+    RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_WHEEL_MAX_RPM);
 
     /**
      * Aiming launcher pivot tilt based on vision.

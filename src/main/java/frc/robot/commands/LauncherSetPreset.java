@@ -18,23 +18,47 @@ public class LauncherSetPreset extends CommandBase
     RobotContainer.m_launcher.updateLaunchReadyStatus(3, true);
 
     /* Based on the position of the switch on operator board, set preset of launcher. */
-    if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID))
+    // if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID))
+    // {
+    //   RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_INITIATION_LINE_TOP_RPM, 
+    //                                       Constants.LAUNCHER_INITIATION_LINE_BOTTOM_RPM,
+    //                                       Constants.LAUNCHER_INITIATION_LINE_ANGLE);
+    // }
+    // else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID))
+    // {
+    //   RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_CLOSE_TRENCH_TOP_RPM, 
+    //                                       Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM,
+    //                                       Constants.LAUNCHER_CLOSE_TRENCH_ANGLE);
+    // }
+    // else
+    // {
+    //     RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_FAR_TRENCH_TOP_RPM, 
+    //                                         Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM,
+    //                                         Constants.LAUNCHER_FAR_TRENCH_ANGLE);
+    // }
+    if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_GREEN_BTN_ID))
     {
-      RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_INITIATION_LINE_TOP_RPM, 
-                                          Constants.LAUNCHER_INITIATION_LINE_BOTTOM_RPM,
-                                          Constants.LAUNCHER_INITIATION_LINE_ANGLE);
+      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_GREEN_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_GREEN_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_GREEN_ZONE_MOTOR_RPM);
     }
-    else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID))
+    else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_YELLOW_BTN_ID))
     {
-      RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_CLOSE_TRENCH_TOP_RPM, 
-                                          Constants.LAUNCHER_CLOSE_TRENCH_BOTTOM_RPM,
-                                          Constants.LAUNCHER_CLOSE_TRENCH_ANGLE);
+      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_YELLOW_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_YELLOW_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_YELLOW_ZONE_MOTOR_RPM);
     }
-    else
+    else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_BLUE_BTN_ID))
     {
-        RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_FAR_TRENCH_TOP_RPM, 
-                                            Constants.LAUNCHER_FAR_TRENCH_BOTTOM_RPM,
-                                            Constants.LAUNCHER_FAR_TRENCH_ANGLE);
+      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_BLUE_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_BLUE_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_BLUE_ZONE_MOTOR_RPM);
+    }
+    else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_RED_BTN_ID))
+    {
+      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_RED_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_RED_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_RED_ZONE_MOTOR_RPM);
     }
   }
   

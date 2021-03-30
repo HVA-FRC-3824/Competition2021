@@ -19,6 +19,9 @@ public class Chamber extends SubsystemBase
   private WPI_TalonSRX m_elevatorMaster;
   private WPI_TalonSRX m_elevatorSlave;
 
+  //swerve
+  private WPI_TalonSRX m_elevator;
+
   private Ultrasonic m_ballPos_entering;
   private Ultrasonic m_ballPos_exiting;
 
@@ -42,10 +45,21 @@ public class Chamber extends SubsystemBase
 
     m_elevatorSlave.follow(m_elevatorMaster);
 
+    //swerve
+    m_elevator = new WPI_TalonSRX(Constants.CHAMBER_WHEEL_ID);
+    RobotContainer.configureTalonSRX(m_elevator, false, FeedbackDevice.CTRE_MagEncoder_Relative, false, false, 
+                                    Constants.CHAMBER_F, Constants.CHAMBER_P, Constants.CHAMBER_I, Constants.CHAMBER_D, 0, 0, true);
+
     m_ballPos_entering = new Ultrasonic(Constants.CHAMBER_BALL_POS_ENTER_PORT_A, Constants.CHAMBER_BALL_POS_ENTER_PORT_B);
     m_ballPos_exiting = new Ultrasonic(Constants.CHAMBER_BALL_POS_EXIT_PORT_A, Constants.CHAMBER_BALL_POS_EXIT_PORT_B);
   }
-  
+
+  //swerve
+  public WPI_TalonSRX getElevatorTalonSRX()
+  {
+      return m_elevator;
+  }
+
   /**
    * This method will be called once per scheduler run
    */
@@ -83,7 +97,7 @@ public class Chamber extends SubsystemBase
   }
   public void setElevatorPower(double power)
   {
-    m_elevatorMaster.set(ControlMode.PercentOutput, power);
+    m_elevator.set(ControlMode.PercentOutput, power);
   }
  
   /**
@@ -109,8 +123,8 @@ public class Chamber extends SubsystemBase
    */
   public void stepChamberDistance(double distance)
   {
-    double presentPosition = m_elevatorMaster.getSelectedSensorPosition();
-    m_elevatorMaster.set(ControlMode.MotionMagic, presentPosition + distance);
+    double presentPosition = m_elevator.getSelectedSensorPosition();
+    m_elevator.set(ControlMode.MotionMagic, presentPosition + distance);
   }
 
   /**

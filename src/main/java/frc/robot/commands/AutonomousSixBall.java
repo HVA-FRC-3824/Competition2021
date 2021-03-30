@@ -31,8 +31,8 @@ public class AutonomousSixBall extends SequentialCommandGroup
   {
     addCommands(
       // start launcher
-      new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_AUTO_INIT_TOP_RPM, Constants.LAUNCHER_AUTO_INIT_BOTTOM_RPM, 
-                               Constants.LAUNCHER_AUTO_INIT_ANGLE)),
+      // new InstantCommand(() -> RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_AUTO_INIT_TOP_RPM, Constants.LAUNCHER_AUTO_INIT_BOTTOM_RPM, 
+      //                          Constants.LAUNCHER_AUTO_INIT_ANGLE)),
       //wait for launcher to speed up
       new WaitCommand(1),
       // run chamber
