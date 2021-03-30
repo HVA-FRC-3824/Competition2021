@@ -36,17 +36,17 @@ public class Constants
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
 
-  public static final int WHEEL_ONE_ANGLE_MOTOR_ID                          = 0; //0
-  public static final int WHEEL_ONE_SPEED_MOTOR_ID                          = 1; //1
+  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 0; //0
+  public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 1; //1
 
-  public static final int WHEEL_TWO_ANGLE_MOTOR_ID                          = 2; //2
-  public static final int WHEEL_TWO_SPEED_MOTOR_ID                          = 3; //3
+  public static final int FRONT_LEFT_ANGLE_MOTOR_ID                          = 2; //2
+  public static final int FRONT_LEFT_SPEED_MOTOR_ID                          = 3; //3
 
-  public static final int WHEEL_THREE_ANGLE_MOTOR_ID                        = 4; //4
-  public static final int WHEEL_THREE_SPEED_MOTOR_ID                        = 5; //5
+  public static final int BACK_LEFT_ANGLE_MOTOR_ID                        = 4; //4
+  public static final int BACK_LEFT_SPEED_MOTOR_ID                        = 5; //5
 
-  public static final int WHEEL_FOUR_ANGLE_MOTOR_ID                         = 6; //6
-  public static final int WHEEL_FOUR_SPEED_MOTOR_ID                         = 7; //7
+  public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 6; //6
+  public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 7; //7
 
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
