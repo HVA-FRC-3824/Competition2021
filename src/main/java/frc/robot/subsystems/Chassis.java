@@ -231,8 +231,8 @@ public class Chassis extends SubsystemBase
 public void convertSwerveValues (double x1, double y1, double x2)
   {
       //width and length
-      double w = 25;
-      double l = 17;
+      double w = 21.5;
+      double l = 25;
       
       //width and length relative ratios
       double wr;
@@ -260,11 +260,11 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
       //input velocities
       if (Math.abs(x1) > 0.2) {VX = x1;}
-      if (Math.abs(y1) > 0.2) {VY = y1;}
+      if (Math.abs(y1) > 0.2) {VY = -y1;}
 
       //Swerve Gyro Difference Establishing
-      double gyro_current = m_ahrs.getYaw();  
-
+      double gyro_current = m_ahrs.getPitch();  
+      //double gyro_current = m_ahrs.getRoll();
       //adjust strafe vector so that moving forward goes in the set direction and not towards where the robot is facing
       double r = Math.sqrt(VX * VX + VY * VY);
       double strafe_angle = Math.atan2(VY, VX);
@@ -333,32 +333,36 @@ public void convertSwerveValues (double x1, double y1, double x2)
       if (Math.abs(backRight[4] - backRight[3]) > Math.PI && backRight[4] < backRight[3]) {backRight[5] -= 2 * Math.PI;}
       if (Math.abs(backRight[4] - backRight[3]) > Math.PI && backRight[4] > backRight[3]) {backRight[5] += 2 * Math.PI;}
 
-      drive(m_speedMotorFrontRight, m_angleMotorFrontRight, frontRight[2], -(frontRight[3] + frontRight[5]) / ((Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION));
-      drive(m_speedMotorFrontLeft, m_angleMotorFrontLeft, frontLeft[2], -(frontLeft[3] + frontLeft[5]) / ((Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION));
-      drive(m_speedMotorBackLeft, m_angleMotorBackLeft, backLeft[2], -(backLeft[3] + backLeft[5]) / ((Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION));
-      drive(m_speedMotorBackRight, m_angleMotorBackRight, backRight[2], -(backRight[3] + backRight[5])  / ((Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION));
+      drive(m_speedMotorFrontRight, m_angleMotorFrontRight, frontRight[2], -(frontRight[3] + frontRight[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorFrontLeft, m_angleMotorFrontLeft, frontLeft[2], -(frontLeft[3] + frontLeft[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorBackLeft, m_angleMotorBackLeft, backLeft[2], -(backLeft[3] + backLeft[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      drive(m_speedMotorBackRight, m_angleMotorBackRight, backRight[2], -(backRight[3] + backRight[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
 
       SmartDashboard.putNumber("Wheel one offset", frontRight[5]);
-      
-      SmartDashboard.putNumber("Total Angle", (frontRight[3] + frontRight[5]));
-      SmartDashboard.putNumber("Last Angle", frontRight[4]);
+      SmartDashboard.putNumber("Wheel 3 total encoder ticks",  -(backLeft[3] + backLeft[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      SmartDashboard.putNumber("Wheel 3 Current Pos", m_angleMotorBackLeft.getSelectedSensorPosition());
+      SmartDashboard.putNumber("Wheel 3 Setpoint", m_angleMotorBackLeft.getClosedLoopTarget());
+      SmartDashboard.putNumber("Total Angle ", (frontRight[3] + frontRight[5]));
+      //SmartDashboard.putNumber("Last Angle", frontRight[4]);
       SmartDashboard.putNumber("Current Angle 1", frontRight[3]);  
       SmartDashboard.putNumber("Current Angle 2", frontLeft[3]);  
       SmartDashboard.putNumber("Current Angle 3", backLeft[3]);  
       SmartDashboard.putNumber("Current Angle 4", backRight[3]);  
 
-      SmartDashboard.putNumber("Speed 1", frontRight[2]);
-      SmartDashboard.putNumber("Speed 2", frontLeft[2]);
-      SmartDashboard.putNumber("Speed 3", backLeft[2]);
-      SmartDashboard.putNumber("Speed 4", backRight[2]);
-
+      //SmartDashboard.putNumber("Speed 1", frontRight[2]);
+      //SmartDashboard.putNumber("Speed 2", frontLeft[2]);
+      //SmartDashboard.putNumber("Speed 3", backLeft[2]);
+      //SmartDashboard.putNumber("Speed 4", backRight[2]);
       SmartDashboard.putNumber("Swerve Yaw", m_ahrs.getYaw());
+      SmartDashboard.putNumber("Swerve Roll", m_ahrs.getRoll());
+      SmartDashboard.putNumber("Swerve Pitch", m_ahrs.getPitch());
+      SmartDashboard.putNumber("Swerve Angle", m_ahrs.getAngle());
       SmartDashboard.putNumber("Swerve Compass", m_ahrs.getCompassHeading());
     }
 
   public void drive (WPI_TalonFX speedMotor, WPI_TalonFX angleMotor, double speed, double angle)
   {
-    speedMotor.set(speed *0.7);
+    speedMotor.set(speed *0.5);
 
     double setpoint = angle * (Constants.SWERVE_DRIVE_MAX_VOLTAGE * 1.5);
     
@@ -372,7 +376,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       setpoint -= setpoint;
     }
 
-    angleMotor.set(TalonFXControlMode.Position, angle* 0.8);
+    angleMotor.set(TalonFXControlMode.Position, angle);
 
     System.out.println("Speed" + speed);
     System.out.println("Angle" + angle);

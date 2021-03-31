@@ -18,17 +18,17 @@ public class Constants
   public static final int CHASSIS_RIGHT_MASTER_ID                           = 90;  //0
   public static final int CHASSIS_RIGHT_SLAVE_ID                            = 100;  //1
   
-  public static final int INTAKE_WHEEL_INTAKE_ID                            = 50;
+  public static final int INTAKE_WHEEL_INTAKE_ID                            = 0;
 
   public static final int CHAMBER_BASE_ID                                   = 60;
   public static final int CHAMBER_ELEVATOR_SLAVE_ID                         = 70;
   public static final int CHAMBER_ELEVATOR_MASTER_ID                        = 80; //8
-  public static final int CHAMBER_WHEEL_ID                                  = 8;
+  public static final int CHAMBER_WHEEL_ID                                  = 18;
 
   public static final int LAUNCHER_TOP_WHEEL_ID                             = 900; //9
-  public static final int LAUNCHER_TOP_LEFT_MOTOR_ID                        = 9;
-  public static final int LAUNCHER_TOP_RIGHT_MOTOR_ID                       = 10; 
-  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 11;  //10
+  public static final int LAUNCHER_TOP_LEFT_MOTOR_ID                        = 7;
+  public static final int LAUNCHER_TOP_RIGHT_MOTOR_ID                       = 5; 
+  public static final int LAUNCHER_BOTTOM_WHEEL_ID                          = 6;  //10
   public static final int LAUNCHER_PIVOT_ID                                 = 110; //11
 
   public static final int CLIMBER_REEL_LEFT_ID                              = 18;  //12
@@ -39,17 +39,17 @@ public class Constants
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
 
-  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 0; //0
-  public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 1; //1
+  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 13; //0
+  public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 12; //1
 
-  public static final int FRONT_LEFT_ANGLE_MOTOR_ID                          = 2; //2
-  public static final int FRONT_LEFT_SPEED_MOTOR_ID                          = 3; //3
+  public static final int FRONT_LEFT_ANGLE_MOTOR_ID                          = 15; //2
+  public static final int FRONT_LEFT_SPEED_MOTOR_ID                          = 14; //3
 
-  public static final int BACK_LEFT_ANGLE_MOTOR_ID                        = 4; //4
-  public static final int BACK_LEFT_SPEED_MOTOR_ID                        = 5; //5
+  public static final int BACK_LEFT_ANGLE_MOTOR_ID                        = 8; //4
+  public static final int BACK_LEFT_SPEED_MOTOR_ID                        = 9; //5
 
-  public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 6; //6
-  public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 7; //7
+  public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 10; //6
+  public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 11; //7
 
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
@@ -163,7 +163,7 @@ public class Constants
   //public static final double kSensorUnitsPerRotation                        = 4096;
   //public static final double kGearRatio                                     = 3 / 20;
 
-  public static final double WHEEL_MOTOR_TICKS_PER_REVOLUTION               = 2048 * 12;//kSensorUnitsPerRotation / kGearRatio;
+  public static final double WHEEL_MOTOR_TICKS_PER_REVOLUTION               = 2048 * 12; //kSensorUnitsPerRotation / kGearRatio;
 
 
 
