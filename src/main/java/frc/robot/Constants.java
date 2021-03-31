@@ -18,7 +18,7 @@ public class Constants
   public static final int CHASSIS_RIGHT_MASTER_ID                           = 90;  //0
   public static final int CHASSIS_RIGHT_SLAVE_ID                            = 100;  //1
   
-  public static final int INTAKE_WHEEL_INTAKE_ID                            = 50;
+  public static final int INTAKE_WHEEL_INTAKE_ID                            = 0;
 
   public static final int CHAMBER_BASE_ID                                   = 60;
   public static final int CHAMBER_ELEVATOR_SLAVE_ID                         = 70;
@@ -39,17 +39,17 @@ public class Constants
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
 
-  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 0; //0
-  public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 1; //1
+  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 15; //0
+  public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 14; //1
 
-  public static final int FRONT_LEFT_ANGLE_MOTOR_ID                          = 2; //2
-  public static final int FRONT_LEFT_SPEED_MOTOR_ID                          = 3; //3
+  public static final int FRONT_LEFT_ANGLE_MOTOR_ID                          = 8; //2
+  public static final int FRONT_LEFT_SPEED_MOTOR_ID                          = 9; //3
 
-  public static final int BACK_LEFT_ANGLE_MOTOR_ID                        = 4; //4
-  public static final int BACK_LEFT_SPEED_MOTOR_ID                        = 5; //5
+  public static final int BACK_LEFT_ANGLE_MOTOR_ID                        = 10; //4
+  public static final int BACK_LEFT_SPEED_MOTOR_ID                        = 11; //5
 
-  public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 6; //6
-  public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 7; //7
+  public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 13; //6
+  public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 12; //7
 
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
@@ -350,5 +350,7 @@ public class Constants
 
   /* Ask build captains what type of swerve module we have. */
   public static final double SWERVE_DRIVE_MAX_VOLTAGE                      = 4.95;
+  public static final double SWERVE_GEAR_RATIO                 = 0.0833333; //wheel spins per angle motor spin    
+  public static final double SWERVE_TPR                        = 2048 / SWERVE_GEAR_RATIO; //motors ticks per revolution of wheel
 
 }
