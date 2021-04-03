@@ -263,8 +263,8 @@ public void convertSwerveValues (double x1, double y1, double x2)
       if (Math.abs(y1) > 0.2) {VY = -y1;}
 
       //Swerve Gyro Difference Establishing
-      double gyro_current = m_ahrs.getPitch();  
-      //double gyro_current = m_ahrs.getRoll();
+      // double gyro_current = m_ahrs.getPitch();  
+      double gyro_current = m_ahrs.getYaw();
       //adjust strafe vector so that moving forward goes in the set direction and not towards where the robot is facing
       double r = Math.sqrt(VX * VX + VY * VY);
       double strafe_angle = Math.atan2(VY, VX);
