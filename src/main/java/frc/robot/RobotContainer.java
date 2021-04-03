@@ -104,7 +104,7 @@ public class RobotContainer
   {
     m_chassis.setDefaultCommand(m_inlineCommands.m_driveWithJoystick);
     // m_intake.setDefaultCommand(null);
-    m_chamber.setDefaultCommand(new ChamberIndexBalls());
+    // m_chamber.setDefaultCommand(new ChamberIndexBalls());
     // m_launcher.setDefaultCommand(null);
     // m_climber.setDefaultCommand(null);
     // m_controlPanel.setDefaultCommand(null);

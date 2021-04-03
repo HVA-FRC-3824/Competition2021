@@ -38,27 +38,19 @@ public class LauncherSetPreset extends CommandBase
     // }
     if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_GREEN_BTN_ID))
     {
-      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_GREEN_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_GREEN_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_GREEN_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_GREEN_ZONE_TOP_MOTOR_POWER, Constants.LAUNCHER_GREEN_ZONE_BOTTOM_MOTOR_POWER);
     }
     else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_YELLOW_BTN_ID))
     {
-      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_YELLOW_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_YELLOW_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_YELLOW_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_YELLOW_ZONE_TOP_MOTOR_POWER, Constants.LAUNCHER_YELLOW_ZONE_BOTTOM_MOTOR_POWER);
     }
     else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_BLUE_BTN_ID))
     {
-      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_BLUE_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_BLUE_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_BLUE_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_BLUE_ZONE_TOP_MOTOR_POWER, Constants.LAUNCHER_BLUE_ZONE_BOTTOM_MOTOR_POWER);
     }
     else if (RobotContainer.m_OI.getOperatorController().getRawButton(Constants.OP_LAUNCHER_PRESET_RED_BTN_ID))
     {
-      RobotContainer.m_launcher.setTopLeftWheelRPM(Constants.LAUNCHER_RED_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setTopRightWheelRPM(Constants.LAUNCHER_RED_ZONE_MOTOR_RPM);
-      RobotContainer.m_launcher.setBottomWheelRPM(Constants.LAUNCHER_RED_ZONE_MOTOR_RPM);
+      RobotContainer.m_launcher.setPreset(Constants.LAUNCHER_RED_ZONE_TOP_MOTOR_POWER, Constants.LAUNCHER_RED_ZONE_BOTTOM_MOTOR_POWER);
     }
   }
   

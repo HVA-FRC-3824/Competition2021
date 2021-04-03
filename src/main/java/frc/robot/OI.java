@@ -62,6 +62,12 @@ public class OI
 
   private static JoystickButton m_setLauncherPresetBtn;
 
+  private static JoystickButton m_setLauncherPresetGreenBtn;
+  private static JoystickButton m_setLauncherPresetYellowBtn;
+  private static JoystickButton m_setLauncherPresetBlueBtn;
+  private static JoystickButton m_setLauncherPresetRedBtn;
+
+
   /* LEDs */
   private static JoystickButton m_LEDsChaseInwardBtn;
   private static JoystickButton m_LEDsChaseOutwardBtn;
@@ -123,6 +129,12 @@ public class OI
     m_jogLauncherAngleDownBtn         = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID);
 
     m_setLauncherPresetBtn            = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LAUNCHER_PRESET_BTN_ID);
+
+    m_setLauncherPresetGreenBtn       = new JoystickButton(m_operatorJoystick, Constants.OP_LAUNCHER_PRESET_GREEN_BTN_ID);
+    m_setLauncherPresetYellowBtn      = new JoystickButton(m_operatorJoystick, Constants.OP_LAUNCHER_PRESET_YELLOW_BTN_ID);
+    m_setLauncherPresetBlueBtn        = new JoystickButton(m_operatorJoystick, Constants.OP_LAUNCHER_PRESET_BLUE_BTN_ID);
+    m_setLauncherPresetRedBtn         = new JoystickButton(m_operatorJoystick, Constants.OP_LAUNCHER_PRESET_RED_BTN_ID);
+
   
     /* LEDs */
     m_LEDsChaseInwardBtn              = new JoystickButton(m_operatorJoystick, Constants.OPERATOR_LEDS_CHASE_INWARD_BTN_ID);
@@ -157,14 +169,16 @@ public class OI
     // m_setChamberBaseRPMBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberBase);
 
     m_setChamberElevatorToLaunchBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorToLaunch);
-    m_setChamberElevatorToLaunchBtn.whenReleased(RobotContainer.m_inlineCommands.m_setChamberElevatorAuto);
+    m_setChamberElevatorToLaunchBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
 
     m_setChamberElevatorDownBtn.whenPressed(RobotContainer.m_inlineCommands.m_setChamberElevatorDown);
-    m_setChamberElevatorDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_setChamberElevatorAuto);
+    m_setChamberElevatorDownBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopChamberElevator);
 
     /* Chassis Buttons */
     //m_gearShiftBtn.whenPressed(RobotContainer.m_inlineCommands.m_shiftHighGear);
     //m_gearShiftBtn.whenReleased(RobotContainer.m_inlineCommands.m_shiftLowGear);
+
+    m_setHeadingBtn.whenPressed(RobotContainer.m_inlineCommands.m_setHeading);
 
     m_toggleLimelightBtn.whenPressed(RobotContainer.m_inlineCommands.m_toggleLimelight);
 
@@ -209,6 +223,18 @@ public class OI
 
     m_setLauncherPresetBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
     m_setLauncherPresetBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
+    m_setLauncherPresetGreenBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
+    m_setLauncherPresetGreenBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
+    m_setLauncherPresetYellowBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
+    m_setLauncherPresetYellowBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
+    m_setLauncherPresetBlueBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
+    m_setLauncherPresetBlueBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
+
+    m_setLauncherPresetRedBtn.whenPressed(RobotContainer.m_inlineCommands.m_setLauncherPreset);
+    m_setLauncherPresetRedBtn.whenReleased(RobotContainer.m_inlineCommands.m_stopLaunchSequence);
 
     /*LED buttons */
     m_LEDsChaseInwardBtn.whenPressed(RobotContainer.m_inlineCommands.m_chaseInwards);

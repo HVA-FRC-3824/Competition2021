@@ -26,7 +26,7 @@ public class InlineCommands {
 
   public final Command m_setChamberElevatorToLaunch;
   public final Command m_setChamberElevatorDown;
-  public final Command m_setChamberElevatorAuto;
+  public final Command m_stopChamberElevator;
 
   /* Chassis Inline Command Declarations */
   public final Command m_driveWithJoystick;
@@ -91,11 +91,11 @@ public class InlineCommands {
     //   new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(0.0));
 
     m_setChamberElevatorToLaunch =
-      new RunCommand(() -> RobotContainer.m_chamber.stepChamberDistance(Constants.CHAMBER_BALL_STEP_DIST), RobotContainer.m_chamber);
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(-0.5));
     m_setChamberElevatorDown =
-      new RunCommand(() -> RobotContainer.m_chamber.stepChamberDistance(-Constants.CHAMBER_BALL_STEP_DIST), RobotContainer.m_chamber);
-    m_setChamberElevatorAuto =
-      new ChamberIndexBalls();
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.5));
+    m_stopChamberElevator =
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.0));
 
     /* Chassis Inline Command Instantiations */
     // m_driveWithJoystick =

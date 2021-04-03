@@ -6,8 +6,10 @@ import frc.robot.RobotContainer;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -17,16 +19,13 @@ public class Intake extends SubsystemBase
 {
   private DoubleSolenoid m_extender;
 
-  private WPI_TalonSRX m_wheelIntake;
+  private WPI_VictorSPX m_wheelIntake;
 
   public Intake()
   {
     m_extender = new DoubleSolenoid(Constants.INTAKE_EXTENDER_PORT_A, Constants.INTAKE_EXTENDER_PORT_B);
 
-    m_wheelIntake = new WPI_TalonSRX(Constants.INTAKE_WHEEL_INTAKE_ID);
-    RobotContainer.configureTalonSRX(m_wheelIntake, false, FeedbackDevice.CTRE_MagEncoder_Relative, true, true, 
-                                    Constants.INTAKE_WHEEL_INTAKE_F, Constants.INTAKE_WHEEL_INTAKE_P, 
-                                    Constants.INTAKE_WHEEL_INTAKE_I, Constants.INTAKE_WHEEL_INTAKE_D, 0, 0, true);
+    m_wheelIntake = new WPI_VictorSPX(Constants.INTAKE_WHEEL_INTAKE_ID);
 
     SmartDashboard.putData("RETRACT", new InstantCommand(() -> this.retractExtender()));
   }
@@ -43,7 +42,7 @@ public class Intake extends SubsystemBase
    * Methods for Robot.java to get TalonFX/TalonSRX objects to pass to the SetPIDValues command to configure PIDs via SmartDashboard.
    * @return TalonFX/TalonSRX object to be configured.
    */
-  public WPI_TalonSRX getWheelIntakeTalonSRX()
+  public WPI_VictorSPX getWheelIntakeTalonSRX()
   {
       return m_wheelIntake;
   }
@@ -95,6 +94,6 @@ public class Intake extends SubsystemBase
    */
   public void setWheelRPM(int rpm)
   {
-    m_wheelIntake.set(ControlMode.Velocity, RobotContainer.convertRPMToVelocity(rpm, Constants.INTAKE_WHEEL_TPR));
+    m_wheelIntake.set(ControlMode.PercentOutput, 0.5);
   }
 }

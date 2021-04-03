@@ -192,15 +192,12 @@ public class Launcher extends SubsystemBase
   /**
    * This method is used to set the wheel RPMs and pivot angle for presets.
    */
-  public void setPreset(int topLeftRPM, int topRightRPM, int bottomRPM, int pivotSetpoint)
+  public void setPreset(double topPower, double bottomPower)
   {
-    this.setTopLeftWheelRPM(topLeftRPM);
-    this.setTopRightWheelRPM(topRightRPM);
-    this.setBottomWheelRPM(bottomRPM);
+    this.setTopLeftWheelPower(topPower);
+    this.setTopRightWheelPower(-topPower);
+    this.setBottomWheelPower(-bottomPower);
 
-    // this.updateLaunchReadyStatus(0, true);
-
-    this.setAngle(pivotSetpoint);
   }
 
   /**

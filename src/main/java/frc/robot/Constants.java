@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 
 public class Constants 
 {
@@ -238,10 +239,15 @@ public class Constants
   public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3000;//3350;
 
-  public static final int    LAUNCHER_GREEN_ZONE_MOTOR_RPM                  = 3000;
-  public static final int    LAUNCHER_YELLOW_ZONE_MOTOR_RPM                 = 3500;
-  public static final int    LAUNCHER_BLUE_ZONE_MOTOR_RPM                   = 4000;
-  public static final int    LAUNCHER_RED_ZONE_MOTOR_RPM                    = 4500;
+  public static final double LAUNCHER_GREEN_ZONE_TOP_MOTOR_POWER            = 0.25;
+  public static final double LAUNCHER_YELLOW_ZONE_TOP_MOTOR_POWER           = 0.5;
+  public static final double LAUNCHER_BLUE_ZONE_TOP_MOTOR_POWER             = 0.75;
+  public static final double LAUNCHER_RED_ZONE_TOP_MOTOR_POWER              = 1.0;
+
+  public static final double LAUNCHER_GREEN_ZONE_BOTTOM_MOTOR_POWER         = 0.25;
+  public static final double LAUNCHER_YELLOW_ZONE_BOTTOM_MOTOR_POWER        = 0.5;
+  public static final double LAUNCHER_BLUE_ZONE_BOTTOM_MOTOR_POWER          = 0.75;
+  public static final double LAUNCHER_RED_ZONE_BOTTOM_MOTOR_POWER           = 1.0;
  
   // Swerve Drive
   public static final double SWERVE_DRIVE_WHEEL_AXLE_LENGTH                 = 36;
@@ -262,7 +268,7 @@ public class Constants
 
   public static final int    DRIVER_LAUNCHER_VISION_BTN_ID                  = 1;
 
-  public static final int    DRIVER_SET_HEADING_BTN_ID                      = 8;
+  public static final int    DRIVER_SET_HEADING_BTN_ID                      = 4;
 
   // Defense Mode
   public static final int    DRIVER_TOGGLE_DEFENSE_MODE_BTN_ID              = 3;
@@ -350,5 +356,13 @@ public class Constants
 
   /* Ask build captains what type of swerve module we have. */
   public static final double SWERVE_DRIVE_MAX_VOLTAGE                      = 4.95;
+
+  public static final Translation2d BACK_LEFT_WHEEL_LOCATION   = new Translation2d(-12.5 , 10.75); //TODO forward is +X and left is +Y
+  public static final Translation2d BACK_RIGHT_WHEEL_LOCATION  = new Translation2d(-12.5 , -10.75); //TODO forward is +X and left is +Y
+  public static final Translation2d FRONT_LEFT_WHEEL_LOCATION  = new Translation2d(12.5 , 10.75); //TODO forward is +X and left is +Y        
+  public static final Translation2d FRONT_RIGHT_WHEEL_LOCATION = new Translation2d(12.5 , -10.75); //TODO forward is +X and left is +Y
+
+  public static final Constraints ANGLE_CONTROLLER_CONSTRAINTS = new Constraints(0.0, 0.0);
+
 
 }

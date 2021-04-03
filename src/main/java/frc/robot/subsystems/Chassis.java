@@ -21,26 +21,33 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Transform2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.trajectory.constraint.SwerveDriveKinematicsConstraint;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 
 public class Chassis extends SubsystemBase 
@@ -73,6 +80,9 @@ public class Chassis extends SubsystemBase
 
   private WPI_TalonFX m_angleMotorBackRight;
   private WPI_TalonFX m_speedMotorBackRight;
+
+  private SwerveDriveKinematics m_swerveDriveKinematics;
+  private SwerveDriveOdometry m_swerveDriveOdometry;
 
   //{VX, VY, Speed, Angle, Previous Angle, Offset}
   public double [] frontRight = {0, 0, 0, 0, 0, 0};
@@ -126,6 +136,10 @@ public class Chassis extends SubsystemBase
     m_compressor = new Compressor();
 
     m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_A, Constants.CHASSIS_GEARSHIFT_PORT_B);
+
+    m_swerveDriveKinematics = new SwerveDriveKinematics(Constants.FRONT_RIGHT_WHEEL_LOCATION, Constants.FRONT_LEFT_WHEEL_LOCATION, 
+    Constants.BACK_LEFT_WHEEL_LOCATION, Constants.BACK_RIGHT_WHEEL_LOCATION);
+    m_swerveDriveOdometry = new SwerveDriveOdometry(m_swerveDriveKinematics, Rotation2d.fromDegrees(this.getHeading()));
 
     /**
      * Autonomous path following objects
@@ -380,6 +394,46 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
     System.out.println("Speed" + speed);
     System.out.println("Angle" + angle);
+  }
+
+  public SequentialCommandGroup generateSwerveCommand(Pose2d startingPose, List<Translation2d> wayPoints, 
+  Pose2d endingPose, double maxVelocity, boolean isReversed)
+  {
+    // Voltage constraint so never telling robot to move faster than it is capable of achieving.
+    var autoVelocityConstraint =
+    new SwerveDriveKinematicsConstraint(m_swerveDriveKinematics, Math.abs(maxVelocity));
+
+    // Configuration for trajectory that wraps path constraints.
+    TrajectoryConfig trajConfig =
+    new TrajectoryConfig(maxVelocity, Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+    // Add kinematics to track robot speed and ensure max speed is obeyed.
+    .setKinematics(m_swerveDriveKinematics)
+    // Apply voltage constraint created above.
+    .addConstraint(autoVelocityConstraint)
+    // Reverse the trajectory based on passed in parameter.
+    .setReversed(isReversed);
+
+    // Generate trajectory: initialPose, interiorWaypoints, endPose, trajConfig
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(startingPose, wayPoints, endingPose, trajConfig);
+
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, 
+    RobotContainer.m_chassis::getPose, m_swerveDriveKinematics, 
+    new PIDController(0,0,0), 
+    new PIDController(0,0,0),
+    new ProfiledPIDController(0, 0, 0, Constants.ANGLE_CONTROLLER_CONSTRAINTS), 
+    RobotContainer.m_chassis::driveWithModStates, RobotContainer.m_chassis);
+
+    return swerveControllerCommand.andThen(new InstantCommand(() -> RobotContainer.m_chassis.convertSwerveValues(0, 0, 0)));
+  }
+
+  public void driveWithModStates(SwerveModuleState[] modState)
+  {
+    SmartDashboard.putNumber("test", 123);
+    ChassisSpeeds chassisSpeeds = m_swerveDriveKinematics.toChassisSpeeds(modState[0], modState[1], modState[2], modState[3]);
+    SmartDashboard.putNumber("Chassis Speed Omega", chassisSpeeds.omegaRadiansPerSecond);
+    SmartDashboard.putNumber("Chassis Speed X", chassisSpeeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("Chassis Speed Y", chassisSpeeds.vyMetersPerSecond);
+
   }
 
   public double getAngleDifferenceWithLeftRight(double positiveAngle, double negativeAngle) {
