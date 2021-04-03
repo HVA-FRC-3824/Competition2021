@@ -40,6 +40,7 @@ public class Constants
 
   public static final int CONTROL_PANEL_SPINNER_ID                          = 16;
 
+<<<<<<< HEAD
   public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 13; //0
   public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 12; //1
 
@@ -51,6 +52,19 @@ public class Constants
 
   public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 10; //6
   public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 11; //7
+=======
+  public static final int FRONT_RIGHT_ANGLE_MOTOR_ID                          = 15; //0
+  public static final int FRONT_RIGHT_SPEED_MOTOR_ID                          = 14; //1
+
+  public static final int FRONT_LEFT_ANGLE_MOTOR_ID                          = 8; //2
+  public static final int FRONT_LEFT_SPEED_MOTOR_ID                          = 9; //3
+
+  public static final int BACK_LEFT_ANGLE_MOTOR_ID                        = 10; //4
+  public static final int BACK_LEFT_SPEED_MOTOR_ID                        = 11; //5
+
+  public static final int BACK_RIGHT_ANGLE_MOTOR_ID                         = 13; //6
+  public static final int BACK_RIGHT_SPEED_MOTOR_ID                         = 12; //7
+>>>>>>> master
 
   /* Pneumatic Ports */
   public static final int CHASSIS_GEARSHIFT_PORT_A                          = 1;
@@ -357,6 +371,8 @@ public class Constants
 
   /* Ask build captains what type of swerve module we have. */
   public static final double SWERVE_DRIVE_MAX_VOLTAGE                      = 4.95;
+  public static final double SWERVE_GEAR_RATIO                 = 0.0833333; //wheel spins per angle motor spin    
+  public static final double SWERVE_TPR                        = 2048 / SWERVE_GEAR_RATIO; //motors ticks per revolution of wheel
 
   public static final Translation2d BACK_LEFT_WHEEL_LOCATION   = new Translation2d(-12.5 , 10.75); //TODO forward is +X and left is +Y
   public static final Translation2d BACK_RIGHT_WHEEL_LOCATION  = new Translation2d(-12.5 , -10.75); //TODO forward is +X and left is +Y

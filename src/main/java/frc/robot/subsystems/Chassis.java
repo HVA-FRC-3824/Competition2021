@@ -244,6 +244,7 @@ public class Chassis extends SubsystemBase
 
 public void convertSwerveValues (double x1, double y1, double x2)
   {
+<<<<<<< HEAD
       //width and length
       double w = 21.5;
       double l = 25;
@@ -251,18 +252,28 @@ public void convertSwerveValues (double x1, double y1, double x2)
       //width and length relative ratios
       double wr;
       double lr;
+=======
+      // Width and length of robot
+      double w = 25;
+      double l = 17;
+>>>>>>> master
 
-      //input velocities and turn
-      double VX = 0;
-      double VY = 0;
+      // Width and length relative ratios
+      double wR;
+      double lR;
+
+      // Input velocities and turn
+      double vX = 0;
+      double vY = 0;
       double turn = 0;
 
-      //simplificaton for adding turn and strafe velocity for each wheel
+      //implificaton for adding turn and strafe velocity for each wheel
       double a;
       double b;
       double c;
       double d;
 
+<<<<<<< HEAD
 
       //turn amount
       if (Math.abs(x2) > 0.2) {turn = x2 *0.7;}    
@@ -313,29 +324,71 @@ public void convertSwerveValues (double x1, double y1, double x2)
 
       //adjust for exceeding max speed of wheels
       double highestSpeed = Math.max(Math.max(Math.max(frontRight[2], frontLeft[2]), backLeft[2]), backRight[2]);
-      if (highestSpeed > 1) {
-          frontRight[2] = frontRight[2] / highestSpeed;
-          frontLeft[2] = frontLeft[2] / highestSpeed;
-          backLeft[2] = backLeft[2] / highestSpeed;
-          backRight[2] = backRight[2] / highestSpeed;
-      }
-
-      //updating last angle
-      frontRight[4] = frontRight[3];
-      frontLeft[4] = frontLeft[3];
-      backLeft[4] = backLeft[3];
-      backRight[4] = backRight[3];
+=======
+      // Apply deadzone to turn analog stick
+      if (Math.abs(x2) > 0.2)
+          turn = x2;
       
-      // set new angles
-      if(!(VX == 0 && VY == 0 && turn == 0)) 
-      {
-      //finding angle of each wheel based off their velocities
-        frontRight[3] = Math.atan2(c, b) - Math.PI / 2;
-        frontLeft[3] = Math.atan2(d, b) - Math.PI / 2;
-        backLeft[3] = Math.atan2(d, a) - Math.PI / 2;
-        backRight[3] = Math.atan2(c, a) - Math.PI / 2;
+      // Apply dead zone for velocities
+      if (Math.abs(x1) > 0.2)
+          vX = x1;
+      if (Math.abs(y1) > 0.2)
+          vY = -y1;
+
+      // Find similar triangles to chassis for turn vectors (radius = 1)
+      double turnAngle = Math.atan2(l, w);
+      wR = Math.cos(turnAngle);
+      lR = Math.sin(turnAngle);
+
+      // Establishing swerve gyro difference
+      double gyroCurrent = m_ahrs.getYaw();
+
+      // Adjust strafe vector so that forward constant
+      double r = Math.sqrt(vX * vX + vY * vY);
+      double strafeAngle = Math.atan2(vY, vX);
+
+      strafeAngle += gyroCurrent / 360 * 2 * Math.PI;
+      vX = r * Math.cos(strafeAngle);
+      vY = r * Math.sin(strafeAngle);
+
+      // Shortening equations for adding strafe and turn for each wheel
+      a = vX - turn * lR;
+      b = vX + turn * lR;
+      c = vY - turn * wR;
+      d = vY + turn * wR;
+
+      // Finding speed of each wheel based on x and y velocities
+      frontRight[0] = Math.sqrt(Math.abs(b * b + c * c));
+      frontLeft[0] = Math.sqrt(Math.abs(b * b + d * d));
+      backLeft[0] = Math.sqrt(Math.abs(a * a + d * d));
+      backRight[0] = Math.sqrt(Math.abs(a * a + c * c));
+
+      // Adjust for exceeding max speed
+      double highestSpeed = Math.max(Math.max(Math.max(frontRight[0], frontLeft[0]), backLeft[0]), backRight[0]);
+>>>>>>> master
+      if (highestSpeed > 1) {
+          frontRight[0] = frontRight[0] / highestSpeed;
+          frontLeft[0] = frontLeft[0] / highestSpeed;
+          backLeft[0] = backLeft[0] / highestSpeed;
+          backRight[0] = backRight[0] / highestSpeed;
       }
 
+      // Update last angle
+      frontRight[2] = frontRight[1];
+      frontLeft[2] = frontLeft[1];
+      backLeft[2] = backLeft[1];
+      backRight[2] = backLeft[1];
+
+      // Set new angles
+      if (!(vX == 0 && vY == 0 && turn == 0)) {
+          // Find angle of each wheel based on velocities
+          frontRight[1] = Math.atan2(c, b) - Math.PI / 2;
+          frontLeft[1] = Math.atan2(d, b) - Math.PI / 2;
+          backLeft[1] = Math.atan2(d, a) - Math.PI / 2;
+          backRight[1] = Math.atan2(c, a) - Math.PI / 2;
+      }
+
+<<<<<<< HEAD
       //when a wheel moves more than PI in one direction, offset so it goes the other way around
       if (Math.abs(frontRight[4] - frontRight[3]) > Math.PI && frontRight[4] < frontRight[3]) {frontRight[5] -= 2 * Math.PI;}
       if (Math.abs(frontRight[4] - frontRight[3]) > Math.PI && frontRight[4] > frontRight[3]) {frontRight[5] += 2 * Math.PI;}
@@ -367,6 +420,47 @@ public void convertSwerveValues (double x1, double y1, double x2)
       //SmartDashboard.putNumber("Speed 2", frontLeft[2]);
       //SmartDashboard.putNumber("Speed 3", backLeft[2]);
       //SmartDashboard.putNumber("Speed 4", backRight[2]);
+=======
+      // When a wheel moves more than half a circle in one direction, offsets so it
+      // goes the shorter route
+      if ((Math.abs(frontRight[2] - frontRight[1]) > Math.PI && frontRight[2] < frontRight[1]))
+          frontRight[3] -= 2 * Math.PI;
+      if ((Math.abs(frontRight[2] - frontRight[1]) > Math.PI && frontRight[2] > frontRight[1]))
+          frontRight[3] += 2 * Math.PI;
+      if ((Math.abs(frontLeft[2] - frontLeft[1]) > Math.PI && frontLeft[2] < frontLeft[1]))
+          frontLeft[3] -= 2 * Math.PI;
+      if ((Math.abs(frontLeft[2] - frontLeft[1]) > Math.PI && frontLeft[2] > frontLeft[1]))
+          frontLeft[3] += 2 * Math.PI;
+
+      if ((Math.abs(backLeft[2] - backLeft[1]) > Math.PI && backLeft[2] < backLeft[1]))
+          backLeft[3] -= 2 * Math.PI;
+      if ((Math.abs(backLeft[2] - backLeft[1]) > Math.PI && backLeft[2] > backLeft[1]))
+          backLeft[3] += 2 * Math.PI;
+      if ((Math.abs(backRight[2] - backRight[1]) > Math.PI && backRight[2] < backRight[1]))
+          backRight[3] -= 2 * Math.PI;
+      if ((Math.abs(backRight[2] - backRight[1]) > Math.PI && backRight[2] > backRight[1]))
+          backRight[3] += 2 * Math.PI;
+
+      drive(m_speedMotorFrontRight, m_angleMotorFrontRight, frontRight[0],
+              -(frontRight[1] + frontRight[3]) / (Math.PI * 2) * Constants.SWERVE_TPR);
+      drive(m_speedMotorFrontLeft, m_angleMotorFrontLeft, frontLeft[0],
+              -(frontLeft[1] + frontLeft[3]) / (Math.PI * 2) * Constants.SWERVE_TPR);
+      drive(m_speedMotorBackLeft, m_angleMotorBackLeft, backLeft[0],
+              -(backLeft[1] + backLeft[3]) / (Math.PI * 2) * Constants.SWERVE_TPR);
+      drive(m_speedMotorBackRight, m_angleMotorBackRight, backRight[0],
+              -(backRight[1] + backRight[3]) / (Math.PI * 2) * Constants.SWERVE_TPR);
+
+      SmartDashboard.putNumber("Current Angle Back Right", backRight[1] + backRight[3]);  
+      SmartDashboard.putNumber("Current Angle Back Left", backLeft[1] + backLeft[3]);  
+      SmartDashboard.putNumber("Current Angle Front Right", frontRight [1] + frontRight[3]);  
+      SmartDashboard.putNumber("Current Angle Front Left", frontLeft[1] + frontLeft[3]);  
+  
+      SmartDashboard.putNumber("Speed Back Right", backRight[0]);
+      SmartDashboard.putNumber("Speed Back Left", backLeft[0]);
+      SmartDashboard.putNumber("Speed Front Right", frontRight[0]);
+      SmartDashboard.putNumber("Speed Front Left", frontLeft[0]);
+  
+>>>>>>> master
       SmartDashboard.putNumber("Swerve Yaw", m_ahrs.getYaw());
       SmartDashboard.putNumber("Swerve Roll", m_ahrs.getRoll());
       SmartDashboard.putNumber("Swerve Pitch", m_ahrs.getPitch());
