@@ -301,7 +301,7 @@ public class RobotContainer
      * boolean: if true, Motion Magic is being used, if false, Motion Magic is not
      * being used.
      */
-    SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_chassis.getMotor(), false));
+    // SmartDashboard.putData("Set PID Values", new SetPIDValues(null, m_chassis.getMotor(), false));
   }
 
   /**
