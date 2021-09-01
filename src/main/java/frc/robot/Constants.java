@@ -286,46 +286,46 @@ public class Constants
    */
 
    /* Chamber */
-  public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 140; //14
+  public static final int    OPERATOR_CHAMBER_BASE_RPM_BTN_ID               = 5; //14
   
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_LAUNCH_BTN_ID        = 8; //11
-  public static final int    OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID          = 9; //10
+  public static final int    OPERATOR_CHAMBER_ELEVATOR_LAUNCH_BTN_ID        = 12; //11
+  public static final int    OPERATOR_CHAMBER_ELEVATOR_DOWN_BTN_ID          = 13; //10
 
   /* Climber */
   public static final int    OPERATOR_CLIMBER_EXTEND_LEFT_BTN_ID            = 300; //3
   public static final int    OPERATOR_CLIMBER_RETRACT_LEFT_BTN_ID           = 600; //6
 
-  public static final int    OPERATOR_CLIMBER_EXTEND_RIGHT_BTN_ID           = 4; //4
-  public static final int    OPERATOR_CLIMBER_RETRACT_RIGHT_BTN_ID          = 5; //5
+  public static final int    OPERATOR_CLIMBER_EXTEND_RIGHT_BTN_ID           = 400; //4
+  public static final int    OPERATOR_CLIMBER_RETRACT_RIGHT_BTN_ID          = 500; //5
 
-  public static final int    OPERATOR_CLIMBER_REEL_BTN_ID                   = 70; //7
-  public static final int    OPERATOR_CLIMBER_LIFT_BTN_ID                   = 19; //19
+  public static final int    OPERATOR_CLIMBER_REEL_BTN_ID                   = 2; //7
+  public static final int    OPERATOR_CLIMBER_LIFT_BTN_ID                   = 1; //19
 
   /* Control Panel */
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_POWER_BTN_ID    = 19;
   // public static final int    OPERATOR_CONTROL_PANEL_SPINNER_RPM_BTN_ID      = 18;
 
   /* Intake */
-  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 15; //15
-  public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 11;
+  public static final int    OPERATOR_TOGGLE_INTAKE_BTN_ID                  = 6; //15
+  public static final int    OPERATOR_INTAKE_WHEEL_RPM_BTN_ID               = 4;
 
   /* Launcher */
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 120; //12
-  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 130; //13
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_UP_BTN_ID          = 8; //12
+  public static final int    OPERATOR_LAUNCHER_JOG_ANGLE_DOWN_BTN_ID        = 9; //13
 
-  public static final int    OPERATOR_LAUNCHER_PRESET_BTN_ID                = 60; //6
-  public static final int    OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID           = 80; //8
-  public static final int    OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID          = 90; //9
+  public static final int    OPERATOR_LAUNCHER_PRESET_BTN_ID                = 14; //6
+  public static final int    OPERATOR_LAUNCHER_PRESET_INIT_BTN_ID           = 10; //8
+  public static final int    OPERATOR_LAUNCHER_PRESET_CLOSE_BTN_ID          = 11; //9
 
-  public static final int    OP_LAUNCHER_PRESET_GREEN_BTN_ID                = 3;
-  public static final int    OP_LAUNCHER_PRESET_YELLOW_BTN_ID               = 6; 
-  public static final int    OP_LAUNCHER_PRESET_BLUE_BTN_ID                 = 4;
-  public static final int    OP_LAUNCHER_PRESET_RED_BTN_ID                  = 5;
+  public static final int    OP_LAUNCHER_PRESET_GREEN_BTN_ID                = 3000;
+  public static final int    OP_LAUNCHER_PRESET_YELLOW_BTN_ID               = 6000; 
+  public static final int    OP_LAUNCHER_PRESET_BLUE_BTN_ID                 = 4000;
+  public static final int    OP_LAUNCHER_PRESET_RED_BTN_ID                  = 5000;
 
   /* LEDs */
-  public static final int    OPERATOR_LEDS_CHASE_INWARD_BTN_ID              = 1000; //1
-  public static final int    OPERATOR_LEDS_CHASE_OUTWARD_BTN_ID             = 200; //2
-  public static final int    OPERATOR_LEDS_RAINBOW_BTN_ID                   = 30; //3
+  public static final int    OPERATOR_LEDS_CHASE_INWARD_BTN_ID              = 15; //1
+  public static final int    OPERATOR_LEDS_CHASE_OUTWARD_BTN_ID             = 16; //2
+  public static final int    OPERATOR_LEDS_RAINBOW_BTN_ID                   = 3; //3
 
   
   /**
