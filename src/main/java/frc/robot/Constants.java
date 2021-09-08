@@ -239,7 +239,7 @@ public class Constants
   public static final int    LAUNCHER_AUTO_TRENCH_BOTTOM_RPM                = 4500;
   public static final int    LAUNCHER_AUTO_TRENCH_ANGLE                     = 3000;//3350;
 
-  public static final double LAUNCHER_GREEN_ZONE_TOP_MOTOR_POWER            = 0.35;
+  public static final double LAUNCHER_GREEN_ZONE_TOP_MOTOR_POWER            = 0.2;
   public static final double LAUNCHER_YELLOW_ZONE_TOP_MOTOR_POWER           = 0.55;
   public static final double LAUNCHER_BLUE_ZONE_TOP_MOTOR_POWER             = 0.6;
   public static final double LAUNCHER_RED_ZONE_TOP_MOTOR_POWER              = 0.8;
@@ -247,7 +247,7 @@ public class Constants
 
   public static final double LAUNCHER_GREEN_ZONE_BOTTOM_MOTOR_POWER         = 1.0;
   public static final double LAUNCHER_YELLOW_ZONE_BOTTOM_MOTOR_POWER        = 0.82;
-  public static final double LAUNCHER_BLUE_ZONE_BOTTOM_MOTOR_POWER          = 0.5;
+  public static final double LAUNCHER_BLUE_ZONE_BOTTOM_MOTOR_POWER          = 0.675;
   public static final double LAUNCHER_RED_ZONE_BOTTOM_MOTOR_POWER           = 0.45;
  
   // Swerve Drive

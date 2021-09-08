@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -72,7 +74,7 @@ public class Robot extends TimedRobot {
      * the Command-based framework to work.
      */
     CommandScheduler.getInstance().run();
-    RobotContainer.displayTalonFXInfo(RobotContainer.m_chassis.getMotor(), "Angle Motor");
+    // RobotContainer.displayTalonFXInfo(RobotContainer.m_chassis.getMotor(), "Angle Motor");
 
     // for (int i = 1; i <=
     // RobotContainer.m_OI.getOperatorController().getButtonCount(); i++)
@@ -95,6 +97,8 @@ public class Robot extends TimedRobot {
      * animations to false.
      */
     RobotContainer.m_LEDs.resetSequences();
+
+    //RobotContainer.m_chassis.getMotorFR().set(TalonFXControlMode.Position, RobotContainer.m_chassis.frontRight[5]);
   }
 
   /**

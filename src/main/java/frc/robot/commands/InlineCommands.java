@@ -91,9 +91,9 @@ public class InlineCommands {
     //   new InstantCommand(() -> RobotContainer.m_chamber.setBasePower(0.0));
 
     m_setChamberElevatorToLaunch =
-      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(-0.5));
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(-0.3));
     m_setChamberElevatorDown =
-      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.5));
+      new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.3));
     m_stopChamberElevator =
       new InstantCommand(() -> RobotContainer.m_chamber.setElevatorPower(0.0));
 
@@ -170,9 +170,7 @@ public class InlineCommands {
     m_setLauncherPreset =
       new LauncherSetPreset().alongWith(new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(true)));
     m_stopLaunchSequence =
-      new RunCommand(() -> RobotContainer.m_chassis.teleopDrive(RobotContainer.m_OI.getDriverJoystick().getY(), 
-      RobotContainer.m_OI.getDriverJoystick().getTwist()), RobotContainer.m_chassis).alongWith(new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher), 
-                                    new InstantCommand(() -> RobotContainer.m_LEDs.setLaunchingStatus(false)));
+      new InstantCommand(() -> RobotContainer.m_launcher.stopLauncher(), RobotContainer.m_launcher);
 
     /* LEDs Inline Command Instantiations */
     m_chaseInwards =

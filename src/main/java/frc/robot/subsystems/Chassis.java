@@ -81,8 +81,8 @@ public class Chassis extends SubsystemBase
   private WPI_TalonFX m_angleMotorBackRight;
   private WPI_TalonFX m_speedMotorBackRight;
 
-  private SwerveDriveKinematics m_swerveDriveKinematics;
-  private SwerveDriveOdometry m_swerveDriveOdometry;
+  // private SwerveDriveKinematics m_swerveDriveKinematics;
+  // private SwerveDriveOdometry m_swerveDriveOdometry;
 
   //{VX, VY, Speed, Angle, Previous Angle, Offset}
   public double [] frontRight = {0, 0, 0, 0, 0, 0};
@@ -137,9 +137,9 @@ public class Chassis extends SubsystemBase
 
     m_gearShift = new DoubleSolenoid(Constants.CHASSIS_GEARSHIFT_PORT_A, Constants.CHASSIS_GEARSHIFT_PORT_B);
 
-    m_swerveDriveKinematics = new SwerveDriveKinematics(Constants.FRONT_RIGHT_WHEEL_LOCATION, Constants.FRONT_LEFT_WHEEL_LOCATION, 
-    Constants.BACK_LEFT_WHEEL_LOCATION, Constants.BACK_RIGHT_WHEEL_LOCATION);
-    m_swerveDriveOdometry = new SwerveDriveOdometry(m_swerveDriveKinematics, Rotation2d.fromDegrees(this.getHeading()));
+    // m_swerveDriveKinematics = new SwerveDriveKinematics(Constants.FRONT_RIGHT_WHEEL_LOCATION, Constants.FRONT_LEFT_WHEEL_LOCATION, 
+    // Constants.BACK_LEFT_WHEEL_LOCATION, Constants.BACK_RIGHT_WHEEL_LOCATION);
+    // m_swerveDriveOdometry = new SwerveDriveOdometry(m_swerveDriveKinematics, Rotation2d.fromDegrees(this.getHeading()));
 
     /**
      * Autonomous path following objects
@@ -217,9 +217,21 @@ public class Chassis extends SubsystemBase
     SmartDashboard.putNumber("RIGHT VOLTAGE", m_rightMaster.getMotorOutputVoltage());
   }
 
-  public WPI_TalonFX getMotor ()
+  public WPI_TalonFX getMotorFR ()
   {
     return m_angleMotorFrontRight;
+  }
+  public WPI_TalonFX getMotorFL ()
+  {
+    return m_angleMotorFrontLeft;
+  }
+  public WPI_TalonFX getMotorBL ()
+  {
+    return m_angleMotorBackLeft;
+  }
+  public WPI_TalonFX getMotorBR ()
+  {
+    return m_angleMotorBackRight;
   }
   /**
    * Controls movement of robot drivetrain with passed in power and turn values
@@ -264,7 +276,7 @@ public void convertSwerveValues (double x1, double y1, double x2)
       double d;
 
 
-      //turn amount
+      //setting deadzone
       if (Math.abs(x2) > 0.2) {turn = x2 *0.7;}    
 
       //similar triangle to chassis with radius 1 for turn vectors
@@ -272,9 +284,9 @@ public void convertSwerveValues (double x1, double y1, double x2)
       wr = Math.cos(turn_angle);
       lr = Math.sin(turn_angle);
 
-      //input velocities
-      if (Math.abs(x1) > 0.2) {vX = x1;}
-      if (Math.abs(y1) > 0.2) {vY = -y1;}
+      //input velocities deadzone
+      if (Math.abs(x1) > 0.15) {vX = x1;}
+      if (Math.abs(y1) > 0.15) {vY = -y1;}
 
       //Swerve Gyro Difference Establishing
       // double gyro_current = m_ahrs.getPitch();  
@@ -314,25 +326,25 @@ public void convertSwerveValues (double x1, double y1, double x2)
       //adjust for exceeding max speed of wheels
       double highestSpeed = Math.max(Math.max(Math.max(frontRight[2], frontLeft[2]), backLeft[2]), backRight[2]);
       if (highestSpeed > 1) {
-          frontRight[0] = frontRight[0] / highestSpeed;
-          frontLeft[0] = frontLeft[0] / highestSpeed;
-          backLeft[0] = backLeft[0] / highestSpeed;
-          backRight[0] = backRight[0] / highestSpeed;
+          frontRight[2] = frontRight[2] / highestSpeed;
+          frontLeft[2] = frontLeft[2] / highestSpeed;
+          backLeft[2] = backLeft[2] / highestSpeed;
+          backRight[2] = backRight[2] / highestSpeed;
       }
 
       // Update last angle
-      frontRight[2] = frontRight[1];
-      frontLeft[2] = frontLeft[1];
-      backLeft[2] = backLeft[1];
-      backRight[2] = backLeft[1];
+      frontRight[4] = frontRight[3];
+      frontLeft[4] = frontLeft[3];
+      backLeft[4] = backLeft[3];
+      backRight[4] = backRight[3];
 
       // Set new angles
       if (!(vX == 0 && vY == 0 && turn == 0)) {
           // Find angle of each wheel based on velocities
-          frontRight[1] = Math.atan2(c, b) - Math.PI / 2;
-          frontLeft[1] = Math.atan2(d, b) - Math.PI / 2;
-          backLeft[1] = Math.atan2(d, a) - Math.PI / 2;
-          backRight[1] = Math.atan2(c, a) - Math.PI / 2;
+          frontRight[3] = Math.atan2(c, b) - Math.PI / 2;
+          frontLeft[3] = Math.atan2(d, b) - Math.PI / 2;
+          backLeft[3] = Math.atan2(d, a) - Math.PI / 2;
+          backRight[3] = Math.atan2(c, a) - Math.PI / 2;
       }
 
       //when a wheel moves more than PI in one direction, offset so it goes the other way around
@@ -351,31 +363,25 @@ public void convertSwerveValues (double x1, double y1, double x2)
       drive(m_speedMotorBackLeft, m_angleMotorBackLeft, backLeft[2], -(backLeft[3] + backLeft[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
       drive(m_speedMotorBackRight, m_angleMotorBackRight, backRight[2], -(backRight[3] + backRight[5]) / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
 
-      SmartDashboard.putNumber("Wheel one offset", frontRight[5]);
-      SmartDashboard.putNumber("Wheel 3 total encoder ticks",  -(backLeft[3] + backLeft[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
-      SmartDashboard.putNumber("Wheel 3 Current Pos", m_angleMotorBackLeft.getSelectedSensorPosition());
-      SmartDashboard.putNumber("Wheel 3 Setpoint", m_angleMotorBackLeft.getClosedLoopTarget());
-      SmartDashboard.putNumber("Total Angle ", (frontRight[3] + frontRight[5]));
+      //SmartDashboard.putNumber("Wheel one offset", frontRight[5]);
+      //SmartDashboard.putNumber("Wheel 3 total encoder ticks",  -(backLeft[3] + backLeft[5])  / (Math.PI * 2) * Constants.WHEEL_MOTOR_TICKS_PER_REVOLUTION);
+      //SmartDashboard.putNumber("Wheel 3 Current Pos", m_angleMotorBackLeft.getSelectedSensorPosition());
+      //SmartDashboard.putNumber("Wheel 3 Setpoint", m_angleMotorBackLeft.getClosedLoopTarget());
+      //SmartDashboard.putNumber("Total Angle ", (frontRight[3] + frontRight[5]));
       //SmartDashboard.putNumber("Last Angle", frontRight[4]);
       SmartDashboard.putNumber("Current Angle 1", frontRight[3]);  
       SmartDashboard.putNumber("Current Angle 2", frontLeft[3]);  
       SmartDashboard.putNumber("Current Angle 3", backLeft[3]);  
       SmartDashboard.putNumber("Current Angle 4", backRight[3]);  
 
-      //SmartDashboard.putNumber("Speed 1", frontRight[2]);
-      //SmartDashboard.putNumber("Speed 2", frontLeft[2]);
-      //SmartDashboard.putNumber("Speed 3", backLeft[2]);
-      //SmartDashboard.putNumber("Speed 4", backRight[2]);
       SmartDashboard.putNumber("Swerve Yaw", m_ahrs.getYaw());
-      SmartDashboard.putNumber("Swerve Roll", m_ahrs.getRoll());
-      SmartDashboard.putNumber("Swerve Pitch", m_ahrs.getPitch());
-      SmartDashboard.putNumber("Swerve Angle", m_ahrs.getAngle());
-      SmartDashboard.putNumber("Swerve Compass", m_ahrs.getCompassHeading());
+      //SmartDashboard.putNumber("Swerve Angle", m_ahrs.getAngle());
+      //SmartDashboard.putNumber("Swerve Compass", m_ahrs.getCompassHeading());
     }
 
   public void drive (WPI_TalonFX speedMotor, WPI_TalonFX angleMotor, double speed, double angle)
   {
-    speedMotor.set(speed *0.5);
+    speedMotor.set(speed * 0.75);
 
     double setpoint = angle * (Constants.SWERVE_DRIVE_MAX_VOLTAGE * 1.5);
     
@@ -395,45 +401,45 @@ public void convertSwerveValues (double x1, double y1, double x2)
     System.out.println("Angle" + angle);
   }
 
-  public SequentialCommandGroup generateSwerveCommand(Pose2d startingPose, List<Translation2d> wayPoints, 
-  Pose2d endingPose, double maxVelocity, boolean isReversed)
-  {
-    // Voltage constraint so never telling robot to move faster than it is capable of achieving.
-    var autoVelocityConstraint =
-    new SwerveDriveKinematicsConstraint(m_swerveDriveKinematics, Math.abs(maxVelocity));
+  // public SequentialCommandGroup generateSwerveCommand(Pose2d startingPose, List<Translation2d> wayPoints, 
+  // Pose2d endingPose, double maxVelocity, boolean isReversed)
+  // {
+  //   // Voltage constraint so never telling robot to move faster than it is capable of achieving.
+  //   var autoVelocityConstraint =
+  //   new SwerveDriveKinematicsConstraint(m_swerveDriveKinematics, Math.abs(maxVelocity));
 
-    // Configuration for trajectory that wraps path constraints.
-    TrajectoryConfig trajConfig =
-    new TrajectoryConfig(maxVelocity, Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-    // Add kinematics to track robot speed and ensure max speed is obeyed.
-    .setKinematics(m_swerveDriveKinematics)
-    // Apply voltage constraint created above.
-    .addConstraint(autoVelocityConstraint)
-    // Reverse the trajectory based on passed in parameter.
-    .setReversed(isReversed);
+  //   // Configuration for trajectory that wraps path constraints.
+  //   TrajectoryConfig trajConfig =
+  //   new TrajectoryConfig(maxVelocity, Constants.K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+  //   // Add kinematics to track robot speed and ensure max speed is obeyed.
+  //   .setKinematics(m_swerveDriveKinematics)
+  //   // Apply voltage constraint created above.
+  //   .addConstraint(autoVelocityConstraint)
+  //   // Reverse the trajectory based on passed in parameter.
+  //   .setReversed(isReversed);
 
-    // Generate trajectory: initialPose, interiorWaypoints, endPose, trajConfig
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(startingPose, wayPoints, endingPose, trajConfig);
+  //   // Generate trajectory: initialPose, interiorWaypoints, endPose, trajConfig
+  //   Trajectory trajectory = TrajectoryGenerator.generateTrajectory(startingPose, wayPoints, endingPose, trajConfig);
 
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, 
-    RobotContainer.m_chassis::getPose, m_swerveDriveKinematics, 
-    new PIDController(0,0,0), 
-    new PIDController(0,0,0),
-    new ProfiledPIDController(0, 0, 0, Constants.ANGLE_CONTROLLER_CONSTRAINTS), 
-    RobotContainer.m_chassis::driveWithModStates, RobotContainer.m_chassis);
+  //   SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, 
+  //   RobotContainer.m_chassis::getPose, m_swerveDriveKinematics, 
+  //   new PIDController(0,0,0), 
+  //   new PIDController(0,0,0),
+  //   new ProfiledPIDController(0, 0, 0, Constants.ANGLE_CONTROLLER_CONSTRAINTS), 
+  //   RobotContainer.m_chassis::driveWithModStates, RobotContainer.m_chassis);
 
-    return swerveControllerCommand.andThen(new InstantCommand(() -> RobotContainer.m_chassis.convertSwerveValues(0, 0, 0)));
-  }
+  //   return swerveControllerCommand.andThen(new InstantCommand(() -> RobotContainer.m_chassis.convertSwerveValues(0, 0, 0)));
+  // }
 
-  public void driveWithModStates(SwerveModuleState[] modState)
-  {
-    SmartDashboard.putNumber("test", 123);
-    ChassisSpeeds chassisSpeeds = m_swerveDriveKinematics.toChassisSpeeds(modState[0], modState[1], modState[2], modState[3]);
-    SmartDashboard.putNumber("Chassis Speed Omega", chassisSpeeds.omegaRadiansPerSecond);
-    SmartDashboard.putNumber("Chassis Speed X", chassisSpeeds.vxMetersPerSecond);
-    SmartDashboard.putNumber("Chassis Speed Y", chassisSpeeds.vyMetersPerSecond);
+  // public void driveWithModStates(SwerveModuleState[] modState)
+  // {
+  //   SmartDashboard.putNumber("test", 123);
+  //   ChassisSpeeds chassisSpeeds = m_swerveDriveKinematics.toChassisSpeeds(modState[0], modState[1], modState[2], modState[3]);
+  //   SmartDashboard.putNumber("Chassis Speed Omega", chassisSpeeds.omegaRadiansPerSecond);
+  //   SmartDashboard.putNumber("Chassis Speed X", chassisSpeeds.vxMetersPerSecond);
+  //   SmartDashboard.putNumber("Chassis Speed Y", chassisSpeeds.vyMetersPerSecond);
 
-  }
+  // }
 
   public double getAngleDifferenceWithLeftRight(double positiveAngle, double negativeAngle) {
     // Creating variables that will hold the difference between angles on the left and right sides of the spectrum.

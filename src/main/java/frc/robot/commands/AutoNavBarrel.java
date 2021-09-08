@@ -33,6 +33,6 @@ public class AutoNavBarrel extends SequentialCommandGroup
     public AutoNavBarrel()
     {
         // Follow path
-        RobotContainer.m_chassis.generateSwerveCommand(startingPose, waypoints, endingPose, 2.5, false);
+        // RobotContainer.m_chassis.generateSwerveCommand(startingPose, waypoints, endingPose, 2.5, false);
     }
 }
