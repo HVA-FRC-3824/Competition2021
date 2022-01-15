@@ -4,6 +4,11 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import java.util.List;
+import edu.wpi.first.wpilibj.spline;
+import edu.wpi.first.wpilibj.spline.Spline;
+import edu.wpi.first.wpilibj.spline.CubicHermiteSpline;
+
 /**
  * Limelight is a camera that emits a bright green light to track
  * reflective tape commonly placed around targets for alignment.
@@ -24,6 +29,8 @@ public class Limelight
   private static NetworkTableEntry ta;
   private static NetworkTableEntry camMode;
   private static NetworkTableEntry ledMode;
+  private static Spline CubicHermiteSpline;
+  
 
   /**
    * Enums allow for values to have labels. This is especially useful
@@ -207,4 +214,23 @@ public class Limelight
       this.blinkLED();
     }
   }
+
+  public double findDistance(double area)
+  {
+    // Array of Area
+    double [] lightArea = {0, 0.10, 0.20, 0.60, 1.50, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80};
+    // Array of Distance
+    double [] distance = {282, 137.125, 75.5, 45, 41, 29.875, 20.875, 15.25, 12.75, 10.375, 8.75, 7.625, 6.125, 5.25, 4.625, 4, 3.5, 3.375, 3.25, 2.875, 2.75, 2.6875};
+    
+    double maxArea = 100.0;
+    double minArea = 0.0;
+    double maxDistance = 282.0;
+    double minDistance = 2.6875;
+
+    Spline CubicHermitSpline = new CubicHermiteSpline(minArea, maxArea, minDistance, maxDistance);
+
+    return 0.0;
+    
+  }
+  
 }

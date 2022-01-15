@@ -148,6 +148,7 @@ public class Robot extends TimedRobot {
     /* Initially switch Limelight to driver mode for teleoperation. */
     // RobotContainer.m_limelight.setModeDriver();
     RobotContainer.m_limelight.setModeVision();
+    // SmartDashboard.putNumber("Limelight Validity", (RobotContainer.m_limelight.isTargetAvailable()));
 
     /**
      * Initialize default commands for all subsystems. Do this in teleopInit rather
@@ -164,7 +165,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() 
   {
-    
+    SmartDashboard.putNumber("Limelight X", RobotContainer.m_limelight.getTargetOffsetX());
+    SmartDashboard.putNumber("Limelight Y", RobotContainer.m_limelight.getTargetOffsetY());
+    SmartDashboard.putNumber("Limelight Area", RobotContainer.m_limelight.getTargetArea());
+    // SmartDashboard.putNumber("Distance From Limelight", RobotContainer.m_limelight.findDistance(RobotContainer.m_limelight.getTargetArea()));
   }
 
   /**
