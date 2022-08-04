@@ -4,10 +4,10 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-import java.util.List;
-import edu.wpi.first.wpilibj.spline;
-import edu.wpi.first.wpilibj.spline.Spline;
-import edu.wpi.first.wpilibj.spline.CubicHermiteSpline;
+// import java.util.List;
+// import edu.wpi.first.wpilibj.spline;
+// import edu.wpi.first.wpilibj.spline.Spline;
+// import edu.wpi.first.wpilibj.spline.CubicHermiteSpline;
 
 /**
  * Limelight is a camera that emits a bright green light to track
@@ -29,7 +29,7 @@ public class Limelight
   private static NetworkTableEntry ta;
   private static NetworkTableEntry camMode;
   private static NetworkTableEntry ledMode;
-  private static Spline CubicHermiteSpline;
+  // private static Spline CubicHermiteSpline;
   
 
   /**
@@ -215,7 +215,7 @@ public class Limelight
     }
   }
 
-  public double findDistance(double area)
+  /* public double findDistance(double area)
   {
     // Array of Area
     double [] lightArea = {0, 0.10, 0.20, 0.60, 1.50, 3, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80};
@@ -231,6 +231,7 @@ public class Limelight
 
     return 0.0;
     
-  }
+  } */
+
   
 }
